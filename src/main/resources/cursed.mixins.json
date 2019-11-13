@@ -1,11 +1,12 @@
 {
   "required": true,
-  "package": "net.fabricmc.example.mixin",
+  "package": "me.i509.fabric.cursedshulkerboxes.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ShulkerBoxBlockEntityMixin",
+    "ShulkerBoxSlotMixin"
   ],
   "client": [
-    "ExampleMixin"
   ],
   "injectors": {
     "defaultRequire": 1

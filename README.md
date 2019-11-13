@@ -1,11 +1,10 @@
-# Fabric Example Mod
+# Cursed Shulker Boxes
 
-## Setup
+This mod adds new shulker box types.
 
-1. Edit build.gradle and mod.json to suit your needs.
-    * The "mixins" object can be removed from mod.json if you do not need to use mixins.
-    * Please replace all occurences of "modid" with your own mod ID - sometimes, a different string may also suffice.
-2. Run the following command:
+## Build
+
+To build the mod, use the following command below, or import it into your IDE.
 
 ```
 ./gradlew idea
@@ -13,4 +12,4 @@
 
 ## License
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+Cursed Shulker Boxes is availible under the MIT License which can be found here: https://mit-license.org/

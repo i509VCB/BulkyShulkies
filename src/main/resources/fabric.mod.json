@@ -1,34 +1,44 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "cursedshulkerboxes",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Cursed Shulker Boxes",
+  "description": "",
   "authors": [
-    "Me!"
+    {
+      "name": "i509VCB",
+      "minecraft": "765e5d33-c991-454f-8775-b6a7a394c097"
+    }
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/i509VCB/CursedShulkerBoxes",
+    "sources": "https://github.com/i509VCB/CursedShulkerBoxes"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "MIT",
+  "icon": "assets/cursedshulkerboxes/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod"
+    ],
+    "client": [
+      "me.i509.fabric.cursedshulkerboxes.client.CursedShulkerBoxClientMod"
+    ],
+    "modmenu": [
+      "me.i509.fabric.cursedshulkerboxes.extension.CursedModMenuHook"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "cursed.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.4.0",
-    "fabric": "*"
+    "fabric": "*",
+    "cotton-resources": ">=1.4.1"
   },
   "suggests": {
     "flamingo": "*"
