@@ -146,7 +146,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
     }
 
     @Override
-    public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult_1) {
+    public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
         if (world.isClient) {
             return true;
         } else if (player.isSpectator()) {
@@ -317,12 +317,12 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
     }
 
     @Override
-    public boolean isOpaque(BlockState blockState_1) {
+    public boolean isOpaque(BlockState blockState) {
         return false;
     }
 
     @Override
-    public boolean hasComparatorOutput(BlockState blockState_1) {
+    public boolean hasComparatorOutput(BlockState blockState) {
         return true;
     }
 

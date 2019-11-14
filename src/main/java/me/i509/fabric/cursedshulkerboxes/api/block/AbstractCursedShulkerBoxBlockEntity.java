@@ -178,8 +178,8 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
         return this.inventory.size();
     }
 
-    public boolean onBlockAction(int int_1, int interactorCount) {
-        if (int_1 == 1) {
+    public boolean onBlockAction(int value, int interactorCount) {
+        if (value == 1) {
             this.viewerCount = interactorCount;
             if (interactorCount == 0) {
                 this.animationStage = ShulkerBoxBlockEntity.AnimationStage.CLOSING;
@@ -193,7 +193,7 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
 
             return true;
         } else {
-            return super.onBlockAction(int_1, interactorCount);
+            return super.onBlockAction(value, interactorCount);
         }
     }
 
@@ -279,7 +279,7 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
         return false;
     }
 
-    public int[] getInvAvailableSlots(Direction direction_1) {
+    public int[] getInvAvailableSlots(Direction direction) {
         return AVAILABLE_SLOTS;
     }
 

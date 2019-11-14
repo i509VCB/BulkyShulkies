@@ -42,10 +42,6 @@ public class AbstractMaterialBasedShulkerBoxBlockEntity extends AbstractCursedSh
         this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
     }
 
-    protected AbstractMaterialBasedShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot) {
-        this(blockEntityType, maxAvailableSlot, null);
-    }
-
     @Override
     public Box getBoundingBox(BlockState blockState) {
         return this.getBoundingBoxProgressive(blockState.get(AbstractCursedShulkerBoxBlock.FACING));

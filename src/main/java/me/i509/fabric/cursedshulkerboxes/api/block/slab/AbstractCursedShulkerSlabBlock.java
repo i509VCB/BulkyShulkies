@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 
 public abstract class AbstractCursedShulkerSlabBlock extends AbstractCursedShulkerBoxBlock {
-    protected static final VoxelShape BOTTOM_SHAPE = /*Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D); //*/Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
+    protected static final VoxelShape BOTTOM_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
     protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
     protected static final VoxelShape WEST_SHAPE = Block.createCuboidShape(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
@@ -40,23 +40,8 @@ public abstract class AbstractCursedShulkerSlabBlock extends AbstractCursedShulk
     }
 
     public static VoxelShape getShape(Direction facing) {
-        switch (facing) {
-            case DOWN:
-                return AbstractCursedShulkerSlabBlock.TOP_SHAPE;
-            case SOUTH:
-                return AbstractCursedShulkerSlabBlock.SOUTH_SHAPE;
-            case WEST:
-                return AbstractCursedShulkerSlabBlock.WEST_SHAPE;
-            case EAST:
-                return AbstractCursedShulkerSlabBlock.EAST_SHAPE;
-            case NORTH:
-                return AbstractCursedShulkerSlabBlock.NORTH_SHAPE;
-            case UP:
-            default:
-                return AbstractCursedShulkerSlabBlock.BOTTOM_SHAPE;
-        }
+        return SHAPES.get(facing);
     }
-
 
     @Override
     public VoxelShape getCollisionShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
