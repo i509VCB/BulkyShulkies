@@ -124,12 +124,15 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
      */
     protected abstract ItemStack getItemStack(DyeColor color);
 
+    /**
+     * Get's the dimensions of the Box when it is fully opened.
+     * @param facing The direction the blockState is facing.
+     * @return A Box which contains the maximum dimensions of the box.
+     */
     public abstract Box getOpenBox(Direction facing);
 
     @Override
-    public boolean canSuffocate(BlockState blockState, BlockView blockView, BlockPos blockPos) {
-        return false;
-    }
+    public abstract boolean canSuffocate(BlockState blockState, BlockView blockView, BlockPos blockPos);
 
     @Override
     @Environment(EnvType.CLIENT)
@@ -152,21 +155,13 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
             BlockEntity blockEntity = world.getBlockEntity(blockPos);
             if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
                 Direction facing = blockState.get(FACING);
-                AbstractCursedShulkerBoxBlockEntity abstractCursedShulkerBoxBlockEntity = (AbstractCursedShulkerBoxBlockEntity)blockEntity;
-                boolean isNotObstructed;
-                if (abstractCursedShulkerBoxBlockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
-                    Box openBox = getOpenBox(facing);
-                    isNotObstructed = world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
-                } else {
-                    isNotObstructed = true;
-                }
-
-                if (isNotObstructed) {
-                    if (abstractCursedShulkerBoxBlockEntity.checkUnlocked(player)) {
-                        abstractCursedShulkerBoxBlockEntity.checkLootInteraction(player);
+                AbstractCursedShulkerBoxBlockEntity cursedBlockEntity = (AbstractCursedShulkerBoxBlockEntity) blockEntity;
+                if (this.isObstructionFree(cursedBlockEntity, facing, world, blockPos)) {
+                    if (cursedBlockEntity.checkUnlocked(player)) {
+                        cursedBlockEntity.checkLootInteraction(player);
                         ContainerProviderRegistry.INSTANCE.openContainer(CursedShulkerBoxMod.id("shulkerscrollcontainer"), player, (packetByteBuf -> {
                             packetByteBuf.writeBlockPos(blockPos);
-                            packetByteBuf.writeText(abstractCursedShulkerBoxBlockEntity.getDisplayName());
+                            packetByteBuf.writeText(cursedBlockEntity.getDisplayName());
                         }));
                         player.incrementStat(Stats.OPEN_SHULKER_BOX);
                     }
@@ -176,6 +171,15 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
             } else {
                 return false;
             }
+        }
+    }
+
+    public boolean isObstructionFree(AbstractCursedShulkerBoxBlockEntity blockEntity, Direction facing, World world, BlockPos blockPos) {
+        if (blockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
+            Box openBox = getOpenBox(facing);
+            return world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
+        } else {
+            return true;
         }
     }
 

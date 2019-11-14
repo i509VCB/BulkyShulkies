@@ -56,5 +56,7 @@ public abstract class AbstractMaterialBasedShulkerBoxBlock extends AbstractCurse
     }
 
     @Override
-    public abstract BlockEntity createBlockEntity(BlockView blockView);
+    public boolean canSuffocate(BlockState blockState, BlockView blockView, BlockPos blockPos) {
+        return true;
+    }
 }
