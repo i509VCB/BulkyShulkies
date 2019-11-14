@@ -66,9 +66,9 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
     protected final int[] AVAILABLE_SLOTS;
     protected DefaultedList<ItemStack> inventory;
     private int viewerCount;
-    private ShulkerBoxBlockEntity.AnimationStage animationStage;
-    private float animationProgress;
-    private float prevAnimationProgress;
+    protected ShulkerBoxBlockEntity.AnimationStage animationStage;
+    protected float animationProgress;
+    protected float prevAnimationProgress;
     private DyeColor cachedColor;
     private boolean cachedColorUpdateNeeded;
 
@@ -80,16 +80,7 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
         this.cachedColor = color;
     }
 
-    protected AbstractCursedShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot) {
-        this(blockEntityType, maxAvailableSlot, null);
-        this.cachedColorUpdateNeeded = true;
-    }
-
     public abstract Box getBoundingBox(BlockState blockState);
-
-    public abstract Box getBoundingBox(Direction direction);
-
-    public abstract Box getCollisionBox(Direction direction);
 
     public void tick() {
         this.updateAnimation();
@@ -132,11 +123,11 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
         return this.animationStage;
     }
 
-    private void pushEntities() {
+    private void pushEntities() { // TODO reenable push entities
         BlockState blockState = this.world.getBlockState(this.getPos());
         if (blockState.getBlock() instanceof AbstractCursedShulkerBoxBlock) {
             Direction facing = blockState.get(AbstractCursedShulkerBoxBlock.FACING);
-            Box adjacentToLid = this.getCollisionBox(facing).offset(this.pos);
+            Box adjacentToLid = this.getBoundingBox(blockState).offset(this.pos);
             List<Entity> entities = this.world.getEntities((Entity)null, adjacentToLid);
             if (!entities.isEmpty()) {
                 for(int entityListPos = 0; entityListPos < entities.size(); ++entityListPos) {
@@ -285,7 +276,7 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
 
             currentStack = stackIterator.next();
         } while(currentStack.isEmpty());
-            return false;
+        return false;
     }
 
     public int[] getInvAvailableSlots(Direction direction_1) {

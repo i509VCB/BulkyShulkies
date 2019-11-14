@@ -26,10 +26,8 @@ package me.i509.fabric.cursedshulkerboxes.registry;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import me.i509.fabric.cursedshulkerboxes.block.material.copper.CopperShulkerBoxBlock;
-import me.i509.fabric.cursedshulkerboxes.registry.ShulkerItemGroups;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.DyeColor;
@@ -37,14 +35,13 @@ import net.minecraft.util.registry.Registry;
 
 public class ShulkerBlocks {
     public static final Item.Settings CURSED_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(ShulkerItemGroups.CURSED_GROUP);
-    public static final Item.Settings MATERIAL_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(ShulkerItemGroups.MATERIAL_GROUP);
+    //public static final Item.Settings MATERIAL_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(ShulkerItemGroups.MATERIAL_GROUP);
 
     public static final Block COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), null), "copper_shulker_box");
     public static final Block BLACK_COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), DyeColor.BLACK), "black_copper_shulker_box");
     public static final Block BLUE_COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), DyeColor.BLUE), "blue_copper_shulker_box");
     public static final Block BROWN_COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), DyeColor.BROWN), "brown_copper_shulker_box");
     public static final Block RED_COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), DyeColor.RED), "red_copper_shulker_box");
-
 
     private ShulkerBlocks(){}
     public static void init(){}

@@ -48,18 +48,13 @@ public class AbstractMaterialBasedShulkerBoxBlockEntity extends AbstractCursedSh
 
     @Override
     public Box getBoundingBox(BlockState blockState) {
-        return this.getBoundingBox(blockState.get(AbstractCursedShulkerBoxBlock.FACING));
+        return this.getBoundingBoxProgressive(blockState.get(AbstractCursedShulkerBoxBlock.FACING));
     }
 
-    @Override
-    public Box getBoundingBox(Direction direction) {
+    public Box getBoundingBoxProgressive(Direction direction) {
         float lerpedProgress = this.getAnimationProgress(1.0F);
-        return VoxelShapes.fullCube().getBoundingBox().stretch(0.5F * lerpedProgress * direction.getOffsetX(), 0.5F * lerpedProgress * direction.getOffsetY(), 0.5F * lerpedProgress * direction.getOffsetZ());
-    }
-
-    @Override
-    public Box getCollisionBox(Direction direction) {
-        Direction opposite = direction.getOpposite();
-        return this.getBoundingBox(direction).shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
+        return VoxelShapes.fullCube()
+                .getBoundingBox()
+                .stretch(0.5F * lerpedProgress * direction.getOffsetX(), 0.5F * lerpedProgress * direction.getOffsetY(), 0.5F * lerpedProgress * direction.getOffsetZ());
     }
 }

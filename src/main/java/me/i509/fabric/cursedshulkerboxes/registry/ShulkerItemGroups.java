@@ -26,6 +26,7 @@ package me.i509.fabric.cursedshulkerboxes.registry;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -35,5 +36,4 @@ public class ShulkerItemGroups {
     public static void init(){}
 
     public static final ItemGroup CURSED_GROUP = FabricItemGroupBuilder.build(CursedShulkerBoxMod.id("cursedgroup"), () -> new ItemStack(Items.SHULKER_BOX)); // TODO make this a custom shulker box
-    public static final ItemGroup MATERIAL_GROUP = FabricItemGroupBuilder.build(CursedShulkerBoxMod.id("materialgroup"), () -> new ItemStack(Items.SHULKER_SHELL)); // TODO make this a custom shulker box;
 }

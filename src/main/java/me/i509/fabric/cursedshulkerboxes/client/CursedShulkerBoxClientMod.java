@@ -34,6 +34,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.entity.model.ShulkerEntityModel;
 
 @Environment(EnvType.CLIENT)

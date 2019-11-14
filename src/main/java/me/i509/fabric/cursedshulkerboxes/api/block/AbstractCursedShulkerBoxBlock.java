@@ -62,7 +62,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -114,6 +113,12 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
         return propertyRetriever.getFromShulker(abstractCursedShulkerBoxBlockEntity);
     }
 
+    @Override
+    public abstract VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext);
+
+    @Override
+    public abstract BlockEntity createBlockEntity(BlockView blockView);
+
     /**
      * Gets the ItemStack from the color
      */
@@ -122,11 +127,8 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
     public abstract Box getOpenBox(Direction facing);
 
     @Override
-    public abstract BlockEntity createBlockEntity(BlockView blockView);
-
-    @Override
     public boolean canSuffocate(BlockState blockState, BlockView blockView, BlockPos blockPos) {
-        return true;
+        return false;
     }
 
     @Override
@@ -177,14 +179,17 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     public BlockState getPlacementState(ItemPlacementContext placementContext) {
         return this.getDefaultState().with(FACING, placementContext.getSide());
     }
 
+    @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> stateFactoryBuilder) {
         stateFactoryBuilder.add(FACING);
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public void buildTooltip(ItemStack itemStack, @Nullable BlockView blockView, List<Text> list, TooltipContext tooltipContext) {
         super.buildTooltip(itemStack, blockView, list, tooltipContext);
@@ -222,6 +227,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
 
     }
 
+    @Override
     public void onBreak(World world, BlockPos blockPos, BlockState blockState, PlayerEntity playerEntity) {
         BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
@@ -251,6 +257,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
         super.onBreak(world, blockPos, blockState, playerEntity);
     }
 
+    @Override
     public List<ItemStack> getDroppedStacks(BlockState blockState, net.minecraft.world.loot.context.LootContext.Builder builder) {
         BlockEntity blockEntity = builder.getNullable(LootContextParameters.BLOCK_ENTITY);
         if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
@@ -265,6 +272,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
         return super.getDroppedStacks(blockState, builder);
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public ItemStack getPickStack(BlockView blockView, BlockPos blockPos, BlockState blockState) {
         ItemStack pickStack = super.getPickStack(blockView, blockPos, blockState);
@@ -277,6 +285,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
         return pickStack;
     }
 
+    @Override
     public void onPlaced(World world, BlockPos blockPos, BlockState blockState, LivingEntity livingEntity, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
             BlockEntity blockEntity = world.getBlockEntity(blockPos);
@@ -286,6 +295,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     public void onBlockRemoved(BlockState blockState, World world, BlockPos blockPos, BlockState otherBlockState, boolean boolean_1) {
         if (blockState.getBlock() != otherBlockState.getBlock()) {
             BlockEntity blockEntity = world.getBlockEntity(blockPos);
@@ -297,23 +307,22 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     public PistonBehavior getPistonBehavior(BlockState blockState) {
         return PistonBehavior.DESTROY;
     }
 
-    public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
-        BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
-        return blockEntity instanceof AbstractCursedShulkerBoxBlockEntity ? VoxelShapes.cuboid(((AbstractCursedShulkerBoxBlockEntity)blockEntity).getBoundingBox(blockState)) : VoxelShapes.fullCube();
-    }
-
+    @Override
     public boolean isOpaque(BlockState blockState_1) {
         return false;
     }
 
+    @Override
     public boolean hasComparatorOutput(BlockState blockState_1) {
         return true;
     }
 
+    @Override
     public int getComparatorOutput(BlockState blockState, World world, BlockPos blockPos) {
         return Container.calculateComparatorOutput((Inventory)world.getBlockEntity(blockPos));
     }
@@ -322,15 +331,17 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
         return this.color;
     }
 
+    @Override
     public BlockState rotate(BlockState blockState, BlockRotation blockRotation) {
         return blockState.with(FACING, blockRotation.rotate(blockState.get(FACING)));
     }
 
+    @Override
     public BlockState mirror(BlockState blockState, BlockMirror blockMirror) {
         return blockState.rotate(blockMirror.getRotation(blockState.get(FACING)));
     }
 
-    interface PropertyRetriever<T> {
+    public interface PropertyRetriever<T> {
         T getFromShulker(AbstractCursedShulkerBoxBlockEntity blockEntity);
     }
 }
