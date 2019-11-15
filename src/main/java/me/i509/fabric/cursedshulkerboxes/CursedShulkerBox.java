@@ -24,27 +24,50 @@
 
 package me.i509.fabric.cursedshulkerboxes;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.AbstractCursedShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.item.ItemStack;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.Message;
+import org.apache.logging.log4j.message.MessageFactory;
+import org.apache.logging.log4j.message.SimpleMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 public class CursedShulkerBox {
-    private CursedShulkerBox(){
+    private CursedShulkerBox() {
         disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
         disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof AbstractCursedShulkerBoxBlock);
     }
 
+    public static CursedShulkerBox getInstance() {
+        return instance;
+    }
     private static final CursedShulkerBox instance = new CursedShulkerBox();
 
     private List<Predicate<ItemStack>> disallowedItems = new ArrayList<>();
 
-    public static CursedShulkerBox getInstance() {
-        return instance;
+    public Logger getLogger() {
+        return LogManager.getLogger(new MessageFactory() {
+            @Override
+            public Message newMessage(Object message) {
+                return new SimpleMessage("[CursedShulkerBoxes] " + message);
+            }
+
+            @Override
+            public Message newMessage(String message) {
+                return new SimpleMessage("[CursedShulkerBoxes] " + message);
+            }
+
+            @Override
+            public Message newMessage(String message, Object... params) {
+                return new SimpleMessage("[CursedShulkerBoxes] " + message + params);
+            }
+        });
     }
 
     public void addDisallowedShulkerItem(Predicate<ItemStack> predicate) {

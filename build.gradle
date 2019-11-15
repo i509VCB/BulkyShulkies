@@ -1,5 +1,6 @@
 plugins {
 	id 'fabric-loom' version '0.2.5-SNAPSHOT'
+	id 'com.github.johnrengelman.shadow' version '5.2.0'
 	id 'maven-publish'
 	id 'checkstyle'
 }
@@ -22,37 +23,80 @@ repositories {
 		url = "https://minecraft.curseforge.com/api/maven/"
 	}
 	maven {
+		name = "Sargunv"
 		url = "http://maven.sargunv.s3-website-us-west-2.amazonaws.com/"
 	}
 	maven {
 		name = "Cotton"
 		url = "http://server.bbkr.space:8081/artifactory/libs-release/"
 	}
+	maven {
+		name = "Sponge"
+		url = "https://repo.spongepowered.org/maven"
+	}
 }
+
+logger.lifecycle("""
+	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	Building Cursed Shulker Boxes   
+
+	Version: ${project.mod_version}
+	Minecraft Version: ${project.minecraft_version}
+	Fabric-Loader Version: ${project.loader_version}
+	Fabric-API Version: ${project.fabric_version}
+	Cotton-Resources Version: ${project.cotton_resources_version}
+	
+	
+	Output files will be in /build/libs
+	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+""")
 
 minecraft {
 }
 
 dependencies {
-	//to change the versions see the gradle.properties file
+	// Fabric Stuff.
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
+	// Cotton Resources
+	modImplementation ("io.github.cottonmc:cotton-resources:${cotton_resources_version}") { // We use our own version of modmenu and REI
+		exclude module: "fabric-api"
+		exclude module: "RoughlyEnoughItems"
+	}
 
-	/* this will package cotton-resources in your jar. skip if you don't want this */
-	//include "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
+	include "io.github.cottonmc:cotton-resources:${cotton_resources_version}" // JIJ time
 
+	// ModMenu -- We have a hook for this
+	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
 
-	//modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
-
-	// Optional
-	//modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+	// Config
+	compile 'org.spongepowered:configurate-hocon:3.6'
 
 	// Annotations
-	compile group: 'org.jetbrains', name: 'annotations', version: "${project.jetbrains_annotations}"
+	compileOnly group: 'org.jetbrains', name: 'annotations', version: "${project.jetbrains_annotations}"
+
+	// Optional Mods - We have this for looking up items and verifying recipes.
+	modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+
+	// JUnit for config
+	testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+}
+
+test {
+	logger.lifecycle("""
+	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	Running Unit Tests for Cursed Shulker Boxes
+	
+	Version: ${project.mod_version}
+	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	""")
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
 }
 
 processResources {
@@ -82,6 +126,11 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 jar {
 	from "LICENSE"
+}
+
+checkstyle {
+	configFile = rootProject.file("checkstyle.xml")
+	toolVersion = '8.25'
 }
 
 // configure the maven publication

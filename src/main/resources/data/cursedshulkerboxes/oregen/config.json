@@ -1,3 +1,7 @@
 {
-  "ores": [ "copper" ]
+  "ores": [
+    "copper",
+    "platinum",
+    "silver"
+  ]
 }

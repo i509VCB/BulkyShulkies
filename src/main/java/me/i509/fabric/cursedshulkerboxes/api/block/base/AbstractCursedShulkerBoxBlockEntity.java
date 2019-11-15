@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.cursedshulkerboxes.api.block;
+package me.i509.fabric.cursedshulkerboxes.api.block.base;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBox;
 import net.fabricmc.api.EnvType;
@@ -62,7 +62,7 @@ import java.util.stream.IntStream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Tickable {
+public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Tickable, BaseShulkerBlockEntity {
     protected final int[] AVAILABLE_SLOTS;
     protected DefaultedList<ItemStack> inventory;
     private int viewerCount;
@@ -125,10 +125,12 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
 
     private void pushEntities() { // TODO reenable push entities
         BlockState blockState = this.world.getBlockState(this.getPos());
+
         if (blockState.getBlock() instanceof AbstractCursedShulkerBoxBlock) {
             Direction facing = blockState.get(AbstractCursedShulkerBoxBlock.FACING);
             Box adjacentToLid = this.getBoundingBox(blockState).offset(this.pos);
             List<Entity> entities = this.world.getEntities((Entity)null, adjacentToLid);
+
             if (!entities.isEmpty()) {
                 for(int entityListPos = 0; entityListPos < entities.size(); ++entityListPos) {
                     Entity entity = entities.get(entityListPos);
@@ -306,6 +308,6 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
     }
 
     protected Container createContainer(int syncId, PlayerInventory playerInventory) {
-        return new ShulkerBoxContainer(syncId, playerInventory, this);
+        return new ShulkerBoxContainer(syncId, playerInventory, this); // Our implementation does not require this method
     }
 }

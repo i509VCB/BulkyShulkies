@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.cursedshulkerboxes.api.block;
+package me.i509.fabric.cursedshulkerboxes.api.block.base;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import net.fabricmc.api.EnvType;
@@ -38,7 +38,6 @@ import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.container.Container;
-import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -61,7 +60,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -71,10 +69,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
+public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity implements BaseShulkerBlock {
     public static DirectionProperty FACING = Properties.FACING;
     protected static final Identifier CONTENTS = new Identifier("contents");
-    private static final PropertyRetriever<SidedInventory> INVENTORY_RETRIEVER = blockEntity -> blockEntity;
+    protected static final PropertyRetriever<SidedInventory> INVENTORY_RETRIEVER = blockEntity -> blockEntity;
 
     protected DyeColor color;
     protected ShulkerBoxBlockEntity.AnimationStage animationStage;
@@ -87,52 +85,8 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
         this.setDefaultState(this.stateFactory.getDefaultState().with(FACING, Direction.UP));
     }
 
-    @Nullable
-    @Environment(EnvType.CLIENT)
-    public static DyeColor getColor(Item item) {
-        return getColor(Block.getBlockFromItem(item));
-    }
-
-    @Nullable
-    @Environment(EnvType.CLIENT)
-    public static DyeColor getColor(@Nullable Block block) {
-        return block instanceof AbstractCursedShulkerBoxBlock ? ((AbstractCursedShulkerBoxBlock)block).getColor() : null;
-    }
-
-    public static SidedInventory getInventoryStatic(IWorld world, BlockPos pos) {
-        return retrieve(world.getBlockState(pos), world, pos, INVENTORY_RETRIEVER);
-    }
-
-    private static <T> T retrieve(BlockState clickedState, IWorld world, BlockPos clickedPos, PropertyRetriever<T> propertyRetriever) {
-        BlockEntity clickedBlockEntity = world.getBlockEntity(clickedPos);
-        if (!(clickedBlockEntity instanceof AbstractCursedShulkerBoxBlockEntity)) {
-            return null;
-        }
-
-        AbstractCursedShulkerBoxBlockEntity abstractCursedShulkerBoxBlockEntity = (AbstractCursedShulkerBoxBlockEntity) clickedBlockEntity;
-        return propertyRetriever.getFromShulker(abstractCursedShulkerBoxBlockEntity);
-    }
-
-    @Override
-    public abstract VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext);
-
     @Override
     public abstract BlockEntity createBlockEntity(BlockView blockView);
-
-    /**
-     * Gets the ItemStack from the color
-     */
-    protected abstract ItemStack getItemStack(DyeColor color);
-
-    /**
-     * Get's the dimensions of the Box when it is fully opened.
-     * @param facing The direction the blockState is facing.
-     * @return A Box which contains the maximum dimensions of the box.
-     */
-    public abstract Box getOpenBox(Direction facing);
-
-    @Override
-    public abstract boolean canSuffocate(BlockState blockState, BlockView blockView, BlockPos blockPos);
 
     @Override
     @Environment(EnvType.CLIENT)
@@ -156,6 +110,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
             if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
                 Direction facing = blockState.get(FACING);
                 AbstractCursedShulkerBoxBlockEntity cursedBlockEntity = (AbstractCursedShulkerBoxBlockEntity) blockEntity;
+
                 if (this.isObstructionFree(cursedBlockEntity, facing, world, blockPos)) {
                     if (cursedBlockEntity.checkUnlocked(player)) {
                         cursedBlockEntity.checkLootInteraction(player);
@@ -174,7 +129,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
         }
     }
 
-    public boolean isObstructionFree(AbstractCursedShulkerBoxBlockEntity blockEntity, Direction facing, World world, BlockPos blockPos) {
+    public boolean isObstructionFree(BaseShulkerBlockEntity blockEntity, Direction facing, World world, BlockPos blockPos) {
         if (blockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
             Box openBox = getOpenBox(facing);
             return world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
@@ -347,5 +302,31 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity {
 
     public interface PropertyRetriever<T> {
         T getFromShulker(AbstractCursedShulkerBoxBlockEntity blockEntity);
+    }
+
+    @Nullable
+    @Environment(EnvType.CLIENT)
+    public static DyeColor getColor(Item item) {
+        return getColor(Block.getBlockFromItem(item));
+    }
+
+    @Nullable
+    @Environment(EnvType.CLIENT)
+    public static DyeColor getColor(@Nullable Block block) {
+        return block instanceof AbstractCursedShulkerBoxBlock ? ((AbstractCursedShulkerBoxBlock)block).getColor() : null;
+    }
+
+    public static SidedInventory getInventoryStatic(IWorld world, BlockPos pos) {
+        return retrieve(world.getBlockState(pos), world, pos, INVENTORY_RETRIEVER);
+    }
+
+    private static <T> T retrieve(BlockState clickedState, IWorld world, BlockPos clickedPos, PropertyRetriever<T> propertyRetriever) {
+        BlockEntity clickedBlockEntity = world.getBlockEntity(clickedPos);
+        if (!(clickedBlockEntity instanceof AbstractCursedShulkerBoxBlockEntity)) {
+            return null;
+        }
+
+        AbstractCursedShulkerBoxBlockEntity abstractCursedShulkerBoxBlockEntity = (AbstractCursedShulkerBoxBlockEntity) clickedBlockEntity;
+        return propertyRetriever.getFromShulker(abstractCursedShulkerBoxBlockEntity);
     }
 }

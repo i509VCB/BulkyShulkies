@@ -24,7 +24,8 @@
 
 package me.i509.fabric.cursedshulkerboxes;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.AbstractCursedShulkerBoxBlock;
+import io.github.cottonmc.resources.CottonResources;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.container.ShulkerBoxScrollableContainer;
 import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
 import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlocks;
@@ -50,13 +51,12 @@ public class CursedShulkerBoxMod implements ModInitializer {
         ShulkerBlockEntities.init();
         ShulkerItems.init();
         ShulkerItemGroups.init();
-        ContainerProviderRegistry.INSTANCE.registerFactory(id("shulkerscrollcontainer"), ((syncId, identifier, player, buf) ->
-        {
+
+        ContainerProviderRegistry.INSTANCE.registerFactory(id("shulkerscrollcontainer"), ((syncId, identifier, player, buf) -> {
             BlockPos pos = buf.readBlockPos();
             Text name = buf.readText();
             World world = player.getEntityWorld();
             return new ShulkerBoxScrollableContainer(syncId, player.inventory, AbstractCursedShulkerBoxBlock.getInventoryStatic(world, pos), name);
         }));
-
     }
 }

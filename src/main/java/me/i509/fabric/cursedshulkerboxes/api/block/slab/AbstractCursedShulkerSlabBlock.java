@@ -1,6 +1,6 @@
 package me.i509.fabric.cursedshulkerboxes.api.block.slab;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.AbstractCursedShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.util.DefaultReturnHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

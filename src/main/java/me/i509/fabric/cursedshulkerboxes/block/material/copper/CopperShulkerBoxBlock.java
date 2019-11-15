@@ -47,7 +47,7 @@ public class CopperShulkerBoxBlock extends AbstractMaterialBasedShulkerBoxBlock 
     }
 
     @Override
-    protected ItemStack getItemStack(@Nullable DyeColor color) {
+    public ItemStack getItemStack(@Nullable DyeColor color) {
         return new ItemStack(COLOR_BLOCK_MAP.get(color)); // TODO Impl
     }
 

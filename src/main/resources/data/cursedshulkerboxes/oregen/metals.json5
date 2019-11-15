@@ -1,0 +1,12 @@
+{
+  "generators": {
+    "platinum": {
+      "ore_block": "c:platinum_ore",
+
+      "min_height": 6,
+      "max_height": 24,
+      "cluster_count": 1,
+      "cluster_size": 2
+    }
+  }
+}
