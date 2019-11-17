@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Cursed Shulker Boxes",
-  "description": "",
+  "description": "More Shulker boxes, both material based and cursed.",
   "authors": [
     {
       "name": "i509VCB",
@@ -32,15 +32,15 @@
     ]
   },
   "mixins": [
-    "cursed.mixins.json"
+    "cursed.mixins.json",
+    "abstraction.mixin.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.4.0",
-    "fabric": "*",
-    "cotton-resources": ">=1.4.1"
+    "fabric": "*"
   },
   "suggests": {
-    "flamingo": "*"
+    "cotton-resources": ">=1.4.1"
   }
 }
