@@ -24,13 +24,10 @@
 
 package me.i509.fabric.cursedshulkerboxes;
 
-import io.github.cottonmc.resources.CottonResources;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.container.ShulkerBoxScrollableContainer;
-import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
-import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlocks;
-import me.i509.fabric.cursedshulkerboxes.registry.ShulkerItemGroups;
-import me.i509.fabric.cursedshulkerboxes.registry.ShulkerItems;
+import me.i509.fabric.cursedshulkerboxes.extension.ShulkerHooks;
+import me.i509.fabric.cursedshulkerboxes.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.text.Text;
@@ -47,10 +44,12 @@ public class CursedShulkerBoxMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        CursedShulkerBox.getInstance();
         ShulkerBlocks.init();
         ShulkerBlockEntities.init();
         ShulkerItems.init();
         ShulkerItemGroups.init();
+        ShulkerHooks.init();
 
         ContainerProviderRegistry.INSTANCE.registerFactory(id("shulkerscrollcontainer"), ((syncId, identifier, player, buf) -> {
             BlockPos pos = buf.readBlockPos();

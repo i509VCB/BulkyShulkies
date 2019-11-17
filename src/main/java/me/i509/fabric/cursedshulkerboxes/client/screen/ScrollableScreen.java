@@ -40,7 +40,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 /**
- * Credit: NinjaPhoenix, Code is MIT like rest of project.
+ * Credit: NinjaPhenix, Code is MIT like rest of project.
  */
 @Environment(EnvType.CLIENT)
 public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollableContainer> implements ContainerProvider<ShulkerBoxScrollableContainer>

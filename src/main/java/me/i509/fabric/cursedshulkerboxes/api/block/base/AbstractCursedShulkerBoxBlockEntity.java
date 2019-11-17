@@ -25,6 +25,7 @@
 package me.i509.fabric.cursedshulkerboxes.api.block.base;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBox;
+import me.i509.fabric.cursedshulkerboxes.container.ShulkerBoxScrollableContainer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -62,7 +63,7 @@ import java.util.stream.IntStream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Tickable, BaseShulkerBlockEntity {
+public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContainerBlockEntity implements Tickable, BaseShulkerBlockEntity {
     protected final int[] AVAILABLE_SLOTS;
     protected DefaultedList<ItemStack> inventory;
     private int viewerCount;
@@ -123,7 +124,7 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
         return this.animationStage;
     }
 
-    private void pushEntities() { // TODO reenable push entities
+    private void pushEntities() {
         BlockState blockState = this.world.getBlockState(this.getPos());
 
         if (blockState.getBlock() instanceof AbstractCursedShulkerBoxBlock) {
@@ -289,10 +290,6 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
         return CursedShulkerBox.getInstance().canInsertItem(stack);
     }
 
-    public boolean canExtractInvStack(int inventorySlot, ItemStack stack, Direction direction) {
-        return true;
-    }
-
     public float getAnimationProgress(float currentProgress) {
         return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
     }
@@ -305,9 +302,5 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
         }
 
         return this.cachedColor;
-    }
-
-    protected Container createContainer(int syncId, PlayerInventory playerInventory) {
-        return new ShulkerBoxContainer(syncId, playerInventory, this); // Our implementation does not require this method
     }
 }

@@ -24,15 +24,13 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.base;
 
+import me.i509.fabric.cursedshulkerboxes.CursedShulkerBox;
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -72,7 +70,7 @@ import java.util.List;
 public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity implements BaseShulkerBlock {
     public static DirectionProperty FACING = Properties.FACING;
     protected static final Identifier CONTENTS = new Identifier("contents");
-    protected static final PropertyRetriever<SidedInventory> INVENTORY_RETRIEVER = blockEntity -> blockEntity;
+    protected static final SingleTypePropertyRetriever<SidedInventory> INVENTORY_RETRIEVER = blockEntity -> blockEntity;
 
     protected DyeColor color;
     protected ShulkerBoxBlockEntity.AnimationStage animationStage;
@@ -194,7 +192,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
             AbstractCursedShulkerBoxBlockEntity abstractCursedShulkerBoxBlockEntity = (AbstractCursedShulkerBoxBlockEntity)blockEntity;
 
             if (!world.isClient && playerEntity.isCreative() && !abstractCursedShulkerBoxBlockEntity.isInvEmpty()) {
-                ItemStack stack = getItemStack(this.getColor()); // TODO
+                ItemStack stack = getItemStack(this.getColor());
                 CompoundTag serializedInventory = abstractCursedShulkerBoxBlockEntity.serializeInventory(new CompoundTag());
 
                 if (!serializedInventory.isEmpty()) {
@@ -300,7 +298,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
         return blockState.rotate(blockMirror.getRotation(blockState.get(FACING)));
     }
 
-    public interface PropertyRetriever<T> {
+    public interface SingleTypePropertyRetriever<T> {
         T getFromShulker(AbstractCursedShulkerBoxBlockEntity blockEntity);
     }
 
@@ -320,7 +318,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
         return retrieve(world.getBlockState(pos), world, pos, INVENTORY_RETRIEVER);
     }
 
-    private static <T> T retrieve(BlockState clickedState, IWorld world, BlockPos clickedPos, PropertyRetriever<T> propertyRetriever) {
+    private static <T> T retrieve(BlockState clickedState, IWorld world, BlockPos clickedPos, SingleTypePropertyRetriever<T> propertyRetriever) {
         BlockEntity clickedBlockEntity = world.getBlockEntity(clickedPos);
         if (!(clickedBlockEntity instanceof AbstractCursedShulkerBoxBlockEntity)) {
             return null;

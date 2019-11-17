@@ -73,7 +73,7 @@ dependencies {
 	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
 
 	// Config
-	compile 'org.spongepowered:configurate-hocon:3.6'
+	compile "org.spongepowered:configurate-hocon:${project.configurate_version}"
 
 	// Annotations
 	compileOnly group: 'org.jetbrains', name: 'annotations', version: "${project.jetbrains_annotations}"

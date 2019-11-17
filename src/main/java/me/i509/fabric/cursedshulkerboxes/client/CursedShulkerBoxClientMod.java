@@ -22,7 +22,6 @@
  * SOFTWARE.
  */
 
-
 package me.i509.fabric.cursedshulkerboxes.client;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
