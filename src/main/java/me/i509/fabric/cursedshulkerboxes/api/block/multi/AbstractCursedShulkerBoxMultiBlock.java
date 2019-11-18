@@ -56,11 +56,13 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
     /**
      * TODO:
      *
-     * Make it so it will only access the bottom to open the inventory.
+     * Make it so it will only access the bottom blockentity to open the inventory, can still open from top but actual inventory will be located in bottom.
      *
      * Do isObstructionFree check from the bottom block only, first verify the bottom block is actually our type or things like debug world will crash.
      *
-     * Modify onPlace so it can be placed in a directional (longways if place on side of block) fashion, while verifying no entity is in the way of the possible path.
+     * Cannot place on a wall in midair yet.
+     *
+     * When block is placed sideways or vertically, verify an entity isn't in the way before going letting the place occur.
      *
      * Fix issue where placing the box will overwrite the block above it.
      *
@@ -106,7 +108,12 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
     public boolean isObstructionFree(BaseShulkerBlockEntity blockEntity, Direction facing, World world, BlockPos blockPos) {
         if (blockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
             Box openBox = getOpenBox(facing, world, blockPos);
-            return world.doesNotCollide(openBox.offset(blockPos.offset(facing, 2)));
+            if(world.getBlockState(blockPos).get(HALF) == DoubleBlockHalf.LOWER) {
+                return world.doesNotCollide(openBox.offset(blockPos.offset(facing, 2)));
+            }
+
+            return world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
+
         } else {
             return true;
         }
@@ -124,7 +131,7 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
     }
 
     public void onPlaced(World world, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
-        world.setBlockState(blockPos.up(), blockState.with(HALF, DoubleBlockHalf.UPPER), 3); // Directionality of place checks here.
+        world.setBlockState(blockPos.offset(blockState.get(FACING)), blockState.with(HALF, DoubleBlockHalf.UPPER), 3); // Directionality of place checks here.
         if (itemStack.hasCustomName()) {
             BlockEntity blockEntity = world.getBlockEntity(blockPos.up());
             if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
@@ -137,11 +144,13 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
 
     public void onBreak(World world, BlockPos blockPos, BlockState blockState, PlayerEntity playerEntity) {
         DoubleBlockHalf brokeBlockHalf = blockState.get(HALF);
-        BlockPos otherHalf = brokeBlockHalf == DoubleBlockHalf.LOWER ? blockPos.up() : blockPos.down();
+        Direction facing = blockState.get(FACING);
+
+        BlockPos otherHalf = brokeBlockHalf == DoubleBlockHalf.LOWER ? blockPos.offset(facing) : blockPos.offset(facing.getOpposite());
         BlockState otherBlockState = world.getBlockState(otherHalf);
 
         if (otherBlockState.getBlock() == this && otherBlockState.get(HALF) != brokeBlockHalf) {
-            world.setBlockState(otherHalf, Blocks.AIR.getDefaultState(), 35); // TODO TF does 35 do?
+            world.setBlockState(otherHalf, Blocks.AIR.getDefaultState(), 35);
             world.playLevelEvent(playerEntity, 2001, otherHalf, Block.getRawIdFromState(otherBlockState));
             ItemStack mainHandStack = playerEntity.getMainHandStack();
 

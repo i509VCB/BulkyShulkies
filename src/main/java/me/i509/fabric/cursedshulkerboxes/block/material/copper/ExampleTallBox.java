@@ -31,9 +31,15 @@ public class ExampleTallBox extends AbstractCursedShulkerBoxMultiBlock {
     @Override
     protected Box getOpenBox(Direction facing, World world, BlockPos blockPos) {
         if(world.getBlockState(blockPos).get(HALF) == DoubleBlockHalf.LOWER) {
-            return VoxelShapes.fullCube().getBoundingBox();
+            return VoxelShapes.fullCube().getBoundingBox()
+                    .stretch(1.0F * facing.getOffsetX(), 1.0F * facing.getOffsetY(), 1.0F * facing.getOffsetZ())
+                    .shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ())
+                    .stretch(0.75F * facing.getOffsetX(), 0.75F * facing.getOffsetY(), 0.75F * facing.getOffsetZ())
+                    .shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
         }
 
-        return VoxelShapes.fullCube().getBoundingBox().stretch(0.75F * facing.getOffsetX(), 0.75F * facing.getOffsetY(), 0.75F * facing.getOffsetZ()).shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
+        return VoxelShapes.fullCube().getBoundingBox()
+                .stretch(0.75F * facing.getOffsetX(), 0.75F * facing.getOffsetY(), 0.75F * facing.getOffsetZ())
+                .shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
     }
 }

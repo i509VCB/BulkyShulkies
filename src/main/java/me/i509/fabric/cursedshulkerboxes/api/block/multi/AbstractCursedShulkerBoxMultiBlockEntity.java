@@ -34,6 +34,7 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShapes;
 import org.jetbrains.annotations.Nullable;
 
@@ -57,5 +58,9 @@ public class AbstractCursedShulkerBoxMultiBlockEntity extends AbstractCursedShul
         return VoxelShapes.fullCube()
                 .getBoundingBox()
                 .stretch(0.75F * lerpedProgress * direction.getOffsetX(), 0.75F * lerpedProgress * direction.getOffsetY(), 0.75F * lerpedProgress * direction.getOffsetZ());
+    }
+
+    public float getAnimationProgress(float currentProgress) { // TODO Add logic to make upper half read the lower block for current animation progress so the box properly expands.
+        return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
     }
 }
