@@ -24,9 +24,11 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.multi;
 
+import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlockEntity;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlockEntity;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -38,10 +40,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stat.Stats;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -56,9 +61,9 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
     /**
      * TODO:
      *
-     * Make it so it will only access the bottom blockentity to open the inventory, can still open from top but actual inventory will be located in bottom.
+     * Figure out why entities suffocate when the custom shulkers push them.
      *
-     * Do isObstructionFree check from the bottom block only, first verify the bottom block is actually our type or things like debug world will crash.
+     * Synchonized inventories breaks collision boxes.
      *
      * Cannot place on a wall in midair yet.
      *
@@ -70,7 +75,7 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
      *
      * When opening from bottom, also expand the upper halve's box shape.
      *
-     * Drop the shulker box when broken.
+     * Drop the shulker box when broken. (Requires all color types to be registered) [[Fine]]
      *
      * Item Texture should be the tall box (custom item renderer needed)
      *
@@ -101,14 +106,19 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
     public boolean canPlaceAt(BlockState blockState, ViewableWorld viewableWorld, BlockPos blockPos) { // TODO for bug relating to overwriting block above when it shouldn't place at all
         BlockPos down = blockPos.down();
         BlockState belowState = viewableWorld.getBlockState(down);
+        Direction facing = blockState.get(FACING);
 
-        return blockState.get(HALF) == DoubleBlockHalf.LOWER ? belowState.isSideSolidFullSquare(viewableWorld, down, Direction.UP) : belowState.getBlock() == this;
+        return blockState.get(HALF) == DoubleBlockHalf.LOWER ? belowState.isSideSolidFullSquare(viewableWorld, down, facing) : belowState.getBlock() == this;
+    }
+
+    public boolean canSuffocate(BlockState blockState, BlockView blockView, BlockPos blockPos) {
+        return false;
     }
 
     public boolean isObstructionFree(BaseShulkerBlockEntity blockEntity, Direction facing, World world, BlockPos blockPos) {
         if (blockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
             Box openBox = getOpenBox(facing, world, blockPos);
-            if(world.getBlockState(blockPos).get(HALF) == DoubleBlockHalf.LOWER) {
+            if(isBottom(world.getBlockState(blockPos))) {
                 return world.doesNotCollide(openBox.offset(blockPos.offset(facing, 2)));
             }
 
@@ -116,6 +126,44 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
 
         } else {
             return true;
+        }
+    }
+
+    @Override
+    public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
+        if (world.isClient) {
+            return true;
+        } else if (player.isSpectator()) {
+            return true;
+        } else {
+            BlockEntity blockEntity = world.getBlockEntity(blockPos);
+            if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
+                Direction facing = blockState.get(FACING);
+
+                if(isBottom(blockState)) { // This tells game to read the inventory from block above so bounding boxes are easier.
+                    BlockPos otherBlockPos = blockPos.offset(facing);
+                    BlockState otherState = world.getBlockState(otherBlockPos);
+
+                    return this.activate(otherState, world, otherBlockPos, player, hand, blockHitResult);
+                }
+
+                AbstractCursedShulkerBoxBlockEntity cursedBlockEntity = (AbstractCursedShulkerBoxBlockEntity) blockEntity;
+
+                if (this.isObstructionFree(cursedBlockEntity, facing, world, blockPos)) {
+                    if (cursedBlockEntity.checkUnlocked(player)) {
+                        cursedBlockEntity.checkLootInteraction(player);
+                        ContainerProviderRegistry.INSTANCE.openContainer(CursedShulkerBoxMod.id("shulkerscrollcontainer"), player, (packetByteBuf -> {
+                            packetByteBuf.writeBlockPos(blockPos);
+                            packetByteBuf.writeText(cursedBlockEntity.getDisplayName());
+                        }));
+                        player.incrementStat(Stats.OPEN_SHULKER_BOX);
+                    }
+                }
+
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

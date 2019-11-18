@@ -57,7 +57,7 @@ public class AbstractCursedShulkerBoxMultiBlockEntity extends AbstractCursedShul
         float lerpedProgress = this.getAnimationProgress(1.0F);
         return VoxelShapes.fullCube()
                 .getBoundingBox()
-                .stretch(0.75F * lerpedProgress * direction.getOffsetX(), 0.75F * lerpedProgress * direction.getOffsetY(), 0.75F * lerpedProgress * direction.getOffsetZ());
+                .stretch(1 * lerpedProgress * direction.getOffsetX(), 1 * lerpedProgress * direction.getOffsetY(), 1 * lerpedProgress * direction.getOffsetZ());
     }
 
     public float getAnimationProgress(float currentProgress) { // TODO Add logic to make upper half read the lower block for current animation progress so the box properly expands.

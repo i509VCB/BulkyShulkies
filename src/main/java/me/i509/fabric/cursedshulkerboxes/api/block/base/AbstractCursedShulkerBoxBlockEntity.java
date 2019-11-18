@@ -122,7 +122,7 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
         return this.animationStage;
     }
 
-    private void pushEntities() {
+    protected void pushEntities() {
         BlockState blockState = this.world.getBlockState(this.getPos());
 
         if (blockState.getBlock() instanceof AbstractCursedShulkerBoxBlock) {
@@ -198,7 +198,7 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
         }
     }
 
-    private void updateNeighborStates() {
+    protected void updateNeighborStates() {
         this.getCachedState().updateNeighborStates(this.getWorld(), this.getPos(), 3);
     }
 
