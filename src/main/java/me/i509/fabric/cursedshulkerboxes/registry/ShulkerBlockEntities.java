@@ -26,6 +26,7 @@ package me.i509.fabric.cursedshulkerboxes.registry;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import me.i509.fabric.cursedshulkerboxes.block.material.copper.CopperShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.block.material.copper.ExampleTallBE;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -42,6 +43,10 @@ public class ShulkerBlockEntities {
             ShulkerBlocks.BLUE_COPPER_SHULKER_BOX,
             ShulkerBlocks.BROWN_COPPER_SHULKER_BOX,
             ShulkerBlocks.RED_COPPER_SHULKER_BOX);
+
+    public static final BlockEntityType<ExampleTallBE> EXAMPLE_TALL = register("example_tall_shulker_box",
+            ExampleTallBE::new,
+            ShulkerBlocks.TEST_TALL);
 
     private ShulkerBlockEntities(){}
     public static void init(){}

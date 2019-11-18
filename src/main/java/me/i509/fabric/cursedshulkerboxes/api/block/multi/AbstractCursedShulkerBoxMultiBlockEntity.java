@@ -22,40 +22,40 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.cursedshulkerboxes.api.block.material;
+package me.i509.fabric.cursedshulkerboxes.api.block.multi;
 
 import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
-import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlockEntity;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.EntityContext;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DefaultedList;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractMaterialBasedShulkerBoxBlock extends AbstractCursedShulkerBoxBlock {
-    protected AbstractMaterialBasedShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
-        super(settings, slotCount, color);
+public class AbstractCursedShulkerBoxMultiBlockEntity extends AbstractCursedShulkerBoxBlockEntity {
+    protected AbstractCursedShulkerBoxMultiBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
+        super(blockEntityType, maxAvailableSlot, color);
+        this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
     }
 
     @Override
-    public Box getOpenBox(Direction facing) {
-        return VoxelShapes.fullCube().getBoundingBox().stretch(0.5F * facing.getOffsetX(), 0.5F * facing.getOffsetY(), 0.5F * facing.getOffsetZ()).shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
+    public Box getBoundingBox(BlockState blockState) {
+        if(blockState.get(AbstractCursedShulkerBoxMultiBlock.HALF) == DoubleBlockHalf.LOWER) {
+            return VoxelShapes.fullCube().getBoundingBox();
+        }
+
+        return this.getBoundingBoxProgressive(blockState.get(AbstractCursedShulkerBoxBlock.FACING));
     }
 
-    @Override
-    public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
-        BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
-        return blockEntity instanceof BaseShulkerBlockEntity ? VoxelShapes.cuboid(((BaseShulkerBlockEntity)blockEntity).getBoundingBox(blockState)) : VoxelShapes.fullCube();
-    }
-
-    @Override
-    public boolean canSuffocate(BlockState blockState, BlockView blockView, BlockPos blockPos) {
-        return true;
+    public Box getBoundingBoxProgressive(Direction direction) {
+        float lerpedProgress = this.getAnimationProgress(1.0F);
+        return VoxelShapes.fullCube()
+                .getBoundingBox()
+                .stretch(0.75F * lerpedProgress * direction.getOffsetX(), 0.75F * lerpedProgress * direction.getOffsetY(), 0.75F * lerpedProgress * direction.getOffsetZ());
     }
 }

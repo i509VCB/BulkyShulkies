@@ -24,13 +24,15 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.base;
 
-import me.i509.fabric.cursedshulkerboxes.CursedShulkerBox;
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -80,7 +82,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
         super(settings);
         this.color = color;
         this.slotCount = slotCount;
-        this.setDefaultState(this.stateFactory.getDefaultState().with(FACING, Direction.UP));
+        this.setDefaultState(getStateFactory().getDefaultState().with(FACING, Direction.UP));
     }
 
     @Override

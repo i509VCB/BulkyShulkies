@@ -24,8 +24,8 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.slab;
 
+import me.i509.fabric.cursedshulkerboxes.abstraction.DefaultReturnHashMap;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
-import me.i509.fabric.cursedshulkerboxes.util.DefaultReturnHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -61,6 +61,7 @@ public abstract class AbstractCursedShulkerSlabBlock extends AbstractCursedShulk
 
     protected AbstractCursedShulkerSlabBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
         super(settings, slotCount, color);
+        this.setDefaultState(this.getStateFactory().getDefaultState().with(FACING, Direction.UP));
     }
 
     public static VoxelShape getShape(Direction facing) {

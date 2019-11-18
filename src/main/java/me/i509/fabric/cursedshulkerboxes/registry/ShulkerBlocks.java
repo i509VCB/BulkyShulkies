@@ -26,6 +26,7 @@ package me.i509.fabric.cursedshulkerboxes.registry;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import me.i509.fabric.cursedshulkerboxes.block.material.copper.CopperShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.block.material.copper.ExampleTallBox;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
@@ -36,6 +37,8 @@ import net.minecraft.util.registry.Registry;
 public class ShulkerBlocks {
     public static final Item.Settings CURSED_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(ShulkerItemGroups.CURSED_GROUP);
     //public static final Item.Settings MATERIAL_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(ShulkerItemGroups.MATERIAL_GROUP);
+
+    public static final Block TEST_TALL = register(new ExampleTallBox(FabricBlockSettings.of(Material.SHULKER_BOX).build(), null), "test_tall_shulker_box");
 
     public static final Block COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), null), "copper_shulker_box");
     public static final Block BLACK_COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), DyeColor.BLACK), "black_copper_shulker_box");

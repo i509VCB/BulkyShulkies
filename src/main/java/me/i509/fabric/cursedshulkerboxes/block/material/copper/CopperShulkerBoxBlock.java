@@ -24,9 +24,9 @@
 
 package me.i509.fabric.cursedshulkerboxes.block.material.copper;
 
+import me.i509.fabric.cursedshulkerboxes.abstraction.DefaultReturnHashMap;
 import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlocks;
-import me.i509.fabric.cursedshulkerboxes.util.DefaultReturnHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;

@@ -22,34 +22,25 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.cursedshulkerboxes.abstraction.recipe;
-
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.util.Identifier;
-import ninja.leaping.configurate.commented.CommentedConfigurationNode;
-import ninja.leaping.configurate.commented.SimpleCommentedConfigurationNode;
+package me.i509.fabric.cursedshulkerboxes.abstraction;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.function.BiConsumer;
 
-@FunctionalInterface
-public interface HoconRecipeReloadEvent {
-    Event<HoconRecipeReloadEvent> EVENT = EventFactory.createArrayBacked(HoconRecipeReloadEvent.class, (callbacks) -> (recipeBiConsumer) -> {
-        for(HoconRecipeReloadEvent callback : callbacks) {
-            callback.getRecipes(recipeBiConsumer);
-        }
-    });
+public class DefaultReturnHashMap<K, V> extends HashMap<K,V> {
+    private V defaultVal;
 
-    void getRecipes(BiConsumer<Identifier, CommentedConfigurationNode> recipe);
-
-    static void exampleInvoke() {
-        Map<Identifier, CommentedConfigurationNode> recipes = new HashMap<>();
-        EVENT.invoker().getRecipes(recipes::put);
+    public DefaultReturnHashMap(V defaultValue) {
+        super();
+        this.defaultVal = defaultValue;
     }
 
-    HoconRecipeReloadEvent recipese = (recipes) -> {
-        recipes.accept(new Identifier("test:recipe"), SimpleCommentedConfigurationNode.root());
-    };
+    @Override
+    public V get(Object key) {
+        V value = super.get(key);
+        return value != null ? value : getDefaultValue();
+    }
+
+    private V getDefaultValue() {
+        return this.defaultVal;
+    }
 }

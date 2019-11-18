@@ -10,7 +10,7 @@ public class ShulkerHooks {
     private ShulkerHooks() {}
     public static void init() {}
 
-    static {
+    /*static {
         if(LOADER.isModLoaded("cotton-resources")) {
             if (CursedShulkerBox.getInstance().getConfig().shouldUseCottonResources()) {
                 isCottonEnabled = true;
@@ -18,7 +18,7 @@ public class ShulkerHooks {
                 isCottonEnabled = false;
             }
         }
-    }
+    }*/ // TODO enable
 
     public static boolean isCottonEnabled() {
         return isCottonEnabled;

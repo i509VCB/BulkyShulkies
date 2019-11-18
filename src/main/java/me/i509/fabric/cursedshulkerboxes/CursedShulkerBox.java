@@ -27,7 +27,6 @@ package me.i509.fabric.cursedshulkerboxes;
 import com.google.common.reflect.TypeToken;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.config.MainConfig;
-import me.i509.fabric.cursedshulkerboxes.config.RecipeConfig;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
@@ -51,13 +50,12 @@ import java.util.function.Predicate;
 public class CursedShulkerBox {
     private MainConfig mainConf;
     private ConfigurationLoader<CommentedConfigurationNode> mainConfLoader;
-    private RecipeConfig recipeConf;
     private ConfigurationLoader<CommentedConfigurationNode> recipeConfLoader;
 
     private CursedShulkerBox() {
         disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
         disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof AbstractCursedShulkerBoxBlock);
-
+        /*
         if(!configLocation.exists()) {
             configLocation.mkdirs();
         }
@@ -78,7 +76,7 @@ public class CursedShulkerBox {
         } catch (Exception e) {
             e.printStackTrace(); // TODO Fail
         }
-
+        */
     }
 
     private void reloadRecipes() {
