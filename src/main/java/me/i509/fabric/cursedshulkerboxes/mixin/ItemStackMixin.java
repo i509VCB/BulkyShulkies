@@ -19,9 +19,8 @@ public abstract class ItemStackMixin {
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getLevel(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/item/ItemStack;)I"), method = "damage(ILjava/util/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z", cancellable = true)
     public void onDamaged(int damageTaken, Random random, ServerPlayerEntity serverPlayerEntity, CallbackInfoReturnable<Boolean> cir) {
-
-        if(this.getItem() instanceof AbstractShulkerHelmet) {
-            if(!DurabilityBasedProtection.canApplyNoDurability((ItemStack) (Object) this)) {
+        if(this.getItem() instanceof DurabilityBasedProtection) {
+            if(!DurabilityBasedProtection.canApplyNoDurability((ItemStack) (Object) this)) { // This check also says if the armor is at minimum durability.
                 cir.setReturnValue(false);
             }
         }
