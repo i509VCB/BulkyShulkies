@@ -15,6 +15,11 @@
       }
     }
   ],
+  "contributors": [
+    {
+      "name": "Zoutelande_"
+    }
+  ],
   "contact": {
     "homepage": "https://github.com/i509VCB/CursedShulkerBoxes",
     "sources": "https://github.com/i509VCB/CursedShulkerBoxes",
@@ -49,14 +54,5 @@
     "cotton-resources": ">=1.4.1"
   },
   "custom": {
-    "cursed:artist": {
-      "Material Shulker Textures": "Zoutelande_"
-    },
-    "cursed:translation": {
-      "English": "i509VCB"
-    },
-    "cursed:util": {
-      "Container Logic": "NinjaPhenix"
-    }
   }
 }

@@ -25,11 +25,13 @@
 package me.i509.fabric.cursedshulkerboxes;
 
 import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.api.item.HelmetTrackedDataStage;
 import me.i509.fabric.cursedshulkerboxes.container.ShulkerBoxScrollableContainer;
 import me.i509.fabric.cursedshulkerboxes.extension.ShulkerHooks;
 import me.i509.fabric.cursedshulkerboxes.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -44,6 +46,8 @@ public class CursedShulkerBoxMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        TrackedDataHandlerRegistry.register(HelmetTrackedDataStage.INSTANCE);
+
         CursedShulkerBox.getInstance();
         ShulkerBlocks.init();
         ShulkerBlockEntities.init();

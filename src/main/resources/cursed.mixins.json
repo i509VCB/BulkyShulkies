@@ -4,7 +4,9 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ShulkerBoxBlockEntityMixin",
-    "ShulkerBoxSlotMixin"
+    "ShulkerBoxSlotMixin",
+    "ItemStackMixin",
+    "LivingEntityMixin"
   ],
   "client": [
   ],

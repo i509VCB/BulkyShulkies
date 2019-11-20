@@ -24,8 +24,18 @@
 
 package me.i509.fabric.cursedshulkerboxes.registry;
 
+import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
+import me.i509.fabric.cursedshulkerboxes.api.item.AbstractShulkerHelmet;
+import net.minecraft.item.Item;
+import net.minecraft.util.registry.Registry;
+
 public class ShulkerItems {
+    public static final Item SHULKER_HELMET = register(new AbstractShulkerHelmet(new Item.Settings().maxCount(1)), "shulker_helmet");
+
     private ShulkerItems(){}
     public static void init(){}
 
+    public static Item register(Item item, String path) {
+        return Registry.register(Registry.ITEM, CursedShulkerBoxMod.id(path), item);
+    }
 }
