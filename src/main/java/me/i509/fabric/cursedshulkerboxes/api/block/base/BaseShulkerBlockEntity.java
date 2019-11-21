@@ -25,7 +25,6 @@
 package me.i509.fabric.cursedshulkerboxes.api.block.base;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
@@ -34,21 +33,30 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a shulker box block entity and exposes some information about the blockentity's state.
- * <p>It is recommended to use {@link AbstractCursedShulkerBoxBlockEntity} instead, which will handle most of the boilerplate from container based storage blocks.
+ * <p>It is recommended to use {@link AbstractShulkerBoxBlockEntity} instead, which will handle most of the boilerplate from container based storage blocks.
  */
 public interface BaseShulkerBlockEntity {
     /**
-     * Gets the bounding box of the BlockEntity.
+     * Gets the bounding box of the BlockEntity. This will redirect the call to after getting the facing direction from the state {@link BaseShulkerBlockEntity#getBoundingBox(Direction)}.
      * @param blockState The blockState of the BlockEntity.
      * @return The bounding box of the block entity.
      */
     Box getBoundingBox(BlockState blockState);
 
     /**
+     * Gets the bounding box of the BlockEntity
+     * @param direction The direction the BlockEntity is facing.
+     * @return The bounding box of the blockentity.
+     */
+    Box getBoundingBox(Direction direction);
+
+    Box getCollisionBox(Direction facing);
+
+    /**
      * Gets the current animation stage of the shulker box.
      * @return The current {@link net.minecraft.block.entity.ShulkerBoxBlockEntity.AnimationStage}
      */
-    ShulkerBoxBlockEntity.AnimationStage getAnimationStage();
+    AnimationStatus getAnimationStage();
 
     /**
      * Gets the color of the shulker box.
@@ -72,4 +80,11 @@ public interface BaseShulkerBlockEntity {
      * @return If true, the item will enter the inventory, otherwise the item will not enter the inventory.
      */
     boolean canInsertInvStack(int inventorySlot, ItemStack stack, @Nullable Direction direction);
+
+    enum AnimationStatus {
+        OPENED,
+        CLOSED,
+        OPENING,
+        CLOSING;
+    }
 }

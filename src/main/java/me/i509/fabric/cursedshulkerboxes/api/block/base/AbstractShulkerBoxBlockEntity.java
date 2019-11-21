@@ -28,10 +28,8 @@ import me.i509.fabric.cursedshulkerboxes.CursedShulkerBox;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.container.Container;
 import net.minecraft.entity.Entity;
@@ -61,32 +59,40 @@ import java.util.stream.IntStream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Tickable, BaseShulkerBlockEntity {
+/*
+ * Note: The Hitboxes for the shulker boxes are a bit wonky, as you really can't stand ontop of the boxes.
+ * This is a bug which I have no known fix for. Please PR if you have a fix for the issue where you jitter standing ontop of an open shulker box. This issue is not present with the vanilla shulker box oddly.
+ * I have done testing and realized it has something to do with the Dynamic Nature of the Shulker Box hitboxes
+ */
+public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Tickable, BaseShulkerBlockEntity {
     protected final int[] AVAILABLE_SLOTS;
     protected DefaultedList<ItemStack> inventory;
     private int viewerCount;
-    protected ShulkerBoxBlockEntity.AnimationStage animationStage;
+    protected AnimationStatus animationStage;
     protected float animationProgress;
     protected float prevAnimationProgress;
     private DyeColor cachedColor;
     private boolean cachedColorUpdateNeeded;
 
-    protected AbstractCursedShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
+    protected AbstractShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
         super(blockEntityType);
         checkArgument(maxAvailableSlot > 0, "Maximum available slot cannot be less than 1");
         this.AVAILABLE_SLOTS = IntStream.range(0, maxAvailableSlot).toArray();
-        this.animationStage = ShulkerBoxBlockEntity.AnimationStage.CLOSED;
+        this.animationStage = AnimationStatus.CLOSED;
         this.cachedColor = color;
     }
 
     public abstract Box getBoundingBox(BlockState blockState);
 
+    public abstract Box getBoundingBox(Direction facing);
+
+    public abstract Box getCollisionBox(Direction facing);
+
     public void tick() {
         this.updateAnimation();
-        if (this.animationStage == ShulkerBoxBlockEntity.AnimationStage.OPENING || this.animationStage == ShulkerBoxBlockEntity.AnimationStage.CLOSING) {
+        if (this.animationStage == AnimationStatus.OPENING || this.animationStage == AnimationStatus.CLOSING) {
             this.pushEntities();
         }
-
     }
 
     protected void updateAnimation() {
@@ -99,7 +105,7 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
                 this.animationProgress += 0.1F;
                 if (this.animationProgress >= 1.0F) {
                     this.pushEntities();
-                    this.animationStage = ShulkerBoxBlockEntity.AnimationStage.OPENED;
+                    this.animationStage = AnimationStatus.OPENED;
                     this.animationProgress = 1.0F;
                     this.updateNeighborStates();
                 }
@@ -107,7 +113,7 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
             case CLOSING:
                 this.animationProgress -= 0.1F;
                 if (this.animationProgress <= 0.0F) {
-                    this.animationStage = ShulkerBoxBlockEntity.AnimationStage.CLOSED;
+                    this.animationStage = AnimationStatus.CLOSED;
                     this.animationProgress = 0.0F;
                     this.updateNeighborStates();
                 }
@@ -118,16 +124,17 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
 
     }
 
-    public ShulkerBoxBlockEntity.AnimationStage getAnimationStage() {
+    public AnimationStatus getAnimationStage() {
         return this.animationStage;
     }
 
     protected void pushEntities() {
         BlockState blockState = this.world.getBlockState(this.getPos());
 
-        if (blockState.getBlock() instanceof AbstractCursedShulkerBoxBlock) {
-            Direction facing = blockState.get(AbstractCursedShulkerBoxBlock.FACING);
-            Box adjacentToLid = this.getBoundingBox(blockState).offset(this.pos);
+        if (blockState.getBlock() instanceof BaseShulkerBlock) {
+
+            Direction facing = blockState.get(BaseShulkerBlock.FACING);
+            Box adjacentToLid = this.getCollisionBox(facing).offset(this.pos);
             List<Entity> entities = this.world.getEntities((Entity)null, adjacentToLid);
 
             if (!entities.isEmpty()) {
@@ -183,12 +190,12 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
         if (value == 1) {
             this.viewerCount = interactorCount;
             if (interactorCount == 0) {
-                this.animationStage = ShulkerBoxBlockEntity.AnimationStage.CLOSING;
+                this.animationStage = AnimationStatus.CLOSING;
                 this.updateNeighborStates();
             }
 
             if (interactorCount == 1) {
-                this.animationStage = ShulkerBoxBlockEntity.AnimationStage.OPENING;
+                this.animationStage = AnimationStatus.OPENING;
                 this.updateNeighborStates();
             }
 
@@ -299,7 +306,7 @@ public abstract class AbstractCursedShulkerBoxBlockEntity extends LootableContai
     @Environment(EnvType.CLIENT)
     public DyeColor getColor() {
         if (this.cachedColorUpdateNeeded) {
-            this.cachedColor = ShulkerBoxBlock.getColor(this.getCachedState().getBlock());
+            this.cachedColor = AbstractShulkerBoxBlock.getColor(this.getCachedState().getBlock());
             this.cachedColorUpdateNeeded = false;
         }
 

@@ -24,8 +24,8 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.multi;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -38,7 +38,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShapes;
 import org.jetbrains.annotations.Nullable;
 
-public class AbstractCursedShulkerBoxMultiBlockEntity extends AbstractCursedShulkerBoxBlockEntity {
+public class AbstractCursedShulkerBoxMultiBlockEntity extends AbstractShulkerBoxBlockEntity {
     protected AbstractCursedShulkerBoxMultiBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
         super(blockEntityType, maxAvailableSlot, color);
         this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
@@ -50,14 +50,20 @@ public class AbstractCursedShulkerBoxMultiBlockEntity extends AbstractCursedShul
             return VoxelShapes.fullCube().getBoundingBox();
         }
 
-        return this.getBoundingBoxProgressive(blockState.get(AbstractCursedShulkerBoxBlock.FACING));
+        return this.getBoundingBox(blockState.get(AbstractShulkerBoxBlock.FACING));
     }
 
-    public Box getBoundingBoxProgressive(Direction direction) {
+    public Box getBoundingBox(Direction direction) {
         float lerpedProgress = this.getAnimationProgress(1.0F);
         return VoxelShapes.fullCube()
                 .getBoundingBox()
-                .stretch(1 * lerpedProgress * direction.getOffsetX(), 1 * lerpedProgress * direction.getOffsetY(), 1 * lerpedProgress * direction.getOffsetZ());
+                .stretch(lerpedProgress * 0.5 * direction.getOffsetX(), lerpedProgress * 0.5 * direction.getOffsetY(), lerpedProgress * 0.5 * direction.getOffsetZ());
+    }
+
+    @Override
+    public Box getCollisionBox(Direction facing) {
+        Direction direction = facing.getOpposite();
+        return this.getBoundingBox(facing).shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
     }
 
     public float getAnimationProgress(float currentProgress) { // TODO Add logic to make upper half read the lower block for current animation progress so the box properly expands.

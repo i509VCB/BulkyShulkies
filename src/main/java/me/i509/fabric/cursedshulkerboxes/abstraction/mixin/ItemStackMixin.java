@@ -1,7 +1,6 @@
-package me.i509.fabric.cursedshulkerboxes.mixin;
+package me.i509.fabric.cursedshulkerboxes.abstraction.mixin;
 
-import me.i509.fabric.cursedshulkerboxes.api.item.AbstractShulkerHelmet;
-import me.i509.fabric.cursedshulkerboxes.api.item.DurabilityBasedProtection;
+import me.i509.fabric.cursedshulkerboxes.abstraction.DurabilityBasedProtection;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;

@@ -25,15 +25,14 @@
 package me.i509.fabric.cursedshulkerboxes.api.block.multi;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlockEntity;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlockEntity;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.LivingEntity;
@@ -57,7 +56,7 @@ import net.minecraft.world.ViewableWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedShulkerBoxBlock implements MultiShulkerBoxBlock {
+public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractShulkerBoxBlock implements MultiShulkerBoxBlock {
     /**
      * TODO:
      *
@@ -116,7 +115,7 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
     }
 
     public boolean isObstructionFree(BaseShulkerBlockEntity blockEntity, Direction facing, World world, BlockPos blockPos) {
-        if (blockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
+        if (blockEntity.getAnimationStage() == BaseShulkerBlockEntity.AnimationStatus.CLOSED) {
             Box openBox = getOpenBox(facing, world, blockPos);
             if(isBottom(world.getBlockState(blockPos))) {
                 return world.doesNotCollide(openBox.offset(blockPos.offset(facing, 2)));
@@ -137,7 +136,7 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
             return true;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(blockPos);
-            if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
+            if (blockEntity instanceof AbstractShulkerBoxBlockEntity) {
                 Direction facing = blockState.get(FACING);
 
                 if(isBottom(blockState)) { // This tells game to read the inventory from block above so bounding boxes are easier.
@@ -147,7 +146,7 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
                     return this.activate(otherState, world, otherBlockPos, player, hand, blockHitResult);
                 }
 
-                AbstractCursedShulkerBoxBlockEntity cursedBlockEntity = (AbstractCursedShulkerBoxBlockEntity) blockEntity;
+                AbstractShulkerBoxBlockEntity cursedBlockEntity = (AbstractShulkerBoxBlockEntity) blockEntity;
 
                 if (this.isObstructionFree(cursedBlockEntity, facing, world, blockPos)) {
                     if (cursedBlockEntity.checkUnlocked(player)) {
@@ -182,8 +181,8 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractCursedS
         world.setBlockState(blockPos.offset(blockState.get(FACING)), blockState.with(HALF, DoubleBlockHalf.UPPER), 3); // Directionality of place checks here.
         if (itemStack.hasCustomName()) {
             BlockEntity blockEntity = world.getBlockEntity(blockPos.up());
-            if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
-                ((AbstractCursedShulkerBoxBlockEntity)blockEntity).setCustomName(itemStack.getName());
+            if (blockEntity instanceof AbstractShulkerBoxBlockEntity) {
+                ((AbstractShulkerBoxBlockEntity)blockEntity).setCustomName(itemStack.getName());
             }
         }
 

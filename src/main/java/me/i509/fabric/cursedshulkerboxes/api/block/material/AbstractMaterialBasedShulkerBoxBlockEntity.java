@@ -24,8 +24,8 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.material;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
@@ -36,7 +36,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShapes;
 import org.jetbrains.annotations.Nullable;
 
-public class AbstractMaterialBasedShulkerBoxBlockEntity extends AbstractCursedShulkerBoxBlockEntity {
+public class AbstractMaterialBasedShulkerBoxBlockEntity extends AbstractShulkerBoxBlockEntity {
     protected AbstractMaterialBasedShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
         super(blockEntityType, maxAvailableSlot, color);
         this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
@@ -44,13 +44,44 @@ public class AbstractMaterialBasedShulkerBoxBlockEntity extends AbstractCursedSh
 
     @Override
     public Box getBoundingBox(BlockState blockState) {
-        return this.getBoundingBoxProgressive(blockState.get(AbstractCursedShulkerBoxBlock.FACING));
-    }
-
-    public Box getBoundingBoxProgressive(Direction direction) {
-        float lerpedProgress = this.getAnimationProgress(1.0F);
+        Direction direction = blockState.get(BaseShulkerBlock.FACING);
+        float f = this.getAnimationProgress(1.0F);
         return VoxelShapes.fullCube()
                 .getBoundingBox()
-                .stretch(0.5F * lerpedProgress * direction.getOffsetX(), 0.5F * lerpedProgress * direction.getOffsetY(), 0.5F * lerpedProgress * direction.getOffsetZ());
+                .stretch(f * 0.5F * direction.getOffsetX(), f * 0.5F * direction.getOffsetY(), f * 0.5F * direction.getOffsetZ());
+        //return this.getBoundingBox(blockState.get(BaseShulkerBlock.FACING));
+    }
+
+    @Override
+    public Box getBoundingBox(Direction direction) {
+        float f = this.getAnimationProgress(1.0F);
+        return VoxelShapes.fullCube()
+                .getBoundingBox()
+                .stretch(f * 0.5F * direction.getOffsetX(), f * 0.5F * direction.getOffsetY(), f * 0.5F * direction.getOffsetZ());
+
+
+        /*
+        float f = this.getAnimationProgress(1.0F);
+
+        System.out.println(MoreObjects.toStringHelper(direction)
+                .add("xOff", direction.getOffsetX())
+                .add("yOff", direction.getOffsetY())
+                .add("zOff", direction.getOffsetZ())
+                .toString()
+        );
+
+        double xOff = 0.5F * f * (float)direction.getOffsetX();
+        double yOff = 0.5F * f * (float)direction.getOffsetY();
+        double zOff = 0.5F * f * (float)direction.getOffsetZ();
+
+        return VoxelShapes.fullCube().getBoundingBox().stretch((double)(0.5F * f * (float)direction.getOffsetX()), (double)(0.5F * f * (float)direction.getOffsetY()), (double)(0.5F * f * (float)direction.getOffsetZ()));
+
+         */
+    }
+
+    @Override
+    public Box getCollisionBox(Direction facing) {
+        Direction opposite = facing.getOpposite();
+        return this.getBoundingBox(facing).shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
     }
 }

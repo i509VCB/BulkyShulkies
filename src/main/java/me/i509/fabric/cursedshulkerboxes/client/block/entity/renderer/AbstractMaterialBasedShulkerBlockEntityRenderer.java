@@ -25,7 +25,8 @@
 package me.i509.fabric.cursedshulkerboxes.client.block.entity.renderer;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlock;
 import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -52,8 +53,8 @@ public abstract class AbstractMaterialBasedShulkerBlockEntityRenderer<BE extends
         if (blockEntity.hasWorld()) {
             BlockState blockState = this.getWorld().getBlockState(blockEntity.getPos());
 
-            if (blockState.getBlock() instanceof AbstractCursedShulkerBoxBlock) {
-                facing = blockState.get(AbstractCursedShulkerBoxBlock.FACING);
+            if (blockState.getBlock() instanceof AbstractShulkerBoxBlock) {
+                facing = blockState.get(BaseShulkerBlock.FACING);
             }
         }
 

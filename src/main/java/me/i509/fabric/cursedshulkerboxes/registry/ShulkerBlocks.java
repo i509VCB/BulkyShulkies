@@ -25,7 +25,9 @@
 package me.i509.fabric.cursedshulkerboxes.registry;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
+import me.i509.fabric.cursedshulkerboxes.block.cursed.slab.CursedSlabShulkerBox;
 import me.i509.fabric.cursedshulkerboxes.block.material.copper.CopperShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.block.material.copper.ExampleBlock;
 import me.i509.fabric.cursedshulkerboxes.block.material.copper.ExampleTallBox;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -45,6 +47,12 @@ public class ShulkerBlocks {
     public static final Block BLUE_COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), DyeColor.BLUE), "blue_copper_shulker_box");
     public static final Block BROWN_COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), DyeColor.BROWN), "brown_copper_shulker_box");
     public static final Block RED_COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), DyeColor.RED), "red_copper_shulker_box");
+    public static final Block ORANGE_COPPER_SHULKER_BOX = register(new CopperShulkerBoxBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build(), DyeColor.ORANGE), "orange_copper_shulker_box");
+
+
+    public static final Block SLAB_SHULKER_BOX = register(new CursedSlabShulkerBox(FabricBlockSettings.of(Material.SHULKER_BOX).build(), null), "slab_shulker_box");
+
+    public static final Block TR = register(new ExampleBlock(FabricBlockSettings.of(Material.SHULKER_BOX).build()), "tr");
 
     private ShulkerBlocks(){}
     public static void init(){}

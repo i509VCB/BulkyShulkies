@@ -1,8 +1,8 @@
 plugins {
-	id 'fabric-loom' version '0.2.5-SNAPSHOT'
+	id 'fabric-loom' version '0.2.6-SNAPSHOT'
 	id 'com.github.johnrengelman.shadow' version '5.2.0'
 	id 'maven-publish'
-	id 'checkstyle'
+	//id 'checkstyle'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -57,7 +57,7 @@ minecraft {
 dependencies {
 	// Fabric Stuff.
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
@@ -128,10 +128,10 @@ jar {
 	from "LICENSE"
 }
 
-checkstyle {
-	configFile = rootProject.file("checkstyle.xml")
-	toolVersion = '8.25'
-}
+//checkstyle {
+//	configFile = rootProject.file("checkstyle.xml")
+//	toolVersion = '8.25'
+//}
 
 // configure the maven publication
 publishing {

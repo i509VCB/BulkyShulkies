@@ -35,5 +35,5 @@ public class ShulkerItemGroups {
     private ShulkerItemGroups(){}
     public static void init(){}
 
-    public static final ItemGroup CURSED_GROUP = FabricItemGroupBuilder.build(CursedShulkerBoxMod.id("cursedgroup"), () -> new ItemStack(Items.SHULKER_BOX)); // TODO make this a custom shulker box
+    public static final ItemGroup CURSED_GROUP = FabricItemGroupBuilder.build(CursedShulkerBoxMod.id("cursedgroup"), () -> new ItemStack(ShulkerBlocks.COPPER_SHULKER_BOX));
 }

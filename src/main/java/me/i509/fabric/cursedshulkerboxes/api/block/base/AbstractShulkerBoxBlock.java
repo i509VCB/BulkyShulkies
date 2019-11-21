@@ -34,7 +34,6 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.container.Container;
@@ -50,8 +49,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateFactory;
-import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -60,6 +57,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -69,16 +67,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity implements BaseShulkerBlock {
-    public static DirectionProperty FACING = Properties.FACING;
+public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements BaseShulkerBlock {
     protected static final Identifier CONTENTS = new Identifier("contents");
     protected static final SingleTypePropertyRetriever<SidedInventory> INVENTORY_RETRIEVER = blockEntity -> blockEntity;
 
     protected DyeColor color;
-    protected ShulkerBoxBlockEntity.AnimationStage animationStage;
+    protected BaseShulkerBlockEntity.AnimationStatus animationStage;
     protected final int slotCount;
 
-    protected AbstractCursedShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
+    protected AbstractShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
         super(settings);
         this.color = color;
         this.slotCount = slotCount;
@@ -99,6 +96,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
+    /*
     @Override
     public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
         if (world.isClient) {
@@ -110,8 +108,15 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
             if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
                 Direction facing = blockState.get(FACING);
                 AbstractCursedShulkerBoxBlockEntity cursedBlockEntity = (AbstractCursedShulkerBoxBlockEntity) blockEntity;
-
-                if (this.isObstructionFree(cursedBlockEntity, facing, world, blockPos)) {
+                boolean shouldOpen;
+                if(cursedBlockEntity.getAnimationStage() == AnimationStatus.CLOSED) {
+                    Box openBox = getOpenBox(facing);
+                    shouldOpen = world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
+                } else {
+                    shouldOpen = true;
+                }
+                //if (this.isObstructionFree(cursedBlockEntity, facing, world, blockPos)) {
+                if (shouldOpen) {
                     if (cursedBlockEntity.checkUnlocked(player)) {
                         cursedBlockEntity.checkLootInteraction(player);
                         ContainerProviderRegistry.INSTANCE.openContainer(CursedShulkerBoxMod.id("shulkerscrollcontainer"), player, (packetByteBuf -> {
@@ -127,10 +132,48 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
                 return false;
             }
         }
+    }*/
+
+    public boolean activate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (world.isClient) {
+            return true;
+        } else if (player.isSpectator()) {
+            return true;
+        } else {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof AbstractShulkerBoxBlockEntity) {
+                Direction direction = state.get(FACING);
+                AbstractShulkerBoxBlockEntity shulkerBoxBlockEntity = (AbstractShulkerBoxBlockEntity)blockEntity;
+                boolean bl2;
+                if (shulkerBoxBlockEntity.getAnimationStage() == BaseShulkerBlockEntity.AnimationStatus.CLOSED) {
+                    Box box = VoxelShapes
+                            .fullCube()
+                            .getBoundingBox()
+                            .stretch((double)(0.5F * (float)direction.getOffsetX()), (double)(0.5F * (float)direction.getOffsetY()), (double)(0.5F * (float)direction.getOffsetZ()))
+                            .shrink((double)direction.getOffsetX(), (double)direction.getOffsetY(), (double)direction.getOffsetZ());
+                    bl2 = world.doesNotCollide(box.offset(pos.offset(direction)));
+                } else {
+                    bl2 = true;
+                }
+
+                if (bl2) {
+                    //player.openContainer(shulkerBoxBlockEntity);
+                    ContainerProviderRegistry.INSTANCE.openContainer(CursedShulkerBoxMod.id("shulkerscrollcontainer"), player, (packetByteBuf -> {
+                        packetByteBuf.writeBlockPos(pos);
+                        packetByteBuf.writeText(shulkerBoxBlockEntity.getDisplayName());
+                    }));
+                    player.incrementStat(Stats.OPEN_SHULKER_BOX);
+                }
+
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     public boolean isObstructionFree(BaseShulkerBlockEntity blockEntity, Direction facing, World world, BlockPos blockPos) {
-        if (blockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
+        if (blockEntity.getAnimationStage() == BaseShulkerBlockEntity.AnimationStatus.CLOSED) {
             Box openBox = getOpenBox(facing);
             return world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
         } else {
@@ -190,26 +233,26 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
     public void onBreak(World world, BlockPos blockPos, BlockState blockState, PlayerEntity playerEntity) {
         BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
-        if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
-            AbstractCursedShulkerBoxBlockEntity abstractCursedShulkerBoxBlockEntity = (AbstractCursedShulkerBoxBlockEntity)blockEntity;
+        if (blockEntity instanceof AbstractShulkerBoxBlockEntity) {
+            AbstractShulkerBoxBlockEntity abstractShulkerBoxBlockEntity = (AbstractShulkerBoxBlockEntity)blockEntity;
 
-            if (!world.isClient && playerEntity.isCreative() && !abstractCursedShulkerBoxBlockEntity.isInvEmpty()) {
+            if (!world.isClient && playerEntity.isCreative() && !abstractShulkerBoxBlockEntity.isInvEmpty()) {
                 ItemStack stack = getItemStack(this.getColor());
-                CompoundTag serializedInventory = abstractCursedShulkerBoxBlockEntity.serializeInventory(new CompoundTag());
+                CompoundTag serializedInventory = abstractShulkerBoxBlockEntity.serializeInventory(new CompoundTag());
 
                 if (!serializedInventory.isEmpty()) {
                     stack.putSubTag("BlockEntityTag", serializedInventory);
                 }
 
-                if (abstractCursedShulkerBoxBlockEntity.hasCustomName()) {
-                    stack.setCustomName(abstractCursedShulkerBoxBlockEntity.getCustomName());
+                if (abstractShulkerBoxBlockEntity.hasCustomName()) {
+                    stack.setCustomName(abstractShulkerBoxBlockEntity.getCustomName());
                 }
 
                 ItemEntity itemEntity = new ItemEntity(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
                 itemEntity.setToDefaultPickupDelay();
                 world.spawnEntity(itemEntity);
             } else {
-                abstractCursedShulkerBoxBlockEntity.checkLootInteraction(playerEntity);
+                abstractShulkerBoxBlockEntity.checkLootInteraction(playerEntity);
             }
         }
 
@@ -219,11 +262,11 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
     @Override
     public List<ItemStack> getDroppedStacks(BlockState blockState, net.minecraft.world.loot.context.LootContext.Builder builder) {
         BlockEntity blockEntity = builder.getNullable(LootContextParameters.BLOCK_ENTITY);
-        if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
-            AbstractCursedShulkerBoxBlockEntity abstractCursedShulkerBoxBlockEntity = (AbstractCursedShulkerBoxBlockEntity)blockEntity;
+        if (blockEntity instanceof AbstractShulkerBoxBlockEntity) {
+            AbstractShulkerBoxBlockEntity abstractShulkerBoxBlockEntity = (AbstractShulkerBoxBlockEntity)blockEntity;
             builder = builder.putDrop(CONTENTS, (lootContext, consumer) -> {
-                for(int inventoryPos = 0; inventoryPos < abstractCursedShulkerBoxBlockEntity.getInvSize(); ++inventoryPos) {
-                    consumer.accept(abstractCursedShulkerBoxBlockEntity.getInvStack(inventoryPos));
+                for(int inventoryPos = 0; inventoryPos < abstractShulkerBoxBlockEntity.getInvSize(); ++inventoryPos) {
+                    consumer.accept(abstractShulkerBoxBlockEntity.getInvStack(inventoryPos));
                 }
             });
         }
@@ -235,7 +278,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
     @Environment(EnvType.CLIENT)
     public ItemStack getPickStack(BlockView blockView, BlockPos blockPos, BlockState blockState) {
         ItemStack pickStack = super.getPickStack(blockView, blockPos, blockState);
-        AbstractCursedShulkerBoxBlockEntity tallShulkerBoxBlockEntity = (AbstractCursedShulkerBoxBlockEntity)blockView.getBlockEntity(blockPos);
+        AbstractShulkerBoxBlockEntity tallShulkerBoxBlockEntity = (AbstractShulkerBoxBlockEntity)blockView.getBlockEntity(blockPos);
         CompoundTag serializedInventory = tallShulkerBoxBlockEntity.serializeInventory(new CompoundTag());
         if (!serializedInventory.isEmpty()) {
             pickStack.putSubTag("BlockEntityTag", serializedInventory);
@@ -248,8 +291,8 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
     public void onPlaced(World world, BlockPos blockPos, BlockState blockState, LivingEntity livingEntity, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
             BlockEntity blockEntity = world.getBlockEntity(blockPos);
-            if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
-                ((AbstractCursedShulkerBoxBlockEntity)blockEntity).setCustomName(itemStack.getName());
+            if (blockEntity instanceof AbstractShulkerBoxBlockEntity) {
+                ((AbstractShulkerBoxBlockEntity)blockEntity).setCustomName(itemStack.getName());
             }
         }
     }
@@ -258,7 +301,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
     public void onBlockRemoved(BlockState blockState, World world, BlockPos blockPos, BlockState otherBlockState, boolean boolean_1) {
         if (blockState.getBlock() != otherBlockState.getBlock()) {
             BlockEntity blockEntity = world.getBlockEntity(blockPos);
-            if (blockEntity instanceof AbstractCursedShulkerBoxBlockEntity) {
+            if (blockEntity instanceof AbstractShulkerBoxBlockEntity) {
                 world.updateHorizontalAdjacent(blockPos, blockState.getBlock());
             }
 
@@ -301,7 +344,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
     }
 
     public interface SingleTypePropertyRetriever<T> {
-        T getFromShulker(AbstractCursedShulkerBoxBlockEntity blockEntity);
+        T getFromShulker(AbstractShulkerBoxBlockEntity blockEntity);
     }
 
     @Nullable
@@ -313,7 +356,7 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
     @Nullable
     @Environment(EnvType.CLIENT)
     public static DyeColor getColor(@Nullable Block block) {
-        return block instanceof AbstractCursedShulkerBoxBlock ? ((AbstractCursedShulkerBoxBlock)block).getColor() : null;
+        return block instanceof BaseShulkerBlock ? ((BaseShulkerBlock)block).getColor() : null;
     }
 
     public static SidedInventory getInventoryStatic(IWorld world, BlockPos pos) {
@@ -322,11 +365,11 @@ public abstract class AbstractCursedShulkerBoxBlock extends BlockWithEntity impl
 
     private static <T> T retrieve(BlockState clickedState, IWorld world, BlockPos clickedPos, SingleTypePropertyRetriever<T> propertyRetriever) {
         BlockEntity clickedBlockEntity = world.getBlockEntity(clickedPos);
-        if (!(clickedBlockEntity instanceof AbstractCursedShulkerBoxBlockEntity)) {
+        if (!(clickedBlockEntity instanceof AbstractShulkerBoxBlockEntity)) {
             return null;
         }
 
-        AbstractCursedShulkerBoxBlockEntity abstractCursedShulkerBoxBlockEntity = (AbstractCursedShulkerBoxBlockEntity) clickedBlockEntity;
-        return propertyRetriever.getFromShulker(abstractCursedShulkerBoxBlockEntity);
+        AbstractShulkerBoxBlockEntity abstractShulkerBoxBlockEntity = (AbstractShulkerBoxBlockEntity) clickedBlockEntity;
+        return propertyRetriever.getFromShulker(abstractShulkerBoxBlockEntity);
     }
 }

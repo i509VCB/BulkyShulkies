@@ -27,6 +27,8 @@ package me.i509.fabric.cursedshulkerboxes.api.block.base;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -37,9 +39,10 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * This represents all the base methods to a shulker box.
- * <p>It is recommended to use {@link AbstractCursedShulkerBoxBlock} instead, which will handle most of the boilerplate from container based storage blocks.
+ * <p>It is recommended to use {@link AbstractShulkerBoxBlock} instead, which will handle most of the boilerplate from container based storage blocks.
  */
 public interface BaseShulkerBlock {
+    DirectionProperty FACING = Properties.FACING;
     /**
      * Gets the VoxelShape representing the outline and hitbox shape. This shape should adjust with the lid of the shulker box.
      * @param blockState The blockState.

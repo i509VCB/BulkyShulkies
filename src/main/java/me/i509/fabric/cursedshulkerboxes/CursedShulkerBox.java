@@ -24,18 +24,14 @@
 
 package me.i509.fabric.cursedshulkerboxes;
 
-import com.google.common.reflect.TypeToken;
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.config.MainConfig;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.item.ItemStack;
-import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
-import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
-import ninja.leaping.configurate.objectmapping.DefaultObjectMapperFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.Message;
@@ -54,7 +50,7 @@ public class CursedShulkerBox {
 
     private CursedShulkerBox() {
         disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
-        disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof AbstractCursedShulkerBoxBlock);
+        disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof AbstractShulkerBoxBlock);
         /*
         if(!configLocation.exists()) {
             configLocation.mkdirs();

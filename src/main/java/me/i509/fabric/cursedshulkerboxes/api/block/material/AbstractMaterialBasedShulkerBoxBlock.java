@@ -24,8 +24,8 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.material;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractCursedShulkerBoxBlock;
-import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityContext;
@@ -38,20 +38,32 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractMaterialBasedShulkerBoxBlock extends AbstractCursedShulkerBoxBlock {
+public abstract class AbstractMaterialBasedShulkerBoxBlock extends AbstractShulkerBoxBlock {
     protected AbstractMaterialBasedShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
         super(settings, slotCount, color);
     }
 
     @Override
     public Box getOpenBox(Direction facing) {
-        return VoxelShapes.fullCube().getBoundingBox().stretch(0.5F * facing.getOffsetX(), 0.5F * facing.getOffsetY(), 0.5F * facing.getOffsetZ()).shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
+        // VoxelShapes.fullCube()
+        //                .getBoundingBox()
+        //                .stretch(0.5F * direction.getOffsetX(), 0.5F * direction.getOffsetY(), 0.5F * direction.getOffsetZ());
+        return VoxelShapes.fullCube().getBoundingBox()
+                .stretch(0.5F * facing.getOffsetX(), 0.5F * facing.getOffsetY(), 0.5F * facing.getOffsetZ())
+                .shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
     }
+
+    /*
+    Box box = VoxelShapes.fullCube().getBoundingBox()
+                        .stretch(0.5F * facing.getOffsetX(), 0.5F * facing.getOffsetY(), 0.5F * facing.getOffsetZ())
+                        .shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
+     */
 
     @Override
     public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
+        // TODO Outline Shape machine broke
         BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
-        return blockEntity instanceof BaseShulkerBlockEntity ? VoxelShapes.cuboid(((BaseShulkerBlockEntity)blockEntity).getBoundingBox(blockState)) : VoxelShapes.fullCube();
+        return blockEntity instanceof AbstractShulkerBoxBlockEntity ? VoxelShapes.cuboid(((AbstractShulkerBoxBlockEntity)blockEntity).getBoundingBox(blockState)) : VoxelShapes.fullCube();
     }
 
     @Override

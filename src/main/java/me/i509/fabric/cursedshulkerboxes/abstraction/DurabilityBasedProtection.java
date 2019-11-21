@@ -1,4 +1,4 @@
-package me.i509.fabric.cursedshulkerboxes.api.item;
+package me.i509.fabric.cursedshulkerboxes.abstraction;
 
 import net.minecraft.item.ItemStack;
 
