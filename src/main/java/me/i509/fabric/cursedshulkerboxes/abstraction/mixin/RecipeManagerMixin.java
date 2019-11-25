@@ -48,7 +48,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @Mixin(RecipeManager.class)
 public class RecipeManagerMixin {
-    @Inject(at = @At(value = "INVOKE"), method = "method_20705(Ljava/util/Map;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V")
+    @Inject(at = @At(value = "INVOKE"), method = "apply(Ljava/util/Map;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V")
     public void onRegisterRecipe(Map<Identifier, JsonObject> recipes, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
         Map<Identifier, CommentedConfigurationNode> hoconRecipes = new HashMap<>();
         HoconRecipeReloadEvent.EVENT.invoker().getRecipes(hoconRecipes::put);

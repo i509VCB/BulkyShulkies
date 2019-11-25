@@ -49,7 +49,7 @@
   "depends": {
     "fabricloader": ">=0.4.0",
     "fabric": "*",
-    "minecraft": "1.14.x"
+    "minecraft": "1.15.x"
   },
   "suggests": {
     "cotton-resources": ">=1.4.1"

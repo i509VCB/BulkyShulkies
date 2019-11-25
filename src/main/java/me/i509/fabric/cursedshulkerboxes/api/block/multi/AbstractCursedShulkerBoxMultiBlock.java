@@ -24,11 +24,9 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.multi;
 
-import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlockEntity;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlockEntity;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -39,28 +37,23 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stat.Stats;
-import net.minecraft.state.StateFactory;
+import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.ViewableWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractShulkerBoxBlock implements MultiShulkerBoxBlock {
     /**
      * TODO:
-     *
-     * Figure out why entities suffocate when the custom shulkers push them.
      *
      * Synchonized inventories breaks collision boxes.
      *
@@ -84,7 +77,7 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractShulker
 
     protected AbstractCursedShulkerBoxMultiBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
         super(settings, slotCount, color);
-        this.setDefaultState(getStateFactory().getDefaultState().with(FACING, Direction.UP).with(HALF, DoubleBlockHalf.LOWER));
+        this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.UP).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
@@ -102,23 +95,26 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractShulker
         return state.get(HALF) == DoubleBlockHalf.LOWER;
     }
 
-    public boolean canPlaceAt(BlockState blockState, ViewableWorld viewableWorld, BlockPos blockPos) { // TODO for bug relating to overwriting block above when it shouldn't place at all
-        BlockPos down = blockPos.down();
-        BlockState belowState = viewableWorld.getBlockState(down);
+    @Override
+    public boolean canPlaceAt(BlockState blockState, WorldView view, BlockPos blockPos) { // TODO for bug relating to overwriting block above when it shouldn't place at all
+        BlockPos down = new BlockPos(blockPos.down());
+        BlockState belowState = view.getBlockState(down);
         Direction facing = blockState.get(FACING);
 
-        return blockState.get(HALF) == DoubleBlockHalf.LOWER ? belowState.isSideSolidFullSquare(viewableWorld, down, facing) : belowState.getBlock() == this;
+        return blockState.get(HALF) == DoubleBlockHalf.LOWER ? belowState.isSideSolidFullSquare(view, down, facing) : belowState.getBlock() == this;
     }
 
+    @Override
     public boolean canSuffocate(BlockState blockState, BlockView blockView, BlockPos blockPos) {
         return false;
     }
 
+    @Override
     public boolean isObstructionFree(BaseShulkerBlockEntity blockEntity, Direction facing, World world, BlockPos blockPos) {
         if (blockEntity.getAnimationStage() == BaseShulkerBlockEntity.AnimationStatus.CLOSED) {
             Box openBox = getOpenBox(facing, world, blockPos);
             if(isBottom(world.getBlockState(blockPos))) {
-                return world.doesNotCollide(openBox.offset(blockPos.offset(facing, 2)));
+                return world.doesNotCollide(openBox.offset(new BlockPos(blockPos.offset(facing, 2))));
             }
 
             return world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
@@ -128,7 +124,8 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractShulker
         }
     }
 
-    @Override
+    // TODO replace with onUse
+    /*@Override
     public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
         if (world.isClient) {
             return true;
@@ -164,7 +161,7 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractShulker
                 return false;
             }
         }
-    }
+    }*/
 
     public final Box getOpenBox(Direction facing) {
         return VoxelShapes.fullCube().getBoundingBox();
@@ -177,6 +174,7 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractShulker
         return this.getDefaultState().with(FACING, placementContext.getSide()).with(HALF, DoubleBlockHalf.LOWER);
     }
 
+    @Override
     public void onPlaced(World world, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         world.setBlockState(blockPos.offset(blockState.get(FACING)), blockState.with(HALF, DoubleBlockHalf.UPPER), 3); // Directionality of place checks here.
         if (itemStack.hasCustomName()) {
@@ -189,6 +187,7 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractShulker
         super.onPlaced(world, blockPos, blockState, livingEntity, itemStack);
     }
 
+    @Override
     public void onBreak(World world, BlockPos blockPos, BlockState blockState, PlayerEntity playerEntity) {
         DoubleBlockHalf brokeBlockHalf = blockState.get(HALF);
         Direction facing = blockState.get(FACING);
@@ -210,7 +209,8 @@ public abstract class AbstractCursedShulkerBoxMultiBlock extends AbstractShulker
         super.onBreak(world, blockPos, blockState, playerEntity);
     }
 
-    protected void appendProperties(StateFactory.Builder<Block, BlockState> stateFactory) {
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> stateFactory) {
         super.appendProperties(stateFactory);
         stateFactory.add(HALF);
     }

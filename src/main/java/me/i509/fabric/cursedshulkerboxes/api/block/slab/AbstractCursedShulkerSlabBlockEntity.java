@@ -35,6 +35,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
+// TODO Change push speed as not to make it as jaggedly hard when being moved.
 public class AbstractCursedShulkerSlabBlockEntity extends AbstractShulkerBoxBlockEntity {
     protected AbstractCursedShulkerSlabBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
         super(blockEntityType, maxAvailableSlot, color);
@@ -58,4 +59,39 @@ public class AbstractCursedShulkerSlabBlockEntity extends AbstractShulkerBoxBloc
         Direction direction = facing.getOpposite();
         return this.getBoundingBox(facing).shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
     }
+
+    /*
+     * Since the half slab shulker box is smaller, we slow down the animation.
+     *
+    @Override
+    protected void updateAnimation() {
+        this.prevAnimationProgress = this.animationProgress;
+        switch(this.animationStage) {
+            case CLOSED:
+                this.animationProgress = 0.0F;
+                break;
+            case OPENING:
+                this.animationProgress += 0.05F;
+                if (this.animationProgress >= 1.0F) {
+                    this.pushEntities();
+                    this.animationStage = AnimationStatus.OPENED;
+                    this.animationProgress = 1.0F;
+                    this.updateNeighborStates();
+                }
+                break;
+            case CLOSING:
+                this.animationProgress -= 0.05F;
+                if (this.animationProgress <= 0.0F) {
+                    this.animationStage = AnimationStatus.CLOSED;
+                    this.animationProgress = 0.0F;
+                    this.updateNeighborStates();
+                }
+                break;
+            case OPENED:
+                this.animationProgress = 1.0F;
+        }
+
+    }
+
+     */
 }

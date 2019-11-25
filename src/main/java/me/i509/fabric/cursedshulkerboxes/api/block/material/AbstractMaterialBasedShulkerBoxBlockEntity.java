@@ -44,12 +44,7 @@ public class AbstractMaterialBasedShulkerBoxBlockEntity extends AbstractShulkerB
 
     @Override
     public Box getBoundingBox(BlockState blockState) {
-        Direction direction = blockState.get(BaseShulkerBlock.FACING);
-        float f = this.getAnimationProgress(1.0F);
-        return VoxelShapes.fullCube()
-                .getBoundingBox()
-                .stretch(f * 0.5F * direction.getOffsetX(), f * 0.5F * direction.getOffsetY(), f * 0.5F * direction.getOffsetZ());
-        //return this.getBoundingBox(blockState.get(BaseShulkerBlock.FACING));
+        return this.getBoundingBox(blockState.get(BaseShulkerBlock.FACING));
     }
 
     @Override
@@ -58,25 +53,6 @@ public class AbstractMaterialBasedShulkerBoxBlockEntity extends AbstractShulkerB
         return VoxelShapes.fullCube()
                 .getBoundingBox()
                 .stretch(f * 0.5F * direction.getOffsetX(), f * 0.5F * direction.getOffsetY(), f * 0.5F * direction.getOffsetZ());
-
-
-        /*
-        float f = this.getAnimationProgress(1.0F);
-
-        System.out.println(MoreObjects.toStringHelper(direction)
-                .add("xOff", direction.getOffsetX())
-                .add("yOff", direction.getOffsetY())
-                .add("zOff", direction.getOffsetZ())
-                .toString()
-        );
-
-        double xOff = 0.5F * f * (float)direction.getOffsetX();
-        double yOff = 0.5F * f * (float)direction.getOffsetY();
-        double zOff = 0.5F * f * (float)direction.getOffsetZ();
-
-        return VoxelShapes.fullCube().getBoundingBox().stretch((double)(0.5F * f * (float)direction.getOffsetX()), (double)(0.5F * f * (float)direction.getOffsetY()), (double)(0.5F * f * (float)direction.getOffsetZ()));
-
-         */
     }
 
     @Override

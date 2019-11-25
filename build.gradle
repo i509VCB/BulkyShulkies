@@ -2,7 +2,7 @@ plugins {
 	id 'fabric-loom' version '0.2.6-SNAPSHOT'
 	id 'com.github.johnrengelman.shadow' version '5.2.0'
 	id 'maven-publish'
-	//id 'checkstyle'
+	id 'checkstyle'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -61,13 +61,13 @@ dependencies {
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Cotton Resources
-	modImplementation ("io.github.cottonmc:cotton-resources:${cotton_resources_version}") { // We use our own version of modmenu and REI
-		exclude module: "fabric-api"
-		exclude module: "RoughlyEnoughItems"
-	}
+	// Cotton Resources -- Uncomment when 1.15 branch I am porting comes out
+	//modImplementation ("io.github.cottonmc:cotton-resources:${cotton_resources_version}") { // We use our own version of modmenu and REI
+	//	exclude module: "fabric-api"
+	//	exclude module: "RoughlyEnoughItems"
+	//}
 
-	include "io.github.cottonmc:cotton-resources:${cotton_resources_version}" // JIJ time
+	//include "io.github.cottonmc:cotton-resources:${cotton_resources_version}" // JIJ time
 
 	// ModMenu -- We have a hook for this
 	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
@@ -79,7 +79,9 @@ dependencies {
 	compileOnly group: 'org.jetbrains', name: 'annotations', version: "${project.jetbrains_annotations}"
 
 	// Optional Mods - We have this for looking up items and verifying recipes.
-	modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+	modRuntime ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
+		exclude module: "modmenu"
+	}
 
 	// JUnit for config
 	testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
@@ -128,10 +130,10 @@ jar {
 	from "LICENSE"
 }
 
-//checkstyle {
-//	configFile = rootProject.file("checkstyle.xml")
-//	toolVersion = '8.25'
-//}
+checkstyle {
+	configFile = rootProject.file("checkstyle.xml")
+	toolVersion = '8.25'
+}
 
 // configure the maven publication
 publishing {

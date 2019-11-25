@@ -59,11 +59,6 @@ import java.util.stream.IntStream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-/*
- * Note: The Hitboxes for the shulker boxes are a bit wonky, as you really can't stand ontop of the boxes.
- * This is a bug which I have no known fix for. Please PR if you have a fix for the issue where you jitter standing ontop of an open shulker box. This issue is not present with the vanilla shulker box oddly.
- * I have done testing and realized it has something to do with the Dynamic Nature of the Shulker Box hitboxes
- */
 public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Tickable, BaseShulkerBlockEntity {
     protected final int[] AVAILABLE_SLOTS;
     protected DefaultedList<ItemStack> inventory;
@@ -76,18 +71,22 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
 
     protected AbstractShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
         super(blockEntityType);
-        checkArgument(maxAvailableSlot > 0, "Maximum available slot cannot be less than 1");
+        checkArgument(maxAvailableSlot > 0, "Maximum available slots cannot be less than 1");
         this.AVAILABLE_SLOTS = IntStream.range(0, maxAvailableSlot).toArray();
         this.animationStage = AnimationStatus.CLOSED;
         this.cachedColor = color;
     }
 
+    @Override
     public abstract Box getBoundingBox(BlockState blockState);
 
+    @Override
     public abstract Box getBoundingBox(Direction facing);
 
+    @Override
     public abstract Box getCollisionBox(Direction facing);
 
+    @Override
     public void tick() {
         this.updateAnimation();
         if (this.animationStage == AnimationStatus.OPENING || this.animationStage == AnimationStatus.CLOSING) {
@@ -124,57 +123,55 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
 
     }
 
+    @Override
     public AnimationStatus getAnimationStage() {
         return this.animationStage;
     }
 
     protected void pushEntities() {
         BlockState blockState = this.world.getBlockState(this.getPos());
-
         if (blockState.getBlock() instanceof BaseShulkerBlock) {
-
-            Direction facing = blockState.get(BaseShulkerBlock.FACING);
-            Box adjacentToLid = this.getCollisionBox(facing).offset(this.pos);
-            List<Entity> entities = this.world.getEntities((Entity)null, adjacentToLid);
-
-            if (!entities.isEmpty()) {
-                for(int entityListPos = 0; entityListPos < entities.size(); ++entityListPos) {
-                    Entity entity = entities.get(entityListPos);
+            Direction direction = blockState.get(BaseShulkerBlock.FACING);
+            Box box = this.getCollisionBox(direction).offset(this.pos);
+            List<Entity> list = this.world.getEntities(null, box);
+            if (!list.isEmpty()) {
+                for(int i = 0; i < list.size(); ++i) {
+                    Entity entity = list.get(i);
                     if (entity.getPistonBehavior() != PistonBehavior.IGNORE) {
-                        double xOffset = 0.0D;
-                        double yOffset = 0.0D;
-                        double zOffset = 0.0D;
-                        Box entityBoundingBox = entity.getBoundingBox();
-                        switch(facing.getAxis()) {
+                        double d = 0.0D;
+                        double e = 0.0D;
+                        double f = 0.0D;
+                        Box box2 = entity.getBoundingBox();
+                        switch(direction.getAxis()) {
                             case X:
-                                if (facing.getDirection() == Direction.AxisDirection.POSITIVE) {
-                                    xOffset = adjacentToLid.maxX - entityBoundingBox.minX;
+                                if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
+                                    d = box.x2 - box2.x1;
                                 } else {
-                                    xOffset = entityBoundingBox.maxX - adjacentToLid.minX;
+                                    d = box2.x2 - box.x1;
                                 }
 
-                                xOffset += 0.01D;
+                                d += 0.01D;
                                 break;
                             case Y:
-                                if (facing.getDirection() == Direction.AxisDirection.POSITIVE) {
-                                    yOffset = adjacentToLid.maxY - entityBoundingBox.minY;
+                                if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
+                                    e = box.y2 - box2.y1;
                                 } else {
-                                    yOffset = entityBoundingBox.maxY - adjacentToLid.minY;
+                                    e = box2.y2 - box.y1;
                                 }
 
-                                yOffset += 0.01D;
+                                e += 0.01D;
                                 break;
                             case Z:
-                                if (facing.getDirection() == Direction.AxisDirection.POSITIVE) {
-                                    zOffset = adjacentToLid.maxZ - entityBoundingBox.minZ;
+                                if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
+                                    f = box.z2 - box2.z1;
                                 } else {
-                                    zOffset = entityBoundingBox.maxZ - adjacentToLid.minZ;
+                                    f = box2.z2 - box.z1;
                                 }
 
-                                zOffset += 0.01D;
+                                f += 0.01D;
                         }
 
-                        entity.move(MovementType.SHULKER_BOX, new Vec3d(xOffset * facing.getOffsetX(), yOffset * facing.getOffsetY(), zOffset * facing.getOffsetZ()));
+                        entity.move(MovementType.SHULKER_BOX, new Vec3d(d * (double)direction.getOffsetX(), e * (double)direction.getOffsetY(), f * (double)direction.getOffsetZ()));
                     }
                 }
 
@@ -182,10 +179,12 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
         }
     }
 
+    @Override
     public int getInvSize() {
         return this.inventory.size();
     }
 
+    @Override
     public boolean onBlockAction(int value, int interactorCount) {
         if (value == 1) {
             this.viewerCount = interactorCount;
@@ -209,6 +208,7 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
         this.getCachedState().updateNeighborStates(this.getWorld(), this.getPos(), 3);
     }
 
+    @Override
     public void onInvOpen(PlayerEntity playerEntity) {
         if (!playerEntity.isSpectator()) {
             if (this.viewerCount < 0) {
@@ -224,6 +224,7 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
 
     }
 
+    @Override
     public void onInvClose(PlayerEntity playerEntity) {
         if (!playerEntity.isSpectator()) {
             --this.viewerCount;
@@ -235,15 +236,18 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
 
     }
 
+    @Override
     protected Text getContainerName() {
-        return new TranslatableText("container.shulkerBox", new Object[0]);
+        return new TranslatableText("container.shulkerBox");
     }
 
+    @Override
     public void fromTag(CompoundTag input) {
         super.fromTag(input);
         this.deserializeInventory(input);
     }
 
+    @Override
     public CompoundTag toTag(CompoundTag output) {
         super.toTag(output);
         return this.serializeInventory(output);
@@ -251,7 +255,7 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
 
     public void deserializeInventory(CompoundTag tag) {
         this.inventory = DefaultedList.ofSize(this.getInvSize(), ItemStack.EMPTY);
-        if (!this.deserializeLootTable(tag) && tag.containsKey("Items", 9)) {
+        if (!this.deserializeLootTable(tag) && tag.contains("Items", 9)) {
             Inventories.fromTag(tag, this.inventory);
         }
 
@@ -265,14 +269,17 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
         return output;
     }
 
+    @Override
     protected DefaultedList<ItemStack> getInvStackList() {
         return this.inventory;
     }
 
+    @Override
     protected void setInvStackList(DefaultedList<ItemStack> itemStackDefaultedList) {
         this.inventory = itemStackDefaultedList;
     }
 
+    @Override
     public boolean isInvEmpty() {
         Iterator<ItemStack> stackIterator = this.inventory.iterator(); // TODO This could be cleaner.
 
@@ -287,18 +294,22 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
         return false;
     }
 
+    @Override
     public int[] getInvAvailableSlots(Direction direction) {
         return AVAILABLE_SLOTS;
     }
 
+    @Override
     public boolean canExtractInvStack(int inventorySlot, ItemStack stack, Direction direction) {
         return true;
     }
 
+    @Override
     public boolean canInsertInvStack(int inventorySlot, ItemStack stack, @Nullable Direction direction) {
         return CursedShulkerBox.getInstance().canInsertItem(stack);
     }
 
+    @Override
     public float getAnimationProgress(float currentProgress) {
         return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
     }
@@ -313,6 +324,7 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
         return this.cachedColor;
     }
 
+    @Override
     protected Container createContainer(int syncId, PlayerInventory playerInventory) {
         return null; // Our implementation does not require this method since the PropertyRetriever and Fabric-API handle the containers.
     }

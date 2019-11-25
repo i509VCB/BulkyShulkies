@@ -31,7 +31,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityContext;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.SystemUtil;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -50,7 +50,7 @@ public abstract class AbstractCursedShulkerSlabBlock extends AbstractShulkerBoxB
     protected static final VoxelShape SOUTH_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D);
     protected static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 8.0D, 16.0D, 16.0D, 16.0D);
 
-    private static final Map<Direction, VoxelShape> SHAPES = SystemUtil.consume(new DefaultReturnHashMap<>(BOTTOM_SHAPE), map -> {
+    private static final Map<Direction, VoxelShape> SHAPES = Util.create(new DefaultReturnHashMap<>(BOTTOM_SHAPE), map -> {
         map.put(Direction.DOWN, TOP_SHAPE);
         map.put(Direction.UP, BOTTOM_SHAPE);
         map.put(Direction.WEST, WEST_SHAPE);
@@ -61,7 +61,7 @@ public abstract class AbstractCursedShulkerSlabBlock extends AbstractShulkerBoxB
 
     protected AbstractCursedShulkerSlabBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
         super(settings, slotCount, color);
-        this.setDefaultState(this.getStateFactory().getDefaultState().with(FACING, Direction.UP));
+        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.UP));
     }
 
     public static VoxelShape getShape(Direction facing) {
@@ -76,14 +76,16 @@ public abstract class AbstractCursedShulkerSlabBlock extends AbstractShulkerBoxB
     @Override
     public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
         BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
-        return blockEntity instanceof AbstractCursedShulkerSlabBlockEntity ?
-                VoxelShapes.cuboid(((AbstractCursedShulkerSlabBlockEntity) blockEntity).getBoundingBox(blockState))
+        return blockEntity instanceof AbstractCursedShulkerSlabBlockEntity
+                ? VoxelShapes.cuboid(((AbstractCursedShulkerSlabBlockEntity) blockEntity).getBoundingBox(blockState))
                 : AbstractCursedShulkerSlabBlock.getShape(blockState.get(AbstractCursedShulkerSlabBlock.FACING));
     }
 
     @Override
-    public Box getOpenBox(Direction facing) {
-        return getShape(facing).getBoundingBox().stretch(0.25F * facing.getOffsetX(), 0.25F * facing.getOffsetY(), 0.25F * facing.getOffsetZ()).shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
+    public Box getOpenBox(Direction facing) { // This is the bit above the block where collisions are checked for to verify the box can actually be opened.
+        return getShape(facing).getBoundingBox()
+                .stretch(0.25F * facing.getOffsetX(), 0.25F * facing.getOffsetY(), 0.25F * facing.getOffsetZ())
+                .shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
     }
 
     @Override

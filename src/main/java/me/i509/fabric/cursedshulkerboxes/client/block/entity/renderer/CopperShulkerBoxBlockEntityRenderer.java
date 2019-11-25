@@ -25,42 +25,42 @@
 package me.i509.fabric.cursedshulkerboxes.client.block.entity.renderer;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
+import me.i509.fabric.cursedshulkerboxes.abstraction.DefaultReturnHashMap;
 import me.i509.fabric.cursedshulkerboxes.block.material.copper.CopperShulkerBoxBlockEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.class_4722;
+import net.minecraft.class_4730;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.entity.model.ShulkerEntityModel;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 
+import java.util.Arrays;
+
+@Environment(EnvType.CLIENT)
 public class CopperShulkerBoxBlockEntityRenderer extends AbstractMaterialBasedShulkerBlockEntityRenderer<CopperShulkerBoxBlockEntity> {
-    private static final Identifier SKIN = CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker.png");
-    private static final Identifier[] SKIN_COLOR = new Identifier[] {
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_white.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_orange.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_magenta.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_light_blue.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_yellow.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_lime.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_pink.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_gray.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_light_gray.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_cyan.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_purple.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_blue.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_brown.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_green.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_red.png"),
-            CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_black.png")
-    };
+    public CopperShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
+        super(new ShulkerEntityModel<>(), blockEntityRenderDispatcher);
+    }
 
-    public CopperShulkerBoxBlockEntityRenderer(ShulkerEntityModel model) {
-        super(model);
+    public static final Identifier shulkerTextureAtlas = CursedShulkerBoxMod.id("textures/atlas/shulker_boxes.png");
+    private static final class_4730 uncoloredWrappedSprite = new class_4730(shulkerTextureAtlas, CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker"));
+    private static final DefaultReturnHashMap<DyeColor, class_4730> wrappedSprites = Util.create(new DefaultReturnHashMap<>(uncoloredWrappedSprite), map -> {
+        Arrays.stream(DyeColor.values()).forEach(color -> {
+            map.put(color, new class_4730(shulkerTextureAtlas, CursedShulkerBoxMod.id("textures/blockentity/shulker/copper/shulker_" + color.getName())));
+        });
+    });
+
+    @Override
+    public Identifier getShulkerTextureAtlas() {
+        //return shulkerTextureAtlas;
+        return class_4722.field_21704;
     }
 
     @Override
-    public Identifier getSkin() {
-        return SKIN;
-    }
-
-    @Override
-    public Identifier[] getSkinColors() {
-        return SKIN_COLOR;
+    public class_4730 getWrappedSprite(DyeColor color) {
+        return wrappedSprites.get(color);
     }
 }

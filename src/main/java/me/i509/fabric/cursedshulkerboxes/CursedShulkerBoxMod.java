@@ -30,10 +30,13 @@ import me.i509.fabric.cursedshulkerboxes.extension.ShulkerHooks;
 import me.i509.fabric.cursedshulkerboxes.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.minecraft.block.NoteBlock;
+import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 
 public class CursedShulkerBoxMod implements ModInitializer {
     public static final String MODID = "cursedshulkerboxes";
@@ -50,6 +53,7 @@ public class CursedShulkerBoxMod implements ModInitializer {
         ShulkerItems.init();
         ShulkerItemGroups.init();
         ShulkerHooks.init();
+
         CursedDataTrackers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
 
         ContainerProviderRegistry.INSTANCE.registerFactory(id("shulkerscrollcontainer"), ((syncId, identifier, player, buf) -> {

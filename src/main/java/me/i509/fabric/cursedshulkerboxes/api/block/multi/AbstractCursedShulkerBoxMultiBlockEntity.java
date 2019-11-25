@@ -53,6 +53,7 @@ public class AbstractCursedShulkerBoxMultiBlockEntity extends AbstractShulkerBox
         return this.getBoundingBox(blockState.get(AbstractShulkerBoxBlock.FACING));
     }
 
+    @Override
     public Box getBoundingBox(Direction direction) {
         float lerpedProgress = this.getAnimationProgress(1.0F);
         return VoxelShapes.fullCube()
@@ -66,6 +67,7 @@ public class AbstractCursedShulkerBoxMultiBlockEntity extends AbstractShulkerBox
         return this.getBoundingBox(facing).shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
     }
 
+    @Override
     public float getAnimationProgress(float currentProgress) { // TODO Add logic to make upper half read the lower block for current animation progress so the box properly expands.
         return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
     }

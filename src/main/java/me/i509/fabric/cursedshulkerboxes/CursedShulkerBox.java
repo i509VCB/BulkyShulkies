@@ -29,6 +29,7 @@ import me.i509.fabric.cursedshulkerboxes.config.MainConfig;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.client.render.block.entity.ShulkerBoxBlockEntityRenderer;
 import net.minecraft.item.ItemStack;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -76,7 +77,6 @@ public class CursedShulkerBox {
     }
 
     private void reloadRecipes() {
-
     }
 
     private static final CursedShulkerBox instance = new CursedShulkerBox();
