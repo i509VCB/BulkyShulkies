@@ -24,6 +24,8 @@
 
 package me.i509.fabric.cursedshulkerboxes.block.material.copper;
 
+import static me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlock.FACING;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityContext;
@@ -35,30 +37,28 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
-import static me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlock.FACING;
-
 public class ExampleBlock extends Block {
-    public ExampleBlock(Settings settings) {
-        super(settings);
-        this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.UP));
-    }
+	public ExampleBlock(Settings settings) {
+		super(settings);
+		this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.UP));
+	}
 
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext ePos) {
-        Direction direction = state.get(FACING);
-        return VoxelShapes.cuboid(VoxelShapes.fullCube()
-                .getBoundingBox()
-                .stretch(0.5F * direction.getOffsetX(), 0.5F * direction.getOffsetY(), 0.5F * direction.getOffsetZ()));
-    }
+	@Override
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext ePos) {
+		Direction direction = state.get(FACING);
+		return VoxelShapes.cuboid(VoxelShapes.fullCube()
+				.getBoundingBox()
+				.stretch(0.5F * direction.getOffsetX(), 0.5F * direction.getOffsetY(), 0.5F * direction.getOffsetZ()));
+	}
 
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext placementContext) {
-        return this.getDefaultState().with(FACING, placementContext.getSide());
-    }
+	@Override
+	public BlockState getPlacementState(ItemPlacementContext placementContext) {
+		return this.getDefaultState().with(FACING, placementContext.getSide());
+	}
 
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
-        builder.add(FACING);
-    }
+	@Override
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+		super.appendProperties(builder);
+		builder.add(FACING);
+	}
 }

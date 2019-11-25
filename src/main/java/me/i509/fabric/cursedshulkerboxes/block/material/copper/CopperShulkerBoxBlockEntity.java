@@ -24,17 +24,19 @@
 
 package me.i509.fabric.cursedshulkerboxes.block.material.copper;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
-import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
-import net.minecraft.util.DyeColor;
 import org.jetbrains.annotations.Nullable;
 
-public class CopperShulkerBoxBlockEntity extends AbstractMaterialBasedShulkerBoxBlockEntity {
-    public CopperShulkerBoxBlockEntity(@Nullable DyeColor color) {
-        super(ShulkerBlockEntities.COPPER_SHULKER_BOX, 36, color);
-    }
+import net.minecraft.util.DyeColor;
 
-    public CopperShulkerBoxBlockEntity() {
-        this(null);
-    }
+import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
+
+public class CopperShulkerBoxBlockEntity extends AbstractMaterialBasedShulkerBoxBlockEntity {
+	public CopperShulkerBoxBlockEntity(@Nullable DyeColor color) {
+		super(ShulkerBlockEntities.COPPER_SHULKER_BOX, 36, color);
+	}
+
+	public CopperShulkerBoxBlockEntity() {
+		this(null);
+	}
 }

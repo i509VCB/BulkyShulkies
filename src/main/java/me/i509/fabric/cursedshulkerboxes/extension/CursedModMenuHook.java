@@ -25,11 +25,12 @@
 package me.i509.fabric.cursedshulkerboxes.extension;
 
 import io.github.prospector.modmenu.api.ModMenuApi;
+
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 
 public class CursedModMenuHook implements ModMenuApi {
-    @Override
-    public String getModId() {
-        return CursedShulkerBoxMod.MODID;
-    }
+	@Override
+	public String getModId() {
+		return CursedShulkerBoxMod.MODID;
+	}
 }

@@ -24,22 +24,24 @@
 
 package me.i509.fabric.cursedshulkerboxes.mixin;
 
-import me.i509.fabric.cursedshulkerboxes.CursedShulkerBox;
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
+import net.minecraft.block.entity.ShulkerBoxBlockEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Direction;
+
+import me.i509.fabric.cursedshulkerboxes.CursedShulkerBox;
+
 @Mixin(ShulkerBoxBlockEntity.class)
 public abstract class ShulkerBoxBlockEntityMixin {
-    /**
-     * @author i509
-     * @reason Prevent our custom shulker boxes from being thrown in a different shulker box and vice versa.
-     */
-    @Overwrite
-    public boolean canInsertInvStack(int inventorySlot, ItemStack stack, @Nullable Direction direction) {
-        return CursedShulkerBox.getInstance().canInsertItem(stack);
-    }
+	/**
+	 * @author i509
+	 * @reason Prevent our custom shulker boxes from being thrown in a different shulker box and vice versa.
+	 */
+	@Overwrite
+	public boolean canInsertInvStack(int inventorySlot, ItemStack stack, @Nullable Direction direction) {
+		return CursedShulkerBox.getInstance().canInsertItem(stack);
+	}
 }

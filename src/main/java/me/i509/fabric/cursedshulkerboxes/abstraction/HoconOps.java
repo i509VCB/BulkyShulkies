@@ -24,6 +24,14 @@
 
 package me.i509.fabric.cursedshulkerboxes.abstraction;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.DSL;
 import com.mojang.datafixers.types.DynamicOps;
@@ -32,176 +40,178 @@ import ninja.leaping.configurate.ValueType;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.commented.SimpleCommentedConfigurationNode;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 public class HoconOps implements DynamicOps<CommentedConfigurationNode> {
-    public static final HoconOps INSTANCE = new HoconOps();
+	public static final HoconOps INSTANCE = new HoconOps();
 
-    protected HoconOps() {}
+	protected HoconOps() {
+		// NO-OP
+	}
 
-    @Override
-    public CommentedConfigurationNode empty() {
-        return SimpleCommentedConfigurationNode.root();
-    }
+	@Override
+	public CommentedConfigurationNode empty() {
+		return SimpleCommentedConfigurationNode.root();
+	}
 
-    @Override
-    public Type<?> getType(CommentedConfigurationNode input) {
-        if (input == null) {
-            throw new NullPointerException("input is null");
-        }
+	@Override
+	public Type<?> getType(CommentedConfigurationNode input) {
+		if (input == null) {
+			throw new NullPointerException("input is null");
+		}
 
-        switch (input.getValueType()) {
-            case SCALAR:
-                Object value = input.getValue();
-                if (value instanceof String) {
-                    return DSL.string();
-                } else if (value instanceof Boolean) {
-                    return DSL.bool();
-                } else if (value instanceof Short) {
-                    return DSL.shortType();
-                } else if (value instanceof Integer) {
-                    return DSL.intType();
-                } else if (value instanceof Long) {
-                    return DSL.longType();
-                } else if (value instanceof Float) {
-                    return DSL.floatType();
-                } else if (value instanceof Double) {
-                    return DSL.doubleType();
-                } else if (value instanceof Byte) {
-                    return DSL.byteType();
-                } else {
-                    throw new IllegalArgumentException("Scalar value '" + input + "' has an unknown type: " + value.getClass().getName());
-                }
-            case MAP:
-                return DSL.compoundList(DSL.remainderType(), DSL.remainderType());
-            case LIST:
-                return DSL.list(DSL.remainderType());
-            case NULL:
-                return DSL.nilType();
-            default:
-                throw new IllegalArgumentException("Value type '" + input + "' has an unknown type: " + input.getValue().getClass().getName());
-        }
-    }
+		switch (input.getValueType()) {
+		case SCALAR:
+			Object value = input.getValue();
 
-    @Override
-    public Optional<Number> getNumberValue(CommentedConfigurationNode input) {
-        if (input.getValueType().equals(ValueType.SCALAR)) {
-            if (input.getValue() instanceof Number) {
-                return Optional.of((Number) input.getValue());
-            } else if (input.getValue() instanceof Boolean) {
-                return Optional.of(input.getBoolean() ? 1 : 0);
-            }
-        }
+			if (value instanceof String) {
+				return DSL.string();
+			} else if (value instanceof Boolean) {
+				return DSL.bool();
+			} else if (value instanceof Short) {
+				return DSL.shortType();
+			} else if (value instanceof Integer) {
+				return DSL.intType();
+			} else if (value instanceof Long) {
+				return DSL.longType();
+			} else if (value instanceof Float) {
+				return DSL.floatType();
+			} else if (value instanceof Double) {
+				return DSL.doubleType();
+			} else if (value instanceof Byte) {
+				return DSL.byteType();
+			} else {
+				throw new IllegalArgumentException("Scalar value '" + input + "' has an unknown type: " + value.getClass().getName());
+			}
+		case MAP:
+			return DSL.compoundList(DSL.remainderType(), DSL.remainderType());
+		case LIST:
+			return DSL.list(DSL.remainderType());
+		case NULL:
+			return DSL.nilType();
+		default:
+			throw new IllegalArgumentException("Value type '" + input + "' has an unknown type: " + input.getValue().getClass().getName());
+		}
+	}
 
-        return Optional.empty();
-    }
+	@Override
+	public Optional<Number> getNumberValue(CommentedConfigurationNode input) {
+		if (input.getValueType().equals(ValueType.SCALAR)) {
+			if (input.getValue() instanceof Number) {
+				return Optional.of((Number) input.getValue());
+			} else if (input.getValue() instanceof Boolean) {
+				return Optional.of(input.getBoolean() ? 1 : 0);
+			}
+		}
 
-    @Override
-    public CommentedConfigurationNode createNumeric(Number i) {
-        return SimpleCommentedConfigurationNode.root().setValue(i);
-    }
+		return Optional.empty();
+	}
 
-    @Override
-    public Optional<String> getStringValue(CommentedConfigurationNode input) {
-        if(input.getValueType().equals(ValueType.SCALAR)) {
-            if(input.getValue() instanceof String) {
-                return Optional.of(input.getString());
-            }
-        }
-        return Optional.empty();
-    }
+	@Override
+	public CommentedConfigurationNode createNumeric(Number i) {
+		return SimpleCommentedConfigurationNode.root().setValue(i);
+	}
 
-    @Override
-    public CommentedConfigurationNode createString(String value) {
-        return SimpleCommentedConfigurationNode.root().setValue(value);
-    }
+	@Override
+	public Optional<String> getStringValue(CommentedConfigurationNode input) {
+		if (input.getValueType().equals(ValueType.SCALAR)) {
+			if (input.getValue() instanceof String) {
+				return Optional.of(input.getString());
+			}
+		}
 
-    @Override
-    public CommentedConfigurationNode mergeInto(CommentedConfigurationNode input, CommentedConfigurationNode value) {
-        return value.mergeValuesFrom(input);
-    }
+		return Optional.empty();
+	}
 
-    @Override
-    public CommentedConfigurationNode mergeInto(CommentedConfigurationNode input, CommentedConfigurationNode key, CommentedConfigurationNode value) {
-        Map<Object, CommentedConfigurationNode> immutableInputChildrenMap = (Map<Object, CommentedConfigurationNode>) input.getChildrenMap(); // This is Immutable when it comes out.
-        Map<Object, CommentedConfigurationNode> mutableChildMap = new HashMap<>();
+	@Override
+	public CommentedConfigurationNode createString(String value) {
+		return SimpleCommentedConfigurationNode.root().setValue(value);
+	}
 
-        if(input.getValueType().equals(ValueType.MAP)) {
-            mutableChildMap.putAll(immutableInputChildrenMap);
-        } else if (input.getValueType() != ValueType.NULL) {
-            return input;
-        }
+	@Override
+	public CommentedConfigurationNode mergeInto(CommentedConfigurationNode input, CommentedConfigurationNode value) {
+		return value.mergeValuesFrom(input);
+	}
 
-        mutableChildMap.put(key.getKey(), value);
-        return SimpleCommentedConfigurationNode.root().setValue(mutableChildMap);
-    }
+	@Override
+	public CommentedConfigurationNode mergeInto(CommentedConfigurationNode input, CommentedConfigurationNode key, CommentedConfigurationNode value) {
+		Map<Object, CommentedConfigurationNode> immutableInputChildrenMap = (Map<Object, CommentedConfigurationNode>) input.getChildrenMap(); // This is Immutable when it comes out.
+		Map<Object, CommentedConfigurationNode> mutableChildMap = new HashMap<>();
 
-    @Override
-    public CommentedConfigurationNode merge(CommentedConfigurationNode first, CommentedConfigurationNode second) {
-        return first.mergeValuesFrom(second);
-    }
+		if (input.getValueType().equals(ValueType.MAP)) {
+			mutableChildMap.putAll(immutableInputChildrenMap);
+		} else if (input.getValueType() != ValueType.NULL) {
+			return input;
+		}
 
-    @Override
-    public Optional<Map<CommentedConfigurationNode, CommentedConfigurationNode>> getMapValues(CommentedConfigurationNode input) {
-        if(input.getValueType().equals(ValueType.MAP)) {
-            ImmutableMap.Builder<CommentedConfigurationNode, CommentedConfigurationNode> builder = ImmutableMap.builder();
-            for (Map.Entry<Object, ? extends CommentedConfigurationNode> entry : input.getChildrenMap().entrySet()) {
-                builder.put(SimpleCommentedConfigurationNode.root().setValue(entry.getKey()), SimpleCommentedConfigurationNode.root().setValue(entry.getValue()));
-            }
-            return Optional.of(builder.build());
-        }
+		mutableChildMap.put(key.getKey(), value);
+		return SimpleCommentedConfigurationNode.root().setValue(mutableChildMap);
+	}
 
-        return Optional.empty();
-    }
+	@Override
+	public CommentedConfigurationNode merge(CommentedConfigurationNode first, CommentedConfigurationNode second) {
+		return first.mergeValuesFrom(second);
+	}
 
-    @Override
-    public CommentedConfigurationNode createMap(Map<CommentedConfigurationNode, CommentedConfigurationNode> map) {
-        Map<Object, CommentedConfigurationNode> resultMap = new HashMap<>();
+	@Override
+	public Optional<Map<CommentedConfigurationNode, CommentedConfigurationNode>> getMapValues(CommentedConfigurationNode input) {
+		if (input.getValueType().equals(ValueType.MAP)) {
+			ImmutableMap.Builder<CommentedConfigurationNode, CommentedConfigurationNode> builder = ImmutableMap.builder();
 
-        for(Map.Entry<CommentedConfigurationNode, CommentedConfigurationNode> entry : map.entrySet()) {
-            resultMap.put(entry.getKey().getPath(), entry.getValue());
-        }
+			for (Map.Entry<Object, ? extends CommentedConfigurationNode> entry : input.getChildrenMap().entrySet()) {
+				builder.put(SimpleCommentedConfigurationNode.root().setValue(entry.getKey()), SimpleCommentedConfigurationNode.root().setValue(entry.getValue()));
+			}
 
-        return SimpleCommentedConfigurationNode.root().setValue(resultMap);
-    }
+			return Optional.of(builder.build());
+		}
 
-    @Override
-    public Optional<Stream<CommentedConfigurationNode>> getStream(CommentedConfigurationNode input) {
-        if(input.getValueType().equals(ValueType.LIST)) {
-            Stream<CommentedConfigurationNode> stream = (Stream<CommentedConfigurationNode>) input.getChildrenList().stream();
-            return Optional.of(stream);
-        }
+		return Optional.empty();
+	}
 
-        return Optional.empty();
-    }
+	@Override
+	public CommentedConfigurationNode createMap(Map<CommentedConfigurationNode, CommentedConfigurationNode> map) {
+		Map<Object, CommentedConfigurationNode> resultMap = new HashMap<>();
 
-    @Override
-    public CommentedConfigurationNode createList(Stream<CommentedConfigurationNode> input) {
-        List<CommentedConfigurationNode> list = new ArrayList<>();
+		for (Map.Entry<CommentedConfigurationNode, CommentedConfigurationNode> entry : map.entrySet()) {
+			resultMap.put(entry.getKey().getPath(), entry.getValue());
+		}
 
-        for (CommentedConfigurationNode node : input.collect(Collectors.toList())) {
-            list.add(node);
-        }
+		return SimpleCommentedConfigurationNode.root().setValue(resultMap);
+	}
 
-        return SimpleCommentedConfigurationNode.root().setValue(list);
-    }
+	@Override
+	public Optional<Stream<CommentedConfigurationNode>> getStream(CommentedConfigurationNode input) {
+		if (input.getValueType().equals(ValueType.LIST)) {
+			Stream<CommentedConfigurationNode> stream = (Stream<CommentedConfigurationNode>) input.getChildrenList().stream();
+			return Optional.of(stream);
+		}
 
-    @Override
-    public CommentedConfigurationNode remove(CommentedConfigurationNode input, String key) {
-        if(input.getValueType().equals(ValueType.MAP)) {
-            Map<Object, ? extends CommentedConfigurationNode> immutableChildMap = input.getChildrenMap();
-            Map<Object, ? extends CommentedConfigurationNode> mutableChildMap = new HashMap<>(immutableChildMap);
-            mutableChildMap.remove(key);
-            return input.setValue(mutableChildMap);
-        }
+		return Optional.empty();
+	}
 
-        return input;
-    }
+	@Override
+	public CommentedConfigurationNode createList(Stream<CommentedConfigurationNode> input) {
+		List<CommentedConfigurationNode> list = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "HOCON";
-    }
+		for (CommentedConfigurationNode node : input.collect(Collectors.toList())) {
+			list.add(node);
+		}
+
+		return SimpleCommentedConfigurationNode.root().setValue(list);
+	}
+
+	@Override
+	public CommentedConfigurationNode remove(CommentedConfigurationNode input, String key) {
+		if (input.getValueType().equals(ValueType.MAP)) {
+			Map<Object, ? extends CommentedConfigurationNode> immutableChildMap = input.getChildrenMap();
+			Map<Object, ? extends CommentedConfigurationNode> mutableChildMap = new HashMap<>(immutableChildMap);
+			mutableChildMap.remove(key);
+			return input.setValue(mutableChildMap);
+		}
+
+		return input;
+	}
+
+	@Override
+	public String toString() {
+		return "HOCON";
+	}
 }

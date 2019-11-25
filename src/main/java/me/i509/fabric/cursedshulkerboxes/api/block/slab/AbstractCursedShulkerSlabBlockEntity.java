@@ -24,8 +24,8 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.slab;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlockEntity;
-import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlock;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
@@ -33,65 +33,32 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
-import org.jetbrains.annotations.Nullable;
+
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlock;
 
 // TODO Change push speed as not to make it as jaggedly hard when being moved.
 public class AbstractCursedShulkerSlabBlockEntity extends AbstractShulkerBoxBlockEntity {
-    protected AbstractCursedShulkerSlabBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
-        super(blockEntityType, maxAvailableSlot, color);
-        this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
-    }
+	protected AbstractCursedShulkerSlabBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
+		super(blockEntityType, maxAvailableSlot, color);
+		this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
+	}
 
-    @Override
-    public Box getBoundingBox(BlockState blockState) {
-        return this.getBoundingBox(blockState.get(BaseShulkerBlock.FACING));
-    }
+	@Override
+	public Box getBoundingBox(BlockState blockState) {
+		return this.getBoundingBox(blockState.get(BaseShulkerBlock.FACING));
+	}
 
-    public Box getBoundingBox(Direction openDirection) {
-        float f = this.getAnimationProgress(1.0F);
-        return AbstractCursedShulkerSlabBlock.getShape(openDirection)
-                .getBoundingBox()
-                .stretch(0.25F * f * openDirection.getOffsetX(), 0.25F * f * openDirection.getOffsetY(), 0.25F * f * openDirection.getOffsetZ());
-    }
+	public Box getBoundingBox(Direction openDirection) {
+		float f = this.getAnimationProgress(1.0F);
+		return AbstractCursedShulkerSlabBlock.getShape(openDirection)
+				.getBoundingBox()
+				.stretch(0.25F * f * openDirection.getOffsetX(), 0.25F * f * openDirection.getOffsetY(), 0.25F * f * openDirection.getOffsetZ());
+	}
 
-    @Override
-    public Box getCollisionBox(Direction facing) {
-        Direction direction = facing.getOpposite();
-        return this.getBoundingBox(facing).shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
-    }
-
-    /*
-     * Since the half slab shulker box is smaller, we slow down the animation.
-     *
-    @Override
-    protected void updateAnimation() {
-        this.prevAnimationProgress = this.animationProgress;
-        switch(this.animationStage) {
-            case CLOSED:
-                this.animationProgress = 0.0F;
-                break;
-            case OPENING:
-                this.animationProgress += 0.05F;
-                if (this.animationProgress >= 1.0F) {
-                    this.pushEntities();
-                    this.animationStage = AnimationStatus.OPENED;
-                    this.animationProgress = 1.0F;
-                    this.updateNeighborStates();
-                }
-                break;
-            case CLOSING:
-                this.animationProgress -= 0.05F;
-                if (this.animationProgress <= 0.0F) {
-                    this.animationStage = AnimationStatus.CLOSED;
-                    this.animationProgress = 0.0F;
-                    this.updateNeighborStates();
-                }
-                break;
-            case OPENED:
-                this.animationProgress = 1.0F;
-        }
-
-    }
-
-     */
+	@Override
+	public Box getCollisionBox(Direction facing) {
+		Direction direction = facing.getOpposite();
+		return this.getBoundingBox(facing).shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
+	}
 }

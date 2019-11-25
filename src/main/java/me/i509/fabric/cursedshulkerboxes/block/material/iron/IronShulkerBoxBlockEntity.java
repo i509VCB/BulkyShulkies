@@ -24,17 +24,19 @@
 
 package me.i509.fabric.cursedshulkerboxes.block.material.iron;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
-import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
-import net.minecraft.util.DyeColor;
 import org.jetbrains.annotations.Nullable;
 
-public class IronShulkerBoxBlockEntity extends AbstractMaterialBasedShulkerBoxBlockEntity {
-    public IronShulkerBoxBlockEntity(@Nullable DyeColor color) {
-        super(ShulkerBlockEntities.IRON_SHULKER_BOX, 45, color);
-    }
+import net.minecraft.util.DyeColor;
 
-    public IronShulkerBoxBlockEntity() {
-        this(null);
-    }
+import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
+
+public class IronShulkerBoxBlockEntity extends AbstractMaterialBasedShulkerBoxBlockEntity {
+	public IronShulkerBoxBlockEntity(@Nullable DyeColor color) {
+		super(ShulkerBlockEntities.IRON_SHULKER_BOX, 45, color);
+	}
+
+	public IronShulkerBoxBlockEntity() {
+		this(null);
+	}
 }

@@ -24,106 +24,112 @@
 
 package me.i509.fabric.cursedshulkerboxes;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
-import me.i509.fabric.cursedshulkerboxes.config.MainConfig;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Block;
-import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.client.render.block.entity.ShulkerBoxBlockEntityRenderer;
-import net.minecraft.item.ItemStack;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
+import com.google.common.reflect.TypeToken;
+import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
+import ninja.leaping.configurate.objectmapping.DefaultObjectMapperFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.Message;
 import org.apache.logging.log4j.message.MessageFactory;
 import org.apache.logging.log4j.message.SimpleMessage;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
+import net.minecraft.block.Block;
+import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.item.ItemStack;
+
+import net.fabricmc.loader.api.FabricLoader;
+
+import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlock;
+import me.i509.fabric.cursedshulkerboxes.config.MainConfig;
 
 public class CursedShulkerBox {
-    private MainConfig mainConf;
-    private ConfigurationLoader<CommentedConfigurationNode> mainConfLoader;
-    private ConfigurationLoader<CommentedConfigurationNode> recipeConfLoader;
+	private MainConfig mainConf;
+	private ConfigurationLoader<CommentedConfigurationNode> mainConfLoader;
+	private ConfigurationLoader<CommentedConfigurationNode> recipeConfLoader;
 
-    private CursedShulkerBox() {
-        disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
-        disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof AbstractShulkerBoxBlock);
-        /*
-        if(!configLocation.exists()) {
-            configLocation.mkdirs();
-        }
-        try {
-            if(!configFile.exists()) {
-                configFile.createNewFile();
-                getLogger().info("Creating config file");
-            }
+	private CursedShulkerBox() {
+		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
+		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof BaseShulkerBlock);
 
-            mainConfLoader = HoconConfigurationLoader.builder()
-                    .setFile(configFile).build();
+		if (!configLocation.exists()) {
+			configLocation.mkdirs();
+		}
 
-            CommentedConfigurationNode mainConfigRoot = mainConfLoader.load(ConfigurationOptions.defaults().setHeader("HEADER")
-                    .setObjectMapperFactory(DefaultObjectMapperFactory.getInstance()).setShouldCopyDefaults(true));
-            mainConf = mainConfigRoot.getValue(TypeToken.of(MainConfig.class), new MainConfig());
-            mainConfLoader.save(mainConfigRoot);
+		try {
+			if (!configFile.exists()) {
+				configFile.createNewFile();
+				getLogger().info("Creating config file");
+			}
 
-        } catch (Exception e) {
-            e.printStackTrace(); // TODO Fail
-        }
-        */
-    }
+			mainConfLoader = HoconConfigurationLoader.builder()
+					.setFile(configFile).build();
 
-    private void reloadRecipes() {
-    }
+			CommentedConfigurationNode mainConfigRoot = mainConfLoader.load(ConfigurationOptions.defaults().setHeader("HEADER")
+					.setObjectMapperFactory(DefaultObjectMapperFactory.getInstance()).setShouldCopyDefaults(true));
+			mainConf = mainConfigRoot.getValue(TypeToken.of(MainConfig.class), new MainConfig());
+			mainConfLoader.save(mainConfigRoot);
+		} catch (Exception e) {
+			e.printStackTrace(); // TODO Fail
+		}
+	}
 
-    private static final CursedShulkerBox instance = new CursedShulkerBox();
-    private static final File configLocation = new File(FabricLoader.getInstance().getConfigDirectory(), "cursedshulkerboxes");
-    private static final File recipesFile = new File(configLocation, "recipes.conf");
-    private static final File configFile = new File(configLocation, "cursedshulkers.conf");
+	private void reloadRecipes() {
+		// TODO Impl
+	}
 
-    public static CursedShulkerBox getInstance() {
-        return instance;
-    }
+	private static final CursedShulkerBox instance = new CursedShulkerBox();
+	private static final File configLocation = new File(FabricLoader.getInstance().getConfigDirectory(), "cursedshulkerboxes");
+	private static final File recipesFile = new File(configLocation, "recipes.conf");
+	private static final File configFile = new File(configLocation, "cursedshulkers.conf");
 
-    private List<Predicate<ItemStack>> disallowedItems = new ArrayList<>();
+	public static CursedShulkerBox getInstance() {
+		return instance;
+	}
 
-    public Logger getLogger() {
-        return LogManager.getLogger(new MessageFactory() {
-            @Override
-            public Message newMessage(Object message) {
-                return new SimpleMessage("[CursedShulkerBoxes] " + message);
-            }
+	private List<Predicate<ItemStack>> disallowedItems = new ArrayList<>();
 
-            @Override
-            public Message newMessage(String message) {
-                return new SimpleMessage("[CursedShulkerBoxes] " + message);
-            }
+	public Logger getLogger() {
+		return LogManager.getLogger(new MessageFactory() {
+			@Override
+			public Message newMessage(Object message) {
+				return new SimpleMessage("[CursedShulkerBoxes] " + message);
+			}
 
-            @Override
-            public Message newMessage(String message, Object... params) {
-                return new SimpleMessage("[CursedShulkerBoxes] " + message + params);
-            }
-        });
-    }
+			@Override
+			public Message newMessage(String message) {
+				return new SimpleMessage("[CursedShulkerBoxes] " + message);
+			}
 
-    public MainConfig getConfig() {
-        return this.mainConf;
-    }
+			@Override
+			public Message newMessage(String message, Object... params) {
+				return new SimpleMessage("[CursedShulkerBoxes] " + message + params);
+			}
+		});
+	}
 
-    public void addDisallowedShulkerItem(Predicate<ItemStack> predicate) {
-        this.disallowedItems.add(predicate);
-    }
+	public MainConfig getConfig() {
+		return this.mainConf;
+	}
 
-    public boolean canInsertItem(ItemStack stack) {
-        for (Predicate<ItemStack> disallowedItems : disallowedItems) {
-            if(disallowedItems.test(stack)) {
-                return false;
-            }
-        }
+	public void addDisallowedShulkerItem(Predicate<ItemStack> predicate) {
+		this.disallowedItems.add(predicate);
+	}
 
-        return true;
-    }
+	public boolean canInsertItem(ItemStack stack) {
+		for (Predicate<ItemStack> disallowedItems : disallowedItems) {
+			if (disallowedItems.test(stack)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

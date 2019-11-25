@@ -24,25 +24,27 @@
 
 package me.i509.fabric.cursedshulkerboxes.block.material.iron;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlock;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.world.BlockView;
-import org.jetbrains.annotations.Nullable;
+
+import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlock;
 
 public class IronShulkerBoxBlock extends AbstractMaterialBasedShulkerBoxBlock {
-    public IronShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
-        super(settings, 45, color);
-    }
+	public IronShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
+		super(settings, 45, color);
+	}
 
-    @Override
-    public BlockEntity createBlockEntity(BlockView blockView) {
-        return new IronShulkerBoxBlockEntity(this.getColor());
-    }
+	@Override
+	public BlockEntity createBlockEntity(BlockView blockView) {
+		return new IronShulkerBoxBlockEntity(this.getColor());
+	}
 
-    @Override
-    public ItemStack getItemStack(@Nullable DyeColor color) {
-        return null;
-    }
+	@Override
+	public ItemStack getItemStack(@Nullable DyeColor color) {
+		return null;
+	}
 }

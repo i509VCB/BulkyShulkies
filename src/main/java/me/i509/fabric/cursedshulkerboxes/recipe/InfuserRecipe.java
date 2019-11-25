@@ -33,38 +33,38 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class InfuserRecipe implements Recipe<Inventory> {
-    @Override
-    public boolean matches(Inventory inv, World world) {
-        return false;
-    }
+	@Override
+	public boolean matches(Inventory inv, World world) {
+		return false;
+	}
 
-    @Override
-    public ItemStack craft(Inventory inv) {
-        return null;
-    }
+	@Override
+	public ItemStack craft(Inventory inv) {
+		return null;
+	}
 
-    @Override
-    public boolean fits(int width, int height) {
-        return false;
-    }
+	@Override
+	public boolean fits(int width, int height) {
+		return false;
+	}
 
-    @Override
-    public ItemStack getOutput() {
-        return null;
-    }
+	@Override
+	public ItemStack getOutput() {
+		return null;
+	}
 
-    @Override
-    public Identifier getId() {
-        return null;
-    }
+	@Override
+	public Identifier getId() {
+		return null;
+	}
 
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return null;
-    }
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return null;
+	}
 
-    @Override
-    public RecipeType<?> getType() {
-        return null;
-    }
+	@Override
+	public RecipeType<?> getType() {
+		return null;
+	}
 }

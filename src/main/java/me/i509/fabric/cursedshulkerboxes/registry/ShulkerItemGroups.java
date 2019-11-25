@@ -24,22 +24,27 @@
 
 package me.i509.fabric.cursedshulkerboxes.registry;
 
-import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+
+import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
+
 public class ShulkerItemGroups {
-    public static final ItemGroup CURSED_GROUP = FabricItemGroupBuilder.build(CursedShulkerBoxMod.id("cursedgroup"), () -> new ItemStack(ShulkerBlocks.COPPER_SHULKER_BOX));
-    public static final ItemGroup MATERIAL_GROUP = FabricItemGroupBuilder.build(CursedShulkerBoxMod.id("materialgroup"), () -> new ItemStack(Items.SHULKER_SHELL));
+	public static final ItemGroup CURSED_GROUP = FabricItemGroupBuilder.build(CursedShulkerBoxMod.id("cursedgroup"), () -> new ItemStack(ShulkerBlocks.COPPER_SHULKER_BOX));
+	public static final ItemGroup MATERIAL_GROUP = FabricItemGroupBuilder.build(CursedShulkerBoxMod.id("materialgroup"), () -> new ItemStack(Items.SHULKER_SHELL));
 
-    public static final Item.Settings UNSTACKABLE_CURSED_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(CURSED_GROUP);
-    public static final Item.Settings UNSTACKABLE_MATERIAL_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(ShulkerItemGroups.MATERIAL_GROUP);
+	public static final Item.Settings UNSTACKABLE_CURSED_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(CURSED_GROUP);
+	public static final Item.Settings UNSTACKABLE_MATERIAL_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(ShulkerItemGroups.MATERIAL_GROUP);
 
-    private ShulkerItemGroups(){}
-    public static void init(){}
+	private ShulkerItemGroups() {
+		// NO-OP
+	}
 
+	public static void init() {
+		// NO-OP
+	}
 }

@@ -28,11 +28,11 @@ import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.LivingEntity;
 
 public interface ShulkerHelmetStage {
-    void setStage(ShulkerBoxBlockEntity.AnimationStage stage);
+	void setStage(ShulkerBoxBlockEntity.AnimationStage stage);
 
-    ShulkerBoxBlockEntity.AnimationStage getStage();
+	ShulkerBoxBlockEntity.AnimationStage getStage();
 
-    static ShulkerHelmetStage getStageFromEntity(LivingEntity entity) {
-        return (ShulkerHelmetStage) entity;
-    }
+	static ShulkerHelmetStage getStageFromEntity(LivingEntity entity) {
+		return (ShulkerHelmetStage) entity;
+	}
 }

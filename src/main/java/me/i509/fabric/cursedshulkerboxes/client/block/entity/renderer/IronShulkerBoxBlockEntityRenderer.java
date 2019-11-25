@@ -24,11 +24,8 @@
 
 package me.i509.fabric.cursedshulkerboxes.client.block.entity.renderer;
 
-import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
-import me.i509.fabric.cursedshulkerboxes.abstraction.DefaultReturnHashMap;
-import me.i509.fabric.cursedshulkerboxes.block.material.iron.IronShulkerBoxBlockEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import java.util.Arrays;
+
 import net.minecraft.class_4722;
 import net.minecraft.class_4730;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -37,30 +34,35 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 
-import java.util.Arrays;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
+import me.i509.fabric.cursedshulkerboxes.abstraction.DefaultReturnHashMap;
+import me.i509.fabric.cursedshulkerboxes.block.material.iron.IronShulkerBoxBlockEntity;
 
 @Environment(EnvType.CLIENT)
 public class IronShulkerBoxBlockEntityRenderer extends AbstractMaterialBasedShulkerBlockEntityRenderer<IronShulkerBoxBlockEntity> {
-    public IronShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
-        super(new ShulkerEntityModel<>(), blockEntityRenderDispatcher);
-    }
+	public IronShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
+		super(new ShulkerEntityModel<>(), blockEntityRenderDispatcher);
+	}
 
-    public static final Identifier shulkerTextureAtlas = CursedShulkerBoxMod.id("textures/atlas/shulker_boxes.png");
-    private static final class_4730 uncoloredWrappedSprite = new class_4730(shulkerTextureAtlas, CursedShulkerBoxMod.id("textures/blockentity/shulker/iron/shulker"));
-    private static final DefaultReturnHashMap<DyeColor, class_4730> wrappedSprites = Util.create(new DefaultReturnHashMap<>(uncoloredWrappedSprite), map -> {
-        Arrays.stream(DyeColor.values()).forEach(color -> {
-            map.put(color, new class_4730(shulkerTextureAtlas, CursedShulkerBoxMod.id("textures/blockentity/shulker/iron/shulker_" + color.getName())));
-        });
-    });
+	public static final Identifier shulkerTextureAtlas = CursedShulkerBoxMod.id("textures/atlas/shulker_boxes.png");
+	private static final class_4730 uncoloredWrappedSprite = new class_4730(shulkerTextureAtlas, CursedShulkerBoxMod.id("textures/blockentity/shulker/iron/shulker"));
+	private static final DefaultReturnHashMap<DyeColor, class_4730> wrappedSprites = Util.create(new DefaultReturnHashMap<>(uncoloredWrappedSprite), map -> {
+		Arrays.stream(DyeColor.values()).forEach(color -> {
+			map.put(color, new class_4730(shulkerTextureAtlas, CursedShulkerBoxMod.id("textures/blockentity/shulker/iron/shulker_" + color.getName())));
+		});
+	});
 
-    @Override
-    public Identifier getShulkerTextureAtlas() {
-        //return shulkerTextureAtlas;
-        return class_4722.field_21704;
-    }
+	@Override
+	public Identifier getShulkerTextureAtlas() {
+		//return shulkerTextureAtlas;
+		return class_4722.field_21704;
+	}
 
-    @Override
-    public class_4730 getWrappedSprite(DyeColor color) {
-        return wrappedSprites.get(color);
-    }
+	@Override
+	public class_4730 getWrappedSprite(DyeColor color) {
+		return wrappedSprites.get(color);
+	}
 }

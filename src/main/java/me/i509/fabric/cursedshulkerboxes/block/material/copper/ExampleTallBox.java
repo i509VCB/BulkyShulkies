@@ -24,8 +24,8 @@
 
 package me.i509.fabric.cursedshulkerboxes.block.material.copper;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.multi.AbstractCursedShulkerBoxMultiBlock;
-import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlocks;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
@@ -35,27 +35,29 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+
+import me.i509.fabric.cursedshulkerboxes.api.block.multi.AbstractCursedShulkerBoxMultiBlock;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlocks;
 
 public class ExampleTallBox extends AbstractCursedShulkerBoxMultiBlock {
-    public ExampleTallBox(Settings settings, @Nullable DyeColor color) {
-        super(settings, 54, color);
-    }
+	public ExampleTallBox(Settings settings, @Nullable DyeColor color) {
+		super(settings, 54, color);
+	}
 
-    @Override
-    public BlockEntity createBlockEntity(BlockView blockView) {
-        return new ExampleTallBE(getColor());
-    }
+	@Override
+	public BlockEntity createBlockEntity(BlockView blockView) {
+		return new ExampleTallBE(getColor());
+	}
 
-    @Override
-    public ItemStack getItemStack(@Nullable DyeColor color) {
-        return new ItemStack(ShulkerBlocks.TEST_TALL);
-    }
+	@Override
+	public ItemStack getItemStack(@Nullable DyeColor color) {
+		return new ItemStack(ShulkerBlocks.TEST_TALL);
+	}
 
-    @Override
-    protected Box getOpenBox(Direction facing, World world, BlockPos blockPos) {
-        return VoxelShapes.fullCube().getBoundingBox()
-                .stretch(0.75F * facing.getOffsetX(), 0.75F * facing.getOffsetY(), 0.75F * facing.getOffsetZ())
-                .shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
-    }
+	@Override
+	protected Box getOpenBox(Direction facing, World world, BlockPos blockPos) {
+		return VoxelShapes.fullCube().getBoundingBox()
+				.stretch(0.75F * facing.getOffsetX(), 0.75F * facing.getOffsetY(), 0.75F * facing.getOffsetZ())
+				.shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
+	}
 }

@@ -24,25 +24,27 @@
 
 package me.i509.fabric.cursedshulkerboxes.client;
 
-import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
-import me.i509.fabric.cursedshulkerboxes.client.block.entity.renderer.CopperShulkerBoxBlockEntityRenderer;
-import me.i509.fabric.cursedshulkerboxes.client.block.entity.renderer.IronShulkerBoxBlockEntityRenderer;
-import me.i509.fabric.cursedshulkerboxes.client.screen.ScrollableScreen;
-import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+
+import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
+import me.i509.fabric.cursedshulkerboxes.client.block.entity.renderer.CopperShulkerBoxBlockEntityRenderer;
+import me.i509.fabric.cursedshulkerboxes.client.block.entity.renderer.IronShulkerBoxBlockEntityRenderer;
+import me.i509.fabric.cursedshulkerboxes.client.screen.ScrollableScreen;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
 
 @Environment(EnvType.CLIENT)
 public class CursedShulkerBoxClientMod implements ClientModInitializer {
-    @Override
-    public void onInitializeClient() {
-        BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, new CopperShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher.INSTANCE));
-        BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, new IronShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher.INSTANCE));
+	@Override
+	public void onInitializeClient() {
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, new CopperShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher.INSTANCE));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, new IronShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher.INSTANCE));
 
-        ScreenProviderRegistry.INSTANCE.registerFactory(CursedShulkerBoxMod.id("shulkerscrollcontainer"), ScrollableScreen::createScreen);
-    }
+		ScreenProviderRegistry.INSTANCE.registerFactory(CursedShulkerBoxMod.id("shulkerscrollcontainer"), ScrollableScreen::createScreen);
+	}
 }

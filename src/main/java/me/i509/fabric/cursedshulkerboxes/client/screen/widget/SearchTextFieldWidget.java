@@ -25,46 +25,49 @@
 
 package me.i509.fabric.cursedshulkerboxes.client.screen.widget;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 /**
- * Credit: NinjaPhoenix, Code is MIT like rest of project.
+ * Credit: NinjaPhenix, Code is MIT like rest of project.
  */
 @Environment(EnvType.CLIENT)
 public class SearchTextFieldWidget extends TextFieldWidget {
-    private boolean ignoreNextChar;
+	private boolean ignoreNextChar;
 
-    public SearchTextFieldWidget(TextRenderer textRenderer, int x, int y, int width, int height, String message) {
-        super(textRenderer, x, y, width, height, message);
-        ignoreNextChar = false;
-    }
+	public SearchTextFieldWidget(TextRenderer textRenderer, int x, int y, int width, int height, String message) {
+		super(textRenderer, x, y, width, height, message);
+		ignoreNextChar = false;
+	}
 
-    @Override
-    public boolean mouseClicked(double x, double y, int button) {
-        if (isVisible() && button == 1 && clicked(x, y)) {
-            setText("");
-            return true;
-        }
-        return super.mouseClicked(x, y, button);
-    }
+	@Override
+	public boolean mouseClicked(double x, double y, int button) {
+		if (isVisible() && button == 1 && clicked(x, y)) {
+			setText("");
+			return true;
+		}
 
-    @Override
-    public boolean charTyped(char character, int int_1) {
-        if (ignoreNextChar) {
-            ignoreNextChar = false;
-            return false;
-        }
-        return super.charTyped(character, int_1);
-    }
+		return super.mouseClicked(x, y, button);
+	}
 
-    public boolean isMouseInBounds(double x, double y) {
-        return clicked(x, y);
-    }
+	@Override
+	public boolean charTyped(char character, int int_1) {
+		if (ignoreNextChar) {
+			ignoreNextChar = false;
+			return false;
+		}
 
-    public void ignoreNextChar() {
-        ignoreNextChar = true;
-    }
+		return super.charTyped(character, int_1);
+	}
+
+	public boolean isMouseInBounds(double x, double y) {
+		return clicked(x, y);
+	}
+
+	public void ignoreNextChar() {
+		ignoreNextChar = true;
+	}
 }

@@ -24,8 +24,8 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.multi;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlockEntity;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -36,39 +36,41 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShapes;
-import org.jetbrains.annotations.Nullable;
+
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlockEntity;
 
 public class AbstractCursedShulkerBoxMultiBlockEntity extends AbstractShulkerBoxBlockEntity {
-    protected AbstractCursedShulkerBoxMultiBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
-        super(blockEntityType, maxAvailableSlot, color);
-        this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
-    }
+	protected AbstractCursedShulkerBoxMultiBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
+		super(blockEntityType, maxAvailableSlot, color);
+		this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
+	}
 
-    @Override
-    public Box getBoundingBox(BlockState blockState) {
-        if(blockState.get(AbstractCursedShulkerBoxMultiBlock.HALF) == DoubleBlockHalf.LOWER) {
-            return VoxelShapes.fullCube().getBoundingBox();
-        }
+	@Override
+	public Box getBoundingBox(BlockState blockState) {
+		if (blockState.get(AbstractCursedShulkerBoxMultiBlock.HALF) == DoubleBlockHalf.LOWER) {
+			return VoxelShapes.fullCube().getBoundingBox();
+		}
 
-        return this.getBoundingBox(blockState.get(AbstractShulkerBoxBlock.FACING));
-    }
+		return this.getBoundingBox(blockState.get(AbstractShulkerBoxBlock.FACING));
+	}
 
-    @Override
-    public Box getBoundingBox(Direction direction) {
-        float lerpedProgress = this.getAnimationProgress(1.0F);
-        return VoxelShapes.fullCube()
-                .getBoundingBox()
-                .stretch(lerpedProgress * 0.5 * direction.getOffsetX(), lerpedProgress * 0.5 * direction.getOffsetY(), lerpedProgress * 0.5 * direction.getOffsetZ());
-    }
+	@Override
+	public Box getBoundingBox(Direction direction) {
+		float lerpedProgress = this.getAnimationProgress(1.0F);
+		return VoxelShapes.fullCube()
+				.getBoundingBox()
+				.stretch(lerpedProgress * 0.5 * direction.getOffsetX(), lerpedProgress * 0.5 * direction.getOffsetY(), lerpedProgress * 0.5 * direction.getOffsetZ());
+	}
 
-    @Override
-    public Box getCollisionBox(Direction facing) {
-        Direction direction = facing.getOpposite();
-        return this.getBoundingBox(facing).shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
-    }
+	@Override
+	public Box getCollisionBox(Direction facing) {
+		Direction direction = facing.getOpposite();
+		return this.getBoundingBox(facing).shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
+	}
 
-    @Override
-    public float getAnimationProgress(float currentProgress) { // TODO Add logic to make upper half read the lower block for current animation progress so the box properly expands.
-        return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
-    }
+	@Override
+	public float getAnimationProgress(float currentProgress) { // TODO Add logic to make upper half read the lower block for current animation progress so the box properly expands.
+		return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
+	}
 }

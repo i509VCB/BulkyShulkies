@@ -24,9 +24,14 @@
 
 package me.i509.fabric.cursedshulkerboxes.api.block.base;
 
-import me.i509.fabric.cursedshulkerboxes.CursedShulkerBox;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import static com.google.common.base.Preconditions.checkArgument;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.IntStream;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
@@ -51,281 +56,287 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.IntStream;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import me.i509.fabric.cursedshulkerboxes.CursedShulkerBox;
 
 public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Tickable, BaseShulkerBlockEntity {
-    protected final int[] AVAILABLE_SLOTS;
-    protected DefaultedList<ItemStack> inventory;
-    private int viewerCount;
-    protected AnimationStatus animationStage;
-    protected float animationProgress;
-    protected float prevAnimationProgress;
-    private DyeColor cachedColor;
-    private boolean cachedColorUpdateNeeded;
+	protected final int[] AVAILABLE_SLOTS;
+	protected DefaultedList<ItemStack> inventory;
+	private int viewerCount;
+	protected AnimationStatus animationStage;
+	protected float animationProgress;
+	protected float prevAnimationProgress;
+	private DyeColor cachedColor;
+	private boolean cachedColorUpdateNeeded;
 
-    protected AbstractShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
-        super(blockEntityType);
-        checkArgument(maxAvailableSlot > 0, "Maximum available slots cannot be less than 1");
-        this.AVAILABLE_SLOTS = IntStream.range(0, maxAvailableSlot).toArray();
-        this.animationStage = AnimationStatus.CLOSED;
-        this.cachedColor = color;
-    }
+	protected AbstractShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
+		super(blockEntityType);
+		checkArgument(maxAvailableSlot > 0, "Maximum available slots cannot be less than 1");
+		this.AVAILABLE_SLOTS = IntStream.range(0, maxAvailableSlot).toArray();
+		this.animationStage = AnimationStatus.CLOSED;
+		this.cachedColor = color;
+	}
 
-    @Override
-    public abstract Box getBoundingBox(BlockState blockState);
+	@Override
+	public abstract Box getBoundingBox(BlockState blockState);
 
-    @Override
-    public abstract Box getBoundingBox(Direction facing);
+	@Override
+	public abstract Box getBoundingBox(Direction facing);
 
-    @Override
-    public abstract Box getCollisionBox(Direction facing);
+	@Override
+	public abstract Box getCollisionBox(Direction facing);
 
-    @Override
-    public void tick() {
-        this.updateAnimation();
-        if (this.animationStage == AnimationStatus.OPENING || this.animationStage == AnimationStatus.CLOSING) {
-            this.pushEntities();
-        }
-    }
+	@Override
+	public void tick() {
+		this.updateAnimation();
 
-    protected void updateAnimation() {
-        this.prevAnimationProgress = this.animationProgress;
-        switch(this.animationStage) {
-            case CLOSED:
-                this.animationProgress = 0.0F;
-                break;
-            case OPENING:
-                this.animationProgress += 0.1F;
-                if (this.animationProgress >= 1.0F) {
-                    this.pushEntities();
-                    this.animationStage = AnimationStatus.OPENED;
-                    this.animationProgress = 1.0F;
-                    this.updateNeighborStates();
-                }
-                break;
-            case CLOSING:
-                this.animationProgress -= 0.1F;
-                if (this.animationProgress <= 0.0F) {
-                    this.animationStage = AnimationStatus.CLOSED;
-                    this.animationProgress = 0.0F;
-                    this.updateNeighborStates();
-                }
-                break;
-            case OPENED:
-                this.animationProgress = 1.0F;
-        }
+		if (this.animationStage == AnimationStatus.OPENING || this.animationStage == AnimationStatus.CLOSING) {
+			this.pushEntities();
+		}
+	}
 
-    }
+	protected void updateAnimation() {
+		this.prevAnimationProgress = this.animationProgress;
+		switch (this.animationStage) {
+		case CLOSED:
+			this.animationProgress = 0.0F;
+			break;
+		case OPENING:
+			this.animationProgress += 0.1F;
 
-    @Override
-    public AnimationStatus getAnimationStage() {
-        return this.animationStage;
-    }
+			if (this.animationProgress >= 1.0F) {
+				this.pushEntities();
+				this.animationStage = AnimationStatus.OPENED;
+				this.animationProgress = 1.0F;
+				this.updateNeighborStates();
+			}
 
-    protected void pushEntities() {
-        BlockState blockState = this.world.getBlockState(this.getPos());
-        if (blockState.getBlock() instanceof BaseShulkerBlock) {
-            Direction direction = blockState.get(BaseShulkerBlock.FACING);
-            Box box = this.getCollisionBox(direction).offset(this.pos);
-            List<Entity> list = this.world.getEntities(null, box);
-            if (!list.isEmpty()) {
-                for(int i = 0; i < list.size(); ++i) {
-                    Entity entity = list.get(i);
-                    if (entity.getPistonBehavior() != PistonBehavior.IGNORE) {
-                        double d = 0.0D;
-                        double e = 0.0D;
-                        double f = 0.0D;
-                        Box box2 = entity.getBoundingBox();
-                        switch(direction.getAxis()) {
-                            case X:
-                                if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
-                                    d = box.x2 - box2.x1;
-                                } else {
-                                    d = box2.x2 - box.x1;
-                                }
+			break;
+		case CLOSING:
+			this.animationProgress -= 0.1F;
 
-                                d += 0.01D;
-                                break;
-                            case Y:
-                                if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
-                                    e = box.y2 - box2.y1;
-                                } else {
-                                    e = box2.y2 - box.y1;
-                                }
+			if (this.animationProgress <= 0.0F) {
+				this.animationStage = AnimationStatus.CLOSED;
+				this.animationProgress = 0.0F;
+				this.updateNeighborStates();
+			}
 
-                                e += 0.01D;
-                                break;
-                            case Z:
-                                if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
-                                    f = box.z2 - box2.z1;
-                                } else {
-                                    f = box2.z2 - box.z1;
-                                }
+			break;
+		case OPENED:
+			this.animationProgress = 1.0F;
+		}
+	}
 
-                                f += 0.01D;
-                        }
+	@Override
+	public AnimationStatus getAnimationStage() {
+		return this.animationStage;
+	}
 
-                        entity.move(MovementType.SHULKER_BOX, new Vec3d(d * (double)direction.getOffsetX(), e * (double)direction.getOffsetY(), f * (double)direction.getOffsetZ()));
-                    }
-                }
+	protected void pushEntities() {
+		BlockState blockState = this.world.getBlockState(this.getPos());
 
-            }
-        }
-    }
+		if (blockState.getBlock() instanceof BaseShulkerBlock) {
+			Direction direction = blockState.get(BaseShulkerBlock.FACING);
+			Box box = this.getCollisionBox(direction).offset(this.pos);
+			List<Entity> list = this.world.getEntities(null, box);
 
-    @Override
-    public int getInvSize() {
-        return this.inventory.size();
-    }
+			if (!list.isEmpty()) {
+				for (int i = 0; i < list.size(); ++i) {
+					Entity entity = list.get(i);
 
-    @Override
-    public boolean onBlockAction(int value, int interactorCount) {
-        if (value == 1) {
-            this.viewerCount = interactorCount;
-            if (interactorCount == 0) {
-                this.animationStage = AnimationStatus.CLOSING;
-                this.updateNeighborStates();
-            }
+					if (entity.getPistonBehavior() != PistonBehavior.IGNORE) {
+						double d = 0.0D;
+						double e = 0.0D;
+						double f = 0.0D;
+						Box box2 = entity.getBoundingBox();
+						switch (direction.getAxis()) {
+						case X:
+							if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
+								d = box.x2 - box2.x1;
+							} else {
+								d = box2.x2 - box.x1;
+							}
 
-            if (interactorCount == 1) {
-                this.animationStage = AnimationStatus.OPENING;
-                this.updateNeighborStates();
-            }
+							d += 0.01D;
+							break;
+						case Y:
+							if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
+								e = box.y2 - box2.y1;
+							} else {
+								e = box2.y2 - box.y1;
+							}
 
-            return true;
-        } else {
-            return super.onBlockAction(value, interactorCount);
-        }
-    }
+							e += 0.01D;
+							break;
+						case Z:
+							if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
+								f = box.z2 - box2.z1;
+							} else {
+								f = box2.z2 - box.z1;
+							}
 
-    protected void updateNeighborStates() {
-        this.getCachedState().updateNeighborStates(this.getWorld(), this.getPos(), 3);
-    }
+							f += 0.01D;
+						}
 
-    @Override
-    public void onInvOpen(PlayerEntity playerEntity) {
-        if (!playerEntity.isSpectator()) {
-            if (this.viewerCount < 0) {
-                this.viewerCount = 0;
-            }
+						entity.move(MovementType.SHULKER_BOX, new Vec3d(d * (double) direction.getOffsetX(), e * (double) direction.getOffsetY(), f * (double) direction.getOffsetZ()));
+					}
+				}
+			}
+		}
+	}
 
-            ++this.viewerCount;
-            this.world.addBlockAction(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
-            if (this.viewerCount == 1) {
-                this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
-            }
-        }
+	@Override
+	public int getInvSize() {
+		return this.inventory.size();
+	}
 
-    }
+	@Override
+	public boolean onBlockAction(int value, int interactorCount) {
+		if (value == 1) {
+			this.viewerCount = interactorCount;
 
-    @Override
-    public void onInvClose(PlayerEntity playerEntity) {
-        if (!playerEntity.isSpectator()) {
-            --this.viewerCount;
-            this.world.addBlockAction(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
-            if (this.viewerCount <= 0) {
-                this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
-            }
-        }
+			if (interactorCount == 0) {
+				this.animationStage = AnimationStatus.CLOSING;
+				this.updateNeighborStates();
+			}
 
-    }
+			if (interactorCount == 1) {
+				this.animationStage = AnimationStatus.OPENING;
+				this.updateNeighborStates();
+			}
 
-    @Override
-    protected Text getContainerName() {
-        return new TranslatableText("container.shulkerBox");
-    }
+			return true;
+		} else {
+			return super.onBlockAction(value, interactorCount);
+		}
+	}
 
-    @Override
-    public void fromTag(CompoundTag input) {
-        super.fromTag(input);
-        this.deserializeInventory(input);
-    }
+	protected void updateNeighborStates() {
+		this.getCachedState().updateNeighborStates(this.getWorld(), this.getPos(), 3);
+	}
 
-    @Override
-    public CompoundTag toTag(CompoundTag output) {
-        super.toTag(output);
-        return this.serializeInventory(output);
-    }
+	@Override
+	public void onInvOpen(PlayerEntity playerEntity) {
+		if (!playerEntity.isSpectator()) {
+			if (this.viewerCount < 0) {
+				this.viewerCount = 0;
+			}
 
-    public void deserializeInventory(CompoundTag tag) {
-        this.inventory = DefaultedList.ofSize(this.getInvSize(), ItemStack.EMPTY);
-        if (!this.deserializeLootTable(tag) && tag.contains("Items", 9)) {
-            Inventories.fromTag(tag, this.inventory);
-        }
+			++this.viewerCount;
+			this.world.addBlockAction(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
 
-    }
+			if (this.viewerCount == 1) {
+				this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
+			}
+		}
+	}
 
-    public CompoundTag serializeInventory(CompoundTag output) {
-        if (!this.serializeLootTable(output)) {
-            Inventories.toTag(output, this.inventory, false);
-        }
+	@Override
+	public void onInvClose(PlayerEntity playerEntity) {
+		if (!playerEntity.isSpectator()) {
+			--this.viewerCount;
+			this.world.addBlockAction(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
 
-        return output;
-    }
+			if (this.viewerCount <= 0) {
+				this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
+			}
+		}
+	}
 
-    @Override
-    protected DefaultedList<ItemStack> getInvStackList() {
-        return this.inventory;
-    }
+	@Override
+	protected Text getContainerName() {
+		return new TranslatableText("container.shulkerBox");
+	}
 
-    @Override
-    protected void setInvStackList(DefaultedList<ItemStack> itemStackDefaultedList) {
-        this.inventory = itemStackDefaultedList;
-    }
+	@Override
+	public void fromTag(CompoundTag input) {
+		super.fromTag(input);
+		this.deserializeInventory(input);
+	}
 
-    @Override
-    public boolean isInvEmpty() {
-        Iterator<ItemStack> stackIterator = this.inventory.iterator(); // TODO This could be cleaner.
+	@Override
+	public CompoundTag toTag(CompoundTag output) {
+		super.toTag(output);
+		return this.serializeInventory(output);
+	}
 
-        ItemStack currentStack;
-        do {
-            if (!stackIterator.hasNext()) {
-                return true;
-            }
+	public void deserializeInventory(CompoundTag tag) {
+		this.inventory = DefaultedList.ofSize(this.getInvSize(), ItemStack.EMPTY);
 
-            currentStack = stackIterator.next();
-        } while(currentStack.isEmpty());
-        return false;
-    }
+		if (!this.deserializeLootTable(tag) && tag.contains("Items", 9)) {
+			Inventories.fromTag(tag, this.inventory);
+		}
+	}
 
-    @Override
-    public int[] getInvAvailableSlots(Direction direction) {
-        return AVAILABLE_SLOTS;
-    }
+	public CompoundTag serializeInventory(CompoundTag output) {
+		if (!this.serializeLootTable(output)) {
+			Inventories.toTag(output, this.inventory, false);
+		}
 
-    @Override
-    public boolean canExtractInvStack(int inventorySlot, ItemStack stack, Direction direction) {
-        return true;
-    }
+		return output;
+	}
 
-    @Override
-    public boolean canInsertInvStack(int inventorySlot, ItemStack stack, @Nullable Direction direction) {
-        return CursedShulkerBox.getInstance().canInsertItem(stack);
-    }
+	@Override
+	protected DefaultedList<ItemStack> getInvStackList() {
+		return this.inventory;
+	}
 
-    @Override
-    public float getAnimationProgress(float currentProgress) {
-        return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
-    }
+	@Override
+	protected void setInvStackList(DefaultedList<ItemStack> itemStackDefaultedList) {
+		this.inventory = itemStackDefaultedList;
+	}
 
-    @Environment(EnvType.CLIENT)
-    public DyeColor getColor() {
-        if (this.cachedColorUpdateNeeded) {
-            this.cachedColor = AbstractShulkerBoxBlock.getColor(this.getCachedState().getBlock());
-            this.cachedColorUpdateNeeded = false;
-        }
+	@Override
+	public boolean isInvEmpty() {
+		Iterator<ItemStack> stackIterator = this.inventory.iterator(); // TODO This could be cleaner.
 
-        return this.cachedColor;
-    }
+		ItemStack currentStack;
 
-    @Override
-    protected Container createContainer(int syncId, PlayerInventory playerInventory) {
-        return null; // Our implementation does not require this method since the PropertyRetriever and Fabric-API handle the containers.
-    }
+		do {
+			if (!stackIterator.hasNext()) {
+				return true;
+			}
+
+			currentStack = stackIterator.next();
+		} while (currentStack.isEmpty());
+		return false;
+	}
+
+	@Override
+	public int[] getInvAvailableSlots(Direction direction) {
+		return AVAILABLE_SLOTS;
+	}
+
+	@Override
+	public boolean canExtractInvStack(int inventorySlot, ItemStack stack, Direction direction) {
+		return true;
+	}
+
+	@Override
+	public boolean canInsertInvStack(int inventorySlot, ItemStack stack, @Nullable Direction direction) {
+		return CursedShulkerBox.getInstance().canInsertItem(stack);
+	}
+
+	@Override
+	public float getAnimationProgress(float currentProgress) {
+		return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
+	}
+
+	@Environment(EnvType.CLIENT)
+	public DyeColor getColor() {
+		if (this.cachedColorUpdateNeeded) {
+			this.cachedColor = AbstractShulkerBoxBlock.getColor(this.getCachedState().getBlock());
+			this.cachedColorUpdateNeeded = false;
+		}
+
+		return this.cachedColor;
+	}
+
+	@Override
+	protected Container createContainer(int syncId, PlayerInventory playerInventory) {
+		return null; // Our implementation does not require this method since the PropertyRetriever and Fabric-API handle the containers.
+	}
 }

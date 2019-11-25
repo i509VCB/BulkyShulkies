@@ -26,21 +26,21 @@ package me.i509.fabric.cursedshulkerboxes.abstraction;
 
 import java.util.HashMap;
 
-public class DefaultReturnHashMap<K, V> extends HashMap<K,V> {
-    private V defaultVal;
+public class DefaultReturnHashMap<K, V> extends HashMap<K, V> {
+	private V defaultVal;
 
-    public DefaultReturnHashMap(V defaultValue) {
-        super();
-        this.defaultVal = defaultValue;
-    }
+	public DefaultReturnHashMap(V defaultValue) {
+		super();
+		this.defaultVal = defaultValue;
+	}
 
-    @Override
-    public V get(Object key) {
-        V value = super.get(key);
-        return value != null ? value : getDefaultValue();
-    }
+	@Override
+	public V get(Object key) {
+		V value = super.get(key);
+		return value != null ? value : getDefaultValue();
+	}
 
-    private V getDefaultValue() {
-        return this.defaultVal;
-    }
+	private V getDefaultValue() {
+		return this.defaultVal;
+	}
 }

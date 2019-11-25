@@ -24,19 +24,20 @@
 
 package me.i509.fabric.cursedshulkerboxes.block.infuser;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.world.BlockView;
-import org.jetbrains.annotations.Nullable;
 
 public class ShulkerBoxInfuserBlock extends BlockWithEntity {
-    protected ShulkerBoxInfuserBlock(Settings settings) {
-        super(settings);
-    }
+	protected ShulkerBoxInfuserBlock(Settings settings) {
+		super(settings);
+	}
 
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockView view) {
-        return null;
-    }
+	@Nullable
+	@Override
+	public BlockEntity createBlockEntity(BlockView view) {
+		return null;
+	}
 }

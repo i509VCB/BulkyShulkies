@@ -24,76 +24,81 @@
 
 package me.i509.fabric.cursedshulkerboxes.registry;
 
-import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
-import me.i509.fabric.cursedshulkerboxes.block.cursed.slab.CursedSlabShulkerBoxBE;
-import me.i509.fabric.cursedshulkerboxes.block.material.copper.CopperShulkerBoxBlockEntity;
-import me.i509.fabric.cursedshulkerboxes.block.material.copper.ExampleTallBE;
-import me.i509.fabric.cursedshulkerboxes.block.material.iron.IronShulkerBoxBlockEntity;
+import java.util.function.Supplier;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.registry.Registry;
 
-import java.util.function.Supplier;
+import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
+import me.i509.fabric.cursedshulkerboxes.block.cursed.slab.CursedSlabShulkerBoxBE;
+import me.i509.fabric.cursedshulkerboxes.block.material.copper.CopperShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.block.material.copper.ExampleTallBE;
+import me.i509.fabric.cursedshulkerboxes.block.material.iron.IronShulkerBoxBlockEntity;
 
 public class ShulkerBlockEntities {
+	public static final BlockEntityType<CopperShulkerBoxBlockEntity> COPPER_SHULKER_BOX = register("copper_shulker_box",
+			CopperShulkerBoxBlockEntity::new,
+			ShulkerBlocks.COPPER_SHULKER_BOX, // Uncolored
+			ShulkerBlocks.WHITE_COPPER_SHULKER_BOX,
+			ShulkerBlocks.ORANGE_COPPER_SHULKER_BOX,
+			ShulkerBlocks.MAGENTA_COPPER_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_BLUE_COPPER_SHULKER_BOX,
+			ShulkerBlocks.YELLOW_COPPER_SHULKER_BOX,
+			ShulkerBlocks.LIME_COPPER_SHULKER_BOX,
+			ShulkerBlocks.PINK_COPPER_SHULKER_BOX,
+			ShulkerBlocks.GRAY_COPPER_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_GRAY_COPPER_SHULKER_BOX,
+			ShulkerBlocks.CYAN_COPPER_SHULKER_BOX,
+			ShulkerBlocks.PURPLE_COPPER_SHULKER_BOX,
+			ShulkerBlocks.BLUE_COPPER_SHULKER_BOX,
+			ShulkerBlocks.BROWN_COPPER_SHULKER_BOX,
+			ShulkerBlocks.GREEN_COPPER_SHULKER_BOX,
+			ShulkerBlocks.RED_COPPER_SHULKER_BOX,
+			ShulkerBlocks.BLACK_COPPER_SHULKER_BOX
+	);
 
-    public static final BlockEntityType<CopperShulkerBoxBlockEntity> COPPER_SHULKER_BOX = register("copper_shulker_box",
-            CopperShulkerBoxBlockEntity::new,
-            ShulkerBlocks.COPPER_SHULKER_BOX, // Uncolored
-            ShulkerBlocks.WHITE_COPPER_SHULKER_BOX,
-            ShulkerBlocks.ORANGE_COPPER_SHULKER_BOX,
-            ShulkerBlocks.MAGENTA_COPPER_SHULKER_BOX,
-            ShulkerBlocks.LIGHT_BLUE_COPPER_SHULKER_BOX,
-            ShulkerBlocks.YELLOW_COPPER_SHULKER_BOX,
-            ShulkerBlocks.LIME_COPPER_SHULKER_BOX,
-            ShulkerBlocks.PINK_COPPER_SHULKER_BOX,
-            ShulkerBlocks.GRAY_COPPER_SHULKER_BOX,
-            ShulkerBlocks.LIGHT_GRAY_COPPER_SHULKER_BOX,
-            ShulkerBlocks.CYAN_COPPER_SHULKER_BOX,
-            ShulkerBlocks.PURPLE_COPPER_SHULKER_BOX,
-            ShulkerBlocks.BLUE_COPPER_SHULKER_BOX,
-            ShulkerBlocks.BROWN_COPPER_SHULKER_BOX,
-            ShulkerBlocks.GREEN_COPPER_SHULKER_BOX,
-            ShulkerBlocks.RED_COPPER_SHULKER_BOX,
-            ShulkerBlocks.BLACK_COPPER_SHULKER_BOX
-    );
+	public static final BlockEntityType<IronShulkerBoxBlockEntity> IRON_SHULKER_BOX = register("iron_shulker_box",
+			IronShulkerBoxBlockEntity::new,
+			ShulkerBlocks.IRON_SHULKER_BOX, // Uncolored
+			ShulkerBlocks.WHITE_IRON_SHULKER_BOX,
+			ShulkerBlocks.ORANGE_IRON_SHULKER_BOX,
+			ShulkerBlocks.MAGENTA_IRON_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_BLUE_IRON_SHULKER_BOX,
+			ShulkerBlocks.YELLOW_IRON_SHULKER_BOX,
+			ShulkerBlocks.LIME_IRON_SHULKER_BOX,
+			ShulkerBlocks.PINK_IRON_SHULKER_BOX,
+			ShulkerBlocks.GRAY_IRON_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_GRAY_IRON_SHULKER_BOX,
+			ShulkerBlocks.CYAN_IRON_SHULKER_BOX,
+			ShulkerBlocks.PURPLE_IRON_SHULKER_BOX,
+			ShulkerBlocks.BLUE_IRON_SHULKER_BOX,
+			ShulkerBlocks.BROWN_IRON_SHULKER_BOX,
+			ShulkerBlocks.GREEN_IRON_SHULKER_BOX,
+			ShulkerBlocks.RED_IRON_SHULKER_BOX,
+			ShulkerBlocks.BLACK_IRON_SHULKER_BOX
+	);
 
-    public static final BlockEntityType<IronShulkerBoxBlockEntity> IRON_SHULKER_BOX = register("iron_shulker_box",
-            IronShulkerBoxBlockEntity::new,
-            ShulkerBlocks.IRON_SHULKER_BOX, // Uncolored
-            ShulkerBlocks.WHITE_IRON_SHULKER_BOX,
-            ShulkerBlocks.ORANGE_IRON_SHULKER_BOX,
-            ShulkerBlocks.MAGENTA_IRON_SHULKER_BOX,
-            ShulkerBlocks.LIGHT_BLUE_IRON_SHULKER_BOX,
-            ShulkerBlocks.YELLOW_IRON_SHULKER_BOX,
-            ShulkerBlocks.LIME_IRON_SHULKER_BOX,
-            ShulkerBlocks.PINK_IRON_SHULKER_BOX,
-            ShulkerBlocks.GRAY_IRON_SHULKER_BOX,
-            ShulkerBlocks.LIGHT_GRAY_IRON_SHULKER_BOX,
-            ShulkerBlocks.CYAN_IRON_SHULKER_BOX,
-            ShulkerBlocks.PURPLE_IRON_SHULKER_BOX,
-            ShulkerBlocks.BLUE_IRON_SHULKER_BOX,
-            ShulkerBlocks.BROWN_IRON_SHULKER_BOX,
-            ShulkerBlocks.GREEN_IRON_SHULKER_BOX,
-            ShulkerBlocks.RED_IRON_SHULKER_BOX,
-            ShulkerBlocks.BLACK_IRON_SHULKER_BOX
-            );
+	public static final BlockEntityType<ExampleTallBE> EXAMPLE_TALL = register("example_tall_shulker_box",
+			ExampleTallBE::new,
+			ShulkerBlocks.TEST_TALL
+	);
 
-    public static final BlockEntityType<ExampleTallBE> EXAMPLE_TALL = register("example_tall_shulker_box",
-            ExampleTallBE::new,
-            ShulkerBlocks.TEST_TALL
-    );
+	public static final BlockEntityType<CursedSlabShulkerBoxBE> SLAB_SHULKER_BOX = register("slab_shulker_box",
+			CursedSlabShulkerBoxBE::new,
+			ShulkerBlocks.SLAB_SHULKER_BOX // TODO Add all the colors
+	);
 
-    public static final BlockEntityType<CursedSlabShulkerBoxBE> SLAB_SHULKER_BOX = register("slab_shulker_box",
-            CursedSlabShulkerBoxBE::new,
-            ShulkerBlocks.SLAB_SHULKER_BOX // TODO Add all the colors
-    );
+	private ShulkerBlockEntities() {
+		// NO-OP
+	}
 
-    private ShulkerBlockEntities(){}
-    public static void init(){}
+	public static void init() {
+		// NO-OP
+	}
 
-    private static <B extends BlockEntity> BlockEntityType<B> register(String name, Supplier<B> supplier, Block... supportedBlocks) {
-        return Registry.register(Registry.BLOCK_ENTITY, CursedShulkerBoxMod.id(name), BlockEntityType.Builder.create(supplier, supportedBlocks).build(null)); // TODO Replace null when DataFixers are done.
-    }
+	private static <B extends BlockEntity> BlockEntityType<B> register(String name, Supplier<B> supplier, Block... supportedBlocks) {
+		return Registry.register(Registry.BLOCK_ENTITY, CursedShulkerBoxMod.id(name), BlockEntityType.Builder.create(supplier, supportedBlocks).build(null)); // TODO Replace null when DataFixers are done.
+	}
 }

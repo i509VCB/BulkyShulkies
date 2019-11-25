@@ -27,23 +27,16 @@ package me.i509.fabric.cursedshulkerboxes.extension;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class ShulkerHooks {
-    private static final FabricLoader LOADER = FabricLoader.getInstance();
-    private static boolean isCottonEnabled;
+	private static final FabricLoader LOADER = FabricLoader.getInstance();
+	private static boolean isCottonEnabled;
 
-    private ShulkerHooks() {}
-    public static void init() {}
+	private ShulkerHooks() {
+	}
 
-    /*static {
-        if(LOADER.isModLoaded("cotton-resources")) {
-            if (CursedShulkerBox.getInstance().getConfig().shouldUseCottonResources()) {
-                isCottonEnabled = true;
-            } else {
-                isCottonEnabled = false;
-            }
-        }
-    }*/ // TODO enable
+	public static void init() {
+	}
 
-    public static boolean isCottonEnabled() {
-        return isCottonEnabled;
-    }
+	public static boolean isCottonEnabled() {
+		return isCottonEnabled;
+	}
 }

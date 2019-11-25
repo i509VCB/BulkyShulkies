@@ -24,43 +24,45 @@
 
 package me.i509.fabric.cursedshulkerboxes;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
-import me.i509.fabric.cursedshulkerboxes.container.ShulkerBoxScrollableContainer;
-import me.i509.fabric.cursedshulkerboxes.extension.ShulkerHooks;
-import me.i509.fabric.cursedshulkerboxes.registry.*;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-import net.minecraft.block.NoteBlock;
-import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
+
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+
+import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.cursedshulkerboxes.container.ShulkerBoxScrollableContainer;
+import me.i509.fabric.cursedshulkerboxes.extension.ShulkerHooks;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlocks;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerItemGroups;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerItems;
 
 public class CursedShulkerBoxMod implements ModInitializer {
-    public static final String MODID = "cursedshulkerboxes";
+	public static final String MODID = "cursedshulkerboxes";
 
-    public static Identifier id(String path) {
-        return new Identifier(MODID, path);
-    }
+	public static Identifier id(String path) {
+		return new Identifier(MODID, path);
+	}
 
-    @Override
-    public void onInitialize() {
-        CursedShulkerBox.getInstance();
-        ShulkerBlocks.init();
-        ShulkerBlockEntities.init();
-        ShulkerItems.init();
-        ShulkerItemGroups.init();
-        ShulkerHooks.init();
+	@Override
+	public void onInitialize() {
+		CursedShulkerBox.getInstance();
+		ShulkerBlocks.init();
+		ShulkerBlockEntities.init();
+		ShulkerItems.init();
+		ShulkerItemGroups.init();
+		ShulkerHooks.init();
 
-        CursedDataTrackers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
+		CursedDataTrackers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
 
-        ContainerProviderRegistry.INSTANCE.registerFactory(id("shulkerscrollcontainer"), ((syncId, identifier, player, buf) -> {
-            BlockPos pos = buf.readBlockPos();
-            Text name = buf.readText();
-            World world = player.getEntityWorld();
-            return new ShulkerBoxScrollableContainer(syncId, player.inventory, AbstractShulkerBoxBlock.getInventoryStatic(world, pos), name);
-        }));
-    }
+		ContainerProviderRegistry.INSTANCE.registerFactory(id("shulkerscrollcontainer"), ((syncId, identifier, player, buf) -> {
+			BlockPos pos = buf.readBlockPos();
+			Text name = buf.readText();
+			World world = player.getEntityWorld();
+			return new ShulkerBoxScrollableContainer(syncId, player.inventory, AbstractShulkerBoxBlock.getInventoryStatic(world, pos), name);
+		}));
+	}
 }
