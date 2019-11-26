@@ -25,14 +25,18 @@
 package me.i509.fabric.cursedshulkerboxes;
 
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
 import com.google.common.reflect.TypeToken;
 import ninja.leaping.configurate.ConfigurationOptions;
+import ninja.leaping.configurate.ValueType;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -53,6 +57,9 @@ import me.i509.fabric.cursedshulkerboxes.api.block.base.BaseShulkerBlock;
 import me.i509.fabric.cursedshulkerboxes.config.MainConfig;
 
 public class CursedShulkerBox {
+	public static final double CURRENT_CONFIG_SCHEMA = 1.0;
+	private static final CursedShulkerBox instance;
+
 	private MainConfig mainConf;
 	private ConfigurationLoader<CommentedConfigurationNode> mainConfLoader;
 	private ConfigurationLoader<CommentedConfigurationNode> recipeConfLoader;
@@ -63,41 +70,87 @@ public class CursedShulkerBox {
 		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
 		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof BaseShulkerBlock);
 
-		Path configLocations = FabricLoader.getInstance().getConfigDirectory().toPath().resolve("cursedshulkerboxes");
-		Path configFiles = configLocations.resolve("cursedshulkers.conf");
+		Path configLocation = FabricLoader.getInstance().getConfigDirectory().toPath().resolve("cursedshulkerboxes");
+		Path configFile = configLocation.resolve("cursedshulkers.conf");
 
-		Files.isDirectory(configLocations);
+		Files.isDirectory(configLocation);
 
-		if (!Files.exists(configLocations)) {
-			Files.createDirectories(configLocations);
+		if (!Files.exists(configLocation)) {
+			Files.createDirectories(configLocation);
 		}
 
-		if (!Files.exists(configFiles)) {
-			Files.createFile(configFiles);
+		if (!Files.exists(configFile)) {
+			Files.createFile(configFile);
 		}
 
 		try {
 			mainConfLoader = HoconConfigurationLoader.builder()
-					.setPath(configFiles).build();
+					.setPath(configFile).build();
 
-			CommentedConfigurationNode mainConfigRoot = mainConfLoader.load(ConfigurationOptions.defaults().setHeader("HEADER")
+			CommentedConfigurationNode mainConfigRoot = mainConfLoader.load(ConfigurationOptions.defaults().setHeader(MainConfig.HEADER)
 					.setObjectMapperFactory(DefaultObjectMapperFactory.getInstance()).setShouldCopyDefaults(true));
+
+			mainConfigRoot = checkSchema(mainConfigRoot, configFile, configLocation);
+
 			mainConf = mainConfigRoot.getValue(TypeToken.of(MainConfig.class), new MainConfig());
 			mainConfLoader.save(mainConfigRoot);
+
+			if (mainConf != null) {
+				double configSchema = mainConf.getSchema();
+
+				if (configSchema != CursedShulkerBox.CURRENT_CONFIG_SCHEMA) {
+					boolean tooLow = configSchema < CursedShulkerBox.CURRENT_CONFIG_SCHEMA;
+					boolean tooHigh = configSchema > CursedShulkerBox.CURRENT_CONFIG_SCHEMA;
+
+					if (tooLow) {
+						// TODO Config updating magic
+					}
+
+					if (tooHigh) {
+						// TODO Someone backported from a newer version or obviously changed the field.
+					}
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace(); // TODO Fail
+		}
+	}
+
+	private CommentedConfigurationNode checkSchema(CommentedConfigurationNode mainConfigRoot, Path configFile, Path configLocation) throws IOException {
+		CommentedConfigurationNode schemaNode = mainConfigRoot.getNode("schemaVersion");
+
+		if (schemaNode.getValueType() != ValueType.SCALAR || !(schemaNode.getValue() instanceof Double)) {
+			getLogger().error("schemaVersion is not a scalar type or a double: " + Arrays.toString(schemaNode.getPath()));
+			getLogger().error("Copied broken config file to same directory.");
+			backupBrokenAndReplace(configFile, configLocation);
+		}
+
+		double configSchema = schemaNode.getDouble();
+
+		if (0 > configSchema) {
+			getLogger().error("Config Schema cannot be negative: " + Arrays.toString(schemaNode.getPath()));
+			backupBrokenAndReplace(configFile, configLocation);
+		}
+
+		return mainConfigRoot;
+	}
+
+	private CommentedConfigurationNode backupBrokenAndReplace(Path configFile, Path configLocation) throws IOException {
+		try {
+			Files.copy(configFile, configLocation.resolve("broken_config.conf"));
+		} catch (FileAlreadyExistsException ignore) {
+			Files.copy(configFile, configLocation.resolve("broken_config" + Instant.now().getEpochSecond() +".conf")); // Okay it already existed, so we throw an epoch second on it now so it's unique.
+		} finally {
+			Files.deleteIfExists(configFile);
+			Files.createFile(configFile);
+			return mainConfLoader.load(ConfigurationOptions.defaults().setHeader(MainConfig.HEADER)
+				.setObjectMapperFactory(DefaultObjectMapperFactory.getInstance()).setShouldCopyDefaults(true));
 		}
 	}
 
 	private void reloadRecipes() {
 		// TODO Impl
 	}
-
-	private static final CursedShulkerBox instance;
-
-	private static final Path configLocation = FabricLoader.getInstance().getConfigDirectory().toPath().resolve("cursedshulkerboxes");
-	private static final Path recipesFile = configLocation.resolve("recipes.conf");
-	private static final Path configFile = configLocation.resolve("cursedshulkers.conf");
 
 	public static CursedShulkerBox getInstance() {
 		return instance;

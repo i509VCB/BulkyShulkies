@@ -34,19 +34,24 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
 public class MainConfig {
-	public static final String RECIPE_HEADER = "1.0\n"
-			+ "This file defines allows defining of recipes via a config.\n"
+	public static final String RECIPE_HEADER = "This file defines allows defining of recipes via a config.\n"
 			+ "The json syntax for recipes should work out of the box.\n"
-			+ "If you need help, please contact me on discord here: https://discord.gg/qX7kBWY\n"; // TODO URL At release
+			+ "If you need help, please contact me on discord here: https://discord.gg/qX7kBWY"; // TODO URL At release
+	public static final String HEADER = "This file allows configuration of different features within cursed shulker boxes.\n"
+			+ "All options here are done using the HOCON Schema, which you can get more information here: https://docs.spongepowered.org/stable/en/server/getting-started/configuration/hocon.html\n"
+			+ "Since HOCON is a superset of JSON, almost all JSON Schemas should work out of the box\n"
+			+ "If you need help, please contact me on discord here: https://discord.gg/qX7kBWY";
 
-	@Setting(comment = "Specifies weather recipes from CottonResources should be used if CottonResources is present.")
+	@Setting(comment = "Specifies weather recipes from CottonResources should be used.\n"
+			+ "This Setting shall only go into effect, if the value is true and CottonResources is present")
 	private boolean useCottonResources = true;
 
 	public boolean shouldUseCottonResources() {
 		return useCottonResources;
 	}
 
-	@Setting(comment = "Specifies weather platinum shulker box's should be allowed to use their magnetic properties to collection items from a distance.")
+	@Setting(comment = "Specifies weather platinum shulker box's should be allowed to use their magnetic properties to collection items from a distance.\n"
+			+ "Note this will cause an increase in lag, however this can be slightly controlled by the magnetism range.")
 	private boolean shouldPlatinumUseMagnetism = true;
 
 	public boolean shouldPlatinumUseMagnetism() {
@@ -65,12 +70,24 @@ public class MainConfig {
 	}
 
 	@Setting(comment = "Specifies items which are not allowed to be placed within any shulker box's slots.\n"
-			+ "This should be a namespaced key, such as mymod:myblock (assuming myblock is registered as a BlockItem within the registry) or mymod:myitem.\n"
+			+ "This should be a list of namespaced identifiers, such as mymod:myblock (assuming myblock is registered as a BlockItem within the registry) or mymod:myitem.\n"
 			+ "Note this currently does not support tags.\n"
 			+ "Items which are not present in the registry will be ignored and warned about in the log")
 	private List<String> notAllowedInShulkers = new ArrayList<>();
 
 	public List<String> getNotAllowedInShulkers() {
 		return notAllowedInShulkers;
+	}
+
+	@Setting(comment = "This specifies the Schema Version of this config.\n"
+			+ "This setting should not be changed since it will mess up your config settings.\n"
+			+ "When the config schema changes, this value will be read and your config updated accordingly automatically.\n"
+			+ "If the file's schema is lower than the mod's schema version, the config will be updated.\n"
+			+ "If the file's schema is greater than the mod's schema version, the config will be backed up and an error message will be placed in the log.\n"
+			+ "Then the config will be set to the new schema version. (We do not try to guestimate the contents of the config with an unknown schema version)")
+	private double schemaVersion = 1.0;
+
+	public double getSchema() {
+		return schemaVersion;
 	}
 }
