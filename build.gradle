@@ -70,7 +70,10 @@ dependencies {
 	//include "io.github.cottonmc:cotton-resources:${cotton_resources_version}" // JIJ time
 
 	// ModMenu -- We have a hook for this
-	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
+	modImplementation ("io.github.prospector:modmenu:${project.modmenu_version}") { // We use our own version of modmenu and REI
+		exclude module: "fabric-api"
+		//	exclude module: "RoughlyEnoughItems"
+		}
 
 	// Config
 	compile "org.spongepowered:configurate-hocon:${project.configurate_version}"
@@ -81,6 +84,7 @@ dependencies {
 	// Optional Mods - We have this for looking up items and verifying recipes.
 	modRuntime ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
 		exclude module: "modmenu"
+		exclude module: "fabric-api"
 	}
 
 	// JUnit for config

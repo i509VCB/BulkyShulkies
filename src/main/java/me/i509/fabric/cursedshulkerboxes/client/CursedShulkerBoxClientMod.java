@@ -24,8 +24,6 @@
 
 package me.i509.fabric.cursedshulkerboxes.client;
 
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
-
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -42,8 +40,8 @@ import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
 public class CursedShulkerBoxClientMod implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, new CopperShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher.INSTANCE));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, new IronShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher.INSTANCE));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, CopperShulkerBoxBlockEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, IronShulkerBoxBlockEntityRenderer::new);
 
 		ScreenProviderRegistry.INSTANCE.registerFactory(CursedShulkerBoxMod.id("shulkerscrollcontainer"), ScrollableScreen::createScreen);
 	}

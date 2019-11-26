@@ -53,7 +53,7 @@ public abstract class LivingEntityMixin {
 			ItemStack stack = armorItems.next();
 
 			if (stack.getItem() instanceof AbstractShulkerHelmet) {
-				if (!DurabilityBasedProtection.canApplyNoDurability(stack)) {
+				if (DurabilityBasedProtection.canDamage(stack)) {
 					realArmorPoints -= ((ArmorItem) stack.getItem()).getProtection(); // Here we remove the armor points logically supplied by the server. TODO Maybe change armor point icon in that context.
 				}
 			}

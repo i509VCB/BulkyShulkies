@@ -8,6 +8,7 @@ import me.i509.fabric.cursedshulkerboxes.api.item.HelmetTrackedDataStage;
 
 public class CursedDataTrackers {
 	private CursedDataTrackers() {
+		// NO-OP
 	}
 
 	static {

@@ -24,20 +24,53 @@
 
 package me.i509.fabric.cursedshulkerboxes.config;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import ninja.leaping.configurate.objectmapping.Setting;
+import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
+@ConfigSerializable
 public class MainConfig {
-	private static final String RECIPE_HEADER =
-			"1.0\n"
-					+ "This file defines allows defining of recipes via a config.\n"
-					+ "The json syntax for recipes should work out of the box.\n"
-					+ "Any recipe type which does not have a HOCON recipe handler will be ignored and an error message will be displayed\n"
-					+ "If you need help, please contact me on discord here: https://discord.gg/qX7kBWY\n"; // TODO URL At release
+	public static final String RECIPE_HEADER = "1.0\n"
+			+ "This file defines allows defining of recipes via a config.\n"
+			+ "The json syntax for recipes should work out of the box.\n"
+			+ "If you need help, please contact me on discord here: https://discord.gg/qX7kBWY\n"; // TODO URL At release
 
-	@Setting(comment = "Weather recipes from CottonResources should be used if CottonResources is present.")
+	@Setting(comment = "Specifies weather recipes from CottonResources should be used if CottonResources is present.")
 	private boolean useCottonResources = true;
 
 	public boolean shouldUseCottonResources() {
 		return useCottonResources;
+	}
+
+	@Setting(comment = "Specifies weather platinum shulker box's should be allowed to use their magnetic properties to collection items from a distance.")
+	private boolean shouldPlatinumUseMagnetism = true;
+
+	public boolean shouldPlatinumUseMagnetism() {
+		return shouldPlatinumUseMagnetism;
+	}
+
+	@Setting(comment = "Specifies the maximum range in which the platinum shulker box's magnetism no longer can pick up items. \n"
+			+ "Note that the larger this number is will result in more lag.\n"
+			+ "This cannot be 0 or negative and there is a firm limit of a 16 block max range.")
+	private int platinumMagnetMaxRange = 6;
+
+	public int getPlatinumMagnetMaxRange() {
+		checkArgument(platinumMagnetMaxRange > 0, "Range cannot be zero or lower.");
+		checkArgument(platinumMagnetMaxRange <= 16, "The maximum magnetism range for platinum shulker boxes is 16 blocks.");
+		return platinumMagnetMaxRange;
+	}
+
+	@Setting(comment = "Specifies items which are not allowed to be placed within any shulker box's slots.\n"
+			+ "This should be a namespaced key, such as mymod:myblock (assuming myblock is registered as a BlockItem within the registry) or mymod:myitem.\n"
+			+ "Note this currently does not support tags.\n"
+			+ "Items which are not present in the registry will be ignored and warned about in the log")
+	private List<String> notAllowedInShulkers = new ArrayList<>();
+
+	public List<String> getNotAllowedInShulkers() {
+		return notAllowedInShulkers;
 	}
 }
