@@ -3,7 +3,6 @@
   "package": "me.i509.fabric.cursedshulkerboxes.abstraction.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "RecipeManagerMixin",
     "ItemStackMixin",
     "LivingEntityMixin"
   ],

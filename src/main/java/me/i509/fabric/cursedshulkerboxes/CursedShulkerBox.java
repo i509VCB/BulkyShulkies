@@ -63,7 +63,6 @@ public class CursedShulkerBox {
 
 	private MainConfig mainConf;
 	private ConfigurationLoader<CommentedConfigurationNode> mainConfLoader;
-	private ConfigurationLoader<CommentedConfigurationNode> recipeConfLoader;
 
 	private CursedShulkerBox() throws IOException {
 		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
@@ -71,8 +70,6 @@ public class CursedShulkerBox {
 
 		Path configLocation = FabricLoader.getInstance().getConfigDirectory().toPath().resolve("cursedshulkerboxes");
 		Path configFile = configLocation.resolve("cursedshulkers.conf");
-
-		Files.isDirectory(configLocation);
 
 		if (!Files.exists(configLocation)) {
 			Files.createDirectories(configLocation);
@@ -161,6 +158,5 @@ public class CursedShulkerBox {
 		}
 
 		instance = tmp;
-
 	}
 }
