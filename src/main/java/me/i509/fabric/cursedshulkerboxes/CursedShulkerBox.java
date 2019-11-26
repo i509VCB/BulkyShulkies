@@ -25,18 +25,15 @@
 package me.i509.fabric.cursedshulkerboxes;
 
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.google.common.reflect.TypeToken;
 import ninja.leaping.configurate.ConfigurationOptions;
-import ninja.leaping.configurate.ValueType;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -50,6 +47,9 @@ import org.apache.logging.log4j.message.SimpleMessage;
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -59,14 +59,13 @@ import me.i509.fabric.cursedshulkerboxes.config.MainConfig;
 public class CursedShulkerBox {
 	public static final double CURRENT_CONFIG_SCHEMA = 1.0;
 	private static final CursedShulkerBox instance;
+	private static List<Predicate<ItemStack>> disallowedItems = new ArrayList<>();
 
 	private MainConfig mainConf;
 	private ConfigurationLoader<CommentedConfigurationNode> mainConfLoader;
 	private ConfigurationLoader<CommentedConfigurationNode> recipeConfLoader;
 
 	private CursedShulkerBox() throws IOException {
-		System.out.println(FabricLoader.getInstance().getConfigDirectory().toString());
-
 		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
 		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof BaseShulkerBlock);
 
@@ -90,61 +89,29 @@ public class CursedShulkerBox {
 			CommentedConfigurationNode mainConfigRoot = mainConfLoader.load(ConfigurationOptions.defaults().setHeader(MainConfig.HEADER)
 					.setObjectMapperFactory(DefaultObjectMapperFactory.getInstance()).setShouldCopyDefaults(true));
 
-			mainConfigRoot = checkSchema(mainConfigRoot, configFile, configLocation);
-
 			mainConf = mainConfigRoot.getValue(TypeToken.of(MainConfig.class), new MainConfig());
 			mainConfLoader.save(mainConfigRoot);
-
-			if (mainConf != null) {
-				double configSchema = mainConf.getSchema();
-
-				if (configSchema != CursedShulkerBox.CURRENT_CONFIG_SCHEMA) {
-					boolean tooLow = configSchema < CursedShulkerBox.CURRENT_CONFIG_SCHEMA;
-					boolean tooHigh = configSchema > CursedShulkerBox.CURRENT_CONFIG_SCHEMA;
-
-					if (tooLow) {
-						// TODO Config updating magic
-					}
-
-					if (tooHigh) {
-						// TODO Someone backported from a newer version or obviously changed the field.
-					}
-				}
-			}
 		} catch (Exception e) {
 			e.printStackTrace(); // TODO Fail
-		}
-	}
-
-	private CommentedConfigurationNode checkSchema(CommentedConfigurationNode mainConfigRoot, Path configFile, Path configLocation) throws IOException {
-		CommentedConfigurationNode schemaNode = mainConfigRoot.getNode("schemaVersion");
-
-		if (schemaNode.getValueType() != ValueType.SCALAR || !(schemaNode.getValue() instanceof Double)) {
-			getLogger().error("schemaVersion is not a scalar type or a double: " + Arrays.toString(schemaNode.getPath()));
-			getLogger().error("Copied broken config file to same directory.");
-			backupBrokenAndReplace(configFile, configLocation);
+			return;
 		}
 
-		double configSchema = schemaNode.getDouble();
+		for (String id : mainConf.getNotAllowedInShulkers()) {
+			Identifier identifier = Identifier.tryParse(id);
 
-		if (0 > configSchema) {
-			getLogger().error("Config Schema cannot be negative: " + Arrays.toString(schemaNode.getPath()));
-			backupBrokenAndReplace(configFile, configLocation);
-		}
+			if (identifier == null) {
+				getLogger().error("Item: " + id + " is not a namespaced key, so it failed to be registered into the shulker box blacklist.");
+				continue;
+			}
 
-		return mainConfigRoot;
-	}
+			Optional<Item> item = Registry.ITEM.getOrEmpty(identifier);
 
-	private CommentedConfigurationNode backupBrokenAndReplace(Path configFile, Path configLocation) throws IOException {
-		try {
-			Files.copy(configFile, configLocation.resolve("broken_config.conf"));
-		} catch (FileAlreadyExistsException ignore) {
-			Files.copy(configFile, configLocation.resolve("broken_config" + Instant.now().getEpochSecond() +".conf")); // Okay it already existed, so we throw an epoch second on it now so it's unique.
-		} finally {
-			Files.deleteIfExists(configFile);
-			Files.createFile(configFile);
-			return mainConfLoader.load(ConfigurationOptions.defaults().setHeader(MainConfig.HEADER)
-				.setObjectMapperFactory(DefaultObjectMapperFactory.getInstance()).setShouldCopyDefaults(true));
+			if (!item.isPresent()) {
+				getLogger().error("Tried to register item: " + identifier.toString() + " to the shulker box blacklist, but it is not present within the ITEM registry.");
+				continue;
+			}
+
+			CursedShulkerBox.addDisallowedShulkerItem((stack) -> Registry.ITEM.getId(stack.getItem()).equals(identifier));
 		}
 	}
 
@@ -155,8 +122,6 @@ public class CursedShulkerBox {
 	public static CursedShulkerBox getInstance() {
 		return instance;
 	}
-
-	private List<Predicate<ItemStack>> disallowedItems = new ArrayList<>();
 
 	public Logger getLogger() {
 		return LogManager.getLogger(new AbstractMessageFactory() {
@@ -171,8 +136,8 @@ public class CursedShulkerBox {
 		return this.mainConf;
 	}
 
-	public void addDisallowedShulkerItem(Predicate<ItemStack> predicate) {
-		this.disallowedItems.add(predicate);
+	public static void addDisallowedShulkerItem(Predicate<ItemStack> predicate) {
+		disallowedItems.add(predicate);
 	}
 
 	public boolean canInsertItem(ItemStack stack) {
@@ -196,5 +161,6 @@ public class CursedShulkerBox {
 		}
 
 		instance = tmp;
+
 	}
 }
