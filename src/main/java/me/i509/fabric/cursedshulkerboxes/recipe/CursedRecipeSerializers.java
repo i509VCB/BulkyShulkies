@@ -22,22 +22,13 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.cursedshulkerboxes;
+package me.i509.fabric.cursedshulkerboxes.recipe;
 
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
-import net.minecraft.entity.data.TrackedDataHandler;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.recipe.SpecialRecipeSerializer;
+import net.minecraft.util.registry.Registry;
 
-import me.i509.fabric.cursedshulkerboxes.api.item.HelmetTrackedDataStage;
+import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 
-public class CursedDataTrackers {
-	private CursedDataTrackers() {
-		// NO-OP
-	}
-
-	static {
-		TrackedDataHandlerRegistry.register(HelmetTrackedDataStage.INSTANCE);
-	}
-
-	public static final TrackedDataHandler<ShulkerBoxBlockEntity.AnimationStage> SHULKER_ANIMATION_STAGE = HelmetTrackedDataStage.INSTANCE;
+public class CursedRecipeSerializers {
+	public static final SpecialRecipeSerializer<AbstractShulkerBoxColoringRecipe> ABSTRACT_SHULKER_COLORING = Registry.register(Registry.RECIPE_SERIALIZER, CursedShulkerBoxMod.id("shulker_coloring"), new SpecialRecipeSerializer<>(AbstractShulkerBoxColoringRecipe::new));
 }

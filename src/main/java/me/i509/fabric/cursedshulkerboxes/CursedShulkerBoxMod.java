@@ -35,6 +35,7 @@ import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import me.i509.fabric.cursedshulkerboxes.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.container.ShulkerBoxScrollableContainer;
 import me.i509.fabric.cursedshulkerboxes.extension.ShulkerHooks;
+import me.i509.fabric.cursedshulkerboxes.recipe.CursedRecipeSerializers;
 import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
 import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlocks;
 import me.i509.fabric.cursedshulkerboxes.registry.ShulkerItemGroups;
@@ -50,13 +51,13 @@ public class CursedShulkerBoxMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		CursedShulkerBox.getInstance();
+		CursedRecipeSerializers.ABSTRACT_SHULKER_COLORING.getClass(); // Register the colorizer recipe type
+		CursedDataTrackers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
 		ShulkerBlocks.init();
 		ShulkerBlockEntities.init();
 		ShulkerItems.init();
 		ShulkerItemGroups.init();
 		ShulkerHooks.init();
-
-		CursedDataTrackers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
 
 		ContainerProviderRegistry.INSTANCE.registerFactory(id("shulkerscrollcontainer"), ((syncId, identifier, player, buf) -> {
 			BlockPos pos = buf.readBlockPos();
