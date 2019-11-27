@@ -33,13 +33,14 @@ import net.minecraft.util.registry.Registry;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import me.i509.fabric.cursedshulkerboxes.block.cursed.slab.CursedSlabShulkerBoxBE;
-import me.i509.fabric.cursedshulkerboxes.block.material.copper.CopperShulkerBoxBlockEntity;
-import me.i509.fabric.cursedshulkerboxes.block.material.copper.ExampleTallBE;
-import me.i509.fabric.cursedshulkerboxes.block.material.iron.IronShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.block.material.copper.CopperShulkerBoxBE;
+import me.i509.fabric.cursedshulkerboxes.block.material.iron.IronShulkerBoxBE;
+import me.i509.fabric.cursedshulkerboxes.block.material.gold.GoldShulkerBoxBE;
+import me.i509.fabric.cursedshulkerboxes.block.material.silver.SilverShulkerBoxBE;
 
 public class ShulkerBlockEntities {
-	public static final BlockEntityType<CopperShulkerBoxBlockEntity> COPPER_SHULKER_BOX = register("copper_shulker_box",
-			CopperShulkerBoxBlockEntity::new,
+	public static final BlockEntityType<CopperShulkerBoxBE> COPPER_SHULKER_BOX = register("copper_shulker_box",
+			CopperShulkerBoxBE::new,
 			ShulkerBlocks.COPPER_SHULKER_BOX, // Uncolored
 			ShulkerBlocks.WHITE_COPPER_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_COPPER_SHULKER_BOX,
@@ -59,8 +60,8 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_COPPER_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<IronShulkerBoxBlockEntity> IRON_SHULKER_BOX = register("iron_shulker_box",
-			IronShulkerBoxBlockEntity::new,
+	public static final BlockEntityType<IronShulkerBoxBE> IRON_SHULKER_BOX = register("iron_shulker_box",
+			IronShulkerBoxBE::new,
 			ShulkerBlocks.IRON_SHULKER_BOX, // Uncolored
 			ShulkerBlocks.WHITE_IRON_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_IRON_SHULKER_BOX,
@@ -80,14 +81,67 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_IRON_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<ExampleTallBE> EXAMPLE_TALL = register("example_tall_shulker_box",
-			ExampleTallBE::new,
-			ShulkerBlocks.TEST_TALL
+	public static final BlockEntityType<SilverShulkerBoxBE> SILVER_SHULKER_BOX = register("silver_shulker_box",
+			SilverShulkerBoxBE::new,
+			ShulkerBlocks.SILVER_SHULKER_BOX, // Uncolored
+			ShulkerBlocks.WHITE_SILVER_SHULKER_BOX,
+			ShulkerBlocks.ORANGE_SILVER_SHULKER_BOX,
+			ShulkerBlocks.MAGENTA_SILVER_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_BLUE_SILVER_SHULKER_BOX,
+			ShulkerBlocks.YELLOW_SILVER_SHULKER_BOX,
+			ShulkerBlocks.LIME_SILVER_SHULKER_BOX,
+			ShulkerBlocks.PINK_SILVER_SHULKER_BOX,
+			ShulkerBlocks.GRAY_SILVER_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_GRAY_SILVER_SHULKER_BOX,
+			ShulkerBlocks.CYAN_SILVER_SHULKER_BOX,
+			ShulkerBlocks.PURPLE_SILVER_SHULKER_BOX,
+			ShulkerBlocks.BLUE_SILVER_SHULKER_BOX,
+			ShulkerBlocks.BROWN_SILVER_SHULKER_BOX,
+			ShulkerBlocks.GREEN_SILVER_SHULKER_BOX,
+			ShulkerBlocks.RED_SILVER_SHULKER_BOX,
+			ShulkerBlocks.BLACK_SILVER_SHULKER_BOX
+	);
+
+	public static final BlockEntityType<GoldShulkerBoxBE> GOLD_SHULKER_BOX = register("gold_shulker_box",
+			GoldShulkerBoxBE::new,
+			ShulkerBlocks.GOLD_SHULKER_BOX, // Uncolored
+			ShulkerBlocks.WHITE_GOLD_SHULKER_BOX,
+			ShulkerBlocks.ORANGE_GOLD_SHULKER_BOX,
+			ShulkerBlocks.MAGENTA_GOLD_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_BLUE_GOLD_SHULKER_BOX,
+			ShulkerBlocks.YELLOW_GOLD_SHULKER_BOX,
+			ShulkerBlocks.LIME_GOLD_SHULKER_BOX,
+			ShulkerBlocks.PINK_GOLD_SHULKER_BOX,
+			ShulkerBlocks.GRAY_GOLD_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_GRAY_GOLD_SHULKER_BOX,
+			ShulkerBlocks.CYAN_GOLD_SHULKER_BOX,
+			ShulkerBlocks.PURPLE_GOLD_SHULKER_BOX,
+			ShulkerBlocks.BLUE_GOLD_SHULKER_BOX,
+			ShulkerBlocks.BROWN_GOLD_SHULKER_BOX,
+			ShulkerBlocks.GREEN_GOLD_SHULKER_BOX,
+			ShulkerBlocks.RED_GOLD_SHULKER_BOX,
+			ShulkerBlocks.BLACK_GOLD_SHULKER_BOX
 	);
 
 	public static final BlockEntityType<CursedSlabShulkerBoxBE> SLAB_SHULKER_BOX = register("slab_shulker_box",
 			CursedSlabShulkerBoxBE::new,
-			ShulkerBlocks.SLAB_SHULKER_BOX // TODO Add all the colors
+			ShulkerBlocks.SLAB_SHULKER_BOX,
+			ShulkerBlocks.WHITE_SLAB_SHULKER_BOX,
+			ShulkerBlocks.ORANGE_SLAB_SHULKER_BOX,
+			ShulkerBlocks.MAGENTA_SLAB_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_BLUE_SLAB_SHULKER_BOX,
+			ShulkerBlocks.YELLOW_SLAB_SHULKER_BOX,
+			ShulkerBlocks.LIME_SLAB_SHULKER_BOX,
+			ShulkerBlocks.PINK_SLAB_SHULKER_BOX,
+			ShulkerBlocks.GRAY_SLAB_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_GRAY_SLAB_SHULKER_BOX,
+			ShulkerBlocks.CYAN_SLAB_SHULKER_BOX,
+			ShulkerBlocks.PURPLE_SLAB_SHULKER_BOX,
+			ShulkerBlocks.BLUE_SLAB_SHULKER_BOX,
+			ShulkerBlocks.BROWN_SLAB_SHULKER_BOX,
+			ShulkerBlocks.GREEN_SLAB_SHULKER_BOX,
+			ShulkerBlocks.RED_SLAB_SHULKER_BOX,
+			ShulkerBlocks.BLACK_SLAB_SHULKER_BOX
 	);
 
 	private ShulkerBlockEntities() {

@@ -27,7 +27,7 @@ package me.i509.fabric.cursedshulkerboxes.abstraction;
 import java.util.HashMap;
 
 public class DefaultReturnHashMap<K, V> extends HashMap<K, V> {
-	private V defaultVal;
+	private final V defaultVal;
 
 	public DefaultReturnHashMap(V defaultValue) {
 		super();

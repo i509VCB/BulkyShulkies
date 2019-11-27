@@ -25,7 +25,7 @@
 
 package me.i509.fabric.cursedshulkerboxes.client.screen;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
@@ -37,6 +37,7 @@ import net.minecraft.util.math.MathHelper;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import me.i509.fabric.cursedshulkerboxes.client.screen.widget.SearchTextFieldWidget;
@@ -62,7 +63,7 @@ public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollab
 		totalRows = container.getRows();
 		topRow = 0;
 		displayedRows = hasScrollbar() ? 6 : totalRows;
-		//if (hasScrollbar() && !FabricLoader.getInstance().isModLoaded("roughlyenoughitems")) containerWidth += 22;
+		if (hasScrollbar() && !FabricLoader.getInstance().isModLoaded("roughlyenoughitems")) containerWidth += 22;
 		containerHeight = 114 + displayedRows * 18;
 		progress = 0;
 		container.setSearchTerm("");
@@ -111,7 +112,7 @@ public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollab
 
 	@Override
 	protected void drawBackground(float lastFrameDuration, int mouseX, int mouseY) {
-		GlStateManager.color4f(1, 1, 1, 1);
+		RenderSystem.color4f(1, 1, 1, 1);
 		minecraft.getTextureManager().bindTexture(BASE_TEXTURE);
 		int x = (width - containerWidth) / 2;
 		int y = (height - containerHeight) / 2;

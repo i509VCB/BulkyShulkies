@@ -31,12 +31,12 @@ import net.minecraft.util.DyeColor;
 import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
 import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
 
-public class IronShulkerBoxBlockEntity extends AbstractMaterialBasedShulkerBoxBlockEntity {
-	public IronShulkerBoxBlockEntity(@Nullable DyeColor color) {
+public class IronShulkerBoxBE extends AbstractMaterialBasedShulkerBoxBlockEntity {
+	public IronShulkerBoxBE(@Nullable DyeColor color) {
 		super(ShulkerBlockEntities.IRON_SHULKER_BOX, 45, color);
 	}
 
-	public IronShulkerBoxBlockEntity() {
+	public IronShulkerBoxBE() {
 		this(null);
 	}
 }

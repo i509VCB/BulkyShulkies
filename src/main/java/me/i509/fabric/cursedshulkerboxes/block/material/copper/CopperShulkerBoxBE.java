@@ -22,9 +22,21 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.cursedshulkerboxes.recipe;
+package me.i509.fabric.cursedshulkerboxes.block.material.copper;
 
-import net.minecraft.recipe.RecipeType;
+import org.jetbrains.annotations.Nullable;
 
-public class InfuserRecipeType implements RecipeType<InfuserRecipe> {
+import net.minecraft.util.DyeColor;
+
+import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
+
+public class CopperShulkerBoxBE extends AbstractMaterialBasedShulkerBoxBlockEntity {
+	public CopperShulkerBoxBE(@Nullable DyeColor color) {
+		super(ShulkerBlockEntities.COPPER_SHULKER_BOX, 36, color);
+	}
+
+	public CopperShulkerBoxBE() {
+		this(null);
+	}
 }

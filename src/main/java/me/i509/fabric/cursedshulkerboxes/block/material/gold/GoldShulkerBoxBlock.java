@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.cursedshulkerboxes.block.cursed.slab;
+package me.i509.fabric.cursedshulkerboxes.block.material.gold;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -31,59 +31,59 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.world.BlockView;
 
-import me.i509.fabric.cursedshulkerboxes.api.block.slab.AbstractCursedShulkerSlabBlock;
+import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlocks;
 
-public class CursedSlabShulkerBox extends AbstractCursedShulkerSlabBlock {
-	public CursedSlabShulkerBox(Settings settings, @Nullable DyeColor color) {
-		super(settings, 18, color);
+public class GoldShulkerBoxBlock extends AbstractMaterialBasedShulkerBoxBlock {
+	public GoldShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
+		super(settings, 63, color);
 	}
 
 	@Override
 	public BlockEntity createBlockEntity(BlockView blockView) {
-		return new CursedSlabShulkerBoxBE(this.getColor());
+		return new GoldShulkerBoxBE(this.getColor());
 	}
 
 	@Override
 	public ItemStack getItemStack(@Nullable DyeColor color) {
 		if (color == null) {
-			return new ItemStack(ShulkerBlocks.SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.GOLD_SHULKER_BOX);
 		}
 
 		switch (color) {
 		case WHITE:
-			return new ItemStack(ShulkerBlocks.WHITE_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.WHITE_GOLD_SHULKER_BOX);
 		case ORANGE:
-			return new ItemStack(ShulkerBlocks.ORANGE_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.ORANGE_GOLD_SHULKER_BOX);
 		case MAGENTA:
-			return new ItemStack(ShulkerBlocks.MAGENTA_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.MAGENTA_GOLD_SHULKER_BOX);
 		case LIGHT_BLUE:
-			return new ItemStack(ShulkerBlocks.LIGHT_BLUE_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.LIGHT_BLUE_GOLD_SHULKER_BOX);
 		case YELLOW:
-			return new ItemStack(ShulkerBlocks.YELLOW_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.YELLOW_GOLD_SHULKER_BOX);
 		case LIME:
-			return new ItemStack(ShulkerBlocks.LIME_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.LIME_GOLD_SHULKER_BOX);
 		case PINK:
-			return new ItemStack(ShulkerBlocks.PINK_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.PINK_GOLD_SHULKER_BOX);
 		case GRAY:
-			return new ItemStack(ShulkerBlocks.GRAY_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.GRAY_GOLD_SHULKER_BOX);
 		case LIGHT_GRAY:
-			return new ItemStack(ShulkerBlocks.LIGHT_GRAY_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.LIGHT_GRAY_GOLD_SHULKER_BOX);
 		case CYAN:
-			return new ItemStack(ShulkerBlocks.CYAN_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.CYAN_GOLD_SHULKER_BOX);
 		case PURPLE:
 		default:
-			return new ItemStack(ShulkerBlocks.PURPLE_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.PURPLE_GOLD_SHULKER_BOX);
 		case BLUE:
-			return new ItemStack(ShulkerBlocks.BLUE_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.BLUE_GOLD_SHULKER_BOX);
 		case BROWN:
-			return new ItemStack(ShulkerBlocks.BROWN_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.BROWN_GOLD_SHULKER_BOX);
 		case GREEN:
-			return new ItemStack(ShulkerBlocks.GREEN_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.GREEN_GOLD_SHULKER_BOX);
 		case RED:
-			return new ItemStack(ShulkerBlocks.RED_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.RED_GOLD_SHULKER_BOX);
 		case BLACK:
-			return new ItemStack(ShulkerBlocks.BLACK_SLAB_SHULKER_BOX);
+			return new ItemStack(ShulkerBlocks.BLACK_GOLD_SHULKER_BOX);
 		}
 	}
 }

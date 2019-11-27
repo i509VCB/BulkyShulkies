@@ -39,10 +39,10 @@ import net.fabricmc.api.Environment;
 
 import me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod;
 import me.i509.fabric.cursedshulkerboxes.abstraction.DefaultReturnHashMap;
-import me.i509.fabric.cursedshulkerboxes.block.material.iron.IronShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.block.material.iron.IronShulkerBoxBE;
 
 @Environment(EnvType.CLIENT)
-public class IronShulkerBoxBlockEntityRenderer extends AbstractMaterialBasedShulkerBlockEntityRenderer<IronShulkerBoxBlockEntity> {
+public class IronShulkerBoxBlockEntityRenderer extends AbstractMaterialBasedShulkerBlockEntityRenderer<IronShulkerBoxBE> {
 	public IronShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
 		super(new ShulkerEntityModel<>(), blockEntityRenderDispatcher);
 	}

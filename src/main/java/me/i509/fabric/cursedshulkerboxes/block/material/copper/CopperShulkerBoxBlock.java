@@ -24,52 +24,66 @@
 
 package me.i509.fabric.cursedshulkerboxes.block.material.copper;
 
-import java.util.Map;
-
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Util;
 import net.minecraft.world.BlockView;
 
-import me.i509.fabric.cursedshulkerboxes.abstraction.DefaultReturnHashMap;
 import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlock;
 import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlocks;
 
 public class CopperShulkerBoxBlock extends AbstractMaterialBasedShulkerBoxBlock {
-	private static final Map<DyeColor, Block> COLOR_BLOCK_MAP = Util.create(new DefaultReturnHashMap<>(ShulkerBlocks.COPPER_SHULKER_BOX), (map) -> {
-		map.put(DyeColor.WHITE, ShulkerBlocks.WHITE_COPPER_SHULKER_BOX);
-		map.put(DyeColor.ORANGE, ShulkerBlocks.ORANGE_COPPER_SHULKER_BOX);
-		map.put(DyeColor.MAGENTA, ShulkerBlocks.MAGENTA_COPPER_SHULKER_BOX);
-		map.put(DyeColor.LIGHT_BLUE, ShulkerBlocks.LIGHT_BLUE_COPPER_SHULKER_BOX);
-		map.put(DyeColor.YELLOW, ShulkerBlocks.YELLOW_COPPER_SHULKER_BOX);
-		map.put(DyeColor.LIME, ShulkerBlocks.LIME_COPPER_SHULKER_BOX);
-		map.put(DyeColor.PINK, ShulkerBlocks.PINK_COPPER_SHULKER_BOX);
-		map.put(DyeColor.GRAY, ShulkerBlocks.GRAY_COPPER_SHULKER_BOX);
-		map.put(DyeColor.LIGHT_GRAY, ShulkerBlocks.LIGHT_GRAY_COPPER_SHULKER_BOX);
-		map.put(DyeColor.CYAN, ShulkerBlocks.CYAN_COPPER_SHULKER_BOX);
-		map.put(DyeColor.PURPLE, ShulkerBlocks.PURPLE_COPPER_SHULKER_BOX);
-		map.put(DyeColor.BLUE, ShulkerBlocks.BLUE_COPPER_SHULKER_BOX);
-		map.put(DyeColor.BROWN, ShulkerBlocks.BROWN_COPPER_SHULKER_BOX);
-		map.put(DyeColor.GREEN, ShulkerBlocks.GREEN_COPPER_SHULKER_BOX);
-		map.put(DyeColor.RED, ShulkerBlocks.RED_COPPER_SHULKER_BOX);
-		map.put(DyeColor.BLACK, ShulkerBlocks.BLACK_COPPER_SHULKER_BOX);
-	});
-
 	public CopperShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
 		super(settings, 36, color);
 	}
 
 	@Override
 	public ItemStack getItemStack(@Nullable DyeColor color) {
-		return new ItemStack(COLOR_BLOCK_MAP.get(color));
+		if (color == null) {
+			return new ItemStack(ShulkerBlocks.COPPER_SHULKER_BOX);
+		}
+
+		switch (color) {
+		case WHITE:
+			return new ItemStack(ShulkerBlocks.WHITE_COPPER_SHULKER_BOX);
+		case ORANGE:
+			return new ItemStack(ShulkerBlocks.ORANGE_COPPER_SHULKER_BOX);
+		case MAGENTA:
+			return new ItemStack(ShulkerBlocks.MAGENTA_COPPER_SHULKER_BOX);
+		case LIGHT_BLUE:
+			return new ItemStack(ShulkerBlocks.LIGHT_BLUE_COPPER_SHULKER_BOX);
+		case YELLOW:
+			return new ItemStack(ShulkerBlocks.YELLOW_COPPER_SHULKER_BOX);
+		case LIME:
+			return new ItemStack(ShulkerBlocks.LIME_COPPER_SHULKER_BOX);
+		case PINK:
+			return new ItemStack(ShulkerBlocks.PINK_COPPER_SHULKER_BOX);
+		case GRAY:
+			return new ItemStack(ShulkerBlocks.GRAY_COPPER_SHULKER_BOX);
+		case LIGHT_GRAY:
+			return new ItemStack(ShulkerBlocks.LIGHT_GRAY_COPPER_SHULKER_BOX);
+		case CYAN:
+			return new ItemStack(ShulkerBlocks.CYAN_COPPER_SHULKER_BOX);
+		case PURPLE:
+		default:
+			return new ItemStack(ShulkerBlocks.PURPLE_COPPER_SHULKER_BOX);
+		case BLUE:
+			return new ItemStack(ShulkerBlocks.BLUE_COPPER_SHULKER_BOX);
+		case BROWN:
+			return new ItemStack(ShulkerBlocks.BROWN_COPPER_SHULKER_BOX);
+		case GREEN:
+			return new ItemStack(ShulkerBlocks.GREEN_COPPER_SHULKER_BOX);
+		case RED:
+			return new ItemStack(ShulkerBlocks.RED_COPPER_SHULKER_BOX);
+		case BLACK:
+			return new ItemStack(ShulkerBlocks.BLACK_COPPER_SHULKER_BOX);
+		}
 	}
 
 	@Override
 	public BlockEntity createBlockEntity(BlockView blockView) {
-		return new CopperShulkerBoxBlockEntity(this.getColor());
+		return new CopperShulkerBoxBE(this.getColor());
 	}
 }

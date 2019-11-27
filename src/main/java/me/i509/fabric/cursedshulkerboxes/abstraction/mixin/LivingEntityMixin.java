@@ -37,7 +37,6 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 
 import me.i509.fabric.cursedshulkerboxes.abstraction.DurabilityBasedProtection;
-import me.i509.fabric.cursedshulkerboxes.api.item.AbstractShulkerHelmet;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
@@ -52,9 +51,9 @@ public abstract class LivingEntityMixin {
 		do {
 			ItemStack stack = armorItems.next();
 
-			if (stack.getItem() instanceof AbstractShulkerHelmet) {
+			if (stack.getItem() instanceof DurabilityBasedProtection) {
 				if (DurabilityBasedProtection.canDamage(stack)) {
-					realArmorPoints -= ((ArmorItem) stack.getItem()).getProtection(); // Here we remove the armor points logically supplied by the server. TODO Maybe change armor point icon in that context.
+					realArmorPoints -= ((ArmorItem) stack.getItem()).getProtection(); // Here we remove the armor points logically supplied by the server. // TODO Maybe change armor point icon in that context.
 				}
 			}
 		} while (armorItems.hasNext());

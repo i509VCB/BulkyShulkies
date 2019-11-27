@@ -89,7 +89,7 @@ public class CursedShulkerBox {
 			mainConf = mainConfigRoot.getValue(TypeToken.of(MainConfig.class), new MainConfig());
 			mainConfLoader.save(mainConfigRoot);
 		} catch (Exception e) {
-			e.printStackTrace(); // TODO Fail
+			e.printStackTrace(); // Well some invalid syntax
 			return;
 		}
 
@@ -110,10 +110,6 @@ public class CursedShulkerBox {
 
 			CursedShulkerBox.addDisallowedShulkerItem((stack) -> Registry.ITEM.getId(stack.getItem()).equals(identifier));
 		}
-	}
-
-	private void reloadRecipes() {
-		// TODO Impl
 	}
 
 	public static CursedShulkerBox getInstance() {

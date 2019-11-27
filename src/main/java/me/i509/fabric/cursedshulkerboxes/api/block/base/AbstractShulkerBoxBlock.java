@@ -283,7 +283,7 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 
 	@Override
 	public PistonBehavior getPistonBehavior(BlockState blockState) {
-		return PistonBehavior.DESTROY;
+		return PistonBehavior.BLOCK; // TODO The Shulkers don't drop themselves right now so for safety we do this.
 	}
 
 	@Override

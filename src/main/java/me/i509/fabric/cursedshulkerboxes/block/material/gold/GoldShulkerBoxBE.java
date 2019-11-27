@@ -22,49 +22,21 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.cursedshulkerboxes.recipe;
+package me.i509.fabric.cursedshulkerboxes.block.material.gold;
 
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-public class InfuserRecipe implements Recipe<Inventory> {
-	@Override
-	public boolean matches(Inventory inv, World world) {
-		return false;
+import net.minecraft.util.DyeColor;
+
+import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
+
+public class GoldShulkerBoxBE extends AbstractMaterialBasedShulkerBoxBlockEntity {
+	public GoldShulkerBoxBE(@Nullable DyeColor color) {
+		super(ShulkerBlockEntities.GOLD_SHULKER_BOX, 63, color);
 	}
 
-	@Override
-	public ItemStack craft(Inventory inv) {
-		return null;
-	}
-
-	@Override
-	public boolean fits(int width, int height) {
-		return false;
-	}
-
-	@Override
-	public ItemStack getOutput() {
-		return null;
-	}
-
-	@Override
-	public Identifier getId() {
-		return null;
-	}
-
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return null;
-	}
-
-	@Override
-	public RecipeType<?> getType() {
-		return null;
+	public GoldShulkerBoxBE() {
+		this(null);
 	}
 }

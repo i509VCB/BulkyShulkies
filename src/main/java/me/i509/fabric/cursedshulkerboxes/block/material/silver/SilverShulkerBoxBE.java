@@ -22,9 +22,21 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.cursedshulkerboxes.recipe;
+package me.i509.fabric.cursedshulkerboxes.block.material.silver;
 
-import net.minecraft.inventory.BasicInventory;
+import org.jetbrains.annotations.Nullable;
 
-public class InfuserInventory extends BasicInventory {
+import net.minecraft.util.DyeColor;
+
+import me.i509.fabric.cursedshulkerboxes.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
+import me.i509.fabric.cursedshulkerboxes.registry.ShulkerBlockEntities;
+
+public class SilverShulkerBoxBE extends AbstractMaterialBasedShulkerBoxBlockEntity {
+	public SilverShulkerBoxBE(@Nullable DyeColor color) {
+		super(ShulkerBlockEntities.SILVER_SHULKER_BOX, 54, color);
+	}
+
+	public SilverShulkerBoxBE() {
+		this(null);
+	}
 }

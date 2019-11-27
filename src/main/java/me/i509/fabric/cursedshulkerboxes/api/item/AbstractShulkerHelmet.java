@@ -26,11 +26,17 @@ package me.i509.fabric.cursedshulkerboxes.api.item;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ItemStack;
 
 import me.i509.fabric.cursedshulkerboxes.abstraction.DurabilityBasedProtection;
 
 public class AbstractShulkerHelmet extends ArmorItem implements DurabilityBasedProtection {
 	public AbstractShulkerHelmet(Settings settings) {
 		super(ShulkerArmorMaterials.SHULKER, EquipmentSlot.HEAD, settings);
+	}
+
+	@Override
+	public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+		return this.type.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
 	}
 }

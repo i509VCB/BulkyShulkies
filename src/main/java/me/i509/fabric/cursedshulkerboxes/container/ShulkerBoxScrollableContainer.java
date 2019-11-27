@@ -91,12 +91,12 @@ public class ShulkerBoxScrollableContainer extends Container {
 
 		for (int y = 0; y < 3; ++y) {
 			for (int x = 0; x < 9; ++x) {
-				addSlot(new ShulkerBoxSlot(playerInventory, x + y * 9 + 9, 8 + x * 18, 103 + y * 18 + int_3));
+				addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 103 + y * 18 + int_3));
 			}
 		}
 
 		for (int x = 0; x < 9; ++x) {
-			addSlot(new ShulkerBoxSlot(playerInventory, x, 8 + x * 18, 161 + int_3));
+			addSlot(new Slot(playerInventory, x, 8 + x * 18, 161 + int_3));
 		}
 	}
 
