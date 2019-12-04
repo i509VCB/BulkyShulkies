@@ -6,11 +6,11 @@ import net.minecraft.inventory.BasicInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class EnderSlabInventory extends BasicInventory {
-	@Nullable private EnderSlabBoxBE currentBlockEntity;
+	@Nullable
+	private EnderSlabBoxBE currentBlockEntity;
 
 	public EnderSlabInventory() {
 		super(18);
