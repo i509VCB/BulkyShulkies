@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "me.i509.fabric.bulkyshulkies.abstraction.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ItemStackMixin",
+    "LivingEntityMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

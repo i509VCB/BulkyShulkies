@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "me.i509.fabric.bulkyshulkies.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ShulkerBoxBlockEntityMixin",
+    "ShulkerBoxSlotMixin",
+    "LivingEntityMixin"
+  ],
+  "client": [
+    "client.TexturedRenderLayersMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,4 +1,4 @@
-# Cursed Shulker Boxes
+# Bulky Shulkies
 
 This mod adds new shulker box types.
 
@@ -7,7 +7,7 @@ This mod adds new shulker box types.
 To build the mod, use the following command below, or import it into your IDE.
 
 ```
-./gradlew idea
+./gradlew build
 ```
 
 ## License

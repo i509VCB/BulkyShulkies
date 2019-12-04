@@ -34,6 +34,13 @@ repositories {
 		name = "Sponge"
 		url = "https://repo.spongepowered.org/maven"
 	}
+	maven {
+ 		url = "http://server.bbkr.space:8081/artifactory/libs-release"
+	}
+	maven {
+		name = "Jitpack"
+		url = "https://www.jitpack.io"
+	}
 }
 
 logger.lifecycle("""
@@ -45,7 +52,7 @@ logger.lifecycle("""
 	Fabric-Loader Version: ${project.loader_version}
 	Fabric-API Version: ${project.fabric_version}
 	Cotton-Resources Version: ${project.cotton_resources_version}
-	
+	LibCD Version: ${project.libcd_version}
 	
 	Output files will be in /build/libs
 	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -61,48 +68,35 @@ dependencies {
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Cotton Resources -- Uncomment when 1.15 branch I am porting comes out
-	//modImplementation ("io.github.cottonmc:cotton-resources:${cotton_resources_version}") { // We use our own version of modmenu and REI
-	//	exclude module: "fabric-api"
-	//	exclude module: "RoughlyEnoughItems"
-	//}
+	modImplementation ("io.github.prospector:modmenu:${project.modmenu_version}") { // We use our own version of modmenu and REI
+		exclude(group : "net.fabricmc.fabric-api")
+		exclude module: "RoughlyEnoughItems"
+	}
 
+	// Cotton Resources -- Uncomment when 1.15 is pushed
+	// modImplementation ("io.github.cottonmc:cotton-resources:${cotton_resources_version}") { // We use our own version of modmenu and REI
+	// exclude module: "fabric-api"
+	// exclude module: "RoughlyEnoughItems"
+	// }
 	//include "io.github.cottonmc:cotton-resources:${cotton_resources_version}" // JIJ time
 
-	// ModMenu -- We have a hook for this
-	modImplementation ("io.github.prospector:modmenu:${project.modmenu_version}") { // We use our own version of modmenu and REI
-		exclude module: "fabric-api"
-		//	exclude module: "RoughlyEnoughItems"
-		}
+	// Optional Mods - We have this for looking up items and verifying recipes.
+	modImplementation ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
+		exclude(group : "net.fabricmc.fabric-api")
+	}
+
+	// LibCD is how we only load the CottonResources recipes IF CottonResources is present. We only use it at runtime and we also JIJ it out of the box.
+	modRuntime ("io.github.cottonmc:LibCD:${project.libcd_version}") {
+		exclude(group : "net.fabricmc.fabric-api")
+		exclude module: "modmenu"
+	}
+	include ("io.github.cottonmc:LibCD:${project.libcd_version}") {}
 
 	// Config
-	compile "org.spongepowered:configurate-hocon:${project.configurate_version}"
+	implementation "org.spongepowered:configurate-hocon:${project.configurate_version}"
 
 	// Annotations
-	compileOnly group: 'org.jetbrains', name: 'annotations', version: "${project.jetbrains_annotations}"
-
-	// Optional Mods - We have this for looking up items and verifying recipes.
-	modRuntime ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
-		exclude module: "modmenu"
-		exclude module: "fabric-api"
-	}
-
-	// JUnit for config
-	testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
-}
-
-test {
-	logger.lifecycle("""
-	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	Running Unit Tests for Cursed Shulker Boxes
-	
-	Version: ${project.mod_version}
-	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	""")
-	useJUnitPlatform()
-	testLogging {
-		events "passed", "skipped", "failed"
-	}
+	implementation group: 'org.jetbrains', name: 'annotations', version: "${project.jetbrains_annotations}"
 }
 
 processResources {
@@ -118,9 +112,6 @@ processResources {
 	}
 }
 
-// ensure that the encoding is set to UTF-8, no matter what the system default is
-// this fixes some edge cases with special characters not displaying correctly
-// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
 }

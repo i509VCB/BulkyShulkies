@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "cursedshulkerboxes",
+  "id": "bulkyshulkies",
   "version": "${version}",
 
-  "name": "Cursed Shulker Boxes",
-  "description": "More Shulker boxes, both material based and cursed.",
+  "name": "Bulky Shulkies",
+  "description": "More Bulky Shulker boxes.",
   "authors": [
     {
       "name": "i509VCB",
@@ -32,18 +32,18 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.i509.fabric.cursedshulkerboxes.CursedShulkerBoxMod"
+      "me.i509.fabric.bulkyshulkies.CursedShulkerBoxMod"
     ],
     "client": [
-      "me.i509.fabric.cursedshulkerboxes.client.CursedShulkerBoxClientMod"
+      "me.i509.fabric.bulkyshulkies.client.CursedShulkerBoxClientMod"
     ],
-    "modmenu": [
-      "me.i509.fabric.cursedshulkerboxes.extension.CursedModMenuHook"
+    "rei_plugins_v0": [
+      "me.i509.fabric.bulkyshulkies.client.CursedShulkerBoxREIPlugin"
     ]
   },
   "mixins": [
-    "cursed.mixins.json",
-    "abstraction.mixin.json"
+    "mixins.abstraction.json",
+    "mixins.cursed.json"
   ],
 
   "depends": {
