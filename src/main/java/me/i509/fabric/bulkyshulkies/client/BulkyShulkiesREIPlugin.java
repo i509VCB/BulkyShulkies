@@ -18,7 +18,7 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
 
 @Environment(EnvType.CLIENT)
-public class CursedShulkerBoxREIPlugin implements REIPluginV0 {
+public class BulkyShulkiesREIPlugin implements REIPluginV0 {
 	@Override
 	public SemanticVersion getMinimumVersion() throws VersionParsingException {
 		return SemanticVersion.parse("3.0-pre");

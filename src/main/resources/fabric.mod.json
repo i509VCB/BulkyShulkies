@@ -32,13 +32,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.i509.fabric.bulkyshulkies.CursedShulkerBoxMod"
+      "me.i509.fabric.bulkyshulkies.BulkyShulkiesMod"
     ],
     "client": [
-      "me.i509.fabric.bulkyshulkies.client.CursedShulkerBoxClientMod"
+      "me.i509.fabric.bulkyshulkies.client.BulkyShulkiesClientMod"
     ],
     "rei_plugins_v0": [
-      "me.i509.fabric.bulkyshulkies.client.CursedShulkerBoxREIPlugin"
+      "me.i509.fabric.bulkyshulkies.client.BulkyShulkiesREIPlugin"
     ]
   },
   "mixins": [

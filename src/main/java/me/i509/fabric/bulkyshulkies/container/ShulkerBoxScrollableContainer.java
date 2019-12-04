@@ -28,6 +28,8 @@ package me.i509.fabric.bulkyshulkies.container;
 import java.util.Arrays;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
+import me.i509.fabric.bulkyshulkies.api.SlotDuck;
+import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.container.Container;
 import net.minecraft.container.ShulkerBoxSlot;
 import net.minecraft.container.Slot;
@@ -143,8 +145,11 @@ public class ShulkerBoxScrollableContainer extends Container {
 		for (Integer slotID : unsortedToSortedSlotMap) {
 			Slot slot = slotList.get(slotID);
 			int y = (index / 9) - offset;
-			slot.xPosition = 8 + 18 * (index % 9);
-			slot.yPosition = (y >= rows || y < 0) ? -2000 : 18 + 18 * y;
+			//slot.xPosition = 8 + 18 * (index % 9);
+			//slot.yPosition = (y >= rows || y < 0) ? -2000 : 18 + 18 * y;
+			SlotDuck duck = (SlotDuck) slot; // TODO: In the future replace this with something nicer.
+			duck.setXPosition(8 + 18 * (index % 9));
+			duck.setYPosition((y >= rows || y < 0) ? -2000 : 18 + 18 * y);
 			index++;
 		}
 	}

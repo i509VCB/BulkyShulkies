@@ -52,7 +52,7 @@ public abstract class AbstractCursedShulkerSlabBlock extends AbstractShulkerBoxB
 	protected static final VoxelShape SOUTH_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D);
 	protected static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 8.0D, 16.0D, 16.0D, 16.0D);
 
-	private static final Map<Direction, VoxelShape> SHAPES = Util.create(new DefaultReturnHashMap<>(BOTTOM_SHAPE), map -> {
+	private static final Map<Direction, VoxelShape> SHAPES = Util.make(new DefaultReturnHashMap<>(BOTTOM_SHAPE), map -> {
 		map.put(Direction.DOWN, TOP_SHAPE);
 		map.put(Direction.UP, BOTTOM_SHAPE);
 		map.put(Direction.WEST, WEST_SHAPE);

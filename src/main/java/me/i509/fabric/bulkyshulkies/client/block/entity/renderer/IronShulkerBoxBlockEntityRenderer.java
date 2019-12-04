@@ -48,7 +48,7 @@ public class IronShulkerBoxBlockEntityRenderer extends AbstractMaterialBasedShul
 
 	public static final Identifier shulkerTextureAtlas = new Identifier("textures/atlas/shulker_boxes.png");
 	public static final SpriteIdentifier UNCOLORED_IDENTIFIER = new SpriteIdentifier(shulkerTextureAtlas, BulkyShulkiesMod.id("textures/be/shulker/iron/shulker"));
-	public static final DefaultReturnHashMap<DyeColor, SpriteIdentifier> COLOR_TO_SPRITE_IDENTIFIER = Util.create(new DefaultReturnHashMap<>(UNCOLORED_IDENTIFIER), map -> {
+	public static final DefaultReturnHashMap<DyeColor, SpriteIdentifier> COLOR_TO_SPRITE_IDENTIFIER = Util.make(new DefaultReturnHashMap<>(UNCOLORED_IDENTIFIER), map -> {
 		Arrays.stream(DyeColor.values()).forEach(color -> {
 			map.put(color, new SpriteIdentifier(shulkerTextureAtlas, BulkyShulkiesMod.id("textures/be/shulker/iron/shulker_" + color.getName())));
 		});

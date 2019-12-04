@@ -77,7 +77,7 @@ public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollab
 	@Override
 	public void init() {
 		super.init();
-		searchBox = addButton(new SearchTextFieldWidget(font, left + 82, top + 127, 80, 8, ""));
+		searchBox = addButton(new SearchTextFieldWidget(font, this.x + 82, this.y + 127, 80, 8, ""));
 		searchBox.setMaxLength(50);
 		searchBox.setHasBorder(false);
 		searchBox.setVisible(hasScrollbar());
@@ -150,7 +150,7 @@ public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollab
 	@Override
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
 		if (!dragging) return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
-		progress = MathHelper.clamp((mouseY - top - 25.5) / 90, 0, 1);
+		progress = MathHelper.clamp((mouseY - this.y - 25.5) / 90, 0, 1);
 		setTopRow((int) (progress * (totalRows - 6)));
 		return true;
 	}
@@ -162,7 +162,7 @@ public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollab
 			this.setFocused(null);
 		}
 
-		if (button == 0 && left + 172 < mouseX && mouseX < left + 184 && top + 18 < mouseY && mouseY < top + 123) {
+		if (button == 0 && this.x + 172 < mouseX && mouseX < this.x + 184 && this.y + 18 < mouseY && mouseY < this.y + 123) {
 			dragging = true;
 			return true;
 		}
@@ -222,11 +222,11 @@ public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollab
 	}
 
 	public int getTop() {
-		return this.top;
+		return this.y;
 	}
 
 	public int getLeft() {
-		return this.left;
+		return this.x;
 	}
 
 	public boolean hasScrollbar() {

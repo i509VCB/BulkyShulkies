@@ -49,7 +49,7 @@ public class CopperShulkerBoxBlockEntityRenderer extends AbstractMaterialBasedSh
 
 	public static final Identifier SHULKER_TEXTURE_ATLAS = BulkyShulkiesMod.id("textures/atlas/copper_shulkerboxes.png");
 	public static final SpriteIdentifier UNCOLORED_IDENTIFIER = new SpriteIdentifier(SHULKER_TEXTURE_ATLAS, BulkyShulkiesMod.id("textures/be/shulker/copper/shulker"));
-	public static final DefaultReturnHashMap<DyeColor, SpriteIdentifier> COLOR_TO_SPRITE_IDENTIFIER = Util.create(new DefaultReturnHashMap<>(UNCOLORED_IDENTIFIER), map -> {
+	public static final DefaultReturnHashMap<DyeColor, SpriteIdentifier> COLOR_TO_SPRITE_IDENTIFIER = Util.make(new DefaultReturnHashMap<>(UNCOLORED_IDENTIFIER), map -> {
 		Arrays.stream(DyeColor.values()).forEach(color -> {
 			map.put(color, new SpriteIdentifier(SHULKER_TEXTURE_ATLAS, BulkyShulkiesMod.id("textures/be/shulker/copper/shulker_" + color.getName())));
 		});
