@@ -27,6 +27,10 @@ package me.i509.fabric.bulkyshulkies.client;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
+import net.fabricmc.fabric.api.client.keybinding.KeyBindingRegistry;
+import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
@@ -44,11 +48,15 @@ import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.CopperShulkerBo
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.IronShulkerBoxBlockEntityRenderer;
 import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
 public class BulkyShulkiesClientMod implements ClientModInitializer {
+	public static final FabricKeyBinding OPEN_SHULKER_HELMET = FabricKeyBinding.Builder.create(BulkyShulkiesMod.id("open_helmet"), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, "bulkyshulkies").build();
+
 	@Override
 	public void onInitializeClient() {
+		KeyBindingRegistry.INSTANCE.register(OPEN_SHULKER_HELMET);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, CopperShulkerBoxBlockEntityRenderer::new);
 		//BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, IronShulkerBoxBlockEntityRenderer::new);
 
