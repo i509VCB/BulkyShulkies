@@ -88,8 +88,8 @@ public abstract class AbstractMaterialBasedShulkerBlockEntityRenderer<BE extends
 
 		matrixStack.push();
 		matrixStack.translate(0.5D, 0.5D, 0.5D);
-		float g = 0.9995F;
-		matrixStack.scale(0.9995F, 0.9995F, 0.9995F);
+		float baseScale = 0.9995F;
+		matrixStack.scale(baseScale, baseScale, baseScale);
 		matrixStack.multiply(direction.getRotationQuaternion());
 		matrixStack.scale(1.0F, -1.0F, -1.0F);
 		matrixStack.translate(0.0D, -1.0D, 0.0D);
