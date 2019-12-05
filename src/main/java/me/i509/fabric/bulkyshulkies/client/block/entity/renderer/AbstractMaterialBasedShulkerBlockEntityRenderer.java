@@ -24,8 +24,6 @@
 
 package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
-import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -38,15 +36,16 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.mob.ShulkerEntity;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
+import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
 import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
 
 @Environment(EnvType.CLIENT)
 public abstract class AbstractMaterialBasedShulkerBlockEntityRenderer<BE extends AbstractMaterialBasedShulkerBoxBlockEntity> extends BlockEntityRenderer<BE> {

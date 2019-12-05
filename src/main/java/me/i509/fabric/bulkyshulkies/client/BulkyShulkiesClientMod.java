@@ -26,9 +26,9 @@ package me.i509.fabric.bulkyshulkies.client;
 
 import java.util.function.Consumer;
 
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import org.lwjgl.glfw.GLFW;
 
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
 
@@ -53,6 +53,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		KeyBindingRegistry.INSTANCE.addCategory(BulkyShulkiesMod.MODID);
 		KeyBindingRegistry.INSTANCE.register(OPEN_SHULKER_HELMET);
 		ScreenProviderRegistry.INSTANCE.registerFactory(BulkyShulkiesMod.id("shulkerscrollcontainer"), ScrollableScreen::createScreen);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, CopperShulkerBoxBlockEntityRenderer::new);

@@ -26,7 +26,6 @@ package me.i509.fabric.bulkyshulkies.registry;
 
 import java.util.function.Supplier;
 
-import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -35,6 +34,7 @@ import net.minecraft.util.registry.Registry;
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBE;
@@ -125,24 +125,24 @@ public class ShulkerBlockEntities {
 	);
 
 	public static final BlockEntityType<DiamondShulkerBoxBE> DIAMOND_SHULKER_BOX = register("diamond_shulker_box",
-		DiamondShulkerBoxBE::new,
-		ShulkerBlocks.DIAMOND_SHULKER_BOX, // Uncolored
-		ShulkerBlocks.WHITE_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.ORANGE_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.MAGENTA_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.LIGHT_BLUE_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.YELLOW_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.LIME_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.PINK_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.GRAY_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.LIGHT_GRAY_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.CYAN_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.PURPLE_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.BLUE_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.BROWN_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.GREEN_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.RED_DIAMOND_SHULKER_BOX,
-		ShulkerBlocks.BLACK_DIAMOND_SHULKER_BOX
+			DiamondShulkerBoxBE::new,
+			ShulkerBlocks.DIAMOND_SHULKER_BOX, // Uncolored
+			ShulkerBlocks.WHITE_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.ORANGE_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.MAGENTA_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_BLUE_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.YELLOW_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.LIME_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.PINK_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.GRAY_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_GRAY_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.CYAN_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.PURPLE_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.BLUE_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.BROWN_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.GREEN_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.RED_DIAMOND_SHULKER_BOX,
+			ShulkerBlocks.BLACK_DIAMOND_SHULKER_BOX
 	);
 
 	public static final BlockEntityType<CursedSlabShulkerBoxBE> SLAB_SHULKER_BOX = register("slab_shulker_box",

@@ -24,13 +24,13 @@
 
 package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
 
-import me.i509.fabric.bulkyshulkies.client.TextureKeys;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.client.TextureKeys;
 
 @Environment(EnvType.CLIENT)
 public class IronShulkerBoxBlockEntityRenderer extends AbstractMaterialBasedShulkerBlockEntityRenderer<IronShulkerBoxBE> {

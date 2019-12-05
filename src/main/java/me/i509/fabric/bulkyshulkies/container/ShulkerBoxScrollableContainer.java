@@ -27,9 +27,6 @@ package me.i509.fabric.bulkyshulkies.container;
 
 import java.util.Arrays;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.SlotDuck;
-import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.container.Container;
 import net.minecraft.container.ShulkerBoxSlot;
 import net.minecraft.container.Slot;
@@ -42,6 +39,9 @@ import net.minecraft.text.Text;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
+
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
+import me.i509.fabric.bulkyshulkies.api.SlotDuck;
 
 /**
  * Credit: NinjaPhoenix, Code is MIT like rest of project.

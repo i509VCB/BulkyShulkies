@@ -1,12 +1,7 @@
 package me.i509.fabric.bulkyshulkies.block.ender;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
-import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,7 +16,15 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+
+import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
+import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 public class EnderSlabBox extends CursedSlabShulkerBox {
 	public EnderSlabBox(Settings settings, @Nullable DyeColor color) {

@@ -28,7 +28,6 @@ import java.util.function.Supplier;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
@@ -40,7 +39,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 public enum ShulkerArmorMaterials implements ArmorMaterial {
-	SHULKER("shulker", 20, new int[]{2, 5, 6, 2}, 12, SoundEvents.ITEM_ARMOR_EQUIP_TURTLE, 0.0F, () -> Ingredient.ofItems(new ItemConvertible[]{Items.GOLD_INGOT}));
+	SHULKER("shulker", 20, new int[]{2, 5, 6, 2}, 12, SoundEvents.ITEM_ARMOR_EQUIP_TURTLE, 0.0F, () -> Ingredient.ofItems(Items.GOLD_INGOT));
 
 	private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
 	private final String name;

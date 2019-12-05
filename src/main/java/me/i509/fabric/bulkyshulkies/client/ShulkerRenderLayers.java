@@ -1,15 +1,18 @@
 package me.i509.fabric.bulkyshulkies.client;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
+import java.util.Arrays;
+import java.util.function.Consumer;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.function.Consumer;
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
+
+import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 
 public class ShulkerRenderLayers {
 	public static final Identifier SHULKER_BOXES_ATLAS_TEXTURE = BulkyShulkiesMod.id("textures/atlas/shulker_boxes.png");

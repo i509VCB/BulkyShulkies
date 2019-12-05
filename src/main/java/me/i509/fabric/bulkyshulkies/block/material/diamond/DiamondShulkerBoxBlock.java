@@ -1,12 +1,14 @@
 package me.i509.fabric.bulkyshulkies.block.material.diamond;
 
-import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialBasedShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.world.BlockView;
-import org.jetbrains.annotations.Nullable;
+
+import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialBasedShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 public class DiamondShulkerBoxBlock extends AbstractMaterialBasedShulkerBoxBlock {
 	public DiamondShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {

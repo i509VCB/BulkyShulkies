@@ -2,7 +2,9 @@ package me.i509.fabric.bulkyshulkies.client;
 
 public class TextureKeys {
 	private TextureKeys() {
+		// NO-OP
 	}
+
 	public static final String COPPER = "copper";
 	public static final String IRON = "iron";
 	public static final String SILVER = "silver";

@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
@@ -60,6 +59,8 @@ import net.minecraft.util.math.Vec3d;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
 public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Tickable, BaseShulkerBlockEntity {
 	protected final int[] AVAILABLE_SLOTS;

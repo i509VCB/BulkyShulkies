@@ -1,14 +1,17 @@
 package me.i509.fabric.bulkyshulkies.mixin;
 
-import me.i509.fabric.bulkyshulkies.api.player.EnderSlabAccess;
-import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
-import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundTag;
+
+import net.fabricmc.fabric.api.util.NbtType;
+
+import me.i509.fabric.bulkyshulkies.api.player.EnderSlabAccess;
+import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin implements EnderSlabAccess {

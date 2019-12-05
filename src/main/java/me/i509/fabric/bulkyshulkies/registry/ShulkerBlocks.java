@@ -24,8 +24,6 @@
 
 package me.i509.fabric.bulkyshulkies.registry;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
-import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.Material;
@@ -37,9 +35,11 @@ import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 
+import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.api.block.slab.SlabBlockPlacementDispenserBehavior;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
 import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;

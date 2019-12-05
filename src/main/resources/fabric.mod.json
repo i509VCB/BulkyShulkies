@@ -18,6 +18,9 @@
   "contributors": [
     {
       "name": "Zoutelande_"
+    },
+    {
+      "name": "NinjaPhenix"
     }
   ],
   "contact": {
@@ -27,7 +30,7 @@
   },
 
   "license": "MIT",
-  "icon": "assets/cursedshulkerboxes/icon.png",
+  "icon": "assets/bulkyshulkies/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -52,6 +55,7 @@
     "minecraft": "1.15.x"
   },
   "suggests": {
+    "libcd": "*",
     "cotton-resources": ">=1.4.1"
   },
   "custom": {

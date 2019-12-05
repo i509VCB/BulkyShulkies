@@ -27,7 +27,6 @@ package me.i509.fabric.bulkyshulkies.api.block.base;
 import java.util.Iterator;
 import java.util.List;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.Block;
@@ -74,6 +73,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.util.NbtType;
+
+import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 
 public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements BaseShulkerBlock {
 	protected static final Identifier CONTENTS = new Identifier("contents");

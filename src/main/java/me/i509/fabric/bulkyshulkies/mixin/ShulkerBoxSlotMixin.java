@@ -24,12 +24,13 @@
 
 package me.i509.fabric.bulkyshulkies.mixin;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 import net.minecraft.container.ShulkerBoxSlot;
 import net.minecraft.item.ItemStack;
+
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
 @Mixin(ShulkerBoxSlot.class)
 public class ShulkerBoxSlotMixin {
