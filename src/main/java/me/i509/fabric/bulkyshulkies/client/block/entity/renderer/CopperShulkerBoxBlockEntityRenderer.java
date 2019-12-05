@@ -24,79 +24,15 @@
 
 package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
 
-import java.util.Arrays;
-
-import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
-import net.minecraft.client.render.entity.model.ShulkerEntityModel;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-
+import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.client.TextureKeys;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
-import me.i509.fabric.bulkyshulkies.abstraction.DefaultReturnHashMap;
-import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 
 @Environment(EnvType.CLIENT)
 public class CopperShulkerBoxBlockEntityRenderer extends AbstractMaterialBasedShulkerBlockEntityRenderer<CopperShulkerBoxBE> {
 	public CopperShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
-		super(new ShulkerEntityModel<>(), blockEntityRenderDispatcher);
-	}
-
-	public static final Identifier SHULKER_TEXTURE_ATLAS = BulkyShulkiesMod.id("textures/atlas/copper_shulkerboxes.png");
-	public static final SpriteIdentifier UNCOLORED_IDENTIFIER = new SpriteIdentifier(SHULKER_TEXTURE_ATLAS, BulkyShulkiesMod.id("textures/be/shulker/copper/shulker"));
-	public static final DefaultReturnHashMap<DyeColor, SpriteIdentifier> COLOR_TO_SPRITE_IDENTIFIER = Util.make(new DefaultReturnHashMap<>(UNCOLORED_IDENTIFIER), map -> {
-		Arrays.stream(DyeColor.values()).forEach(color -> {
-			map.put(color, new SpriteIdentifier(SHULKER_TEXTURE_ATLAS, BulkyShulkiesMod.id("textures/be/shulker/copper/shulker_" + color.getName())));
-		});
-	});
-
-	@Override
-	public SpriteIdentifier getUncoloredSprite() {
-		return ShulkerRenderLayers.Copper.UNCOLORED;
-	}
-
-	@Override
-	public SpriteIdentifier getColoredSprite(DyeColor color) {
-		switch (color) {
-		case WHITE:
-			return ShulkerRenderLayers.Copper.WHITE;
-		case ORANGE:
-			return ShulkerRenderLayers.Copper.ORANGE;
-		case MAGENTA:
-			return ShulkerRenderLayers.Copper.MAGENTA;
-		case LIGHT_BLUE:
-			return ShulkerRenderLayers.Copper.LIGHT_BLUE;
-		case YELLOW:
-			return ShulkerRenderLayers.Copper.YELLOW;
-		case LIME:
-			return ShulkerRenderLayers.Copper.LIME;
-		case PINK:
-			return ShulkerRenderLayers.Copper.PINK;
-		case GRAY:
-			return ShulkerRenderLayers.Copper.GRAY;
-		case LIGHT_GRAY:
-			return ShulkerRenderLayers.Copper.LIGHT_GRAY;
-		case CYAN:
-			return ShulkerRenderLayers.Copper.CYAN;
-		case PURPLE:
-			return ShulkerRenderLayers.Copper.PURPLE;
-		case BLUE:
-			return ShulkerRenderLayers.Copper.BLUE;
-		case BROWN:
-			return ShulkerRenderLayers.Copper.BROWN;
-		case GREEN:
-			return ShulkerRenderLayers.Copper.GREEN;
-		case RED:
-			return ShulkerRenderLayers.Copper.RED;
-		case BLACK:
-			return ShulkerRenderLayers.Copper.BLACK;
-		}
-
-		return ShulkerRenderLayers.Copper.UNCOLORED;
+		super(blockEntityRenderDispatcher, TextureKeys.COPPER);
 	}
 }

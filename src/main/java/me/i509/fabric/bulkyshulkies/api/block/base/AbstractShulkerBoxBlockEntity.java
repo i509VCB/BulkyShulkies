@@ -290,7 +290,7 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
 
 	@Override
 	public boolean isInvEmpty() {
-		Iterator<ItemStack> stackIterator = this.inventory.iterator(); // TODO This could be cleaner.
+		Iterator<ItemStack> stackIterator = this.inventory.iterator();
 
 		ItemStack currentStack;
 

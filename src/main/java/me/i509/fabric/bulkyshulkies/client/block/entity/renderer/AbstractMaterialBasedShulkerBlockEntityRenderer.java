@@ -24,6 +24,8 @@
 
 package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
 
+import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -36,6 +38,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.mob.ShulkerEntity;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
 import net.fabricmc.api.EnvType;
@@ -45,26 +48,30 @@ import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
 import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
 
-// TODO Make this work with our actual textures.
 @Environment(EnvType.CLIENT)
 public abstract class AbstractMaterialBasedShulkerBlockEntityRenderer<BE extends AbstractMaterialBasedShulkerBoxBlockEntity> extends BlockEntityRenderer<BE> {
-	protected ShulkerEntityModel<ShulkerEntity> model;
+	protected static final ShulkerEntityModel<ShulkerEntity> MODEL = new ShulkerEntityModel<>();
+	protected final String type;
 
-	public AbstractMaterialBasedShulkerBlockEntityRenderer(ShulkerEntityModel<ShulkerEntity> shulkerEntityModel, BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
+	public AbstractMaterialBasedShulkerBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher, String type) {
 		super(blockEntityRenderDispatcher);
-		this.model = shulkerEntityModel;
+		this.type = type;
 	}
 
-	public abstract SpriteIdentifier getUncoloredSprite();
+	public SpriteIdentifier getSprite() {
+		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkiesMod.id("be/shulker/" + type +"/shulker"));
+	}
 
-	public abstract SpriteIdentifier getColoredSprite(DyeColor color);
+	public SpriteIdentifier getSprite(DyeColor color) {
+		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkiesMod.id("be/shulker/" + type +"/shulker_" + color.getName()));
+	}
 
 	@Override
 	public void render(AbstractMaterialBasedShulkerBoxBlockEntity blockEntity, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int defaultUV) {
 		Direction direction = Direction.UP;
 
 		if (blockEntity.hasWorld()) {
-			BlockState blockState = blockEntity.getWorld().getBlockState(blockEntity.getPos());
+			BlockState blockState = blockEntity.getCachedState();
 
 			if (blockState.getBlock() instanceof AbstractShulkerBoxBlock) {
 				direction = blockState.get(BaseShulkerBlock.FACING);
@@ -75,9 +82,9 @@ public abstract class AbstractMaterialBasedShulkerBlockEntityRenderer<BE extends
 		SpriteIdentifier spriteIdentifier;
 
 		if (dyeColor == null) {
-			spriteIdentifier = getUncoloredSprite();
+			spriteIdentifier = getSprite();
 		} else {
-			spriteIdentifier = getColoredSprite(dyeColor);
+			spriteIdentifier = getSprite(dyeColor);
 		}
 
 		matrixStack.push();
@@ -88,11 +95,11 @@ public abstract class AbstractMaterialBasedShulkerBlockEntityRenderer<BE extends
 		matrixStack.scale(1.0F, -1.0F, -1.0F);
 		matrixStack.translate(0.0D, -1.0D, 0.0D);
 		VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutoutNoCull);
-		this.model.getBottomShell().render(matrixStack, vertexConsumer, i, defaultUV);
+		MODEL.getBottomShell().render(matrixStack, vertexConsumer, i, defaultUV);
 		matrixStack.translate(0.0D, (-blockEntity.getAnimationProgress(tickDelta) * 0.5F), 0.0D);
 		matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F * blockEntity.getAnimationProgress(tickDelta)));
 
-		this.model.getTopShell().render(matrixStack, vertexConsumer, i, defaultUV);
+		MODEL.getTopShell().render(matrixStack, vertexConsumer, i, defaultUV);
 		matrixStack.pop();
 	}
 }

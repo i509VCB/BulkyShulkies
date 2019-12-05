@@ -24,43 +24,17 @@
 
 package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
 
-import java.util.Arrays;
-
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.client.TextureKeys;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
-import net.minecraft.client.render.entity.model.ShulkerEntityModel;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.fabric.bulkyshulkies.abstraction.DefaultReturnHashMap;
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
 
 @Environment(EnvType.CLIENT)
 public class IronShulkerBoxBlockEntityRenderer extends AbstractMaterialBasedShulkerBlockEntityRenderer<IronShulkerBoxBE> {
 	public IronShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
-		super(new ShulkerEntityModel<>(), blockEntityRenderDispatcher);
-	}
-
-	public static final Identifier shulkerTextureAtlas = new Identifier("textures/atlas/shulker_boxes.png");
-	public static final SpriteIdentifier UNCOLORED_IDENTIFIER = new SpriteIdentifier(shulkerTextureAtlas, BulkyShulkiesMod.id("textures/be/shulker/iron/shulker"));
-	public static final DefaultReturnHashMap<DyeColor, SpriteIdentifier> COLOR_TO_SPRITE_IDENTIFIER = Util.make(new DefaultReturnHashMap<>(UNCOLORED_IDENTIFIER), map -> {
-		Arrays.stream(DyeColor.values()).forEach(color -> {
-			map.put(color, new SpriteIdentifier(shulkerTextureAtlas, BulkyShulkiesMod.id("textures/be/shulker/iron/shulker_" + color.getName())));
-		});
-	});
-
-	@Override
-	public SpriteIdentifier getUncoloredSprite() {
-		return UNCOLORED_IDENTIFIER;
-	}
-
-	@Override
-	public SpriteIdentifier getColoredSprite(DyeColor color) {
-		return COLOR_TO_SPRITE_IDENTIFIER.get(color);
+		super(blockEntityRenderDispatcher, TextureKeys.IRON);
 	}
 }

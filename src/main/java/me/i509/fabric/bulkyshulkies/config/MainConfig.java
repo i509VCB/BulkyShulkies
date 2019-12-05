@@ -34,9 +34,6 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
 public class MainConfig {
-	public static final String RECIPE_HEADER = "This file defines allows defining of recipes via a config.\n"
-			+ "The json syntax for recipes should work out of the box.\n"
-			+ "If you need help, please contact me on discord here: https://discord.gg/qX7kBWY"; // TODO URL At release
 	public static final String HEADER = "This file allows configuration of different features within cursed shulker boxes.\n"
 			+ "All options here are done using the HOCON Schema, which you can get more information here: https://docs.spongepowered.org/stable/en/server/getting-started/configuration/hocon.html\n"
 			+ "Since HOCON is a superset of JSON, almost all JSON Schemas should work out of the box\n"

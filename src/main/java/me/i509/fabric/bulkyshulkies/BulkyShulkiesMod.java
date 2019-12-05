@@ -42,7 +42,7 @@ import me.i509.fabric.bulkyshulkies.registry.ShulkerItemGroups;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerItems;
 
 public class BulkyShulkiesMod implements ModInitializer {
-	public static final String MODID = "cursedshulkerboxes";
+	public static final String MODID = "bulkyshulkies";
 
 	public static Identifier id(String path) {
 		return new Identifier(MODID, path);
