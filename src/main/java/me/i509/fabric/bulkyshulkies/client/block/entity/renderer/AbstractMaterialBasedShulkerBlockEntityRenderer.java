@@ -41,14 +41,14 @@ import net.minecraft.util.math.Direction;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
-import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
 
 @Environment(EnvType.CLIENT)
-public abstract class AbstractMaterialBasedShulkerBlockEntityRenderer<BE extends AbstractMaterialBasedShulkerBoxBlockEntity> extends BlockEntityRenderer<BE> {
+public abstract class AbstractMaterialBasedShulkerBlockEntityRenderer<BE extends AbstractMaterialShulkerBoxBlockEntity> extends BlockEntityRenderer<BE> {
 	protected static final ShulkerEntityModel<ShulkerEntity> MODEL = new ShulkerEntityModel<>();
 	protected final String type;
 
@@ -58,15 +58,15 @@ public abstract class AbstractMaterialBasedShulkerBlockEntityRenderer<BE extends
 	}
 
 	public SpriteIdentifier getSprite() {
-		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkiesMod.id("be/shulker/" + type +"/shulker"));
+		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id("be/shulker/" + type +"/shulker"));
 	}
 
 	public SpriteIdentifier getSprite(DyeColor color) {
-		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkiesMod.id("be/shulker/" + type +"/shulker_" + color.getName()));
+		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id("be/shulker/" + type +"/shulker_" + color.getName()));
 	}
 
 	@Override
-	public void render(AbstractMaterialBasedShulkerBoxBlockEntity blockEntity, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int defaultUV) {
+	public void render(AbstractMaterialShulkerBoxBlockEntity blockEntity, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int defaultUV) {
 		Direction direction = Direction.UP;
 
 		if (blockEntity.hasWorld()) {

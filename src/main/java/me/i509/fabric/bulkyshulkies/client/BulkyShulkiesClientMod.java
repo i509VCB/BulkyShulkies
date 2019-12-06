@@ -41,6 +41,7 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegi
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.CopperShulkerBoxBlockEntityRenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.IronShulkerBoxBlockEntityRenderer;
@@ -49,13 +50,13 @@ import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
 @Environment(EnvType.CLIENT)
 public class BulkyShulkiesClientMod implements ClientModInitializer {
-	public static final FabricKeyBinding OPEN_SHULKER_HELMET = FabricKeyBinding.Builder.create(BulkyShulkiesMod.id("open_helmet"), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, BulkyShulkiesMod.MODID).build();
+	public static final FabricKeyBinding OPEN_SHULKER_HELMET = FabricKeyBinding.Builder.create(BulkyShulkies.id("open_helmet"), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, BulkyShulkiesMod.MODID).build();
 
 	@Override
 	public void onInitializeClient() {
 		KeyBindingRegistry.INSTANCE.addCategory(BulkyShulkiesMod.MODID);
 		KeyBindingRegistry.INSTANCE.register(OPEN_SHULKER_HELMET);
-		ScreenProviderRegistry.INSTANCE.registerFactory(BulkyShulkiesMod.id("shulkerscrollcontainer"), ScrollableScreen::createScreen);
+		ScreenProviderRegistry.INSTANCE.registerFactory(BulkyShulkies.id("shulkerscrollcontainer"), ScrollableScreen::createScreen);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, CopperShulkerBoxBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, IronShulkerBoxBlockEntityRenderer::new);
 		ClientSpriteRegistryCallback.event(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE).register(BulkyShulkiesClientMod::registerSprites);

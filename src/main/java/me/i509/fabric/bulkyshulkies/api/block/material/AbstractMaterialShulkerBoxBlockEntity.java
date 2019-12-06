@@ -38,8 +38,8 @@ import net.minecraft.util.shape.VoxelShapes;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
 
-public class AbstractMaterialBasedShulkerBoxBlockEntity extends AbstractShulkerBoxBlockEntity {
-	protected AbstractMaterialBasedShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
+public class AbstractMaterialShulkerBoxBlockEntity extends AbstractShulkerBoxBlockEntity {
+	protected AbstractMaterialShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
 		super(blockEntityType, maxAvailableSlot, color);
 		this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
 	}

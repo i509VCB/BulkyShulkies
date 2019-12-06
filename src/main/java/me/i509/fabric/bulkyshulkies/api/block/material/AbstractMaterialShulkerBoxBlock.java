@@ -41,8 +41,8 @@ import net.minecraft.world.BlockView;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlockEntity;
 
-public abstract class AbstractMaterialBasedShulkerBoxBlock extends AbstractShulkerBoxBlock {
-	protected AbstractMaterialBasedShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
+public abstract class AbstractMaterialShulkerBoxBlock extends AbstractShulkerBoxBlock {
+	protected AbstractMaterialShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
 		super(settings, slotCount, color);
 	}
 

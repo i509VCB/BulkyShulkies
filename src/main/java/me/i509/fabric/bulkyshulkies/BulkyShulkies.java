@@ -123,6 +123,10 @@ public class BulkyShulkies {
 		return instance;
 	}
 
+	public static Identifier id(String path) {
+		return new Identifier(BulkyShulkiesMod.MODID, path);
+	}
+
 	public Logger getLogger() {
 		return LOGGER;
 	}

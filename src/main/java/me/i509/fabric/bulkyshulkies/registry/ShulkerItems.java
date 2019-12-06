@@ -27,7 +27,7 @@ package me.i509.fabric.bulkyshulkies.registry;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.item.AbstractShulkerHelmet;
 
 public class ShulkerItems {
@@ -40,6 +40,6 @@ public class ShulkerItems {
 	}
 
 	public static Item register(Item item, String path) {
-		return Registry.register(Registry.ITEM, BulkyShulkiesMod.id(path), item);
+		return Registry.register(Registry.ITEM, BulkyShulkies.id(path), item);
 	}
 }

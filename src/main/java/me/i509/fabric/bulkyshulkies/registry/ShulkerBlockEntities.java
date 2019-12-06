@@ -31,7 +31,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.registry.Registry;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
@@ -175,6 +175,6 @@ public class ShulkerBlockEntities {
 	}
 
 	private static <B extends BlockEntity> BlockEntityType<B> register(String name, Supplier<B> supplier, Block... supportedBlocks) {
-		return Registry.register(Registry.BLOCK_ENTITY, BulkyShulkiesMod.id(name), BlockEntityType.Builder.create(supplier, supportedBlocks).build(null)); // TODO Replace null when DataFixers are done.
+		return Registry.register(Registry.BLOCK_ENTITY, BulkyShulkies.id(name), BlockEntityType.Builder.create(supplier, supportedBlocks).build(null)); // TODO Replace null when DataFixers are done.
 	}
 }

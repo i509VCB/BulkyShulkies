@@ -39,7 +39,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.client.screen.widget.SearchTextFieldWidget;
 import me.i509.fabric.bulkyshulkies.container.ShulkerBoxScrollableContainer;
 
@@ -49,7 +49,7 @@ import me.i509.fabric.bulkyshulkies.container.ShulkerBoxScrollableContainer;
 @Environment(EnvType.CLIENT)
 public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollableContainer> implements ContainerProvider<ShulkerBoxScrollableContainer> {
 	private static final Identifier BASE_TEXTURE = new Identifier("textures/gui/container/generic_54.png");
-	private static final Identifier WIDGETS_TEXTURE = BulkyShulkiesMod.id("textures/gui/container/widgets.png");
+	private static final Identifier WIDGETS_TEXTURE = BulkyShulkies.id("textures/gui/container/widgets.png");
 	private final int displayedRows;
 	private final int totalRows;
 	private int topRow;

@@ -25,7 +25,6 @@
 package me.i509.fabric.bulkyshulkies;
 
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -35,7 +34,7 @@ import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.container.ShulkerBoxScrollableContainer;
 import me.i509.fabric.bulkyshulkies.extension.ShulkerHooks;
-import me.i509.fabric.bulkyshulkies.recipe.CursedRecipeSerializers;
+import me.i509.fabric.bulkyshulkies.recipe.BulkyRecipeSerializers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerItemGroups;
@@ -44,14 +43,10 @@ import me.i509.fabric.bulkyshulkies.registry.ShulkerItems;
 public class BulkyShulkiesMod implements ModInitializer {
 	public static final String MODID = "bulkyshulkies";
 
-	public static Identifier id(String path) {
-		return new Identifier(MODID, path);
-	}
-
 	@Override
 	public void onInitialize() {
 		BulkyShulkies.getInstance();
-		CursedRecipeSerializers.ABSTRACT_SHULKER_COLORING.getClass(); // Register the colorizer recipe type
+		BulkyRecipeSerializers.ABSTRACT_SHULKER_COLORING.getClass(); // Register the colorizer recipe type
 		BulkyDataTrackers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
 		ShulkerBlocks.init();
 		ShulkerBlockEntities.init();
@@ -59,11 +54,11 @@ public class BulkyShulkiesMod implements ModInitializer {
 		ShulkerItemGroups.init();
 		ShulkerHooks.init();
 
-		ContainerProviderRegistry.INSTANCE.registerFactory(id("shulkerscrollcontainer"), ((syncId, identifier, player, buf) -> {
+		ContainerProviderRegistry.INSTANCE.registerFactory(BulkyShulkies.id("shulkerscrollcontainer"), ((syncId, identifier, player, buf) -> {
 			BlockPos pos = buf.readBlockPos();
 			Text name = buf.readText();
 			World world = player.getEntityWorld();
-			return new ShulkerBoxScrollableContainer(syncId, player.inventory, AbstractShulkerBoxBlock.getInventoryStatic(world, pos), name);
+			return new ShulkerBoxScrollableContainer(syncId, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
 		}));
 	}
 }

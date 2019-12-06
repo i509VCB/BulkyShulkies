@@ -14,7 +14,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.util.version.VersionParsingException;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
 
 @Environment(EnvType.CLIENT)
@@ -26,7 +26,7 @@ public class BulkyShulkiesREIPlugin implements REIPluginV0 {
 
 	@Override
 	public Identifier getPluginIdentifier() {
-		return BulkyShulkiesMod.id("reiplugin");
+		return BulkyShulkies.id("reiplugin");
 	}
 
 	@Override

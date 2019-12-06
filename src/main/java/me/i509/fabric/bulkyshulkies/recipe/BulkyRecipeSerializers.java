@@ -27,8 +27,10 @@ package me.i509.fabric.bulkyshulkies.recipe;
 import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.util.registry.Registry;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
+import me.i509.fabric.bulkyshulkies.recipe.injector.InjectorRecipeSerializer;
 
-public class CursedRecipeSerializers {
-	public static final SpecialRecipeSerializer<AbstractShulkerBoxColoringRecipe> ABSTRACT_SHULKER_COLORING = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkiesMod.id("shulker_coloring"), new SpecialRecipeSerializer<>(AbstractShulkerBoxColoringRecipe::new));
+public class BulkyRecipeSerializers {
+	public static final SpecialRecipeSerializer<AbstractShulkerBoxColoringRecipe> ABSTRACT_SHULKER_COLORING = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("shulker_coloring"), new SpecialRecipeSerializer<>(AbstractShulkerBoxColoringRecipe::new));
+	public static final InjectorRecipeSerializer INJECTOR = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("injector"), new InjectorRecipeSerializer());
 }

@@ -28,10 +28,10 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.DyeColor;
 
-import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialBasedShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
-public class GoldShulkerBoxBE extends AbstractMaterialBasedShulkerBoxBlockEntity {
+public class GoldShulkerBoxBE extends AbstractMaterialShulkerBoxBlockEntity {
 	public GoldShulkerBoxBE(@Nullable DyeColor color) {
 		super(ShulkerBlockEntities.GOLD_SHULKER_BOX, 63, color);
 	}

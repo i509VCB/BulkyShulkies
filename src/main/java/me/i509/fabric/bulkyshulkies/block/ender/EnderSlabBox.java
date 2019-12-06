@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlockEntity;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
@@ -56,7 +56,7 @@ public class EnderSlabBox extends CursedSlabShulkerBox {
 				if (shouldOpen) {
 					if (cursedBlockEntity.checkUnlocked(player)) {
 						cursedBlockEntity.checkLootInteraction(player);
-						ContainerProviderRegistry.INSTANCE.openContainer(BulkyShulkiesMod.id("shulkerscrollcontainer"), player, (packetByteBuf -> {
+						ContainerProviderRegistry.INSTANCE.openContainer(BulkyShulkies.id("shulkerscrollcontainer"), player, (packetByteBuf -> {
 							packetByteBuf.writeBlockPos(blockPos);
 							packetByteBuf.writeText(cursedBlockEntity.getDisplayName());
 						}));

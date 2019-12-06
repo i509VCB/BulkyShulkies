@@ -105,6 +105,6 @@ public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 	}
 
 	public RecipeSerializer getSerializer() {
-		return CursedRecipeSerializers.ABSTRACT_SHULKER_COLORING;
+		return BulkyRecipeSerializers.ABSTRACT_SHULKER_COLORING;
 	}
 }

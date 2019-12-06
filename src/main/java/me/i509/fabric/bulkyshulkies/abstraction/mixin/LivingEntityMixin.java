@@ -45,7 +45,7 @@ public abstract class LivingEntityMixin {
 
 	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/DamageUtil;getDamageLeft(FFF)F"), method = "applyArmorToDamage")
 	public float onApplyArmorToDamage(float damageTaken, float armorPoints, float v) {
-		float realArmorPoints = armorPoints; // Originally this is the input armor points.
+		float realArmorPoints = armorPoints; // This is the original armor points.
 		Iterator<ItemStack> armorItems = this.getArmorItems().iterator();
 
 		do {

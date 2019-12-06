@@ -74,7 +74,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.util.NbtType;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
 public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements BaseShulkerBlock {
 	protected static final Identifier CONTENTS = new Identifier("contents");
@@ -123,7 +123,7 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 				if (shouldOpen) {
 					if (cursedBlockEntity.checkUnlocked(player)) {
 						cursedBlockEntity.checkLootInteraction(player);
-						ContainerProviderRegistry.INSTANCE.openContainer(BulkyShulkiesMod.id("shulkerscrollcontainer"), player, (packetByteBuf -> {
+						ContainerProviderRegistry.INSTANCE.openContainer(BulkyShulkies.id("shulkerscrollcontainer"), player, (packetByteBuf -> {
 							packetByteBuf.writeBlockPos(blockPos);
 							packetByteBuf.writeText(cursedBlockEntity.getDisplayName());
 						}));
@@ -326,7 +326,7 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 		return block instanceof BaseShulkerBlock ? ((BaseShulkerBlock) block).getColor() : null;
 	}
 
-	public static SidedInventory getInventoryStatic(IWorld world, BlockPos pos) {
+	public static SidedInventory getInventoryStatically(IWorld world, BlockPos pos) {
 		return retrieve(world.getBlockState(pos), world, pos, INVENTORY_RETRIEVER);
 	}
 

@@ -31,10 +31,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.world.BlockView;
 
-import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialBasedShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
-public class IronShulkerBoxBlock extends AbstractMaterialBasedShulkerBoxBlock {
+public class IronShulkerBoxBlock extends AbstractMaterialShulkerBoxBlock {
 	public IronShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
 		super(settings, 45, color);
 	}

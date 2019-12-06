@@ -35,7 +35,7 @@ import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.slab.SlabBlockPlacementDispenserBehavior;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
 import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlock;
@@ -313,8 +313,8 @@ public class ShulkerBlocks {
 	}
 
 	public static Block register(Block block, String path, Item.Settings settings) {
-		Block b = Registry.register(Registry.BLOCK, BulkyShulkiesMod.id(path), block);
-		Registry.register(Registry.ITEM, BulkyShulkiesMod.id(path), new BlockItem(block, settings));
+		Block b = Registry.register(Registry.BLOCK, BulkyShulkies.id(path), block);
+		Registry.register(Registry.ITEM, BulkyShulkies.id(path), new BlockItem(block, settings));
 		return b;
 	}
 }
