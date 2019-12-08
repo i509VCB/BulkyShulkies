@@ -17,10 +17,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlockEntity;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBE;
@@ -41,9 +38,9 @@ public class EnderSlabBox extends CursedSlabShulkerBox {
 		} else {
 			BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
-			if (blockEntity instanceof AbstractShulkerBoxBlockEntity) {
+			if (blockEntity instanceof AbstractShulkerBoxBE) {
 				Direction facing = blockState.get(FACING);
-				AbstractShulkerBoxBlockEntity cursedBlockEntity = (AbstractShulkerBoxBlockEntity) blockEntity;
+				AbstractShulkerBoxBE cursedBlockEntity = (AbstractShulkerBoxBE) blockEntity;
 				boolean shouldOpen;
 
 				if (cursedBlockEntity.getAnimationStage() == BaseShulkerBlockEntity.AnimationStatus.CLOSED) {
@@ -56,10 +53,7 @@ public class EnderSlabBox extends CursedSlabShulkerBox {
 				if (shouldOpen) {
 					if (cursedBlockEntity.checkUnlocked(player)) {
 						cursedBlockEntity.checkLootInteraction(player);
-						ContainerProviderRegistry.INSTANCE.openContainer(BulkyShulkies.id("shulkerscrollcontainer"), player, (packetByteBuf -> {
-							packetByteBuf.writeBlockPos(blockPos);
-							packetByteBuf.writeText(cursedBlockEntity.getDisplayName());
-						}));
+						openContainer(blockPos, player, cursedBlockEntity.getDisplayName());
 						player.incrementStat(Stats.OPEN_SHULKER_BOX);
 					}
 				}
@@ -82,6 +76,7 @@ public class EnderSlabBox extends CursedSlabShulkerBox {
 			return new ItemStack(ShulkerBlocks.SLAB_SHULKER_BOX);
 		}
 
+		// TODO: Drop the correct ender slab box
 		switch (color) {
 		case WHITE:
 			return new ItemStack(ShulkerBlocks.WHITE_SLAB_SHULKER_BOX);

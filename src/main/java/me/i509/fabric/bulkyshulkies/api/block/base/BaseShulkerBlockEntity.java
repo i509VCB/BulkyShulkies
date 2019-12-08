@@ -35,7 +35,7 @@ import net.minecraft.util.math.Direction;
 /**
  * Represents a shulker box block entity and exposes some information about the blockentity's state.
  *
- * <p>It is recommended to use {@link AbstractShulkerBoxBlockEntity} instead, which will handle most of the boilerplate from container based storage blocks.
+ * <p>It is recommended to use {@link AbstractShulkerBoxBE} instead, which will handle most of the boilerplate from container based storage blocks.
  */
 public interface BaseShulkerBlockEntity {
 	/**

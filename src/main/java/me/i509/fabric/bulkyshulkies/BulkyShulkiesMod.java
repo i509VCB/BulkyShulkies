@@ -24,6 +24,7 @@
 
 package me.i509.fabric.bulkyshulkies;
 
+import net.minecraft.container.ShulkerBoxSlot;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -32,7 +33,11 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.container.ShulkerBoxScrollableContainer;
+import me.i509.fabric.bulkyshulkies.container.ScrollableContainer;
+import me.i509.fabric.bulkyshulkies.container.GenericContainer11x7;
+import me.i509.fabric.bulkyshulkies.container.GenericContainer13x7;
+import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
+import me.i509.fabric.bulkyshulkies.container.GenericContainer9x7;
 import me.i509.fabric.bulkyshulkies.extension.ShulkerHooks;
 import me.i509.fabric.bulkyshulkies.recipe.BulkyRecipeSerializers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
@@ -54,11 +59,32 @@ public class BulkyShulkiesMod implements ModInitializer {
 		ShulkerItemGroups.init();
 		ShulkerHooks.init();
 
-		ContainerProviderRegistry.INSTANCE.registerFactory(BulkyShulkies.id("shulkerscrollcontainer"), ((syncId, identifier, player, buf) -> {
+		ContainerProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, ((syncId, identifier, player, buf) -> {
 			BlockPos pos = buf.readBlockPos();
 			Text name = buf.readText();
 			World world = player.getEntityWorld();
-			return new ShulkerBoxScrollableContainer(syncId, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
+			return new ScrollableContainer(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		}));
+
+		ContainerProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_9x7_CONTAINER, ((syncId, identifier, player, buf) -> {
+			BlockPos pos = buf.readBlockPos();
+			Text name = buf.readText();
+			World world = player.getEntityWorld();
+			return new GenericContainer9x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		}));
+
+		ContainerProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_11x7_CONTAINER, ((syncId, identifier, player, buf) -> {
+			BlockPos pos = buf.readBlockPos();
+			Text name = buf.readText();
+			World world = player.getEntityWorld();
+			return new GenericContainer11x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		}));
+
+		ContainerProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_13x7_CONTAINER, ((syncId, identifier, player, buf) -> {
+			BlockPos pos = buf.readBlockPos();
+			Text name = buf.readText();
+			World world = player.getEntityWorld();
+			return new GenericContainer13x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
 		}));
 	}
 }

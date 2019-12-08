@@ -2,22 +2,43 @@ package me.i509.fabric.bulkyshulkies.block.material.diamond;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
-import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialShulkerBoxBlock;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+
+import me.i509.fabric.bulkyshulkies.api.block.Abstract1x1ShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
+import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
-public class DiamondShulkerBoxBlock extends AbstractMaterialShulkerBoxBlock {
+public class DiamondShulkerBoxBlock extends Abstract1x1ShulkerBoxBlock {
 	public DiamondShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
-		super(settings, 72, color);
+		super(settings, ShulkerBoxConstants.DIAMOND_SLOT_COUNT, color);
 	}
 
 	@Override
 	public BlockEntity createBlockEntity(BlockView blockView) {
 		return new DiamondShulkerBoxBE(this.getColor());
+	}
+
+	@Override
+	protected void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName) {
+		/*
+		ContainerProviderRegistry.INSTANCE.openContainer(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, playerEntity, (packetByteBuf -> {
+			packetByteBuf.writeBlockPos(pos);
+			packetByteBuf.writeText(displayName);
+		}));
+		 */
+		ContainerProviderRegistry.INSTANCE.openContainer(ContainerKeys.SHULKER_11x7_CONTAINER, playerEntity, (packetByteBuf -> {
+			packetByteBuf.writeBlockPos(pos);
+			packetByteBuf.writeText(displayName);
+		}));
 	}
 
 	@Override

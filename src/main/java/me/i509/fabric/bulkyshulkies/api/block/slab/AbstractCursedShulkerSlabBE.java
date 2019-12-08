@@ -40,12 +40,12 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
 
 // TODO Change push speed as not to make it as jaggedly hard when being moved.
-public class AbstractCursedShulkerSlabBlockEntity extends AbstractShulkerBoxBlockEntity {
-	protected AbstractCursedShulkerSlabBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
+public class AbstractCursedShulkerSlabBE extends AbstractShulkerBoxBE {
+	protected AbstractCursedShulkerSlabBE(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
 		super(blockEntityType, maxAvailableSlot, color);
 		this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
 	}

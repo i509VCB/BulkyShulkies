@@ -41,13 +41,13 @@ import net.fabricmc.loader.api.FabricLoader;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.client.screen.widget.SearchTextFieldWidget;
-import me.i509.fabric.bulkyshulkies.container.ShulkerBoxScrollableContainer;
+import me.i509.fabric.bulkyshulkies.container.ScrollableContainer;
 
 /**
  * Credit: NinjaPhenix, Code is MIT like rest of project.
  */
 @Environment(EnvType.CLIENT)
-public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollableContainer> implements ContainerProvider<ShulkerBoxScrollableContainer> {
+public class ScrollableScreen extends AbstractContainerScreen<ScrollableContainer> implements ContainerProvider<ScrollableContainer> {
 	private static final Identifier BASE_TEXTURE = new Identifier("textures/gui/container/generic_54.png");
 	private static final Identifier WIDGETS_TEXTURE = BulkyShulkies.id("textures/gui/container/widgets.png");
 	private final int displayedRows;
@@ -58,7 +58,7 @@ public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollab
 	private SearchTextFieldWidget searchBox;
 	private String searchBoxOldText;
 
-	public ScrollableScreen(ShulkerBoxScrollableContainer container, PlayerInventory playerInventory, Text containerTitle) {
+	public ScrollableScreen(ScrollableContainer container, PlayerInventory playerInventory, Text containerTitle) {
 		super(container, playerInventory, containerTitle);
 		totalRows = container.getRows();
 		topRow = 0;
@@ -70,7 +70,7 @@ public class ScrollableScreen extends AbstractContainerScreen<ShulkerBoxScrollab
 		searchBoxOldText = "";
 	}
 
-	public static ScrollableScreen createScreen(ShulkerBoxScrollableContainer container) {
+	public static ScrollableScreen createScreen(ScrollableContainer container) {
 		return new ScrollableScreen(container, MinecraftClient.getInstance().player.inventory, container.getDisplayName());
 	}
 

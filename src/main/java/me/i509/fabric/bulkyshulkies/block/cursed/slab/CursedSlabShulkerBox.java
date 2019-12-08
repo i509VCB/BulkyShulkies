@@ -27,11 +27,17 @@ package me.i509.fabric.bulkyshulkies.block.cursed.slab;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+
 import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBlock;
+import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 public class CursedSlabShulkerBox extends AbstractCursedShulkerSlabBlock {
@@ -42,6 +48,14 @@ public class CursedSlabShulkerBox extends AbstractCursedShulkerSlabBlock {
 	@Override
 	public BlockEntity createBlockEntity(BlockView blockView) {
 		return new CursedSlabShulkerBoxBE(this.getColor());
+	}
+
+	@Override
+	protected void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName) {
+		ContainerProviderRegistry.INSTANCE.openContainer(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, playerEntity, (packetByteBuf -> {
+			packetByteBuf.writeBlockPos(pos);
+			packetByteBuf.writeText(displayName);
+		}));
 	}
 
 	@Override

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.api.block.material;
+package me.i509.fabric.bulkyshulkies.api.block;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,11 +35,11 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShapes;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
 
-public class AbstractMaterialShulkerBoxBlockEntity extends AbstractShulkerBoxBlockEntity {
-	protected AbstractMaterialShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
+public class Abstract1X1ShulkerBoxBE extends AbstractShulkerBoxBE {
+	protected Abstract1X1ShulkerBoxBE(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
 		super(blockEntityType, maxAvailableSlot, color);
 		this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
 	}

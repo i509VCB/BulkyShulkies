@@ -26,17 +26,37 @@ package me.i509.fabric.bulkyshulkies.block.material.copper;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
-import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialShulkerBoxBlock;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+
+import me.i509.fabric.bulkyshulkies.api.block.Abstract1x1ShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
+import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
-public class CopperShulkerBoxBlock extends AbstractMaterialShulkerBoxBlock {
+public class CopperShulkerBoxBlock extends Abstract1x1ShulkerBoxBlock {
 	public CopperShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
-		super(settings, 36, color);
+		super(settings, ShulkerBoxConstants.COPPER_SLOT_COUNT, color);
+	}
+
+	@Override
+	public BlockEntity createBlockEntity(BlockView blockView) {
+		return new CopperShulkerBoxBE(this.getColor());
+	}
+
+	@Override
+	protected void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName) {
+		ContainerProviderRegistry.INSTANCE.openContainer(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, playerEntity, (packetByteBuf -> {
+			packetByteBuf.writeBlockPos(pos);
+			packetByteBuf.writeText(displayName);
+		}));
 	}
 
 	@Override
@@ -80,10 +100,5 @@ public class CopperShulkerBoxBlock extends AbstractMaterialShulkerBoxBlock {
 		case BLACK:
 			return new ItemStack(ShulkerBlocks.BLACK_COPPER_SHULKER_BOX);
 		}
-	}
-
-	@Override
-	public BlockEntity createBlockEntity(BlockView blockView) {
-		return new CopperShulkerBoxBE(this.getColor());
 	}
 }

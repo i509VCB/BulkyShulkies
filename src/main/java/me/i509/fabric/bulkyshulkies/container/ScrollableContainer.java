@@ -28,7 +28,6 @@ package me.i509.fabric.bulkyshulkies.container;
 import java.util.Arrays;
 
 import net.minecraft.container.Container;
-import net.minecraft.container.ShulkerBoxSlot;
 import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -42,11 +41,12 @@ import net.fabricmc.loader.api.FabricLoader;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.SlotDuck;
+import me.i509.fabric.bulkyshulkies.api.SlotFactory;
 
 /**
  * Credit: NinjaPhoenix, Code is MIT like rest of project.
  */
-public class ShulkerBoxScrollableContainer extends Container {
+public class ScrollableContainer extends Container {
 	private final Text containerName;
 	private final SidedInventory inventory;
 	private final int rows;
@@ -57,7 +57,7 @@ public class ShulkerBoxScrollableContainer extends Container {
 	@Environment(EnvType.CLIENT)
 	private Integer[] unsortedToSortedSlotMap;
 
-	public ShulkerBoxScrollableContainer(int syncId, PlayerInventory playerInventory, SidedInventory inventory, Text containerName) {
+	public ScrollableContainer(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, SidedInventory inventory, Text containerName) {
 		super(null, syncId);
 		this.inventory = inventory;
 		this.containerName = containerName;
@@ -86,7 +86,7 @@ public class ShulkerBoxScrollableContainer extends Container {
 					unsortedToSortedSlotMap[slot] = slot;
 				}
 
-				addSlot(new ShulkerBoxSlot(inventory, slot, 8 + x * 18, yPos));
+				addSlot(slotFactory.create(inventory, slot, 8 + x * 18, yPos));
 			}
 		}
 

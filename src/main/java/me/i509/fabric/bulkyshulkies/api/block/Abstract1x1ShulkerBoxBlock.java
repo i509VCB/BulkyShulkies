@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.api.block.material;
+package me.i509.fabric.bulkyshulkies.api.block;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -41,8 +41,11 @@ import net.minecraft.world.BlockView;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlockEntity;
 
-public abstract class AbstractMaterialShulkerBoxBlock extends AbstractShulkerBoxBlock {
-	protected AbstractMaterialShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
+/**
+ * Represents a shulker box which is 1x1x1 (when closed).
+ */
+public abstract class Abstract1x1ShulkerBoxBlock extends AbstractShulkerBoxBlock {
+	protected Abstract1x1ShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
 		super(settings, slotCount, color);
 	}
 

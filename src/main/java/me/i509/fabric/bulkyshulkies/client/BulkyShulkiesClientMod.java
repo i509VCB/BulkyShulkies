@@ -45,7 +45,10 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.CopperShulkerBoxBlockEntityRenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.IronShulkerBoxBlockEntityRenderer;
+import me.i509.fabric.bulkyshulkies.client.screen.Generic11x7Screen;
+import me.i509.fabric.bulkyshulkies.client.screen.Generic13x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
+import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
 @Environment(EnvType.CLIENT)
@@ -56,7 +59,10 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 	public void onInitializeClient() {
 		KeyBindingRegistry.INSTANCE.addCategory(BulkyShulkiesMod.MODID);
 		KeyBindingRegistry.INSTANCE.register(OPEN_SHULKER_HELMET);
-		ScreenProviderRegistry.INSTANCE.registerFactory(BulkyShulkies.id("shulkerscrollcontainer"), ScrollableScreen::createScreen);
+		// TODO: ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_9x7_CONTAINER, /*Add Method reference to 9x7 screen when created.*/);
+		ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_11x7_CONTAINER, Generic11x7Screen::createScreen);
+		ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_13x7_CONTAINER, Generic13x7Screen::createScreen);
+		ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, ScrollableScreen::createScreen);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, CopperShulkerBoxBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, IronShulkerBoxBlockEntityRenderer::new);
 		ClientSpriteRegistryCallback.event(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE).register(BulkyShulkiesClientMod::registerSprites);

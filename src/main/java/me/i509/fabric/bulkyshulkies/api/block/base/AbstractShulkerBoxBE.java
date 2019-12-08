@@ -62,7 +62,7 @@ import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
-public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlockEntity implements SidedInventory, Tickable, BaseShulkerBlockEntity {
+public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity implements SidedInventory, Tickable, BaseShulkerBlockEntity {
 	protected final int[] AVAILABLE_SLOTS;
 	protected DefaultedList<ItemStack> inventory;
 	private int viewerCount;
@@ -72,7 +72,7 @@ public abstract class AbstractShulkerBoxBlockEntity extends LootableContainerBlo
 	private DyeColor cachedColor;
 	private boolean cachedColorUpdateNeeded;
 
-	protected AbstractShulkerBoxBlockEntity(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
+	protected AbstractShulkerBoxBE(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
 		super(blockEntityType);
 		checkArgument(maxAvailableSlot > 0, "Maximum available slots cannot be less than 1");
 		this.AVAILABLE_SLOTS = IntStream.range(0, maxAvailableSlot).toArray();

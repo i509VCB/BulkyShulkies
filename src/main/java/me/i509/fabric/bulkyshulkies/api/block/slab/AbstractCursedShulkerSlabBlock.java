@@ -78,8 +78,8 @@ public abstract class AbstractCursedShulkerSlabBlock extends AbstractShulkerBoxB
 	@Override
 	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
 		BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
-		return blockEntity instanceof AbstractCursedShulkerSlabBlockEntity
-				? VoxelShapes.cuboid(((AbstractCursedShulkerSlabBlockEntity) blockEntity).getBoundingBox(blockState))
+		return blockEntity instanceof AbstractCursedShulkerSlabBE
+				? VoxelShapes.cuboid(((AbstractCursedShulkerSlabBE) blockEntity).getBoundingBox(blockState))
 				: AbstractCursedShulkerSlabBlock.getShape(blockState.get(FACING));
 	}
 

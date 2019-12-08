@@ -6,19 +6,18 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.text.Text;
 
-public class NewLargeContainer extends Container {
+import me.i509.fabric.bulkyshulkies.api.SlotFactory;
+
+public class GenericContainer9x7 extends Container {
 	private final PlayerInventory playerInventory;
 	private final SidedInventory inventory;
 	private final Text containerName;
 
-	public NewLargeContainer(int syncId, PlayerInventory playerInventory, SidedInventory inventory, Text containerName) {
+	public GenericContainer9x7(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, SidedInventory inventory, Text containerName) {
 		super(null, syncId);
 		this.playerInventory = playerInventory;
 		this.inventory = inventory;
 		this.containerName = containerName;
-	}
-
-	private void addPlayerSlots() {
 	}
 
 	@Override

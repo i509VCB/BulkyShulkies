@@ -28,12 +28,13 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.DyeColor;
 
-import me.i509.fabric.bulkyshulkies.api.block.material.AbstractMaterialShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.Abstract1X1ShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
-public class IronShulkerBoxBE extends AbstractMaterialShulkerBoxBlockEntity {
+public class IronShulkerBoxBE extends Abstract1X1ShulkerBoxBE {
 	public IronShulkerBoxBE(@Nullable DyeColor color) {
-		super(ShulkerBlockEntities.IRON_SHULKER_BOX, 45, color);
+		super(ShulkerBlockEntities.IRON_SHULKER_BOX, ShulkerBoxConstants.IRON_SLOT_COUNT, color);
 	}
 
 	public IronShulkerBoxBE() {
