@@ -1,6 +1,6 @@
 package me.i509.fabric.bulkyshulkies.block;
 
-public class ShulkerBoxConstants {
+public final class ShulkerBoxConstants {
 	public static final int COPPER_SLOT_COUNT = 36;
 	public static final int IRON_SLOT_COUNT = 45;
 	public static final int SILVER_SLOT_COUNT = 54;
@@ -9,4 +9,8 @@ public class ShulkerBoxConstants {
 	public static final int OBSIDIAN_SLOT_COUNT = 91;
 	public static final int CLEAR_SLOT_COUNT = 91;
 	public static final int PLATINUM_SLOT_COUNT = 91;
+
+	private ShulkerBoxConstants() {
+		// NO-OP
+	}
 }

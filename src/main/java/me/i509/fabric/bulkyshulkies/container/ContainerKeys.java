@@ -9,4 +9,8 @@ public final class ContainerKeys {
 	public static final Identifier SHULKER_9x7_CONTAINER = BulkyShulkies.id("shulker_container_9x7");
 	public static final Identifier SHULKER_11x7_CONTAINER = BulkyShulkies.id("shulker_container_11x7");
 	public static final Identifier SHULKER_13x7_CONTAINER = BulkyShulkies.id("shulker_container_13x7");
+
+	private ContainerKeys() {
+		// NO-OP
+	}
 }

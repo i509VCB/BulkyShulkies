@@ -14,7 +14,7 @@ import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
-public class ShulkerRenderLayers {
+public final class ShulkerRenderLayers {
 	public static final Identifier SHULKER_BOXES_ATLAS_TEXTURE = BulkyShulkies.id("textures/atlas/shulker_boxes.png");
 
 	public static void makeAtlases(Consumer<SpriteIdentifier> consumer, String key) {
@@ -33,5 +33,9 @@ public class ShulkerRenderLayers {
 		}
 
 		return "be/shulker/" + key + "/shulker";
+	}
+
+	private ShulkerRenderLayers() {
+		// NO-OP
 	}
 }
