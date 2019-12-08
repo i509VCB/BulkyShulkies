@@ -29,12 +29,12 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.client.TextureKeys;
 
 @Environment(EnvType.CLIENT)
-public class CopperShulkerBoxBlockEntityRenderer extends AbstractMaterialBasedShulkerBlockEntityRenderer<CopperShulkerBoxBE> {
-	public CopperShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
-		super(blockEntityRenderDispatcher, TextureKeys.COPPER);
+public class DiamondShulkerBoxBERenderer extends Abstract1x1ShulkerBERRenderer<DiamondShulkerBoxBE> {
+	public DiamondShulkerBoxBERenderer(BlockEntityRenderDispatcher ber) {
+		super(ber, TextureKeys.DIAMOND);
 	}
 }

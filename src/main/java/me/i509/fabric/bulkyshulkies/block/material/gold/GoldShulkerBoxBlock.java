@@ -53,7 +53,7 @@ public class GoldShulkerBoxBlock extends Abstract1x1ShulkerBoxBlock {
 
 	@Override
 	protected void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName) {
-		ContainerProviderRegistry.INSTANCE.openContainer(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, playerEntity, (packetByteBuf -> {
+		ContainerProviderRegistry.INSTANCE.openContainer(ContainerKeys.SHULKER_9x7_CONTAINER, playerEntity, (packetByteBuf -> {
 			packetByteBuf.writeBlockPos(pos);
 			packetByteBuf.writeText(displayName);
 		}));

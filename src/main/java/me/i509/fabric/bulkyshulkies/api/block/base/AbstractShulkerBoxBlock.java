@@ -320,11 +320,11 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 	private static <T> T retrieve(BlockState clickedState, IWorld world, BlockPos clickedPos, SingleTypePropertyRetriever<T> propertyRetriever) {
 		BlockEntity clickedBlockEntity = world.getBlockEntity(clickedPos);
 
-		if (!(clickedBlockEntity instanceof AbstractShulkerBoxBE)) {
-			return null;
+		if (clickedBlockEntity instanceof AbstractShulkerBoxBE) {
+			AbstractShulkerBoxBE abstractShulkerBoxBlockEntity = (AbstractShulkerBoxBE) clickedBlockEntity;
+			return propertyRetriever.getFromShulker(abstractShulkerBoxBlockEntity);
 		}
 
-		AbstractShulkerBoxBE abstractShulkerBoxBlockEntity = (AbstractShulkerBoxBE) clickedBlockEntity;
-		return propertyRetriever.getFromShulker(abstractShulkerBoxBlockEntity);
+		return null;
 	}
 }

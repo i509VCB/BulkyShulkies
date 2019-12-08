@@ -31,13 +31,13 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import me.i509.fabric.bulkyshulkies.api.item.HelmetTrackedDataStage;
 
 public class BulkyDataTrackers {
-	private BulkyDataTrackers() {
-		// NO-OP
-	}
+	public static final TrackedDataHandler<ShulkerBoxBlockEntity.AnimationStage> SHULKER_ANIMATION_STAGE = HelmetTrackedDataStage.INSTANCE;
 
 	static {
 		TrackedDataHandlerRegistry.register(HelmetTrackedDataStage.INSTANCE);
 	}
 
-	public static final TrackedDataHandler<ShulkerBoxBlockEntity.AnimationStage> SHULKER_ANIMATION_STAGE = HelmetTrackedDataStage.INSTANCE;
+	private BulkyDataTrackers() {
+		// NO-OP
+	}
 }

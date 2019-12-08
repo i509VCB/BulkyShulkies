@@ -48,13 +48,13 @@ import me.i509.fabric.bulkyshulkies.api.block.Abstract1X1ShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
 
 @Environment(EnvType.CLIENT)
-public abstract class AbstractMaterialBasedShulkerBlockEntityRenderer<BE extends Abstract1X1ShulkerBoxBE> extends BlockEntityRenderer<BE> {
+public abstract class Abstract1x1ShulkerBERRenderer<BE extends Abstract1X1ShulkerBoxBE> extends BlockEntityRenderer<BE> {
 	protected static final ShulkerEntityModel<ShulkerEntity> MODEL = new ShulkerEntityModel<>();
 	protected final String type;
 
-	public AbstractMaterialBasedShulkerBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher, String type) {
-		super(blockEntityRenderDispatcher);
-		this.type = type;
+	public Abstract1x1ShulkerBERRenderer(BlockEntityRenderDispatcher ber, String textureKey) {
+		super(ber);
+		this.type = textureKey;
 	}
 
 	public SpriteIdentifier getSprite() {

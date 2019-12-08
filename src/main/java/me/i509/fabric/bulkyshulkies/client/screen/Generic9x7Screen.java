@@ -33,28 +33,26 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.container.GenericContainer11x7;
+import me.i509.fabric.bulkyshulkies.container.GenericContainer9x7;
 
-public class Generic11x7Screen extends AbstractContainerScreen<GenericContainer11x7> {
-	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_11x17.png");
+public class Generic9x7Screen extends AbstractContainerScreen<GenericContainer9x7> {
+	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_9x7.png");;
 
-	public Generic11x7Screen(GenericContainer11x7 container, PlayerInventory playerInventory, Text name) {
+	public Generic9x7Screen(GenericContainer9x7 container, PlayerInventory playerInventory, Text name) {
 		super(container, playerInventory, name);
-		// containerHeight = 90 + (7 * 18); // 96
 		this.containerHeight = 132 + 7 * 18;
-		containerWidth += 28;
 	}
 
-	public static AbstractContainerScreen<GenericContainer11x7> createScreen(GenericContainer11x7 container) {
-		return new Generic11x7Screen(container, MinecraftClient.getInstance().player.inventory, container.getDisplayName());
+	public static AbstractContainerScreen<GenericContainer9x7> createScreen(GenericContainer9x7 container) {
+		return new Generic9x7Screen(container, MinecraftClient.getInstance().player.inventory, container.getDisplayName());
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float lastFrameDuration) {
-		renderBackground();
-		drawBackground(lastFrameDuration, mouseX, mouseY);
-		super.render(mouseX, mouseY, lastFrameDuration);
-		drawMouseoverTooltip(mouseX, mouseY);
+	public void render(int mouseX, int mouseY, float delta) {
+		this.renderBackground();
+		this.drawBackground(delta, mouseX, mouseX);
+		super.render(mouseX, mouseY, delta);
+		this.drawMouseoverTooltip(mouseX, mouseY);
 	}
 
 	@Override

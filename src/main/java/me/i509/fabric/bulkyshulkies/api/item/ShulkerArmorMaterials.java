@@ -28,7 +28,6 @@ import java.util.function.Supplier;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
@@ -57,11 +56,7 @@ public enum ShulkerArmorMaterials implements ArmorMaterial {
 		this.enchantability = int_2;
 		this.equipSound = soundEvent_1;
 		this.toughness = float_1;
-		this.repairIngredientSupplier = new Lazy(supplier_1);
-	}
-
-	public static boolean shouldProtect(ItemStack itemStack) {
-		return itemStack.getDamage() < itemStack.getMaxDamage() - 1;
+		this.repairIngredientSupplier = new Lazy<>(supplier_1);
 	}
 
 	public int getDurability(EquipmentSlot equipmentSlot_1) {
