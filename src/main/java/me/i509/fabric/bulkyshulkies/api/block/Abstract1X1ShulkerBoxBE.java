@@ -38,7 +38,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
 
-public class Abstract1X1ShulkerBoxBE extends AbstractShulkerBoxBE {
+public abstract class Abstract1X1ShulkerBoxBE extends AbstractShulkerBoxBE {
 	protected Abstract1X1ShulkerBoxBE(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
 		super(blockEntityType, maxAvailableSlot, color);
 		this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);

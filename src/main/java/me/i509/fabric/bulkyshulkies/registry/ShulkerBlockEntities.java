@@ -38,6 +38,7 @@ import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBE;
 
 public class ShulkerBlockEntities {
 	public static final BlockEntityType<CopperShulkerBoxBE> COPPER_SHULKER_BOX = register("copper_shulker_box",
@@ -164,6 +165,11 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.GREEN_SLAB_SHULKER_BOX,
 			ShulkerBlocks.RED_SLAB_SHULKER_BOX,
 			ShulkerBlocks.BLACK_SLAB_SHULKER_BOX
+	);
+
+	public static final BlockEntityType<ShulkerInjectorBE> SHULKER_INJECTOR = register("shulker_injector",
+			ShulkerInjectorBE::new,
+			ShulkerBlocks.SHULKER_INJECTOR
 	);
 
 	private ShulkerBlockEntities() {

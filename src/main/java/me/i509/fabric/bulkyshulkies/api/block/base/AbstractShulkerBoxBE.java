@@ -47,8 +47,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Tickable;
@@ -244,11 +242,6 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 				this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
 			}
 		}
-	}
-
-	@Override
-	protected Text getContainerName() {
-		return new TranslatableText("container.shulkerBox");
 	}
 
 	@Override

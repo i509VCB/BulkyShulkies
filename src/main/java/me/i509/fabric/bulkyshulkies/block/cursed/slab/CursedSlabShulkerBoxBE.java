@@ -26,6 +26,8 @@ package me.i509.fabric.bulkyshulkies.block.cursed.slab;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 
 import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBE;
@@ -38,5 +40,10 @@ public class CursedSlabShulkerBoxBE extends AbstractCursedShulkerSlabBE {
 
 	public CursedSlabShulkerBoxBE() {
 		this(null);
+	}
+
+	@Override
+	protected Text getContainerName() {
+		return new TranslatableText("container.slabShulkerBox");
 	}
 }

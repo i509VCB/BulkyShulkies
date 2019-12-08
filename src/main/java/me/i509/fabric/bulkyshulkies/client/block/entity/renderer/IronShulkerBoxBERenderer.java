@@ -33,7 +33,7 @@ import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.client.TextureKeys;
 
 @Environment(EnvType.CLIENT)
-public class IronShulkerBoxBERenderer extends Abstract1x1ShulkerBERRenderer<IronShulkerBoxBE> {
+public class IronShulkerBoxBERenderer extends Abstract1x1ShulkerBERenderer<IronShulkerBoxBE> {
 	public IronShulkerBoxBERenderer(BlockEntityRenderDispatcher ber) {
 		super(ber, TextureKeys.IRON);
 	}

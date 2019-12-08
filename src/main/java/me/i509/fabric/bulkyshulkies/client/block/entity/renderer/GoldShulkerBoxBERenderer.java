@@ -33,7 +33,7 @@ import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.client.TextureKeys;
 
 @Environment(EnvType.CLIENT)
-public class GoldShulkerBoxBERenderer extends Abstract1x1ShulkerBERRenderer<GoldShulkerBoxBE> {
+public class GoldShulkerBoxBERenderer extends Abstract1x1ShulkerBERenderer<GoldShulkerBoxBE> {
 	public GoldShulkerBoxBERenderer(BlockEntityRenderDispatcher ber) {
 		super(ber, TextureKeys.GOLD);
 	}

@@ -26,6 +26,9 @@ package me.i509.fabric.bulkyshulkies.inventory;
 
 public final class InjectorInventory {
 	public static final int INPUT = 0;
+	public static final int PROPELLANT = 1;
+	public static final int INJECTABLE = 2;
+	public static final int RESULT = 3;
 
 	private InjectorInventory() {
 		// NO-OP

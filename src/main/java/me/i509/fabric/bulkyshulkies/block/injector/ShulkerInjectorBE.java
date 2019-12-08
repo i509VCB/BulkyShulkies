@@ -24,17 +24,95 @@
 
 package me.i509.fabric.bulkyshulkies.block.injector;
 
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.LockableContainerBlockEntity;
+import net.minecraft.container.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Tickable;
+import net.minecraft.util.math.Direction;
 
-public class ShulkerInjectorBE extends BlockEntity implements Tickable {
-	public ShulkerInjectorBE(BlockEntityType<?> type) {
-		super(type);
+import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+
+public class ShulkerInjectorBE extends LockableContainerBlockEntity implements SidedInventory, Tickable {
+	protected DefaultedList<ItemStack> inventory;
+
+	public ShulkerInjectorBE() {
+		super(ShulkerBlockEntities.SHULKER_INJECTOR);
+		this.inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
 	}
 
 	@Override
 	public void tick() {
 		// TODO
+	}
+
+	@Override
+	protected Text getContainerName() {
+		return new TranslatableText("container.shulkerInjector");
+	}
+
+	@Override
+	protected Container createContainer(int i, PlayerInventory playerInventory) {
+		return null; // We don't use MC's create container.
+	}
+
+	@Override
+	public int[] getInvAvailableSlots(Direction side) {
+		return new int[0];
+	}
+
+	@Override
+	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir) {
+		return false;
+	}
+
+	@Override
+	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
+		return false;
+	}
+
+	@Override
+	public int getInvSize() {
+		return 0;
+	}
+
+	@Override
+	public boolean isInvEmpty() {
+		return false;
+	}
+
+	@Override
+	public ItemStack getInvStack(int slot) {
+		return null;
+	}
+
+	@Override
+	public ItemStack takeInvStack(int slot, int amount) {
+		return null;
+	}
+
+	@Override
+	public ItemStack removeInvStack(int slot) {
+		return null;
+	}
+
+	@Override
+	public void setInvStack(int slot, ItemStack stack) {
+		// TODO:
+	}
+
+	@Override
+	public boolean canPlayerUseInv(PlayerEntity player) {
+		return false;
+	}
+
+	@Override
+	public void clear() {
+		// TODO:
 	}
 }

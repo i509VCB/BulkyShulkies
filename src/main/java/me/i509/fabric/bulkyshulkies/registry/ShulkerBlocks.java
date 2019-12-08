@@ -43,8 +43,10 @@ import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBloc
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBlock;
 
 public class ShulkerBlocks {
+	// Dynamic bounds are VERY IMPORTANT. Otherwise your box will make entities suffocate since the game's cached block is exactly 1 full cube, so collisions act odd for this reason without the dynamic bounds.
 	public static final Block.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).dynamicBounds().build().nonOpaque();
 
 	/*
@@ -191,6 +193,13 @@ public class ShulkerBlocks {
 	public static final Block GREEN_SLAB_SHULKER_BOX = register(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.GREEN), "green_slab_shulker_box");
 	public static final Block RED_SLAB_SHULKER_BOX = register(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.RED), "red_slab_shulker_box");
 	public static final Block BLACK_SLAB_SHULKER_BOX = register(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.BLACK), "black_slab_shulker_box");
+
+	/*
+	 * ========================
+	 *  Shulker Injector blocks
+	 * ========================
+	 */
+	public static final Block SHULKER_INJECTOR = register(new ShulkerInjectorBlock(FabricBlockSettings.of(Material.METAL).build()), "shulker_injector", ShulkerItemGroups.MATERIAL_SETTINGS);
 
 	private ShulkerBlocks() {
 		// NO-OP

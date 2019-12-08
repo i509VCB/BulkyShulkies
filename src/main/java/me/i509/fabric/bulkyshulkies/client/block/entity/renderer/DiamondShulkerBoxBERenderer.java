@@ -33,7 +33,7 @@ import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.client.TextureKeys;
 
 @Environment(EnvType.CLIENT)
-public class DiamondShulkerBoxBERenderer extends Abstract1x1ShulkerBERRenderer<DiamondShulkerBoxBE> {
+public class DiamondShulkerBoxBERenderer extends Abstract1x1ShulkerBERenderer<DiamondShulkerBoxBE> {
 	public DiamondShulkerBoxBERenderer(BlockEntityRenderDispatcher ber) {
 		super(ber, TextureKeys.DIAMOND);
 	}

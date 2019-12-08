@@ -42,6 +42,9 @@
     ],
     "rei_plugins_v0": [
       "me.i509.fabric.bulkyshulkies.client.BulkyShulkiesREIPlugin"
+    ],
+    "libcd": [
+      "me.i509.fabric.bulkyshulkies.extension.BulkyLibCDHooks"
     ]
   },
   "mixins": [

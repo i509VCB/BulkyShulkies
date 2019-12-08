@@ -33,7 +33,7 @@ import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.client.TextureKeys;
 
 @Environment(EnvType.CLIENT)
-public class CopperShulkerBoxBERenderer extends Abstract1x1ShulkerBERRenderer<CopperShulkerBoxBE> {
+public class CopperShulkerBoxBERenderer extends Abstract1x1ShulkerBERenderer<CopperShulkerBoxBE> {
 	public CopperShulkerBoxBERenderer(BlockEntityRenderDispatcher ber) {
 		super(ber, TextureKeys.COPPER);
 	}

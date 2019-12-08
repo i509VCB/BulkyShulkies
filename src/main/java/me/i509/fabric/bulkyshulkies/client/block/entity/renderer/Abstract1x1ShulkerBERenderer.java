@@ -48,21 +48,21 @@ import me.i509.fabric.bulkyshulkies.api.block.Abstract1X1ShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
 
 @Environment(EnvType.CLIENT)
-public abstract class Abstract1x1ShulkerBERRenderer<BE extends Abstract1X1ShulkerBoxBE> extends BlockEntityRenderer<BE> {
+public abstract class Abstract1x1ShulkerBERenderer<BE extends Abstract1X1ShulkerBoxBE> extends BlockEntityRenderer<BE> {
 	protected static final ShulkerEntityModel<ShulkerEntity> MODEL = new ShulkerEntityModel<>();
 	protected final String type;
 
-	public Abstract1x1ShulkerBERRenderer(BlockEntityRenderDispatcher ber, String textureKey) {
+	public Abstract1x1ShulkerBERenderer(BlockEntityRenderDispatcher ber, String textureKey) {
 		super(ber);
 		this.type = textureKey;
 	}
 
 	public SpriteIdentifier getSprite() {
-		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id("be/shulker/" + type +"/shulker"));
+		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id("be/shulker/" + type + "/shulker"));
 	}
 
 	public SpriteIdentifier getSprite(DyeColor color) {
-		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id("be/shulker/" + type +"/shulker_" + color.getName()));
+		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id("be/shulker/" + type + "/shulker_" + color.getName()));
 	}
 
 	@Override
