@@ -37,6 +37,8 @@ import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBE;
 
@@ -165,6 +167,48 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.GREEN_SLAB_SHULKER_BOX,
 			ShulkerBlocks.RED_SLAB_SHULKER_BOX,
 			ShulkerBlocks.BLACK_SLAB_SHULKER_BOX
+	);
+
+	public static final BlockEntityType<ObsidianShulkerBoxBE> OBSIDIAN_SHULKER_BOX = register("obsidian_shulker_box",
+			ObsidianShulkerBoxBE::new,
+			ShulkerBlocks.OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.WHITE_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.ORANGE_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.MAGENTA_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_BLUE_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.YELLOW_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.LIME_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.PINK_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.GRAY_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_GRAY_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.CYAN_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.PURPLE_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.BLUE_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.BROWN_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.GREEN_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.RED_OBSIDIAN_SHULKER_BOX,
+			ShulkerBlocks.BLACK_OBSIDIAN_SHULKER_BOX
+	);
+
+	public static final BlockEntityType<PlatinumShulkerBoxBE> PLATINUM_SHULKER_BOX = register("platinum_shulker_box",
+			PlatinumShulkerBoxBE::new,
+			ShulkerBlocks.PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.WHITE_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.ORANGE_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.MAGENTA_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_BLUE_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.YELLOW_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.LIME_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.PINK_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.GRAY_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_GRAY_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.CYAN_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.PURPLE_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.BLUE_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.BROWN_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.GREEN_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.RED_PLATINUM_SHULKER_BOX,
+			ShulkerBlocks.BLACK_PLATINUM_SHULKER_BOX
 	);
 
 	public static final BlockEntityType<ShulkerInjectorBE> SHULKER_INJECTOR = register("shulker_injector",

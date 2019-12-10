@@ -36,7 +36,7 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.container.GenericContainer9x7;
 
 public class Generic9x7Screen extends AbstractContainerScreen<GenericContainer9x7> {
-	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_9x7.png");;
+	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_9x7.png");
 
 	public Generic9x7Screen(GenericContainer9x7 container, PlayerInventory playerInventory, Text name) {
 		super(container, playerInventory, name);

@@ -24,24 +24,52 @@
 
 package me.i509.fabric.bulkyshulkies.client.screen;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.util.Identifier;
 import net.minecraft.text.Text;
 
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.container.GenericContainer13x7;
 
 public class Generic13x7Screen extends AbstractContainerScreen<GenericContainer13x7> {
+	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_13x7.png");
+
 	public Generic13x7Screen(GenericContainer13x7 container, PlayerInventory playerInventory, Text name) {
 		super(container, playerInventory, name);
-	}
-
-	@Override
-	protected void drawBackground(float delta, int mouseX, int mouseY) {
-		// TODO
+		// containerHeight = 90 + (7 * 18); // 96
+		this.containerHeight = 132 + 7 * 18;
+		containerWidth += 28 + 36;
 	}
 
 	public static AbstractContainerScreen<GenericContainer13x7> createScreen(GenericContainer13x7 container) {
 		return new Generic13x7Screen(container, MinecraftClient.getInstance().player.inventory, container.getDisplayName());
+	}
+
+	@Override
+	public void render(int mouseX, int mouseY, float lastFrameDuration) {
+		renderBackground();
+		drawBackground(lastFrameDuration, mouseX, mouseY);
+		super.render(mouseX, mouseY, lastFrameDuration);
+		drawMouseoverTooltip(mouseX, mouseY);
+	}
+
+	@Override
+	protected void drawForeground(int mouseX, int mouseY) {
+		this.font.draw(this.title.asFormattedString(), 8.0F, 7.0F, 4210752);
+		this.font.draw(this.playerInventory.getDisplayName().asFormattedString(), 8.0F, (float) (this.containerHeight - 114 + 2), 4210752);
+	}
+
+	@Override
+	protected void drawBackground(float delta, int mouseX, int mouseY) {
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		this.minecraft.getTextureManager().bindTexture(TEXTURE);
+		int i = (this.width - this.containerWidth) / 2;
+		int j = (this.height - this.containerHeight) / 2;
+		this.blit(i, j, 0, 0, this.containerWidth, 7 * 18 + 17);
+		this.blit(i, j + 7 * 18 + 17, 0, 126, this.containerWidth, 96);
 	}
 }

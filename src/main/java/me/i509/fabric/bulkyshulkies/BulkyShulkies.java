@@ -42,7 +42,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.AbstractMessageFactory;
 import org.apache.logging.log4j.message.Message;
-import org.apache.logging.log4j.message.SimpleMessage;
+import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
@@ -60,7 +60,7 @@ public class BulkyShulkies {
 	private static final Logger LOGGER = LogManager.getLogger(new AbstractMessageFactory() {
 		@Override
 		public Message newMessage(String message, Object... params) {
-			return new SimpleMessage("[BulkyShulkies] " + message);
+			return new ParameterizedMessage("[BulkyShulkies] " + message, params);
 		}
 	});
 

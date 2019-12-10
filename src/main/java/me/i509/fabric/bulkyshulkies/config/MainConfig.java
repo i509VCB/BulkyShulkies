@@ -39,16 +39,16 @@ public class MainConfig {
 			+ "Since HOCON is a superset of JSON, almost all JSON Schemas should work out of the box\n"
 			+ "If you need help, please contact me on discord here: https://discord.gg/qX7kBWY";
 
-	@Setting(comment = "Specifies weather recipes from CottonResources should be used.\n"
-			+ "This Setting shall only go into effect, if the value is true and CottonResources is present")
-	private boolean useCottonResources = true;
+	@Setting(comment = "Specifies weather Copper, Silver and Platinum recipes should be loaded even if CottonResources/TechReborn/Other mods have all the required materials should be used.\n"
+			+ "This Setting shall only go into effect, if the value is true and CottonResources is present\n")
+	private boolean useResources = true;
 
-	public boolean shouldUseCottonResources() {
-		return useCottonResources;
+	public boolean shouldUseResources() {
+		return useResources;
 	}
 
 	@Setting(comment = "Specifies weather platinum shulker box's should be allowed to use their magnetic properties to collection items from a distance.\n"
-			+ "Note this will cause an increase in lag, however this can be slightly controlled by the magnetism range.")
+			+ "Note this will cause an increase in lag, however this can be slightly controlled by the magnetism range.\n")
 	private boolean shouldPlatinumUseMagnetism = true;
 
 	public boolean shouldPlatinumUseMagnetism() {
@@ -57,7 +57,7 @@ public class MainConfig {
 
 	@Setting(comment = "Specifies the maximum range in which the platinum shulker box's magnetism no longer can pick up items. \n"
 			+ "Note that the larger this number is will result in more lag.\n"
-			+ "This cannot be 0 or negative and there is a firm limit of a 16 block max range.")
+			+ "This cannot be 0 or negative and there is a firm limit of a 16 block max range.\n")
 	private int platinumMagnetMaxRange = 6;
 
 	public int getPlatinumMagnetMaxRange() {
@@ -69,7 +69,7 @@ public class MainConfig {
 	@Setting(comment = "Specifies items which are not allowed to be placed within any shulker box's slots.\n"
 			+ "This should be a list of namespaced identifiers, such as mymod:myblock (assuming myblock is registered as a BlockItem within the registry) or mymod:myitem.\n"
 			+ "Note this currently does not support tags.\n"
-			+ "Items which are not present in the registry will be ignored and warned about in the log")
+			+ "Items which are not present in the registry will be ignored and warned about in the log\n")
 	private List<String> notAllowedInShulkers = new ArrayList<>();
 
 	public List<String> getNotAllowedInShulkers() {
@@ -81,10 +81,20 @@ public class MainConfig {
 			+ "When the config schema changes, this value will be read and your config updated accordingly automatically.\n"
 			+ "If the file's schema is lower than the mod's schema version, the config will be updated.\n"
 			+ "If the file's schema is greater than the mod's schema version, the config will be backed up and an error message will be placed in the log.\n"
-			+ "Then the config will be set to the new schema version. (We do not try to guestimate the contents of the config with an unknown schema version)")
+			+ "Then the config will be set to the new schema version. (We do not try to guestimate the contents of the config with an unknown schema version)\n")
 	private double schemaVersion = 1.0;
 
 	public double getSchema() {
 		return schemaVersion;
+	}
+
+	@Setting(comment = "This species the delay between each magnetism check for the platinum shulker box.\n"
+			+ "This only applies if Magnetism is enabled.\n"
+			+ "A setting of zero means every single tick, the magnetism will attempt to collect items every single tick, this may cause lag, so it is recommended to increase this value\n")
+	private int magnetismTickDelay = 20;
+
+	public int getMagnetismTickDelay() {
+		checkArgument(magnetismTickDelay >= 0, "Magnetism delay cannot be less than zero.");
+		return magnetismTickDelay;
 	}
 }

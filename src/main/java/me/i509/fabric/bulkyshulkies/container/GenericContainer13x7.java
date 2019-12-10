@@ -45,23 +45,20 @@ public class GenericContainer13x7 extends Container {
 		this.name = containerName;
 		inventory.onInvOpen(playerInventory.player);
 
-		int i = 63;
-
-		for (int n = 0; n < 7; ++n) {
-			for (int m = 0; m < 13; ++m) {
-				//this.addSlot(new ShulkerBoxSlot(inventory, m + n * 9, 7 + m * 18, 18 + n * 18));
-				this.addSlot(slotFactory.create(inventory, m + n * 9, 7 + m * 18, 18 + n * 18));
+		for (int row = 0; row < 7; ++row) {
+			for (int column = 0; column < 13; ++column) {
+				this.addSlot(slotFactory.create(inventory, column + (row * 13), (column * 18) + 4, 18 + (row * 18)));
 			}
 		}
 
-		for (int n = 0; n < 3; ++n) {
-			for (int m = 0; m < 9; ++m) {
-				this.addSlot(new Slot(playerInventory, m + n * 9 + 9, 8 + m * 18, 103 + n * 18 + i));
+		for (int row = 0; row < 3; ++row) {
+			for (int column = 0; column < 9; ++column) {
+				this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 22 + 18 + (column * 18), 112 + row * 18 + 45));
 			}
 		}
 
 		for (int n = 0; n < 9; ++n) {
-			this.addSlot(new Slot(playerInventory, n, 8 + n * 18, 161 + i));
+			this.addSlot(new Slot(playerInventory, n, 22 + 18 + (n * 18), 170 + 45));
 		}
 	}
 
@@ -79,7 +76,7 @@ public class GenericContainer13x7 extends Container {
 			itemStack = itemStack2.copy();
 
 			if (invSlot < 91) {
-				if (!this.insertItem(itemStack2, 7 * 9, this.slotList.size(), true)) {
+				if (!this.insertItem(itemStack2, 7 * 13, this.slotList.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (!this.insertItem(itemStack2, 0, 91, false)) {

@@ -42,12 +42,15 @@ import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBlock;
 
 public class ShulkerBlocks {
 	// Dynamic bounds are VERY IMPORTANT. Otherwise your box will make entities suffocate since the game's cached block is exactly 1 full cube, so collisions act odd for this reason without the dynamic bounds.
 	public static final Block.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).dynamicBounds().build().nonOpaque();
+	public static final Block.Settings OBSIDIAN_SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).resistance(1200.0F).dynamicBounds().build().nonOpaque();
 
 	/*
 	 * ========================
@@ -147,7 +150,7 @@ public class ShulkerBlocks {
 
 	/*
 	 * ========================
-	 *    Diamond Shulker Boxes
+	 *   Diamond Shulker Boxes
 	 * ========================
 	 */
 
@@ -168,6 +171,54 @@ public class ShulkerBlocks {
 	public static final Block GREEN_DIAMOND_SHULKER_BOX = register(new DiamondShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.GREEN), "green_diamond_shulker_box");
 	public static final Block RED_DIAMOND_SHULKER_BOX = register(new DiamondShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.RED), "red_diamond_shulker_box");
 	public static final Block BLACK_DIAMOND_SHULKER_BOX = register(new DiamondShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.BLACK), "black_diamond_shulker_box");
+
+	/*
+	 * ========================
+	 *  Obsidian Shulker Boxes
+	 * ========================
+	 */
+
+	public static final Block OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, null), "obsidian_shulker_box"); // Uncolored
+	public static final Block WHITE_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_obsidian_shulker_box");
+	public static final Block ORANGE_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_obsidian_shulker_box");
+	public static final Block MAGENTA_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.MAGENTA), "magenta_obsidian_shulker_box");
+	public static final Block LIGHT_BLUE_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.LIGHT_BLUE), "light_blue_obsidian_shulker_box");
+	public static final Block YELLOW_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.YELLOW), "yellow_obsidian_shulker_box");
+	public static final Block LIME_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.LIME), "lime_obsidian_shulker_box");
+	public static final Block PINK_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.PINK), "pink_obsidian_shulker_box");
+	public static final Block GRAY_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.GRAY), "gray_obsidian_shulker_box");
+	public static final Block LIGHT_GRAY_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.LIGHT_GRAY), "light_gray_obsidian_shulker_box");
+	public static final Block CYAN_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.CYAN), "cyan_obsidian_shulker_box");
+	public static final Block PURPLE_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.PURPLE), "purple_obsidian_shulker_box");
+	public static final Block BLUE_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.BLUE), "blue_obsidian_shulker_box");
+	public static final Block BROWN_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.BROWN), "brown_obsidian_shulker_box");
+	public static final Block GREEN_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.GREEN), "green_obsidian_shulker_box");
+	public static final Block RED_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.RED), "red_obsidian_shulker_box");
+	public static final Block BLACK_OBSIDIAN_SHULKER_BOX = register(new ObsidianShulkerBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS, DyeColor.BLACK), "black_obsidian_shulker_box");
+
+	/*
+	 * ========================
+	 *  Platinum Shulker Boxes
+	 * ========================
+	 */
+
+	public static final Block PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, null), "platinum_shulker_box"); // Uncolored
+	public static final Block WHITE_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_platinum_shulker_box");
+	public static final Block ORANGE_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_platinum_shulker_box");
+	public static final Block MAGENTA_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.MAGENTA), "magenta_platinum_shulker_box");
+	public static final Block LIGHT_BLUE_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.LIGHT_BLUE), "light_blue_platinum_shulker_box");
+	public static final Block YELLOW_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.YELLOW), "yellow_platinum_shulker_box");
+	public static final Block LIME_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.LIME), "lime_platinum_shulker_box");
+	public static final Block PINK_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.PINK), "pink_platinum_shulker_box");
+	public static final Block GRAY_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.GRAY), "gray_platinum_shulker_box");
+	public static final Block LIGHT_GRAY_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.LIGHT_GRAY), "light_gray_platinum_shulker_box");
+	public static final Block CYAN_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.CYAN), "cyan_platinum_shulker_box");
+	public static final Block PURPLE_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.PURPLE), "purple_platinum_shulker_box");
+	public static final Block BLUE_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.BLUE), "blue_platinum_shulker_box");
+	public static final Block BROWN_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.BROWN), "brown_platinum_shulker_box");
+	public static final Block GREEN_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.GREEN), "green_platinum_shulker_box");
+	public static final Block RED_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.RED), "red_platinum_shulker_box");
+	public static final Block BLACK_PLATINUM_SHULKER_BOX = register(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.BLACK), "black_platinum_shulker_box");
 
 	/*
 	 * ========================
@@ -297,6 +348,24 @@ public class ShulkerBlocks {
 		DispenserBlock.registerBehavior(GREEN_DIAMOND_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
 		DispenserBlock.registerBehavior(RED_DIAMOND_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
 		DispenserBlock.registerBehavior(BLACK_DIAMOND_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		// Obsidian Boxes
+		DispenserBlock.registerBehavior(OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(WHITE_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(ORANGE_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(MAGENTA_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(LIGHT_BLUE_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(YELLOW_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(LIME_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(PINK_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(GRAY_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(LIGHT_GRAY_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(CYAN_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(PURPLE_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(BLUE_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(BROWN_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(GREEN_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(RED_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(BLACK_OBSIDIAN_SHULKER_BOX.asItem(), new BlockPlacementDispenserBehavior());
 		// Slab Boxes
 		DispenserBlock.registerBehavior(SLAB_SHULKER_BOX.asItem(), new SlabBlockPlacementDispenserBehavior());
 		DispenserBlock.registerBehavior(WHITE_SLAB_SHULKER_BOX.asItem(), new SlabBlockPlacementDispenserBehavior());

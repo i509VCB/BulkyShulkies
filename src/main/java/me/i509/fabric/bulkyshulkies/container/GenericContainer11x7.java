@@ -46,20 +46,20 @@ public class GenericContainer11x7 extends Container {
 		this.name = name;
 		this.inventory.onInvOpen(playerInventory.player);
 
-		for (int yHeight = 0; yHeight < 7; ++yHeight) {
-			for (int xHeight = 0; xHeight < 11; ++xHeight) {
-				this.addSlot(slotFactory.create(inventory, xHeight + (yHeight * 11), (xHeight * 18) + 4, 18 + (yHeight * 18)));
+		for (int row = 0; row < 7; ++row) {
+			for (int column = 0; column < 11; ++column) {
+				this.addSlot(slotFactory.create(inventory, column + (row * 11), (column * 18) + 4, 18 + (row * 18)));
 			}
 		}
 
-		for (int n = 0; n < 3; ++n) {
-			for (int m = 0; m < 9; ++m) {
-				this.addSlot(new Slot(playerInventory, m + n * 9 + 9, 22 + (m * 18), 112 + n * 18 + 45));
+		for (int row = 0; row < 3; ++row) {
+			for (int column = 0; column < 9; ++column) {
+				this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 22 + (column * 18), 112 + row * 18 + 45));
 			}
 		}
 
-		for (int n = 0; n < 9; ++n) {
-			this.addSlot(new Slot(playerInventory, n, 22 + (n * 18), 170 + 45));
+		for (int column = 0; column < 9; ++column) {
+			this.addSlot(new Slot(playerInventory, column, 22 + (column * 18), 170 + 45));
 		}
 	}
 

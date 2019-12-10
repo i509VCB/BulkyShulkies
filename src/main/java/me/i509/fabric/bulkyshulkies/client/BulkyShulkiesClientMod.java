@@ -47,6 +47,8 @@ import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.CopperShulkerBo
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.DiamondShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.GoldShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.IronShulkerBoxBERenderer;
+import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.ObsidianShulkerBoxBERenderer;
+import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.PlatinumShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.SilverShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic9x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic11x7Screen;
@@ -72,6 +74,8 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SILVER_SHULKER_BOX, SilverShulkerBoxBERenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.GOLD_SHULKER_BOX, GoldShulkerBoxBERenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.DIAMOND_SHULKER_BOX, DiamondShulkerBoxBERenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.OBSIDIAN_SHULKER_BOX, ObsidianShulkerBoxBERenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.PLATINUM_SHULKER_BOX, PlatinumShulkerBoxBERenderer::new);
 		ClientSpriteRegistryCallback.event(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE).register(BulkyShulkiesClientMod::registerSprites);
 	}
 
