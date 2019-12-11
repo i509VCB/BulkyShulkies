@@ -73,6 +73,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.NbtType;
 
+import me.i509.fabric.bulkyshulkies.extension.ShulkerHooks;
+
 /**
  * Represents an abstract implementation of a shulker box with no strict physical size or inventory size.
  */
@@ -146,6 +148,11 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 	@Environment(EnvType.CLIENT)
 	public void buildTooltip(ItemStack itemStack, @Nullable BlockView blockView, List<Text> list, TooltipContext tooltipContext) {
 		super.buildTooltip(itemStack, blockView, list, tooltipContext);
+
+		if (ShulkerHooks.shulkerTooltipsArePresent()) {
+			return; // Shulker Tooltips will handle the Tooltip itself if installed.
+		}
+
 		CompoundTag blockEntityTag = itemStack.getSubTag("BlockEntityTag");
 
 		if (blockEntityTag != null) {

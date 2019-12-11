@@ -45,6 +45,9 @@
     ],
     "libcd": [
       "me.i509.fabric.bulkyshulkies.extension.BulkyLibCDHooks"
+    ],
+    "shulkerboxtooltip": [
+      "me.i509.fabric.bulkyshulkies.extension.BulkyTooltipHook"
     ]
   },
   "mixins": [
@@ -59,7 +62,8 @@
   },
   "suggests": {
     "libcd": "*",
-    "cotton-resources": ">=1.4.1"
+    "cotton-resources": ">=1.4.1",
+    "shulkerboxtooltip": ">=1.4.3"
   },
   "custom": {
   }

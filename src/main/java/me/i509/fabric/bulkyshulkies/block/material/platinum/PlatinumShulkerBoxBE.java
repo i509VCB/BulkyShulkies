@@ -5,6 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
@@ -12,6 +13,7 @@ import net.minecraft.util.math.Box;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.Abstract1X1ShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.api.event.MagnetismCollectionCallback;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
@@ -43,7 +45,12 @@ public class PlatinumShulkerBoxBE extends Abstract1X1ShulkerBoxBE {
 				Box box = new Box(this.getPos()).stretch(range, range, range);
 				List<ItemEntity> entities = this.getWorld().getNonSpectatingEntities(ItemEntity.class, box);
 				MagnetismCollectionCallback.EVENT.invoker().onMagnetismTick(entities, this.getWorld(), this.getPos(), this);
-				// TODO: attempt to insert the items into the box
+				SidedInventory inventory = AbstractShulkerBoxBlock.getInventoryStatically(this.getWorld(), this.getPos());
+				// Attempt to insert the items into the box
+
+				for (ItemEntity itemEntity : entities) {
+					//inventory.
+				}
 			}
 
 			this.lastMagnetTick++;

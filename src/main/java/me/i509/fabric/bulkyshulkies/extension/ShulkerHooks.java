@@ -24,11 +24,15 @@
 
 package me.i509.fabric.bulkyshulkies.extension;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class ShulkerHooks {
 	private static final FabricLoader LOADER = FabricLoader.getInstance();
-	private static boolean isCottonEnabled;
+	static boolean resourcesPresent;
+	@Environment(EnvType.CLIENT)
+	static boolean shulkerTooltipsPresent;
 
 	private ShulkerHooks() {
 	}
@@ -36,7 +40,12 @@ public class ShulkerHooks {
 	public static void init() {
 	}
 
-	public static boolean isCottonEnabled() {
-		return isCottonEnabled;
+	@Environment(EnvType.CLIENT)
+	public static boolean shulkerTooltipsArePresent() {
+		return shulkerTooltipsPresent;
+	}
+
+	public static boolean areResourcesPresent() {
+		return resourcesPresent;
 	}
 }

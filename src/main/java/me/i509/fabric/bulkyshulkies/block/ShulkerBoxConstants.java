@@ -1,6 +1,7 @@
 package me.i509.fabric.bulkyshulkies.block;
 
 public final class ShulkerBoxConstants {
+	public static final int SLAB_SLOT_COUNT = 18;
 	public static final int COPPER_SLOT_COUNT = 36;
 	public static final int IRON_SLOT_COUNT = 45;
 	public static final int SILVER_SLOT_COUNT = 54;

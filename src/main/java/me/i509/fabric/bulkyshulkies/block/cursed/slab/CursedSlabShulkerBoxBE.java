@@ -31,11 +31,12 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 
 import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBE;
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
 public class CursedSlabShulkerBoxBE extends AbstractCursedShulkerSlabBE {
 	public CursedSlabShulkerBoxBE(@Nullable DyeColor color) {
-		super(ShulkerBlockEntities.SLAB_SHULKER_BOX, 18, color);
+		super(ShulkerBlockEntities.SLAB_SHULKER_BOX, ShulkerBoxConstants.SLAB_SLOT_COUNT, color);
 	}
 
 	public CursedSlabShulkerBoxBE() {

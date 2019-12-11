@@ -32,10 +32,11 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 
 import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBE;
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 
 public class EnderSlabBoxBE extends AbstractCursedShulkerSlabBE {
-	public EnderSlabBoxBE(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
-		super(blockEntityType, maxAvailableSlot, color);
+	public EnderSlabBoxBE(BlockEntityType<?> blockEntityType, @Nullable DyeColor color) {
+		super(blockEntityType, ShulkerBoxConstants.SLAB_SLOT_COUNT, color);
 	}
 
 	@Override

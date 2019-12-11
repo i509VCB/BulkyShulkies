@@ -37,12 +37,13 @@ import net.minecraft.world.BlockView;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
 import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBlock;
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 public class CursedSlabShulkerBox extends AbstractCursedShulkerSlabBlock {
 	public CursedSlabShulkerBox(Settings settings, @Nullable DyeColor color) {
-		super(settings, 18, color);
+		super(settings, ShulkerBoxConstants.SLAB_SLOT_COUNT, color);
 	}
 
 	@Override
