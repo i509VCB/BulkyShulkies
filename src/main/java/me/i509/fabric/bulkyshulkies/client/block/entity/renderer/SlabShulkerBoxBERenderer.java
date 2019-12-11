@@ -31,8 +31,12 @@ import net.minecraft.client.render.entity.model.ShulkerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.mob.ShulkerEntity;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBE;
 
+@Environment(EnvType.CLIENT)
 public class SlabShulkerBoxBERenderer extends BlockEntityRenderer<AbstractCursedShulkerSlabBE> {
 	private static final ShulkerEntityModel<ShulkerEntity> SHULKER_ENTITY_MODEL = new ShulkerEntityModel<>();
 

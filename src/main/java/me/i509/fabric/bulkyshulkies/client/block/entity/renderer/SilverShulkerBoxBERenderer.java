@@ -29,12 +29,12 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
+import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.client.TextureKeys;
 
 @Environment(EnvType.CLIENT)
 public class SilverShulkerBoxBERenderer extends Abstract1x1ShulkerBERenderer<SilverShulkerBoxBE> {
 	public SilverShulkerBoxBERenderer(BlockEntityRenderDispatcher ber) {
-		super(ber, TextureKeys.SILVER);
+		super(ber, ShulkerBoxKeys.SILVER);
 	}
 }

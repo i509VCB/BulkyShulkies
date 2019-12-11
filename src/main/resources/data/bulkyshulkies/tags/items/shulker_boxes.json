@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "#bulkyshulkies:vanilla_shulker_boxes",
+    "#bulkyshulkies:copper_shulker_boxes",
+    "#bulkyshulkies:iron_shulker_boxes",
+    "#bulkyshulkies:silver_shulker_boxes",
+    "#bulkyshulkies:gold_shulker_boxes",
+    "#bulkyshulkies:diamond_shulker_boxes",
+    "#bulkyshulkies:obsidian_shulker_boxes",
+    "#bulkyshulkies:platinum_shulker_boxes",
+    "#bulkyshulkies:clear_shulker_boxes",
+    "#bulkyshulkies:slab_shulker_boxes"
+  ]
+}

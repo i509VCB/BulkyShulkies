@@ -40,6 +40,7 @@ public class ShulkerItemGroups {
 	public static final Item.Settings UNSTACKABLE_CURSED_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(CURSED_GROUP);
 	public static final Item.Settings UNSTACKABLE_MATERIAL_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(ShulkerItemGroups.MATERIAL_GROUP);
 	public static final Item.Settings MATERIAL_SETTINGS = new Item.Settings().group(ShulkerItemGroups.MATERIAL_GROUP);
+	public static final Item.Settings UPGRADES = new Item.Settings().maxCount(16).group(ShulkerItemGroups.MATERIAL_GROUP);
 
 	private ShulkerItemGroups() {
 		// NO-OP

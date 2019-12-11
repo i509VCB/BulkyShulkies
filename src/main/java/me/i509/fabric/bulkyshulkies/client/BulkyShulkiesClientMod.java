@@ -43,6 +43,7 @@ import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.CopperShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.DiamondShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.GoldShulkerBoxBERenderer;
@@ -80,24 +81,24 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 	}
 
 	private static void registerSprites(SpriteAtlasTexture atlas, ClientSpriteRegistryCallback.Registry registry) {
-		ShulkerRenderLayers.registerSprites(atlas, registry, TextureKeys.COPPER);
-		ShulkerRenderLayers.registerSprites(atlas, registry, TextureKeys.IRON);
-		ShulkerRenderLayers.registerSprites(atlas, registry, TextureKeys.SILVER);
-		ShulkerRenderLayers.registerSprites(atlas, registry, TextureKeys.GOLD);
-		ShulkerRenderLayers.registerSprites(atlas, registry, TextureKeys.DIAMOND);
-		ShulkerRenderLayers.registerSprites(atlas, registry, TextureKeys.OBSIDIAN);
-		ShulkerRenderLayers.registerSprites(atlas, registry, TextureKeys.CLEAR);
-		ShulkerRenderLayers.registerSprites(atlas, registry, TextureKeys.PLATINUM);
+		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.COPPER);
+		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.IRON);
+		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.SILVER);
+		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.GOLD);
+		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.DIAMOND);
+		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.OBSIDIAN);
+		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.CLEAR);
+		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.PLATINUM);
 	}
 
 	public static void makeAtlases(Consumer<SpriteIdentifier> consumer) {
-		ShulkerRenderLayers.makeAtlases(consumer, TextureKeys.COPPER);
-		ShulkerRenderLayers.makeAtlases(consumer, TextureKeys.IRON);
-		ShulkerRenderLayers.makeAtlases(consumer, TextureKeys.SILVER);
-		ShulkerRenderLayers.makeAtlases(consumer, TextureKeys.GOLD);
-		ShulkerRenderLayers.makeAtlases(consumer, TextureKeys.DIAMOND);
-		ShulkerRenderLayers.makeAtlases(consumer, TextureKeys.OBSIDIAN);
-		ShulkerRenderLayers.makeAtlases(consumer, TextureKeys.CLEAR);
-		ShulkerRenderLayers.makeAtlases(consumer, TextureKeys.PLATINUM);
+		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.COPPER);
+		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.IRON);
+		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.SILVER);
+		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.GOLD);
+		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.DIAMOND);
+		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.OBSIDIAN);
+		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.CLEAR);
+		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.PLATINUM);
 	}
 }

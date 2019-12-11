@@ -33,4 +33,5 @@ import me.i509.fabric.bulkyshulkies.recipe.injector.InjectorRecipeSerializer;
 public class BulkyRecipeSerializers {
 	public static final SpecialRecipeSerializer<AbstractShulkerBoxColoringRecipe> ABSTRACT_SHULKER_COLORING = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("shulker_coloring"), new SpecialRecipeSerializer<>(AbstractShulkerBoxColoringRecipe::new));
 	public static final InjectorRecipeSerializer INJECTOR = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("injector"), new InjectorRecipeSerializer());
+	public static final AbstractShulkerBoxUpgradeRecipeSerializer UPGRADE = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("upgrade"), new AbstractShulkerBoxUpgradeRecipeSerializer());
 }

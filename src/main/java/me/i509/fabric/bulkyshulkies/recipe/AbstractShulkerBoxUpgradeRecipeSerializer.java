@@ -22,19 +22,26 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.client;
+package me.i509.fabric.bulkyshulkies.recipe;
 
-public class TextureKeys {
-	public static final String COPPER = "copper";
-	public static final String IRON = "iron";
-	public static final String SILVER = "silver";
-	public static final String GOLD = "gold";
-	public static final String DIAMOND = "diamond";
-	public static final String OBSIDIAN = "obsidian";
-	public static final String CLEAR = "clear";
-	public static final String PLATINUM = "platinum";
+import com.google.gson.JsonObject;
 
-	private TextureKeys() {
-		// NO-OP
+import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.PacketByteBuf;
+
+public class AbstractShulkerBoxUpgradeRecipeSerializer extends ShapedRecipe.Serializer {
+	public AbstractShulkerBoxUpgradeRecipe read(Identifier identifier, JsonObject jsonObject) {
+		ShapedRecipe handle = super.read(identifier, jsonObject);
+		return new AbstractShulkerBoxUpgradeRecipe(handle);
+	}
+
+	public AbstractShulkerBoxUpgradeRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
+		ShapedRecipe handle = super.read(identifier, packetByteBuf);
+		return new AbstractShulkerBoxUpgradeRecipe(handle);
+	}
+
+	public void write(PacketByteBuf packetByteBuf, ShapedRecipe shapedRecipe) {
+		super.write(packetByteBuf, shapedRecipe);
 	}
 }

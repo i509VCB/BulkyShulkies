@@ -30,11 +30,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.client.TextureKeys;
+import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
 
 @Environment(EnvType.CLIENT)
 public class DiamondShulkerBoxBERenderer extends Abstract1x1ShulkerBERenderer<DiamondShulkerBoxBE> {
 	public DiamondShulkerBoxBERenderer(BlockEntityRenderDispatcher ber) {
-		super(ber, TextureKeys.DIAMOND);
+		super(ber, ShulkerBoxKeys.DIAMOND);
 	}
 }

@@ -22,19 +22,19 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
+package me.i509.fabric.bulkyshulkies;
 
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+public class ShulkerBoxKeys {
+	public static final String COPPER = "copper";
+	public static final String IRON = "iron";
+	public static final String SILVER = "silver";
+	public static final String GOLD = "gold";
+	public static final String DIAMOND = "diamond";
+	public static final String OBSIDIAN = "obsidian";
+	public static final String CLEAR = "clear";
+	public static final String PLATINUM = "platinum";
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
-import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
-
-@Environment(EnvType.CLIENT)
-public class CopperShulkerBoxBERenderer extends Abstract1x1ShulkerBERenderer<CopperShulkerBoxBE> {
-	public CopperShulkerBoxBERenderer(BlockEntityRenderDispatcher ber) {
-		super(ber, ShulkerBoxKeys.COPPER);
+	private ShulkerBoxKeys() {
+		// NO-OP
 	}
 }

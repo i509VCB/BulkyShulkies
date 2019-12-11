@@ -30,11 +30,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.client.TextureKeys;
+import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
 
 @Environment(EnvType.CLIENT)
 public class IronShulkerBoxBERenderer extends Abstract1x1ShulkerBERenderer<IronShulkerBoxBE> {
 	public IronShulkerBoxBERenderer(BlockEntityRenderDispatcher ber) {
-		super(ber, TextureKeys.IRON);
+		super(ber, ShulkerBoxKeys.IRON);
 	}
 }
