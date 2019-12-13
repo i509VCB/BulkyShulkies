@@ -33,6 +33,7 @@ public class ShulkerBoxKeys {
 	public static final String OBSIDIAN = "obsidian";
 	public static final String CLEAR = "clear";
 	public static final String PLATINUM = "platinum";
+	public static final String SLAB = "slab";
 
 	private ShulkerBoxKeys() {
 		// NO-OP

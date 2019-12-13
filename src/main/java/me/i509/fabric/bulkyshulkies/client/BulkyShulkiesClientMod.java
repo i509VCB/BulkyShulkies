@@ -51,6 +51,7 @@ import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.IronShulkerBoxB
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.ObsidianShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.PlatinumShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.SilverShulkerBoxBERenderer;
+import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.SlabShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic9x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic11x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic13x7Screen;
@@ -77,6 +78,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.DIAMOND_SHULKER_BOX, DiamondShulkerBoxBERenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.OBSIDIAN_SHULKER_BOX, ObsidianShulkerBoxBERenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.PLATINUM_SHULKER_BOX, PlatinumShulkerBoxBERenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SLAB_SHULKER_BOX, SlabShulkerBoxBERenderer::new);
 		ClientSpriteRegistryCallback.event(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE).register(BulkyShulkiesClientMod::registerSprites);
 	}
 
@@ -89,6 +91,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.OBSIDIAN);
 		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.CLEAR);
 		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.PLATINUM);
+		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.SLAB);
 	}
 
 	public static void makeAtlases(Consumer<SpriteIdentifier> consumer) {
@@ -100,5 +103,6 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.OBSIDIAN);
 		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.CLEAR);
 		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.PLATINUM);
+		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.SLAB);
 	}
 }

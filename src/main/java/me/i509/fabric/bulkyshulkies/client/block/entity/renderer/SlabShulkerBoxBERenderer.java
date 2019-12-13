@@ -24,28 +24,13 @@
 
 package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
 
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.entity.model.ShulkerEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.mob.ShulkerEntity;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
+import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBE;
 
-import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBE;
-
-@Environment(EnvType.CLIENT)
-public class SlabShulkerBoxBERenderer extends BlockEntityRenderer<AbstractCursedShulkerSlabBE> {
-	private static final ShulkerEntityModel<ShulkerEntity> SHULKER_ENTITY_MODEL = new ShulkerEntityModel<>();
-
+public class SlabShulkerBoxBERenderer extends AbstractSlabShulkerBoxBERenderer<CursedSlabShulkerBoxBE> {
 	public SlabShulkerBoxBERenderer(BlockEntityRenderDispatcher ber) {
-		super(ber);
-	}
-
-	@Override
-	public void render(AbstractCursedShulkerSlabBE blockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
-		// TODO Renderer magic
+		super(ber, ShulkerBoxKeys.SLAB);
 	}
 }
