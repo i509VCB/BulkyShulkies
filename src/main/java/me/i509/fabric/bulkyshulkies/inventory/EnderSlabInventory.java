@@ -24,22 +24,27 @@
 
 package me.i509.fabric.bulkyshulkies.inventory;
 
+import java.util.stream.IntStream;
+
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.BasicInventory;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.util.math.Direction;
 
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
 
-public class EnderSlabInventory extends BasicInventory {
+public class EnderSlabInventory extends BasicInventory implements SidedInventory {
 	@Nullable
 	private EnderSlabBoxBE currentBlockEntity;
 
 	public EnderSlabInventory() {
-		super(18);
+		super(ShulkerBoxConstants.SLAB_SLOT_COUNT);
 	}
 
 	public void setCurrentBlockEntity(EnderSlabBoxBE enderSlabBoxBE) {
@@ -99,5 +104,20 @@ public class EnderSlabInventory extends BasicInventory {
 
 		super.onInvClose(player);
 		this.currentBlockEntity = null;
+	}
+
+	@Override
+	public int[] getInvAvailableSlots(Direction side) {
+		return IntStream.range(0, ShulkerBoxConstants.SLAB_SLOT_COUNT).toArray();
+	}
+
+	@Override
+	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir) {
+		return true;
+	}
+
+	@Override
+	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
+		return true;
 	}
 }

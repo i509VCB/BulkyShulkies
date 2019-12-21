@@ -51,6 +51,14 @@ public final class ShulkerRenderLayers {
 		Arrays.stream(DyeColor.values()).forEach(c -> registry.register(BulkyShulkies.id(makePath(key, c))));
 	}
 
+	public static void makeAtlas(Consumer<SpriteIdentifier> consumer, String key) {
+		consumer.accept(new SpriteIdentifier(SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id(makePath(key, null))));
+	}
+
+	public static void registerSprite(SpriteAtlasTexture atlas, ClientSpriteRegistryCallback.Registry registry, String key) {
+		registry.register(BulkyShulkies.id(makePath(key, null)));
+	}
+
 	private static String makePath(String key, @Nullable DyeColor color) {
 		if (color != null) {
 			return "be/shulker/" + key + "/shulker_" + color.getName();

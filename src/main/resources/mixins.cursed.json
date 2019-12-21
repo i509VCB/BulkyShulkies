@@ -6,7 +6,8 @@
     "ShulkerBoxBlockEntityMixin",
     "ShulkerBoxSlotMixin",
     "LivingEntityMixin",
-    "SlotMixin"
+    "SlotMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
     "client.TexturedRenderLayersMixin"

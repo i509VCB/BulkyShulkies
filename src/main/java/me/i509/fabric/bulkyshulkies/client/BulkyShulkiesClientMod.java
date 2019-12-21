@@ -46,8 +46,10 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.CopperShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.DiamondShulkerBoxBERenderer;
+import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.EnderSlabBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.GoldShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.IronShulkerBoxBERenderer;
+import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.MissingTexShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.ObsidianShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.PlatinumShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.SilverShulkerBoxBERenderer;
@@ -67,10 +69,13 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 	public void onInitializeClient() {
 		KeyBindingRegistry.INSTANCE.addCategory(BulkyShulkiesMod.MODID);
 		KeyBindingRegistry.INSTANCE.register(OPEN_SHULKER_HELMET);
+
 		ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_9x7_CONTAINER, Generic9x7Screen::createScreen);
 		ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_11x7_CONTAINER, Generic11x7Screen::createScreen);
 		ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_13x7_CONTAINER, Generic13x7Screen::createScreen);
 		ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, ScrollableScreen::createScreen);
+		ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.ENDER_SLAB, ScrollableScreen::createScreen);
+
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, CopperShulkerBoxBERenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, IronShulkerBoxBERenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SILVER_SHULKER_BOX, SilverShulkerBoxBERenderer::new);
@@ -79,6 +84,8 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.OBSIDIAN_SHULKER_BOX, ObsidianShulkerBoxBERenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.PLATINUM_SHULKER_BOX, PlatinumShulkerBoxBERenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SLAB_SHULKER_BOX, SlabShulkerBoxBERenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.MISSING_TEX, MissingTexShulkerBoxBERenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.ENDER_SLAB, EnderSlabBoxBERenderer::new);
 		ClientSpriteRegistryCallback.event(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE).register(BulkyShulkiesClientMod::registerSprites);
 	}
 
@@ -92,6 +99,8 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.CLEAR);
 		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.PLATINUM);
 		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.SLAB);
+		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.MISSING_TEX);
+		ShulkerRenderLayers.registerSprite(atlas, registry, ShulkerBoxKeys.ENDER_SLAB);
 	}
 
 	public static void makeAtlases(Consumer<SpriteIdentifier> consumer) {
@@ -104,5 +113,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.CLEAR);
 		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.PLATINUM);
 		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.SLAB);
+		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.MISSING_TEX);
+		ShulkerRenderLayers.makeAtlas(consumer, ShulkerBoxKeys.ENDER_SLAB);
 	}
 }

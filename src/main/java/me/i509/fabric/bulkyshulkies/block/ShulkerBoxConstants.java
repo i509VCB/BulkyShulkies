@@ -10,6 +10,8 @@ public final class ShulkerBoxConstants {
 	public static final int OBSIDIAN_SLOT_COUNT = 91;
 	public static final int CLEAR_SLOT_COUNT = 91;
 	public static final int PLATINUM_SLOT_COUNT = 91;
+	public static final int DIRT_SLOT_COUNT = 1;
+	public static final int MISSING_TEX = 27;
 
 	private ShulkerBoxConstants() {
 		// NO-OP

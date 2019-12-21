@@ -22,22 +22,19 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.block.ender;
+package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
 
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 
-import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBE;
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
-public class EnderSlabBoxBE extends AbstractCursedShulkerSlabBE {
-	public EnderSlabBoxBE() {
-		super(ShulkerBlockEntities.ENDER_SLAB, ShulkerBoxConstants.SLAB_SLOT_COUNT, null);
-	}
+import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
 
-	@Override
-	protected Text getContainerName() {
-		return new TranslatableText("container.enderSlab");
+@Environment(EnvType.CLIENT)
+public class EnderSlabBoxBERenderer extends AbstractSlabShulkerBoxBERenderer<EnderSlabBoxBE> {
+	public EnderSlabBoxBERenderer(BlockEntityRenderDispatcher ber) {
+		super(ber, ShulkerBoxKeys.ENDER_SLAB);
 	}
 }

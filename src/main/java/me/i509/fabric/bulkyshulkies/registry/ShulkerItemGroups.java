@@ -34,7 +34,7 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
 public class ShulkerItemGroups {
-	public static final ItemGroup CURSED_GROUP = FabricItemGroupBuilder.build(BulkyShulkies.id("cursedgroup"), () -> new ItemStack(ShulkerBlocks.COPPER_SHULKER_BOX));
+	public static final ItemGroup CURSED_GROUP = FabricItemGroupBuilder.build(BulkyShulkies.id("group"), () -> new ItemStack(ShulkerBlocks.COPPER_SHULKER_BOX));
 	public static final ItemGroup MATERIAL_GROUP = FabricItemGroupBuilder.build(BulkyShulkies.id("materialgroup"), () -> new ItemStack(Items.SHULKER_SHELL));
 
 	public static final Item.Settings UNSTACKABLE_CURSED_ITEM_SETTINGS = new Item.Settings().maxCount(1).group(CURSED_GROUP);

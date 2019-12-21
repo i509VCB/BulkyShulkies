@@ -62,33 +62,45 @@ public class BulkyTooltipHook implements ShulkerBoxTooltipApi {
 		List<Item> copper = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.COPPER_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
 		copper.add(ShulkerBlocks.COPPER_SHULKER_BOX.asItem());
 		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.COPPER_SLOT_COUNT), copper);
+
 		// Register popup providers for Iron Shulker Boxes.
 		List<Item> iron = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.IRON_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
 		iron.add(ShulkerBlocks.IRON_SHULKER_BOX.asItem());
 		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.IRON_SLOT_COUNT), iron);
+
 		// Register popup providers for Silver Shulker Boxes.
 		List<Item> silver = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.SILVER_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
 		silver.add(ShulkerBlocks.SILVER_SHULKER_BOX.asItem());
 		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.IRON_SLOT_COUNT), silver);
+
 		// Register popup providers for Gold Shulker Boxes.
 		List<Item> gold = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.GOLD_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
 		gold.add(ShulkerBlocks.GOLD_SHULKER_BOX.asItem());
 		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.GOLD_SLOT_COUNT), gold);
+
 		// Register popup providers for Diamond Shulker Boxes.
 		List<Item> diamond = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.DIAMOND_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
 		diamond.add(ShulkerBlocks.DIAMOND_SHULKER_BOX.asItem());
 		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.DIAMOND_SLOT_COUNT), diamond);
+
 		// Register popup providers for Obsidian Shulker Boxes.
 		List<Item> obsidian = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.OBSIDIAN_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
 		obsidian.add(ShulkerBlocks.OBSIDIAN_SHULKER_BOX.asItem());
 		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.OBSIDIAN_SLOT_COUNT), obsidian);
+
 		// Register popup providers for Platinum Shulker Boxes.
 		List<Item> platinum = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.PLATINUM_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
 		platinum.add(ShulkerBlocks.PLATINUM_SHULKER_BOX.asItem());
 		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.PLATINUM_SLOT_COUNT), platinum);
+
 		// Register popup providers for Slab Shulker Boxes.
 		List<Item> slab = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.SLAB_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
 		slab.add(ShulkerBlocks.SLAB_SHULKER_BOX.asItem());
 		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.SLAB_SLOT_COUNT), slab);
+
+		// Register popup providers for Missing Tex Shulker Boxes.
+		List<Item> missingTex = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.MISSING_TEX_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
+		missingTex.add(ShulkerBlocks.MISSING_TEX_SHULKER_BOX.asItem());
+		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.MISSING_TEX), missingTex);
 	}
 }

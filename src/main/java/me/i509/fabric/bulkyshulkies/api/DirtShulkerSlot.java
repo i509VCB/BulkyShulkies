@@ -22,22 +22,25 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.block.ender;
+package me.i509.fabric.bulkyshulkies.api;
 
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.container.Slot;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tag.ItemTags;
+import net.minecraft.tag.Tag;
+import net.minecraft.util.Identifier;
 
-import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBE;
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+public class DirtShulkerSlot extends Slot {
+	private static final Identifier DIRT_TAG = new Identifier("c", "dirt");
 
-public class EnderSlabBoxBE extends AbstractCursedShulkerSlabBE {
-	public EnderSlabBoxBE() {
-		super(ShulkerBlockEntities.ENDER_SLAB, ShulkerBoxConstants.SLAB_SLOT_COUNT, null);
+	public DirtShulkerSlot(Inventory inventory, int invSlot, int xPosition, int yPosition) {
+		super(inventory, invSlot, xPosition, yPosition);
 	}
 
-	@Override
-	protected Text getContainerName() {
-		return new TranslatableText("container.enderSlab");
+	public boolean canInsert(ItemStack stack) {
+		Tag<Item> tag = ItemTags.getContainer().get(DIRT_TAG);
+		return tag != null && tag.contains(stack.getItem());
 	}
 }

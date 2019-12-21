@@ -24,6 +24,7 @@
 
 package me.i509.fabric.bulkyshulkies;
 
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.container.ShulkerBoxSlot;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
@@ -33,15 +34,19 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.player.EnderSlabAccess;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
 import me.i509.fabric.bulkyshulkies.container.ScrollableContainer;
 import me.i509.fabric.bulkyshulkies.container.GenericContainer11x7;
 import me.i509.fabric.bulkyshulkies.container.GenericContainer13x7;
 import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
 import me.i509.fabric.bulkyshulkies.container.GenericContainer9x7;
 import me.i509.fabric.bulkyshulkies.extension.ShulkerHooks;
+import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
 import me.i509.fabric.bulkyshulkies.recipe.BulkyRecipeSerializers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerDispenserBehaviors;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerItemGroups;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerItems;
 
@@ -54,10 +59,24 @@ public class BulkyShulkiesMod implements ModInitializer {
 		BulkyRecipeSerializers.ABSTRACT_SHULKER_COLORING.getClass(); // Register the colorizer recipe type
 		BulkyDataTrackers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
 		ShulkerBlocks.init();
+		ShulkerDispenserBehaviors.init();
 		ShulkerBlockEntities.init();
 		ShulkerItems.init();
 		ShulkerItemGroups.init();
 		ShulkerHooks.init();
+
+		ContainerProviderRegistry.INSTANCE.registerFactory(ContainerKeys.ENDER_SLAB, (syncId, identifier, player, buf) -> {
+			BlockPos pos = buf.readBlockPos();
+			Text name = buf.readText();
+			World world = player.getEntityWorld();
+
+			EnderSlabInventory slab = ((EnderSlabAccess) player).getEnderSlabInventory();
+
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			slab.setCurrentBlockEntity(blockEntity instanceof EnderSlabBoxBE ? (EnderSlabBoxBE) blockEntity : null);
+
+			return new ScrollableContainer(syncId, ShulkerBoxSlot::new, player.inventory, slab, name);
+		});
 
 		ContainerProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, ((syncId, identifier, player, buf) -> {
 			BlockPos pos = buf.readBlockPos();

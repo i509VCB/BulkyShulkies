@@ -32,9 +32,13 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.Identifier;
 import net.minecraft.text.Text;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.container.GenericContainer13x7;
 
+@Environment(EnvType.CLIENT)
 public class Generic13x7Screen extends AbstractContainerScreen<GenericContainer13x7> {
 	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_13x7.png");
 

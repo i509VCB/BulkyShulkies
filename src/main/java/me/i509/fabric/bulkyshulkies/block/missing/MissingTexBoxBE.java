@@ -22,22 +22,29 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.block.ender;
+package me.i509.fabric.bulkyshulkies.block.missing;
+
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.DyeColor;
 
-import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBE;
+import me.i509.fabric.bulkyshulkies.api.block.Abstract1X1ShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
-public class EnderSlabBoxBE extends AbstractCursedShulkerSlabBE {
-	public EnderSlabBoxBE() {
-		super(ShulkerBlockEntities.ENDER_SLAB, ShulkerBoxConstants.SLAB_SLOT_COUNT, null);
+public class MissingTexBoxBE extends Abstract1X1ShulkerBoxBE {
+	public MissingTexBoxBE(@Nullable DyeColor color) {
+		super(ShulkerBlockEntities.MISSING_TEX, ShulkerBoxConstants.MISSING_TEX, color);
+	}
+
+	public MissingTexBoxBE() {
+		this(null);
 	}
 
 	@Override
 	protected Text getContainerName() {
-		return new TranslatableText("container.enderSlab");
+		return new TranslatableText("container.missingTexBox");
 	}
 }

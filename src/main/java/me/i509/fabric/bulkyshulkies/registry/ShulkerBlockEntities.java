@@ -35,8 +35,10 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBE;
@@ -209,6 +211,32 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.GREEN_PLATINUM_SHULKER_BOX,
 			ShulkerBlocks.RED_PLATINUM_SHULKER_BOX,
 			ShulkerBlocks.BLACK_PLATINUM_SHULKER_BOX
+	);
+
+	public static final BlockEntityType<MissingTexBoxBE> MISSING_TEX = register("missing_tex_box",
+			MissingTexBoxBE::new,
+			ShulkerBlocks.MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.WHITE_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.ORANGE_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.MAGENTA_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_BLUE_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.YELLOW_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.LIME_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.PINK_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.GRAY_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_GRAY_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.CYAN_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.PURPLE_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.BLUE_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.BROWN_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.GREEN_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.RED_MISSING_TEX_SHULKER_BOX,
+			ShulkerBlocks.BLACK_MISSING_TEX_SHULKER_BOX
+	);
+
+	public static final BlockEntityType<EnderSlabBoxBE> ENDER_SLAB = register("ender_slab",
+			EnderSlabBoxBE::new,
+			ShulkerBlocks.ENDER_SLAB_BOX
 	);
 
 	public static final BlockEntityType<ShulkerInjectorBE> SHULKER_INJECTOR = register("shulker_injector",
