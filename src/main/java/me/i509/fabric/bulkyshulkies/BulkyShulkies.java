@@ -46,6 +46,7 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -54,6 +55,7 @@ import net.minecraft.util.registry.Registry;
 import net.fabricmc.loader.api.FabricLoader;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
 import me.i509.fabric.bulkyshulkies.config.MainConfig;
 
 public class BulkyShulkies {
@@ -64,7 +66,6 @@ public class BulkyShulkies {
 		}
 	});
 
-	public static final double CURRENT_CONFIG_SCHEMA = 1.0;
 	private static final BulkyShulkies instance;
 	private static List<Predicate<ItemStack>> disallowedItems = new ArrayList<>();
 
@@ -140,6 +141,10 @@ public class BulkyShulkies {
 	}
 
 	public boolean canInsertItem(ItemStack stack) {
+		if (stack.getItem() instanceof BlockItem && ((BlockItem) stack.getItem()).getBlock() instanceof EnderSlabBoxBlock) {
+			return true;
+		}
+
 		for (Predicate<ItemStack> disallowedItems : disallowedItems) {
 			if (disallowedItems.test(stack)) {
 				return false;

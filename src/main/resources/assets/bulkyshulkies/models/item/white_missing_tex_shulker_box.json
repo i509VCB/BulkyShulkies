@@ -1,0 +1,6 @@
+{
+  "parent": "item/template_shulker_box",
+  "textures": {
+    "particle": "bulkyshulkies:block/white_missing_tex_shulker_box"
+  }
+}
