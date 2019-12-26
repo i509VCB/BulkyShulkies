@@ -10,7 +10,8 @@
     "PlayerEntityMixin"
   ],
   "client": [
-    "client.TexturedRenderLayersMixin"
+    "client.TexturedRenderLayersMixin",
+    "client.BuiltinModelItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

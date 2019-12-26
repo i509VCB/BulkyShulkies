@@ -24,13 +24,19 @@
 
 package me.i509.fabric.bulkyshulkies.client;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Util;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -44,6 +50,28 @@ import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
+import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
+import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBE;
+import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.CopperShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.DiamondShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.EnderSlabBoxBERenderer;
@@ -64,6 +92,38 @@ import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 @Environment(EnvType.CLIENT)
 public class BulkyShulkiesClientMod implements ClientModInitializer {
 	public static final FabricKeyBinding OPEN_SHULKER_HELMET = FabricKeyBinding.Builder.create(BulkyShulkies.id("open_helmet"), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, BulkyShulkiesMod.MODID).build();
+	/**
+	 * Provides the BlockEntity to use for the ItemRenderer.
+	 */
+	private static final Map<DyeColor, Map<Class<? extends AbstractShulkerBoxBlock>, AbstractShulkerBoxBE>> DYE_COLOR_TO_RENDER_BE = Util.make(new HashMap<>(), map -> {
+		map.put(null, Util.make(new HashMap<>(), uncolored -> {
+			uncolored.put(CopperShulkerBoxBlock.class, new CopperShulkerBoxBE());
+			uncolored.put(IronShulkerBoxBlock.class, new IronShulkerBoxBE());
+			uncolored.put(SilverShulkerBoxBlock.class, new SilverShulkerBoxBE());
+			uncolored.put(GoldShulkerBoxBlock.class, new GoldShulkerBoxBE());
+			uncolored.put(DiamondShulkerBoxBlock.class, new DiamondShulkerBoxBE());
+			uncolored.put(ObsidianShulkerBoxBlock.class, new ObsidianShulkerBoxBE());
+			uncolored.put(PlatinumShulkerBoxBlock.class, new PlatinumShulkerBoxBE());
+			uncolored.put(MissingTexBoxBlock.class, new MissingTexBoxBE());
+			uncolored.put(CursedSlabShulkerBox.class, new CursedSlabShulkerBoxBE());
+			// Ender Slab, this has no coloring at all
+			uncolored.put(EnderSlabBoxBlock.class, new EnderSlabBoxBE());
+		}));
+
+		for (DyeColor dyeColor : DyeColor.values()) {
+			map.put(dyeColor, Util.make(new HashMap<>(), colored -> {
+				colored.put(CopperShulkerBoxBlock.class, new CopperShulkerBoxBE(dyeColor));
+				colored.put(IronShulkerBoxBlock.class, new IronShulkerBoxBE(dyeColor));
+				colored.put(SilverShulkerBoxBlock.class, new SilverShulkerBoxBE(dyeColor));
+				colored.put(GoldShulkerBoxBlock.class, new GoldShulkerBoxBE(dyeColor));
+				colored.put(DiamondShulkerBoxBlock.class, new DiamondShulkerBoxBE(dyeColor));
+				colored.put(ObsidianShulkerBoxBlock.class, new ObsidianShulkerBoxBE(dyeColor));
+				colored.put(PlatinumShulkerBoxBlock.class, new PlatinumShulkerBoxBE(dyeColor));
+				colored.put(MissingTexBoxBlock.class, new MissingTexBoxBE(dyeColor));
+				colored.put(CursedSlabShulkerBox.class, new CursedSlabShulkerBoxBE(dyeColor));
+			}));
+		}
+	});
 
 	@Override
 	public void onInitializeClient() {
@@ -115,5 +175,9 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.SLAB);
 		ShulkerRenderLayers.makeAtlases(consumer, ShulkerBoxKeys.MISSING_TEX);
 		ShulkerRenderLayers.makeAtlas(consumer, ShulkerBoxKeys.ENDER_SLAB);
+	}
+
+	public static BlockEntity getRenderBlockEntity(AbstractShulkerBoxBlock block, @Nullable DyeColor color) {
+		return DYE_COLOR_TO_RENDER_BE.get(color).get(block.getClass());
 	}
 }
