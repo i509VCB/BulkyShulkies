@@ -36,13 +36,14 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+// import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
 public class ShulkerInjectorBE extends LockableContainerBlockEntity implements SidedInventory, Tickable {
 	protected DefaultedList<ItemStack> inventory;
 
 	public ShulkerInjectorBE() {
-		super(ShulkerBlockEntities.SHULKER_INJECTOR);
+		super(null); // TODO
+		//super(ShulkerBlockEntities.SHULKER_INJECTOR);
 		this.inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
 	}
 

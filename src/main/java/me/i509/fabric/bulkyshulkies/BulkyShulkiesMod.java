@@ -26,6 +26,7 @@ package me.i509.fabric.bulkyshulkies;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.container.ShulkerBoxSlot;
+import net.minecraft.container.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -71,11 +72,10 @@ public class BulkyShulkiesMod implements ModInitializer {
 			World world = player.getEntityWorld();
 
 			EnderSlabInventory slab = ((EnderSlabAccess) player).getEnderSlabInventory();
-
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			slab.setCurrentBlockEntity(blockEntity instanceof EnderSlabBoxBE ? (EnderSlabBoxBE) blockEntity : null);
 
-			return new ScrollableContainer(syncId, ShulkerBoxSlot::new, player.inventory, slab, name);
+			return new ScrollableContainer(syncId, Slot::new, player.inventory, slab, name);
 		});
 
 		ContainerProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, ((syncId, identifier, player, buf) -> {

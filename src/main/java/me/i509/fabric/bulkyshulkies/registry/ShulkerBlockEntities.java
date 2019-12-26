@@ -42,7 +42,7 @@ import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBE;
+// import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBE;
 
 public class ShulkerBlockEntities {
 	public static final BlockEntityType<CopperShulkerBoxBE> COPPER_SHULKER_BOX = register("copper_shulker_box",
@@ -239,10 +239,10 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.ENDER_SLAB_BOX
 	);
 
-	public static final BlockEntityType<ShulkerInjectorBE> SHULKER_INJECTOR = register("shulker_injector",
+	/*public static final BlockEntityType<ShulkerInjectorBE> SHULKER_INJECTOR = register("shulker_injector",
 			ShulkerInjectorBE::new,
 			ShulkerBlocks.SHULKER_INJECTOR
-	);
+	);*/
 
 	private ShulkerBlockEntities() {
 		// NO-OP

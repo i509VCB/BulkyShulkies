@@ -44,12 +44,13 @@ import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBlock;
+// import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBlock;
 
 public class ShulkerBlocks {
 	// Dynamic bounds are VERY IMPORTANT. Otherwise your box will make entities suffocate since the game's cached block is exactly 1 full cube, so collisions act odd for this reason without the dynamic bounds.
-	public static final Block.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).dynamicBounds().build().nonOpaque();
-	public static final Block.Settings OBSIDIAN_SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).resistance(1200.0F).dynamicBounds().build().nonOpaque();
+	public static final Block.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).dynamicBounds().nonOpaque().build();
+	public static final Block.Settings OBSIDIAN_SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().build();
+	public static final Block.Settings ENDER_SLAB_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().lightLevel(7).build();
 
 	/*
 	 * ========================
@@ -268,14 +269,15 @@ public class ShulkerBlocks {
 	public static final Block RED_SLAB_SHULKER_BOX = register(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.RED), "red_slab_shulker_box");
 	public static final Block BLACK_SLAB_SHULKER_BOX = register(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.BLACK), "black_slab_shulker_box");
 
-	public static final Block ENDER_SLAB_BOX = register(new EnderSlabBoxBlock(OBSIDIAN_SHULKER_BOX_SETTINGS), "ender_slab");
+	public static final Block ENDER_SLAB_BOX = register(new EnderSlabBoxBlock(ENDER_SLAB_SETTINGS), "ender_slab");
 
 	/*
 	 * ========================
 	 *  Shulker Injector blocks
 	 * ========================
 	 */
-	public static final Block SHULKER_INJECTOR = register(new ShulkerInjectorBlock(FabricBlockSettings.of(Material.METAL).build()), "shulker_injector", ShulkerItemGroups.MATERIAL_SETTINGS);
+	// For the future
+	// public static final Block SHULKER_INJECTOR = register(new ShulkerInjectorBlock(FabricBlockSettings.of(Material.METAL).build()), "shulker_injector", ShulkerItemGroups.MATERIAL_SETTINGS);
 
 	private ShulkerBlocks() {
 		// NO-OP
