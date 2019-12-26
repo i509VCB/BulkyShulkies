@@ -3,6 +3,7 @@ plugins {
 	id 'com.github.johnrengelman.shadow' version '5.2.0'
 	id 'maven-publish'
 	id 'checkstyle'
+	id 'net.minecrell.licenser' version '0.4.1'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -11,6 +12,20 @@ targetCompatibility = JavaVersion.VERSION_1_8
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+
+license {
+	header = file('HEADER.txt')
+	include '**/*.java'
+	exclude '**/ScrollableContainer.java'
+	exclude '**/ScrollableScreen.java'
+	exclude '**/SearchTextFieldWidget.java'
+	style.java = 'BLOCK_COMMENT'
+
+	matching(includes: ['**/ScrollableContainer.java', '**/ScrollableScreen.java', '**/SearchTextFieldWidget.java']) {
+		header = file('LICENSE-NINJAPHENIX.txt')
+		style.java = 'BLOCK_COMMENT'
+	}
+}
 
 repositories {
 	mavenCentral()
