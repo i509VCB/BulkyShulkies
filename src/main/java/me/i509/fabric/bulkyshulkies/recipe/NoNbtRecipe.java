@@ -24,60 +24,82 @@
 
 package me.i509.fabric.bulkyshulkies.recipe;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
+public class NoNbtRecipe extends ShapedRecipe {
+	private final int width;
+	private final int height;
+	private DefaultedList<Ingredient> inputs;
 
-public class AbstractShulkerBoxUpgradeRecipe extends ShapedRecipe {
-	public AbstractShulkerBoxUpgradeRecipe(Identifier id, String group, int width, int height, DefaultedList<Ingredient> ingredients, ItemStack output) {
+	public NoNbtRecipe(Identifier id, String group, int width, int height, DefaultedList<Ingredient> ingredients, ItemStack output) {
 		super(id, group, width, height, ingredients, output);
+		this.width = width;
+		this.height = height;
+		this.inputs = ingredients;
 	}
 
-	public AbstractShulkerBoxUpgradeRecipe(ShapedRecipe handle) {
+	public NoNbtRecipe(ShapedRecipe handle) {
 		this(handle.getId(), handle.getGroup(), handle.getWidth(), handle.getHeight(), handle.getPreviewInputs(), handle.getOutput());
 	}
 
-	@Override
-	public ItemStack craft(CraftingInventory inventory) {
-		ItemStack reference = null;
+	public boolean matches(CraftingInventory craftingInventory, World world) {
+		for (int i = 0; i <= craftingInventory.getWidth() - this.width; ++i) {
+			for (int j = 0; j <= craftingInventory.getHeight() - this.height; ++j) {
+				if (this.matchesSmall(craftingInventory, i, j, true)) {
+					return true;
+				}
 
-		for (int i = 0; i < inventory.getInvSize(); ++i) {
-			ItemStack selectedStack = inventory.getInvStack(i);
-
-			if (!selectedStack.isEmpty()) {
-				Item item = selectedStack.getItem();
-
-				if (Block.getBlockFromItem(item) instanceof BaseShulkerBlock || Block.getBlockFromItem(item) instanceof ShulkerBoxBlock) {
-					reference = selectedStack;
-					break;
+				if (this.matchesSmall(craftingInventory, i, j, false)) {
+					return true;
 				}
 			}
 		}
 
-		if (reference == null) {
-			throw new IllegalArgumentException("You need a shulker box somewhere in your recipe for this");
+		return false;
+	}
+
+	private boolean matchesSmall(CraftingInventory inv, int offsetX, int offsetY, boolean bl) {
+		for (int i = 0; i < inv.getWidth(); ++i) {
+			for (int j = 0; j < inv.getHeight(); ++j) {
+				int k = i - offsetX;
+				int l = j - offsetY;
+				Ingredient ingredient = Ingredient.EMPTY;
+
+				if (k >= 0 && l >= 0 && k < this.width && l < this.height) {
+					if (bl) {
+						ingredient = this.inputs.get(this.width - k - 1 + l * this.width);
+					} else {
+						ingredient = this.inputs.get(k + l * this.width);
+					}
+				}
+
+				if (inv.getInvStack(i + j * inv.getWidth()).hasTag()) {
+					return false;
+				}
+
+				if (!ingredient.test(inv.getInvStack(i + j * inv.getWidth()))) {
+					return false;
+				}
+			}
 		}
 
-		ItemStack result = getOutput().copy();
+		return true;
+	}
 
-		if (reference.hasTag()) {
-			result.setTag(reference.getTag().copy());
-		}
-
-		return result;
+	@Override
+	public ItemStack craft(CraftingInventory inventory) {
+		return super.craft(inventory);
 	}
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return BulkyRecipeSerializers.UPGRADE;
+		return BulkyRecipeSerializers.NO_NBT;
 	}
 }

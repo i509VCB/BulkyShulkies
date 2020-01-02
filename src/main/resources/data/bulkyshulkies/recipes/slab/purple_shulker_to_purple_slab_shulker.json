@@ -1,0 +1,15 @@
+{
+  "type": "bulkyshulkies:no_nbt",
+  "pattern": [
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "purple_shulker_box"
+    }
+  },
+  "result": {
+    "item": "bulkyshulkies:purple_slab_shulker_box",
+	"count": 6
+  }
+}

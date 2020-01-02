@@ -24,15 +24,24 @@
 
 package me.i509.fabric.bulkyshulkies.recipe;
 
-import net.minecraft.recipe.SpecialRecipeSerializer;
-import net.minecraft.util.registry.Registry;
+import com.google.gson.JsonObject;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.recipe.injector.InjectorRecipeSerializer;
+import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.PacketByteBuf;
 
-public class BulkyRecipeSerializers {
-	public static final SpecialRecipeSerializer<AbstractShulkerBoxColoringRecipe> ABSTRACT_SHULKER_COLORING = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("shulker_coloring"), new SpecialRecipeSerializer<>(AbstractShulkerBoxColoringRecipe::new));
-	public static final InjectorRecipeSerializer INJECTOR = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("injector"), new InjectorRecipeSerializer());
-	public static final AbstractShulkerBoxUpgradeRecipeSerializer UPGRADE = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("upgrade"), new AbstractShulkerBoxUpgradeRecipeSerializer());
-	public static final NoNbtRecipeSerializer NO_NBT = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("no_nbt"), new NoNbtRecipeSerializer());
+public class NoNbtRecipeSerializer extends ShapedRecipe.Serializer {
+	public NoNbtRecipe read(Identifier identifier, JsonObject jsonObject) {
+		ShapedRecipe handle = super.read(identifier, jsonObject);
+		return new NoNbtRecipe(handle);
+	}
+
+	public NoNbtRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
+		ShapedRecipe handle = super.read(identifier, packetByteBuf);
+		return new NoNbtRecipe(handle);
+	}
+
+	public void write(PacketByteBuf packetByteBuf, ShapedRecipe shapedRecipe) {
+		super.write(packetByteBuf, shapedRecipe);
+	}
 }

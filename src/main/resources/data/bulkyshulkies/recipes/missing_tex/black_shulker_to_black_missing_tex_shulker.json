@@ -1,0 +1,22 @@
+{
+  "type": "bulkyshulkies:upgrade",
+  "pattern": [
+    "ABA",
+    "BSB",
+    "ABA"
+  ],
+  "key": {
+  	"A": {
+	  "item": "purple_concrete"
+	},
+  	"B": {
+	  "item": "black_concrete"
+	},
+    "S": {
+      "item": "black_shulker_box"
+    }
+  },
+  "result": {
+    "item": "bulkyshulkies:black_missing_tex_shulker_box"
+  }
+}

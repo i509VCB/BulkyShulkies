@@ -1,0 +1,25 @@
+{
+  "type": "bulkyshulkies:upgrade",
+  "pattern": [
+    "ABA",
+    "#S#",
+    "#B#"
+  ],
+  "key": {
+  	"A": {
+	  "tag": "c:copper_block"
+	},
+  	"B": {
+	  "tag": "c:diamond_block"
+	},
+    "#": {
+      "tag": "c:platinum_ingot"
+    },
+    "S": {
+      "item": "bulkyshulkies:lime_diamond_shulker_box"
+    }
+  },
+  "result": {
+    "item": "bulkyshulkies:lime_platinum_shulker_box"
+  }
+}
