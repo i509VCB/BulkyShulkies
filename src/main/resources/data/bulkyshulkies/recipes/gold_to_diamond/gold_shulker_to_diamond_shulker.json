@@ -1,0 +1,19 @@
+{
+  "type": "bulkyshulkies:upgrade",
+  "pattern": [
+    "###",
+    "#S#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:diamond"
+    },
+    "S": {
+      "item": "bulkyshulkies:gold_shulker_box"
+    }
+  },
+  "result": {
+    "item": "bulkyshulkies:diamond_shulker_box"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "bulkyshulkies:upgrade",
+  "pattern": [
+    "#B#",
+    "#S#",
+    "#B#"
+  ],
+  "key": {
+  	"B": {
+	  "tag": "c:diamond_block"
+	},
+    "#": {
+      "tag": "c:obsidian"
+    },
+    "S": {
+      "item": "bulkyshulkies:gray_diamond_shulker_box"
+    }
+  },
+  "result": {
+    "item": "bulkyshulkies:gray_obsidian_shulker_box"
+  }
+}

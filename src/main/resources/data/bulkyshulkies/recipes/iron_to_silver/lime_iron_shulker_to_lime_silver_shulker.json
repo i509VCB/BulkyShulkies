@@ -1,0 +1,22 @@
+{
+  "type": "bulkyshulkies:upgrade",
+  "pattern": [
+    "###",
+    "#S#",
+    "#B#"
+  ],
+  "key": {
+  	"B": {
+	  "tag": "c:silver_block"
+	},
+    "#": {
+      "tag": "c:silver_ingot"
+    },
+    "S": {
+      "item": "bulkyshulkies:lime_iron_shulker_box"
+    }
+  },
+  "result": {
+    "item": "bulkyshulkies:lime_silver_shulker_box"
+  }
+}

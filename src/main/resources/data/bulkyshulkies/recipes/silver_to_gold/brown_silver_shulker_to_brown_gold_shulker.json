@@ -1,0 +1,25 @@
+{
+  "type": "bulkyshulkies:upgrade",
+  "pattern": [
+    "AAA",
+    "#S#",
+    "#B#"
+  ],
+  "key": {
+  	"A": {
+	  "tag": "c:iron_ingot"
+	},
+  	"B": {
+	  "tag": "c:gold_block"
+	},
+    "#": {
+      "tag": "c:gold_ingot"
+    },
+    "S": {
+      "item": "bulkyshulkies:brown_silver_shulker_box"
+    }
+  },
+  "result": {
+    "item": "bulkyshulkies:brown_gold_shulker_box"
+  }
+}

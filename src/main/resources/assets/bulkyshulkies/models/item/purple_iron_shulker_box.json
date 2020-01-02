@@ -1,6 +1,6 @@
 {
   "parent": "item/template_shulker_box",
   "textures": {
-    "particle": "bulkyshulkies:block/purple_iron_shulker_box"
+    "particle": "block/purple_shulker_box"
   }
 }

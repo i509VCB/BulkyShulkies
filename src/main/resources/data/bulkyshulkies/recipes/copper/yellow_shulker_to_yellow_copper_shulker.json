@@ -1,0 +1,19 @@
+{
+  "type": "bulkyshulkies:upgrade",
+  "pattern": [
+    "###",
+    "#S#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:copper_ingot"
+    },
+    "S": {
+      "item": "minecraft:yellow_shulker_box"
+    }
+  },
+  "result": {
+    "item": "bulkyshulkies:yellow_copper_shulker_box"
+  }
+}

@@ -47,18 +47,18 @@ public class GenericContainer13x7 extends Container {
 
 		for (int row = 0; row < 7; ++row) {
 			for (int column = 0; column < 13; ++column) {
-				this.addSlot(slotFactory.create(inventory, column + (row * 13), (column * 18) + 4, 18 + (row * 18)));
+				this.addSlot(slotFactory.create(inventory, column + (row * 13), (column * 18) + 8, 18 + (row * 18)));
 			}
 		}
 
 		for (int row = 0; row < 3; ++row) {
 			for (int column = 0; column < 9; ++column) {
-				this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 22 + 18 + (column * 18), 112 + row * 18 + 45));
+				this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 26 + 18 + (column * 18), 112 + row * 18 + 45));
 			}
 		}
 
 		for (int n = 0; n < 9; ++n) {
-			this.addSlot(new Slot(playerInventory, n, 22 + 18 + (n * 18), 170 + 45));
+			this.addSlot(new Slot(playerInventory, n, 26 + 18 + (n * 18), 170 + 45));
 		}
 	}
 

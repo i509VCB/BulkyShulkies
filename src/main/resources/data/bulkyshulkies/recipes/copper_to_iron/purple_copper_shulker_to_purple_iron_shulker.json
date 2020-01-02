@@ -1,0 +1,22 @@
+{
+  "type": "bulkyshulkies:upgrade",
+  "pattern": [
+    "###",
+    "#S#",
+    "#B#"
+  ],
+  "key": {
+  	"B": {
+	  "tag": "c:iron_block"
+	},
+    "#": {
+      "tag": "c:iron_ingot"
+    },
+    "S": {
+      "item": "bulkyshulkies:purple_copper_shulker_box"
+    }
+  },
+  "result": {
+    "item": "bulkyshulkies:purple_iron_shulker_box"
+  }
+}

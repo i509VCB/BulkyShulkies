@@ -72,6 +72,6 @@ public class Generic9x7Screen extends AbstractContainerScreen<GenericContainer9x
 		int i = (this.width - this.containerWidth) / 2;
 		int j = (this.height - this.containerHeight) / 2;
 		this.blit(i, j, 0, 0, this.containerWidth, 7 * 18 + 17);
-		this.blit(i, j + 7 * 18 + 17, 0, 126, this.containerWidth, 96);
+		this.blit(i, j + 7 * 18 /*+ 17*/, 0, 126, this.containerWidth, 114); // was 114, 96
 	}
 }

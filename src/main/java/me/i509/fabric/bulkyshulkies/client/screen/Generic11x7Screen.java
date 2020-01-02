@@ -46,7 +46,7 @@ public class Generic11x7Screen extends AbstractContainerScreen<GenericContainer1
 		super(container, playerInventory, name);
 		// containerHeight = 90 + (7 * 18); // 96
 		this.containerHeight = 132 + 7 * 18;
-		containerWidth += 28;
+		containerWidth += 36;
 	}
 
 	public static AbstractContainerScreen<GenericContainer11x7> createScreen(GenericContainer11x7 container) {
@@ -74,6 +74,6 @@ public class Generic11x7Screen extends AbstractContainerScreen<GenericContainer1
 		int i = (this.width - this.containerWidth) / 2;
 		int j = (this.height - this.containerHeight) / 2;
 		this.blit(i, j, 0, 0, this.containerWidth, 7 * 18 + 17);
-		this.blit(i, j + 7 * 18 + 17, 0, 126, this.containerWidth, 96);
+		this.blit(i, j + 7 * 18, 0, 126, this.containerWidth, 114);
 	}
 }
