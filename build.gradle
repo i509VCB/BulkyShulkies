@@ -66,7 +66,7 @@ dependencies {
 
 	modImplementation "com.misterpemodder:shulkerboxtooltip:${project.shulkerboxtooltip_version}"
 
-	// Cotton Resources -- Uncomment when 1.15 is pushed
+	// Cotton Resources -- Uncomment when 1.15 is pushed, this should be modRuntime due to LibCD handling the tags.
 	// modImplementation ("io.github.cottonmc:cotton-resources:${cotton_resources_version}") { // We use our own version of modmenu and REI
 	// exclude module: "fabric-api"
 	// exclude module: "RoughlyEnoughItems"
@@ -87,6 +87,9 @@ dependencies {
 
 	// Config
 	implementation "org.spongepowered:configurate-hocon:${project.configurate_version}"
+	include "org.spongepowered:configurate-core:${project.configurate_version}"
+	include "org.spongepowered:configurate-hocon:${project.configurate_version}"
+	include "com.typesafe:config:1.3.1"
 
 	// Annotations
 	implementation group: 'org.jetbrains', name: 'annotations', version: "${project.jetbrains_annotations}"
