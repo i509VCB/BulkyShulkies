@@ -3,6 +3,7 @@
   "package": "me.i509.fabric.bulkyshulkies.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ShapedRecipeAccessor",
     "ShulkerBoxBlockEntityMixin",
     "ShulkerBoxSlotMixin",
     "LivingEntityMixin",

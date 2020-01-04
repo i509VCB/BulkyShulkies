@@ -36,6 +36,7 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
+import me.i509.fabric.bulkyshulkies.mixin.ShapedRecipeAccessor;
 
 public class AbstractShulkerBoxUpgradeRecipe extends ShapedRecipe {
 	public AbstractShulkerBoxUpgradeRecipe(Identifier id, String group, int width, int height, DefaultedList<Ingredient> ingredients, ItemStack output) {
@@ -43,7 +44,7 @@ public class AbstractShulkerBoxUpgradeRecipe extends ShapedRecipe {
 	}
 
 	public AbstractShulkerBoxUpgradeRecipe(ShapedRecipe handle) {
-		this(handle.getId(), handle.getGroup(), handle.getWidth(), handle.getHeight(), handle.getPreviewInputs(), handle.getOutput());
+		this(handle.getId(), ((ShapedRecipeAccessor) handle).accessor$getGroup(), handle.getWidth(), handle.getHeight(), handle.getPreviewInputs(), handle.getOutput());
 	}
 
 	@Override

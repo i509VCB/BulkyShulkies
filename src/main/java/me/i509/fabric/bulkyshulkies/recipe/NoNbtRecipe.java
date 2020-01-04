@@ -33,6 +33,8 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
+import me.i509.fabric.bulkyshulkies.mixin.ShapedRecipeAccessor;
+
 public class NoNbtRecipe extends ShapedRecipe {
 	private final int width;
 	private final int height;
@@ -46,7 +48,7 @@ public class NoNbtRecipe extends ShapedRecipe {
 	}
 
 	public NoNbtRecipe(ShapedRecipe handle) {
-		this(handle.getId(), handle.getGroup(), handle.getWidth(), handle.getHeight(), handle.getPreviewInputs(), handle.getOutput());
+		this(handle.getId(), ((ShapedRecipeAccessor) handle).accessor$getGroup(), handle.getWidth(), handle.getHeight(), handle.getPreviewInputs(), handle.getOutput());
 	}
 
 	public boolean matches(CraftingInventory craftingInventory, World world) {
