@@ -253,6 +253,6 @@ public class ShulkerBlockEntities {
 	}
 
 	private static <B extends BlockEntity> BlockEntityType<B> register(String name, Supplier<B> supplier, Block... supportedBlocks) {
-		return Registry.register(Registry.BLOCK_ENTITY, BulkyShulkies.id(name), BlockEntityType.Builder.create(supplier, supportedBlocks).build(null)); // TODO Replace null when DataFixers are done.
+		return Registry.register(Registry.BLOCK_ENTITY_TYPE, BulkyShulkies.id(name), BlockEntityType.Builder.create(supplier, supportedBlocks).build(null)); // TODO Replace null when DataFixers are done.
 	}
 }

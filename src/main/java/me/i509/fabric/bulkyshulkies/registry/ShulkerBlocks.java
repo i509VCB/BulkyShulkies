@@ -32,6 +32,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tools.FabricToolTags;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
@@ -48,9 +49,9 @@ import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
 
 public class ShulkerBlocks {
 	// Dynamic bounds are VERY IMPORTANT. Otherwise your box will make entities suffocate since the game's cached block is exactly 1 full cube, so collisions act odd for this reason without the dynamic bounds.
-	public static final Block.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).dynamicBounds().nonOpaque().build();
-	public static final Block.Settings OBSIDIAN_SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().build();
-	public static final Block.Settings ENDER_SLAB_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().lightLevel(7).build();
+	public static final Block.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque().build();
+	public static final Block.Settings OBSIDIAN_SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().build();
+	public static final Block.Settings ENDER_SLAB_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().lightLevel(7).build();
 
 	/*
 	 * ========================

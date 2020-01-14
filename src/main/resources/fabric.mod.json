@@ -56,12 +56,12 @@
   ],
 
   "depends": {
+    "libcd": "*",
     "fabricloader": ">=0.4.0",
     "fabric": "*",
     "minecraft": "1.15.x"
   },
   "suggests": {
-    "libcd": "*",
     "cotton-resources": ">=1.4.1",
     "shulkerboxtooltip": ">=1.4.3"
   },
