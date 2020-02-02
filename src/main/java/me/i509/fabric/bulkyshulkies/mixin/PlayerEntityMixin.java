@@ -34,27 +34,27 @@ import net.minecraft.nbt.CompoundTag;
 
 import net.fabricmc.fabric.api.util.NbtType;
 
-import me.i509.fabric.bulkyshulkies.api.player.EnderSlabAccess;
+import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
 import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
 
 @Mixin(PlayerEntity.class)
-public class PlayerEntityMixin implements EnderSlabAccess {
-	protected EnderSlabInventory enderSlabInventory = new EnderSlabInventory();
+public class PlayerEntityMixin implements EnderSlabBridge {
+	protected EnderSlabInventory bulky$enderSlabInventory = new EnderSlabInventory();
 
 	@Override
-	public EnderSlabInventory getEnderSlabInventory() {
-		return enderSlabInventory;
+	public EnderSlabInventory bridge$getEnderSlabInventory() {
+		return bulky$enderSlabInventory;
 	}
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerAbilities;deserialize(Lnet/minecraft/nbt/CompoundTag;)V"), method = "readCustomDataFromTag")
 	private void onReadCustomData(CompoundTag tag, CallbackInfo ci) {
 		if (tag.contains("EnderSlabItems", 9)) {
-			this.enderSlabInventory.readTags(tag.getList("EnderSlabItems", NbtType.COMPOUND));
+			this.bulky$enderSlabInventory.readTags(tag.getList("EnderSlabItems", NbtType.COMPOUND));
 		}
 	}
 
 	@Inject(at = @At("HEAD"), method = "writeCustomDataToTag")
 	private void onWriteCustomData(CompoundTag tag, CallbackInfo ci) {
-		tag.put("EnderSlabItems", this.enderSlabInventory.getTags());
+		tag.put("EnderSlabItems", this.bulky$enderSlabInventory.getTags());
 	}
 }

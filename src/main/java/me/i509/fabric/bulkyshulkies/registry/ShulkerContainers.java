@@ -35,7 +35,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.player.EnderSlabAccess;
+import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
 import me.i509.fabric.bulkyshulkies.container.GenericContainer9x7;
 import me.i509.fabric.bulkyshulkies.container.GenericContainer11x7;
@@ -85,7 +85,7 @@ public class ShulkerContainers {
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
 
-		EnderSlabInventory slab = ((EnderSlabAccess) player).getEnderSlabInventory();
+		EnderSlabInventory slab = ((EnderSlabBridge) player).bridge$getEnderSlabInventory();
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		slab.setCurrentBlockEntity(blockEntity instanceof EnderSlabBoxBE ? (EnderSlabBoxBE) blockEntity : null);
 

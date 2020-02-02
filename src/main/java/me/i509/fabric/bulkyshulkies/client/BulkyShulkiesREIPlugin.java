@@ -25,12 +25,21 @@
 package me.i509.fabric.bulkyshulkies.client;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.shedaniel.math.api.Rectangle;
 import me.shedaniel.rei.api.DisplayHelper;
+import me.shedaniel.rei.api.EntryStack;
+import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
+import me.shedaniel.rei.plugin.DefaultPlugin;
+import me.shedaniel.rei.plugin.information.DefaultInformationDisplay;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.item.Item;
+import net.minecraft.tag.ItemTags;
+import net.minecraft.tag.Tag;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
 import net.fabricmc.api.EnvType;
@@ -40,9 +49,12 @@ import net.fabricmc.loader.util.version.VersionParsingException;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 @Environment(EnvType.CLIENT)
 public class BulkyShulkiesREIPlugin implements REIPluginV0 {
+	private static List<EntryStack> entryList;
+
 	@Override
 	public SemanticVersion getMinimumVersion() throws VersionParsingException {
 		return SemanticVersion.parse("3.0-pre");
@@ -65,5 +77,28 @@ public class BulkyShulkiesREIPlugin implements REIPluginV0 {
 
 			return rv;
 		});
+	}
+
+	@Override
+	public void registerRecipeDisplays(RecipeHelper recipeHelper) {
+		DefaultInformationDisplay display = DefaultInformationDisplay.createFromEntries(createAllEntries(), new TranslatableText("bulkyshulkies.rei.info")).line(new TranslatableText("bulkyshulkies.rei.info.nbt"));
+		DefaultPlugin.registerInfoDisplay(display);
+	}
+
+	private static List<EntryStack> createAllEntries() {
+		if (entryList == null) {
+			entryList = new ArrayList<>();
+			Tag<Item> itemTags = ItemTags.getContainer().get(BulkyShulkies.id("slab_shulker_boxes"));
+
+			if (itemTags != null) {
+				itemTags.values().forEach(item -> entryList.add(EntryStack.create(item)));
+			} else {
+				BulkyShulkies.getInstance().getLogger().error("Could not find 'slab_shulker_boxes' tag to generate REI info for.");
+			}
+
+			entryList.add(EntryStack.create(ShulkerBlocks.ENDER_SLAB_BOX));
+		}
+
+		return entryList;
 	}
 }

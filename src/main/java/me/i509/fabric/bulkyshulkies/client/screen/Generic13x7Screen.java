@@ -27,7 +27,7 @@ package me.i509.fabric.bulkyshulkies.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
+import net.minecraft.client.gui.screen.ingame.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.Identifier;
 import net.minecraft.text.Text;
@@ -39,7 +39,7 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.container.GenericContainer13x7;
 
 @Environment(EnvType.CLIENT)
-public class Generic13x7Screen extends AbstractContainerScreen<GenericContainer13x7> {
+public class Generic13x7Screen extends ContainerScreen<GenericContainer13x7> {
 	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_13x7.png");
 
 	public Generic13x7Screen(GenericContainer13x7 container, PlayerInventory playerInventory, Text name) {
@@ -49,7 +49,7 @@ public class Generic13x7Screen extends AbstractContainerScreen<GenericContainer1
 		containerWidth += 36 + 36;
 	}
 
-	public static AbstractContainerScreen<GenericContainer13x7> createScreen(GenericContainer13x7 container) {
+	public static ContainerScreen<GenericContainer13x7> createScreen(GenericContainer13x7 container) {
 		return new Generic13x7Screen(container, MinecraftClient.getInstance().player.inventory, container.getDisplayName());
 	}
 

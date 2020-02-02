@@ -1,0 +1,25 @@
+{
+  "type": "bulkyshulkies:no_nbt",
+  "pattern": [
+    "OEO",
+    "OSO",
+    "ODO"
+  ],
+  "key": {
+    "S": {
+      "tag": "bulkyshulkies:slab_shulker_boxes"
+    },
+    "E": {
+      "item": "ender_eye"
+    },
+    "O": {
+      "item": "obsidian"
+    },
+    "D": {
+      "item": "purple_dye"
+    }
+  },
+  "result": {
+    "item": "bulkyshulkies:ender_slab"
+  }
+}

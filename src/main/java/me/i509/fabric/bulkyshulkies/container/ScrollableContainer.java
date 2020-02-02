@@ -138,7 +138,7 @@ public class ScrollableContainer extends Container {
 		}
 
 		for (Integer slotID : unsortedToSortedSlotMap) {
-			Slot slot = slotList.get(slotID);
+			Slot slot = slots.get(slotID);
 			int y = (index / 9) - offset;
 			//slot.xPosition = 8 + 18 * (index % 9);
 			//slot.yPosition = (y >= rows || y < 0) ? -2000 : 18 + 18 * y;
@@ -154,8 +154,8 @@ public class ScrollableContainer extends Container {
 			return 0;
 		}
 
-		ItemStack stack_a = slotList.get(a).getStack();
-		ItemStack stack_b = slotList.get(b).getStack();
+		ItemStack stack_a = slots.get(a).getStack();
+		ItemStack stack_b = slots.get(b).getStack();
 
 		if (stack_a.isEmpty() && !stack_b.isEmpty()) {
 			return 1;
@@ -175,14 +175,14 @@ public class ScrollableContainer extends Container {
 	@Override
 	public ItemStack transferSlot(PlayerEntity player, int slotIndex) {
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = slotList.get(slotIndex);
+		Slot slot = slots.get(slotIndex);
 
 		if (slot != null && slot.hasStack()) {
 			ItemStack slotStack = slot.getStack();
 			stack = slotStack.copy();
 
 			if (slotIndex < inventory.getInvSize()) {
-				if (!insertItem(slotStack, inventory.getInvSize(), slotList.size(), true)) {
+				if (!insertItem(slotStack, inventory.getInvSize(), slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (!insertItem(slotStack, 0, inventory.getInvSize(), false)) {

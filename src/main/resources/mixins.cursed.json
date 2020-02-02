@@ -8,7 +8,8 @@
     "ShulkerBoxSlotMixin",
     "LivingEntityMixin",
     "SlotMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "ServerPlayerEntityMixin"
   ],
   "client": [
     "client.TexturedRenderLayersMixin",

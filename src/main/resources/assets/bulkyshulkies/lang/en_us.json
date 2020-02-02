@@ -192,5 +192,8 @@
   "block.bulkyshulkies.red_missing_tex_shulker_box": "Red Missing Texture Shulker Box",
   "block.bulkyshulkies.black_missing_tex_shulker_box": "Black Missing Texture Shulker Box",
 
-  "block.bulkyshulkies.ender_slab": "Ender Slab"
+  "block.bulkyshulkies.ender_slab": "Ender Slab",
+
+  "bulkyshulkies.rei.info": "Bulky Shulkies",
+  "bulkyshulkies.rei.info.nbt": "Note for these recipes, the shulker boxes must be empty."
 }

@@ -23,7 +23,7 @@ package me.i509.fabric.bulkyshulkies.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
+import net.minecraft.client.gui.screen.ingame.ContainerScreen;
 import net.minecraft.client.gui.screen.ingame.ContainerProvider;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
@@ -42,7 +42,7 @@ import me.i509.fabric.bulkyshulkies.container.ScrollableContainer;
  * Credit: NinjaPhenix.
  */
 @Environment(EnvType.CLIENT)
-public class ScrollableScreen extends AbstractContainerScreen<ScrollableContainer> implements ContainerProvider<ScrollableContainer> {
+public class ScrollableScreen extends ContainerScreen<ScrollableContainer> implements ContainerProvider<ScrollableContainer> {
 	private static final Identifier BASE_TEXTURE = new Identifier("textures/gui/container/generic_54.png");
 	private static final Identifier WIDGETS_TEXTURE = BulkyShulkies.id("textures/gui/container/widgets.png");
 	private final int displayedRows;

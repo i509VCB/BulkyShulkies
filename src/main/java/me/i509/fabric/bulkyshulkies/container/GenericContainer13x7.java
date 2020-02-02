@@ -69,14 +69,14 @@ public class GenericContainer13x7 extends Container {
 
 	public ItemStack transferSlot(PlayerEntity player, int invSlot) {
 		ItemStack itemStack = ItemStack.EMPTY;
-		Slot slot = this.slotList.get(invSlot);
+		Slot slot = this.slots.get(invSlot);
 
 		if (slot != null && slot.hasStack()) {
 			ItemStack itemStack2 = slot.getStack();
 			itemStack = itemStack2.copy();
 
 			if (invSlot < 91) {
-				if (!this.insertItem(itemStack2, 7 * 13, this.slotList.size(), true)) {
+				if (!this.insertItem(itemStack2, 7 * 13, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (!this.insertItem(itemStack2, 0, 91, false)) {

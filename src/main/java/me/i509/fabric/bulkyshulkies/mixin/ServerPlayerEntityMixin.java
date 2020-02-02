@@ -22,16 +22,26 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.api.player;
+package me.i509.fabric.bulkyshulkies.mixin;
 
-import net.minecraft.entity.player.PlayerEntity;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
+import net.minecraft.server.network.ServerPlayerEntity;
 
-public interface EnderSlabAccess {
-	EnderSlabInventory getEnderSlabInventory();
+import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
 
-	static EnderSlabAccess access(PlayerEntity playerEntity) {
-		return (EnderSlabAccess) playerEntity;
+@Mixin(ServerPlayerEntity.class)
+public abstract class ServerPlayerEntityMixin extends PlayerEntityMixin {
+	/**
+	 * @author i509vcb
+	 * @reason When a player dies, we have to copy the ender slab inventory or the player will lose their ender slab inventory.
+	 */
+	@Inject(at = @At("TAIL"), method = "copyFrom")
+	private void copyEnderSlabData(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
+		EnderSlabBridge oldAccess = (EnderSlabBridge) oldPlayer;
+		this.bulky$enderSlabInventory = oldAccess.bridge$getEnderSlabInventory();
 	}
 }
