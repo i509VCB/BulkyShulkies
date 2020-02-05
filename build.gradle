@@ -74,7 +74,7 @@ dependencies {
 	//include "io.github.cottonmc:cotton-resources:${cotton_resources_version}" // JIJ time
 
 	// Optional Mods - We have this for looking up items and verifying recipes.
-	modImplementation ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
+	modCompileOnly ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
 		exclude(group : "net.fabricmc.fabric-api")
 	}
 

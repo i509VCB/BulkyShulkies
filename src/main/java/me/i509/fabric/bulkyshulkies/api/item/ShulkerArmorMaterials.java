@@ -87,4 +87,9 @@ public enum ShulkerArmorMaterials implements ArmorMaterial {
 	public float getToughness() {
 		return this.toughness;
 	}
+
+	@Override // kb res
+	public float method_24355() {
+		return 0.0F;
+	}
 }
