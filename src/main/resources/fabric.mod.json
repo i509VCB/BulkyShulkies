@@ -58,8 +58,7 @@
   "depends": {
     "libcd": "*",
     "fabricloader": ">=0.4.0",
-    "fabric": "*",
-    "minecraft": "1.16.x"
+    "fabric": "*"
   },
   "suggests": {
     "cotton-resources": ">=1.4.1",
