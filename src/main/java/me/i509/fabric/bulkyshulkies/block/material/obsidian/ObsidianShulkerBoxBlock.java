@@ -38,12 +38,12 @@ import net.minecraft.world.BlockView;
 
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
-import me.i509.fabric.bulkyshulkies.api.block.Abstract1x1ShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.Facing1x1ShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
-public class ObsidianShulkerBoxBlock extends Abstract1x1ShulkerBoxBlock {
+public class ObsidianShulkerBoxBlock extends Facing1x1ShulkerBoxBlock {
 	public ObsidianShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
 		super(settings, ShulkerBoxConstants.OBSIDIAN_SLOT_COUNT, color);
 	}

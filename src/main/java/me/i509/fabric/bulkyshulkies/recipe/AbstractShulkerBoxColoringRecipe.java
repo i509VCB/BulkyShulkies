@@ -38,7 +38,7 @@ import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
+import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
 
 public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 	public AbstractShulkerBoxColoringRecipe(Identifier identifier) {
@@ -53,7 +53,7 @@ public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 			ItemStack itemStack = craftingInventory.getInvStack(k);
 
 			if (!itemStack.isEmpty()) {
-				if (Block.getBlockFromItem(itemStack.getItem()) instanceof BaseShulkerBlock) {
+				if (Block.getBlockFromItem(itemStack.getItem()) instanceof BasicShulkerBlock) {
 					++i;
 				} else {
 					if (!(itemStack.getItem() instanceof DyeItem)) {
@@ -82,7 +82,7 @@ public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 			if (!selectedStack.isEmpty()) {
 				Item item = selectedStack.getItem();
 
-				if (Block.getBlockFromItem(item) instanceof BaseShulkerBlock) {
+				if (Block.getBlockFromItem(item) instanceof BasicShulkerBlock) {
 					itemStack = selectedStack;
 				} else if (item instanceof DyeItem) {
 					dyeItem = (DyeItem) item;
@@ -90,7 +90,7 @@ public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 			}
 		}
 
-		ItemStack newColor = ((BaseShulkerBlock) Block.getBlockFromItem(itemStack.getItem())).getItemStack(dyeItem.getColor());
+		ItemStack newColor = ((BasicShulkerBlock) Block.getBlockFromItem(itemStack.getItem())).getItemStack(dyeItem.getColor());
 
 		if (itemStack.hasTag()) {
 			newColor.setTag(itemStack.getTag().copy()); // Here is where we transfer all the NBT data.

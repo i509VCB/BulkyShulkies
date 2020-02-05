@@ -22,44 +22,43 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.api.block;
+package me.i509.fabric.bulkyshulkies.block.cursed.stair;
 
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DefaultedList;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShapes;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 
-public abstract class Abstract1X1ShulkerBoxBE extends AbstractShulkerBoxBE {
-	protected Abstract1X1ShulkerBoxBE(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
-		super(blockEntityType, maxAvailableSlot, color);
-		this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
+public class StairShulkerBoxBE extends AbstractShulkerBoxBE {
+	public StairShulkerBoxBE(BlockEntityType<?> temp, @Nullable DyeColor color) {
+		super(temp /*ShulkerBlockEntities.STAIR*/, ShulkerBoxConstants.STAIR_SLOT_COUNT, color);
+	}
+
+	@Override
+	protected Text getContainerName() {
+		return new TranslatableText("container.stairShulkerBox");
 	}
 
 	@Override
 	public Box getBoundingBox(BlockState blockState) {
-		return this.getBoundingBox(blockState.get(BaseShulkerBlock.FACING));
+		return null;
 	}
 
 	@Override
-	public Box getBoundingBox(Direction direction) {
-		float f = this.getAnimationProgress(1.0F);
-		return VoxelShapes.fullCube()
-				.getBoundingBox()
-				.stretch(f * 0.5F * direction.getOffsetX(), f * 0.5F * direction.getOffsetY(), f * 0.5F * direction.getOffsetZ());
+	public Box getBoundingBox(Direction facing) {
+		return null;
 	}
 
 	@Override
 	public Box getCollisionBox(Direction facing) {
-		Direction opposite = facing.getOpposite();
-		return this.getBoundingBox(facing).shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
+		return null;
 	}
 }

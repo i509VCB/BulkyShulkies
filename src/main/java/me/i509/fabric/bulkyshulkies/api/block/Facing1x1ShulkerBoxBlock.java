@@ -38,14 +38,13 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlockEntity;
 
 /**
  * Represents a shulker box which is 1x1x1 (when closed).
  */
-public abstract class Abstract1x1ShulkerBoxBlock extends AbstractShulkerBoxBlock {
-	protected Abstract1x1ShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
+public abstract class Facing1x1ShulkerBoxBlock extends FacingShulkerBoxBlock {
+	protected Facing1x1ShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
 		super(settings, slotCount, color);
 	}
 
@@ -67,6 +66,6 @@ public abstract class Abstract1x1ShulkerBoxBlock extends AbstractShulkerBoxBlock
 	@Override
 	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
 		BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
-		return blockEntity instanceof BaseShulkerBlockEntity ? VoxelShapes.cuboid(((BaseShulkerBlockEntity) blockEntity).getBoundingBox(blockState)) : VoxelShapes.fullCube();
+		return blockEntity instanceof BasicShulkerBlockEntity ? VoxelShapes.cuboid(((BasicShulkerBlockEntity) blockEntity).getBoundingBox(blockState)) : VoxelShapes.fullCube();
 	}
 }

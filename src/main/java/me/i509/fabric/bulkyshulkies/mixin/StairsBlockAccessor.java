@@ -22,29 +22,21 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.block.material.iron;
+package me.i509.fabric.bulkyshulkies.mixin;
 
-import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
 
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.DyeColor;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.enums.StairShape;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 
-import me.i509.fabric.bulkyshulkies.api.block.Facing1X1ShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
-
-public class IronShulkerBoxBE extends Facing1X1ShulkerBoxBE {
-	public IronShulkerBoxBE(@Nullable DyeColor color) {
-		super(ShulkerBlockEntities.IRON_SHULKER_BOX, ShulkerBoxConstants.IRON_SLOT_COUNT, color);
-	}
-
-	public IronShulkerBoxBE() {
-		this(null);
-	}
-
-	@Override
-	protected Text getContainerName() {
-		return new TranslatableText("container.ironShulkerBox");
+@Mixin(StairsBlock.class)
+public interface StairsBlockAccessor {
+	@Invoker("method_10675")
+	static StairShape method_10675(BlockState blockState, BlockView blockView, BlockPos blockPos) {
+		throw new AssertionError("Untransformed Accessor!");
 	}
 }

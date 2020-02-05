@@ -41,13 +41,13 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.block.Abstract1X1ShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.api.block.Facing1X1ShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.api.event.MagnetismCollectionCallback;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
-public class PlatinumShulkerBoxBE extends Abstract1X1ShulkerBoxBE {
+public class PlatinumShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 	private int lastMagnetTick = 0;
 
 	public PlatinumShulkerBoxBE(@Nullable DyeColor color) {

@@ -54,7 +54,7 @@ import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.loader.api.FabricLoader;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
+import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
 import me.i509.fabric.bulkyshulkies.config.MainConfig;
 
@@ -74,7 +74,7 @@ public class BulkyShulkies {
 
 	private BulkyShulkies() throws IOException {
 		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
-		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof BaseShulkerBlock);
+		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof BasicShulkerBlock);
 
 		Path configLocation = FabricLoader.getInstance().getConfigDirectory().toPath().resolve("bulkyshulkies");
 		Path configFile = configLocation.resolve("bulkyshulkies.conf");

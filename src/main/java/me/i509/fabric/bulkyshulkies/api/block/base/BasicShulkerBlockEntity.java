@@ -37,9 +37,9 @@ import net.minecraft.util.math.Direction;
  *
  * <p>It is recommended to use {@link AbstractShulkerBoxBE} instead, which will handle most of the boilerplate from container based storage blocks.
  */
-public interface BaseShulkerBlockEntity {
+public interface BasicShulkerBlockEntity {
 	/**
-	 * Gets the bounding box of the BlockEntity. This will redirect the call to after getting the facing direction from the state {@link BaseShulkerBlockEntity#getBoundingBox(Direction)}.
+	 * Gets the bounding box of the BlockEntity. This will redirect the call to after getting the facing direction from the state {@link BasicShulkerBlockEntity#getBoundingBox(Direction)}.
 	 *
 	 * @param blockState The blockState of the BlockEntity.
 	 * @return The bounding box of the block entity.

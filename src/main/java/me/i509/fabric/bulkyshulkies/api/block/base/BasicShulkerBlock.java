@@ -43,7 +43,7 @@ import net.minecraft.world.BlockView;
  *
  * <p>It is recommended to use {@link AbstractShulkerBoxBlock} instead, which will handle most of the boilerplate from container based storage blocks.
  */
-public interface BaseShulkerBlock {
+public interface BasicShulkerBlock {
 	DirectionProperty FACING = Properties.FACING;
 
 	/**

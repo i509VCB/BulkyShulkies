@@ -22,29 +22,24 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.block.material.iron;
+package me.i509.fabric.bulkyshulkies.mixin;
 
-import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.DyeColor;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.StairsBlock;
 
-import me.i509.fabric.bulkyshulkies.api.block.Facing1X1ShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock;
 
-public class IronShulkerBoxBE extends Facing1X1ShulkerBoxBE {
-	public IronShulkerBoxBE(@Nullable DyeColor color) {
-		super(ShulkerBlockEntities.IRON_SHULKER_BOX, ShulkerBoxConstants.IRON_SLOT_COUNT, color);
-	}
-
-	public IronShulkerBoxBE() {
-		this(null);
-	}
-
-	@Override
-	protected Text getContainerName() {
-		return new TranslatableText("container.ironShulkerBox");
+@Mixin(StairsBlock.class)
+public abstract class StairsBlockMixin {
+	@Inject(at = @At("HEAD"), method = "isStairs", cancellable = true)
+	private static void bulky_isStairs(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+		if (state.getBlock() instanceof StairShulkerBoxBlock) {
+			cir.setReturnValue(true);
+		}
 	}
 }

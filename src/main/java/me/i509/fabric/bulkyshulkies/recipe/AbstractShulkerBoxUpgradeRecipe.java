@@ -35,7 +35,7 @@ import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
+import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
 import me.i509.fabric.bulkyshulkies.mixin.ShapedRecipeAccessor;
 
 public class AbstractShulkerBoxUpgradeRecipe extends ShapedRecipe {
@@ -57,7 +57,7 @@ public class AbstractShulkerBoxUpgradeRecipe extends ShapedRecipe {
 			if (!selectedStack.isEmpty()) {
 				Item item = selectedStack.getItem();
 
-				if (Block.getBlockFromItem(item) instanceof BaseShulkerBlock || Block.getBlockFromItem(item) instanceof ShulkerBoxBlock) {
+				if (Block.getBlockFromItem(item) instanceof BasicShulkerBlock || Block.getBlockFromItem(item) instanceof ShulkerBoxBlock) {
 					reference = selectedStack;
 					break;
 				}

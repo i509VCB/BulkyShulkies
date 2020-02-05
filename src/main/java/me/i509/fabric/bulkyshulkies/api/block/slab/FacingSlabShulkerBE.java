@@ -40,19 +40,20 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
+import me.i509.fabric.bulkyshulkies.api.block.FacingShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.api.block.base.BaseShulkerBlock;
+import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
 
 // TODO Change push speed as not to make it as jaggedly hard when being moved.
-public abstract class AbstractCursedShulkerSlabBE extends AbstractShulkerBoxBE {
-	protected AbstractCursedShulkerSlabBE(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
+public abstract class FacingSlabShulkerBE extends AbstractShulkerBoxBE {
+	protected FacingSlabShulkerBE(BlockEntityType<?> blockEntityType, int maxAvailableSlot, @Nullable DyeColor color) {
 		super(blockEntityType, maxAvailableSlot, color);
 		this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
 	}
 
 	@Override
 	public Box getBoundingBox(BlockState blockState) {
-		return this.getBoundingBox(blockState.get(BaseShulkerBlock.FACING));
+		return this.getBoundingBox(blockState.get(FacingShulkerBoxBlock.FACING));
 	}
 
 	public Box getBoundingBox(Direction openDirection) {
@@ -75,8 +76,8 @@ public abstract class AbstractCursedShulkerSlabBE extends AbstractShulkerBoxBE {
 	protected void pushEntities() {
 		BlockState blockState = this.world.getBlockState(this.getPos());
 
-		if (blockState.getBlock() instanceof BaseShulkerBlock) {
-			Direction direction = blockState.get(BaseShulkerBlock.FACING);
+		if (blockState.getBlock() instanceof BasicShulkerBlock) {
+			Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
 			Box box = this.getCollisionBox(direction).offset(this.pos);
 			List<Entity> list = this.world.getEntities(null, box);
 

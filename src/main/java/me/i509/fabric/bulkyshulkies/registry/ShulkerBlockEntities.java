@@ -234,6 +234,28 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_MISSING_TEX_SHULKER_BOX
 	);
 
+	/*
+	public static final BlockEntityType<?> STAIR = register("stair_shulker_box",
+			StairShulkerBoxBE::new,
+			ShulkerBlocks.STAIR_SHULKER_BOX,
+			ShulkerBlocks.WHITE_STAIR_SHULKER_BOX,
+			ShulkerBlocks.ORANGE_STAIR_SHULKER_BOX,
+			ShulkerBlocks.MAGENTA_STAIR_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_BLUE_STAIR_SHULKER_BOX,
+			ShulkerBlocks.YELLOW_STAIR_SHULKER_BOX,
+			ShulkerBlocks.LIME_STAIR_SHULKER_BOX,
+			ShulkerBlocks.PINK_STAIR_SHULKER_BOX,
+			ShulkerBlocks.GRAY_STAIR_SHULKER_BOX,
+			ShulkerBlocks.LIGHT_GRAY_STAIR_SHULKER_BOX,
+			ShulkerBlocks.CYAN_STAIR_SHULKER_BOX,
+			ShulkerBlocks.PURPLE_STAIR_SHULKER_BOX,
+			ShulkerBlocks.BLUE_STAIR_SHULKER_BOX,
+			ShulkerBlocks.BROWN_STAIR_SHULKER_BOX,
+			ShulkerBlocks.GREEN_STAIR_SHULKER_BOX,
+			ShulkerBlocks.RED_STAIR_SHULKER_BOX,
+			ShulkerBlocks.BLACK_STAIR_SHULKER_BOX
+	);*/
+
 	public static final BlockEntityType<EnderSlabBoxBE> ENDER_SLAB = register("ender_slab",
 			EnderSlabBoxBE::new,
 			ShulkerBlocks.ENDER_SLAB_BOX

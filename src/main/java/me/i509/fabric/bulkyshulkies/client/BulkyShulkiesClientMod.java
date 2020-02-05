@@ -72,8 +72,8 @@ import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBE;
 import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
-import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.ShulkerBERenderer1x1;
-import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.SlabShulkerBoxBERenderer;
+import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.Facing1x1ShulkerBERenderer;
+import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.FacingSlabShulkerBoxBERenderer;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic9x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic11x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic13x7Screen;
@@ -128,16 +128,16 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, ScrollableScreen::createScreen);
 		ScreenProviderRegistry.INSTANCE.registerFactory(ContainerKeys.ENDER_SLAB, ScrollableScreen::createScreen);
 
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, ber -> new ShulkerBERenderer1x1<>(ber, ShulkerBoxKeys.COPPER));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, ber -> new ShulkerBERenderer1x1<>(ber, ShulkerBoxKeys.IRON));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SILVER_SHULKER_BOX, ber -> new ShulkerBERenderer1x1<>(ber, ShulkerBoxKeys.SILVER));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.GOLD_SHULKER_BOX, ber -> new ShulkerBERenderer1x1<>(ber, ShulkerBoxKeys.GOLD));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.DIAMOND_SHULKER_BOX, ber -> new ShulkerBERenderer1x1<>(ber, ShulkerBoxKeys.DIAMOND));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.OBSIDIAN_SHULKER_BOX, ber -> new ShulkerBERenderer1x1<>(ber, ShulkerBoxKeys.OBSIDIAN));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.PLATINUM_SHULKER_BOX, ber -> new ShulkerBERenderer1x1<>(ber, ShulkerBoxKeys.PLATINUM));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.MISSING_TEX, ber -> new ShulkerBERenderer1x1<>(ber, ShulkerBoxKeys.MISSING_TEX));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.ENDER_SLAB, ber -> new SlabShulkerBoxBERenderer<>(ber, ShulkerBoxKeys.ENDER_SLAB));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SLAB_SHULKER_BOX, ber -> new SlabShulkerBoxBERenderer<>(ber, ShulkerBoxKeys.SLAB));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, ber -> new Facing1x1ShulkerBERenderer<>(ber, ShulkerBoxKeys.COPPER));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, ber -> new Facing1x1ShulkerBERenderer<>(ber, ShulkerBoxKeys.IRON));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SILVER_SHULKER_BOX, ber -> new Facing1x1ShulkerBERenderer<>(ber, ShulkerBoxKeys.SILVER));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.GOLD_SHULKER_BOX, ber -> new Facing1x1ShulkerBERenderer<>(ber, ShulkerBoxKeys.GOLD));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.DIAMOND_SHULKER_BOX, ber -> new Facing1x1ShulkerBERenderer<>(ber, ShulkerBoxKeys.DIAMOND));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.OBSIDIAN_SHULKER_BOX, ber -> new Facing1x1ShulkerBERenderer<>(ber, ShulkerBoxKeys.OBSIDIAN));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.PLATINUM_SHULKER_BOX, ber -> new Facing1x1ShulkerBERenderer<>(ber, ShulkerBoxKeys.PLATINUM));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.MISSING_TEX, ber -> new Facing1x1ShulkerBERenderer<>(ber, ShulkerBoxKeys.MISSING_TEX));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.ENDER_SLAB, ber -> new FacingSlabShulkerBoxBERenderer<>(ber, ShulkerBoxKeys.ENDER_SLAB));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SLAB_SHULKER_BOX, ber -> new FacingSlabShulkerBoxBERenderer<>(ber, ShulkerBoxKeys.SLAB));
 		ClientSpriteRegistryCallback.event(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE).register(BulkyShulkiesClientMod::registerSprites);
 	}
 

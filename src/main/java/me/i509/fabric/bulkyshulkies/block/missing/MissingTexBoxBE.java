@@ -30,11 +30,11 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 
-import me.i509.fabric.bulkyshulkies.api.block.Abstract1X1ShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.api.block.Facing1X1ShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
-public class MissingTexBoxBE extends Abstract1X1ShulkerBoxBE {
+public class MissingTexBoxBE extends Facing1X1ShulkerBoxBE {
 	public MissingTexBoxBE(@Nullable DyeColor color) {
 		super(ShulkerBlockEntities.MISSING_TEX, ShulkerBoxConstants.MISSING_TEX, color);
 	}

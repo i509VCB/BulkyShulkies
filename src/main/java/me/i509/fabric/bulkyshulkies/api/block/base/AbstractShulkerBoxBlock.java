@@ -44,18 +44,14 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.stat.Stats;
-import net.minecraft.state.StateManager;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
@@ -78,19 +74,18 @@ import me.i509.fabric.bulkyshulkies.extension.ShulkerHooks;
 /**
  * Represents an abstract implementation of a shulker box with no strict physical size or inventory size.
  */
-public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements BaseShulkerBlock {
+public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements BasicShulkerBlock {
 	protected static final Identifier CONTENTS = new Identifier("contents");
 	protected static final SingleTypePropertyRetriever<SidedInventory> INVENTORY_RETRIEVER = blockEntity -> blockEntity;
 
 	protected DyeColor color;
-	protected BaseShulkerBlockEntity.AnimationStatus animationStage;
+	protected BasicShulkerBlockEntity.AnimationStatus animationStage;
 	protected final int slotCount;
 
 	protected AbstractShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
 		super(settings);
 		this.color = color;
 		this.slotCount = slotCount;
-		this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.UP));
 	}
 
 	@Override
@@ -108,11 +103,11 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 			BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
 			if (blockEntity instanceof AbstractShulkerBoxBE) {
-				Direction facing = blockState.get(FACING);
+				Direction facing = Direction.UP;
 				AbstractShulkerBoxBE cursedBlockEntity = (AbstractShulkerBoxBE) blockEntity;
 				boolean shouldOpen;
 
-				if (cursedBlockEntity.getAnimationStage() == BaseShulkerBlockEntity.AnimationStatus.CLOSED) {
+				if (cursedBlockEntity.getAnimationStage() == BasicShulkerBlockEntity.AnimationStatus.CLOSED) {
 					Box openBox = getOpenBox(facing);
 					shouldOpen = world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
 				} else {
@@ -132,16 +127,6 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 				return ActionResult.PASS;
 			}
 		}
-	}
-
-	@Override
-	public BlockState getPlacementState(ItemPlacementContext placementContext) {
-		return this.getDefaultState().with(FACING, placementContext.getSide());
-	}
-
-	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> stateManagerBuilder) {
-		stateManagerBuilder.add(FACING);
 	}
 
 	@Override
@@ -292,16 +277,6 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 		return this.color;
 	}
 
-	@Override
-	public BlockState rotate(BlockState blockState, BlockRotation blockRotation) {
-		return blockState.with(FACING, blockRotation.rotate(blockState.get(FACING)));
-	}
-
-	@Override
-	public BlockState mirror(BlockState blockState, BlockMirror blockMirror) {
-		return blockState.rotate(blockMirror.getRotation(blockState.get(FACING)));
-	}
-
 	protected abstract void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName);
 
 	public interface SingleTypePropertyRetriever<T> {
@@ -317,7 +292,7 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 	@Nullable
 	@Environment(EnvType.CLIENT)
 	public static DyeColor getColor(@Nullable Block block) {
-		return block instanceof BaseShulkerBlock ? ((BaseShulkerBlock) block).getColor() : null;
+		return block instanceof BasicShulkerBlock ? ((BasicShulkerBlock) block).getColor() : null;
 	}
 
 	public static SidedInventory getInventoryStatically(IWorld world, BlockPos pos) {

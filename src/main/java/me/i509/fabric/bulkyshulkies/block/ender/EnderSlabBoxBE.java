@@ -27,11 +27,11 @@ package me.i509.fabric.bulkyshulkies.block.ender;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
-import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBE;
+import me.i509.fabric.bulkyshulkies.api.block.slab.FacingSlabShulkerBE;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
-public class EnderSlabBoxBE extends AbstractCursedShulkerSlabBE {
+public class EnderSlabBoxBE extends FacingSlabShulkerBE {
 	public EnderSlabBoxBE() {
 		super(ShulkerBlockEntities.ENDER_SLAB, ShulkerBoxConstants.SLAB_SLOT_COUNT, null);
 	}

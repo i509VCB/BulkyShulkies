@@ -59,8 +59,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
+import me.i509.fabric.bulkyshulkies.api.block.FacingShulkerBoxBlock;
 
-public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity implements SidedInventory, Tickable, BaseShulkerBlockEntity {
+public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity implements SidedInventory, Tickable, BasicShulkerBlockEntity {
 	protected final int[] AVAILABLE_SLOTS;
 	protected DefaultedList<ItemStack> inventory;
 	private int viewerCount;
@@ -136,8 +137,8 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	protected void pushEntities() {
 		BlockState blockState = this.world.getBlockState(this.getPos());
 
-		if (blockState.getBlock() instanceof BaseShulkerBlock) {
-			Direction direction = blockState.get(BaseShulkerBlock.FACING);
+		if (blockState.getBlock() instanceof BasicShulkerBlock) {
+			Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
 			Box box = this.getCollisionBox(direction).offset(this.pos);
 			List<Entity> list = this.world.getEntities(null, box);
 

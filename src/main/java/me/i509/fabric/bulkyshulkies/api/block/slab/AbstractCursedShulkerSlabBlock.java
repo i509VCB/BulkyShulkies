@@ -42,9 +42,9 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
 import me.i509.fabric.bulkyshulkies.abstraction.DefaultReturnHashMap;
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.FacingShulkerBoxBlock;
 
-public abstract class AbstractCursedShulkerSlabBlock extends AbstractShulkerBoxBlock {
+public abstract class AbstractCursedShulkerSlabBlock extends FacingShulkerBoxBlock {
 	protected static final VoxelShape BOTTOM_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
 	protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 	protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
@@ -78,8 +78,8 @@ public abstract class AbstractCursedShulkerSlabBlock extends AbstractShulkerBoxB
 	@Override
 	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
 		BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
-		return blockEntity instanceof AbstractCursedShulkerSlabBE
-				? VoxelShapes.cuboid(((AbstractCursedShulkerSlabBE) blockEntity).getBoundingBox(blockState))
+		return blockEntity instanceof FacingSlabShulkerBE
+				? VoxelShapes.cuboid(((FacingSlabShulkerBE) blockEntity).getBoundingBox(blockState))
 				: AbstractCursedShulkerSlabBlock.getShape(blockState.get(FACING));
 	}
 

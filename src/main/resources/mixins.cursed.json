@@ -4,12 +4,14 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ShapedRecipeAccessor",
+    "StairsBlockAccessor",
     "ShulkerBoxBlockEntityMixin",
     "ShulkerBoxSlotMixin",
     "LivingEntityMixin",
     "SlotMixin",
     "PlayerEntityMixin",
-    "ServerPlayerEntityMixin"
+    "ServerPlayerEntityMixin",
+    "StairsBlockMixin"
   ],
   "client": [
     "client.TexturedRenderLayersMixin",
