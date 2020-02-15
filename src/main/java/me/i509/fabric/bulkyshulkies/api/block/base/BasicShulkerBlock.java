@@ -91,4 +91,11 @@ public interface BasicShulkerBlock {
 	 */
 	@Nullable
 	DyeColor getColor();
+
+	/**
+	 * Gets the amount of inventory slots this shulker box has.
+	 *
+	 * @return
+	 */
+	int getSlotCount();
 }

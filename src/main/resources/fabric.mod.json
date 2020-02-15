@@ -58,12 +58,13 @@
   },
   "mixins": [
     "mixins.abstraction.json",
-    "mixins.cursed.json"
+    "mixins.cursed.json",
+    "mixins.compat.iteminventory.json"
   ],
 
   "depends": {
     "libcd": "*",
-    "fabricloader": ">=0.4.0",
+    "fabricloader": ">=0.7.0",
     "fabric": "*"
   },
   "suggests": {

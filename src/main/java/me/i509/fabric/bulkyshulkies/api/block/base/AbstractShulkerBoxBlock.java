@@ -273,8 +273,14 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 		return Container.calculateComparatorOutput((Inventory) world.getBlockEntity(blockPos));
 	}
 
+	@Override
 	public DyeColor getColor() {
 		return this.color;
+	}
+
+	@Override
+	public int getSlotCount() {
+		return this.slotCount;
 	}
 
 	protected abstract void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName);
