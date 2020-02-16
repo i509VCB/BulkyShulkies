@@ -28,11 +28,11 @@ import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-// import me.i509.fabric.bulkyshulkies.api.item.AbstractShulkerHelmet;
+import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetItem;
 
 public class ShulkerItems {
 	// TODO: We haven't finished this yet
-	// public static final Item SHULKER_HELMET = register(new AbstractShulkerHelmet(new Item.Settings().group(ShulkerItemGroups.MATERIAL_GROUP).maxCount(1)), "shulker_helmet");
+	public static final Item SHULKER_HELMET = register(new ShulkerHelmetItem(new Item.Settings().group(ShulkerItemGroups.CURSED_GROUP).maxCount(1)), "shulker_helmet");
 
 	private ShulkerItems() {
 	}

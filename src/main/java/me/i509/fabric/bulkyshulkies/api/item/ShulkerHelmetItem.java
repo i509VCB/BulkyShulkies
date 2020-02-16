@@ -30,8 +30,8 @@ import net.minecraft.item.ItemStack;
 
 import me.i509.fabric.bulkyshulkies.abstraction.DurabilityBasedProtection;
 
-public class AbstractShulkerHelmet extends ArmorItem implements DurabilityBasedProtection {
-	public AbstractShulkerHelmet(Settings settings) {
+public class ShulkerHelmetItem extends ArmorItem implements DurabilityBasedProtection {
+	public ShulkerHelmetItem(Settings settings) {
 		super(ShulkerArmorMaterials.SHULKER, EquipmentSlot.HEAD, settings);
 	}
 
