@@ -27,12 +27,12 @@ package me.i509.fabric.bulkyshulkies.block.material.diamond;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 
 import me.i509.fabric.bulkyshulkies.api.block.Facing1X1ShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
 
 public class DiamondShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 	public DiamondShulkerBoxBE(@Nullable DyeColor color) {
@@ -45,6 +45,6 @@ public class DiamondShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 
 	@Override
 	protected Text getContainerName() {
-		return new TranslatableText("container.diamondShulkerBox");
+		return ShulkerTexts.DIAMOND_CONTAINER;
 	}
 }

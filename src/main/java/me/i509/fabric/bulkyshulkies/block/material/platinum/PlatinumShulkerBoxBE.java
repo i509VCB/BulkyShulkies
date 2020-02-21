@@ -35,7 +35,6 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -43,9 +42,10 @@ import net.minecraft.util.math.Direction;
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.Facing1X1ShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.api.event.MagnetismCollectionCallback;
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
 
 public class PlatinumShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 	private int lastMagnetTick = 0;
@@ -150,6 +150,6 @@ public class PlatinumShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 
 	@Override
 	protected Text getContainerName() {
-		return new TranslatableText("container.platinumShulkerBox");
+		return ShulkerTexts.PLATINUM_CONTAINER;
 	}
 }

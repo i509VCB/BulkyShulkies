@@ -25,7 +25,9 @@
 package me.i509.fabric.bulkyshulkies.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.container.ShulkerBoxSlot;
 import net.minecraft.item.ItemStack;
@@ -34,12 +36,10 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
 @Mixin(ShulkerBoxSlot.class)
 public class ShulkerBoxSlotMixin {
-	/**
-	 * @author i509
-	 * @reason Prevent our custom shulker boxes from being thrown in a different shulker box and vice versa.
-	 */
-	@Overwrite
-	public boolean canInsert(ItemStack stack) {
-		return BulkyShulkies.getInstance().canInsertItem(stack);
+	@Inject(at = @At("HEAD"), method = "canInsert", cancellable = true)
+	private void canInsert(ItemStack stack, CallbackInfoReturnable<Boolean> cib) {
+		if (!BulkyShulkies.getInstance().canInsertItem(stack)) {
+			cib.setReturnValue(false);
+		}
 	}
 }

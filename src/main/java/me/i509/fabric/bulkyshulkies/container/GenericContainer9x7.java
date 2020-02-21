@@ -29,7 +29,6 @@ import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
@@ -37,10 +36,10 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.SlotFactory;
 
 public class GenericContainer9x7 extends Container {
-	private final SidedInventory inventory;
+	private final Inventory inventory;
 	private final Text name;
 
-	public GenericContainer9x7(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, SidedInventory inventory, Text name) {
+	public GenericContainer9x7(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text name) {
 		super(null, syncId);
 		this.inventory = inventory;
 		this.name = name;

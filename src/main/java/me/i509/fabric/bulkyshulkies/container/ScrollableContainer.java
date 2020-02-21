@@ -26,7 +26,7 @@ import net.minecraft.container.Container;
 import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.SidedInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
@@ -43,7 +43,7 @@ import me.i509.fabric.bulkyshulkies.api.SlotFactory;
  */
 public class ScrollableContainer extends Container {
 	private final Text containerName;
-	private final SidedInventory inventory;
+	private final Inventory inventory;
 	private final int rows;
 	private final int realRows;
 
@@ -52,7 +52,7 @@ public class ScrollableContainer extends Container {
 	@Environment(EnvType.CLIENT)
 	private Integer[] unsortedToSortedSlotMap;
 
-	public ScrollableContainer(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, SidedInventory inventory, Text containerName) {
+	public ScrollableContainer(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text containerName) {
 		super(null, syncId);
 		this.inventory = inventory;
 		this.containerName = containerName;
@@ -96,7 +96,7 @@ public class ScrollableContainer extends Container {
 		}
 	}
 
-	public SidedInventory getInventory() {
+	public Inventory getInventory() {
 		return inventory;
 	}
 

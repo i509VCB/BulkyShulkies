@@ -27,12 +27,12 @@ package me.i509.fabric.bulkyshulkies.block.cursed.slab;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 
 import me.i509.fabric.bulkyshulkies.api.block.slab.FacingSlabShulkerBE;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
 
 public class CursedSlabShulkerBoxBE extends FacingSlabShulkerBE {
 	public CursedSlabShulkerBoxBE(@Nullable DyeColor color) {
@@ -45,6 +45,6 @@ public class CursedSlabShulkerBoxBE extends FacingSlabShulkerBE {
 
 	@Override
 	protected Text getContainerName() {
-		return new TranslatableText("container.slabShulkerBox");
+		return ShulkerTexts.CURSED_SLAB_CONTAINER;
 	}
 }

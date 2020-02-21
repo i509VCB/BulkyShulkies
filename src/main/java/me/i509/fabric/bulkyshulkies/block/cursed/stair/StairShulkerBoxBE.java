@@ -29,13 +29,13 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
 
 public class StairShulkerBoxBE extends AbstractShulkerBoxBE {
 	public StairShulkerBoxBE(BlockEntityType<?> temp, @Nullable DyeColor color) {
@@ -44,7 +44,7 @@ public class StairShulkerBoxBE extends AbstractShulkerBoxBE {
 
 	@Override
 	protected Text getContainerName() {
-		return new TranslatableText("container.stairShulkerBox");
+		return ShulkerTexts.CURSED_STAIR_CONTAINER;
 	}
 
 	@Override

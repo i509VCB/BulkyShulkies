@@ -37,6 +37,7 @@ repositories {
 	maven { url = "https://repo.spongepowered.org/maven" }
 	maven { url = "http://server.bbkr.space:8081/artifactory/libs-release" }
 	maven { url = "https://www.jitpack.io" }
+	maven { url   "https://dl.bintray.com/kyrptonaught/Quickshulker/"}
 }
 
 logger.lifecycle("""
@@ -65,6 +66,9 @@ dependencies {
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "com.misterpemodder:shulkerboxtooltip:${project.shulkerboxtooltip_version}"
+
+	//QuickShulker support
+	modImplementation "net.kyrptonaught:quickshulker:${project.quickshulker_version}"
 
 	// Cotton Resources -- Uncomment when 1.15 is pushed, this should be modRuntime due to LibCD handling the tags.
 	// modImplementation ("io.github.cottonmc:cotton-resources:${cotton_resources_version}") { // We use our own version of modmenu and REI

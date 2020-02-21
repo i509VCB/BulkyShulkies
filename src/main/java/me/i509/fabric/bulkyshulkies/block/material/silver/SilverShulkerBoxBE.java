@@ -27,12 +27,12 @@ package me.i509.fabric.bulkyshulkies.block.material.silver;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 
 import me.i509.fabric.bulkyshulkies.api.block.Facing1X1ShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
 
 public class SilverShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 	public SilverShulkerBoxBE(@Nullable DyeColor color) {
@@ -45,6 +45,6 @@ public class SilverShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 
 	@Override
 	protected Text getContainerName() {
-		return new TranslatableText("container.silverShulkerBox");
+		return ShulkerTexts.SILVER_CONTAINER;
 	}
 }

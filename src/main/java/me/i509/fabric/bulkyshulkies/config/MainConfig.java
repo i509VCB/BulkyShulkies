@@ -32,6 +32,8 @@ import java.util.List;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
+import me.i509.fabric.bulkyshulkies.config.section.ExtensionConfigSection;
+
 @ConfigSerializable
 public class MainConfig {
 	public static final String HEADER = "This file allows configuration of different features within cursed shulker boxes.\n"
@@ -96,5 +98,12 @@ public class MainConfig {
 	public int getMagnetismTickDelay() {
 		checkArgument(magnetismTickDelay >= 0, "Magnetism delay cannot be less than zero.");
 		return magnetismTickDelay;
+	}
+
+	@Setting(comment = "Specifies settings for possible extensions which bulky shulkies can hook into.")
+	private ExtensionConfigSection extensions = new ExtensionConfigSection();
+
+	public ExtensionConfigSection getExtensions() {
+		return this.extensions;
 	}
 }

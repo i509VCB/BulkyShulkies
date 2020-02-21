@@ -22,26 +22,19 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.mixin;
+package me.i509.fabric.bulkyshulkies.config.section;
 
-import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import ninja.leaping.configurate.objectmapping.Setting;
+import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Direction;
+import me.i509.fabric.bulkyshulkies.config.section.quickshulker.QuickShulkerSection;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
+@ConfigSerializable
+public class ExtensionConfigSection {
+	@Setting(comment = "Options for Quick Shulker hooks")
+	private QuickShulkerSection quickShulker = new QuickShulkerSection();
 
-@Mixin(ShulkerBoxBlockEntity.class)
-public abstract class ShulkerBoxBlockEntityMixin {
-	@Inject(at = @At("HEAD"), method = "canInsertInvStack", cancellable = true)
-	private void canInsert(int inventorySlot, ItemStack stack, @Nullable Direction direction, CallbackInfoReturnable<Boolean> cib) {
-		if (!BulkyShulkies.getInstance().canInsertItem(stack)) {
-			cib.setReturnValue(false);
-		}
+	public QuickShulkerSection getQuickShulker() {
+		return quickShulker;
 	}
 }

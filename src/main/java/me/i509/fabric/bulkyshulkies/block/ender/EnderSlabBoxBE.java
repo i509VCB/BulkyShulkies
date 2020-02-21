@@ -25,11 +25,11 @@
 package me.i509.fabric.bulkyshulkies.block.ender;
 
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import me.i509.fabric.bulkyshulkies.api.block.slab.FacingSlabShulkerBE;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
 
 public class EnderSlabBoxBE extends FacingSlabShulkerBE {
 	public EnderSlabBoxBE() {
@@ -38,6 +38,6 @@ public class EnderSlabBoxBE extends FacingSlabShulkerBE {
 
 	@Override
 	protected Text getContainerName() {
-		return new TranslatableText("container.enderSlab");
+		return ShulkerTexts.ENDER_SLAB;
 	}
 }
