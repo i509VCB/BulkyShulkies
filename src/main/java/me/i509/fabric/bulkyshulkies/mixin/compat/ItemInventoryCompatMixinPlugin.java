@@ -27,6 +27,7 @@ package me.i509.fabric.bulkyshulkies.mixin.compat;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.collect.ImmutableList;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -54,7 +55,7 @@ public class ItemInventoryCompatMixinPlugin implements IMixinConfigPlugin {
 
 	@Override
 	public List<String> getMixins() {
-		return null;
+		return ImmutableList.of();
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import net.minecraft.nbt.ListTag;
 
 import net.fabricmc.fabric.api.util.NbtType;
 
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.inventory.AutoCloseableInventory;
 import me.i509.fabric.bulkyshulkies.item.ShulkerBlockItem;
@@ -65,6 +66,11 @@ public abstract class ShulkerBlockItemMixin_Compat extends BlockItem implements 
 		try (AutoCloseableInventory inventory = this.impl$getInventory(invStack)) {
 			inventory.setInvStack(slot, stackToSet);
 		}
+	}
+
+	@Override
+	public boolean canInsert(ItemStack invItem, int index, ItemStack stack) {
+		return BulkyShulkies.getInstance().canInsertItem(stack);
 	}
 
 	private AutoCloseableInventory impl$getInventory(ItemStack invStack) {

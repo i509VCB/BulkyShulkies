@@ -11,7 +11,8 @@
     "SlotMixin",
     "PlayerEntityMixin",
     "ServerPlayerEntityMixin",
-    "StairsBlockMixin"
+    "StairsBlockMixin",
+    "CauldronBlockMixin"
   ],
   "client": [
     "client.TexturedRenderLayersMixin",
