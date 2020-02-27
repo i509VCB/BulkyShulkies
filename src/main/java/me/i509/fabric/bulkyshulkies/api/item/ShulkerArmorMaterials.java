@@ -59,37 +59,44 @@ public enum ShulkerArmorMaterials implements ArmorMaterial {
 		this.repairIngredientSupplier = new Lazy<>(supplier_1);
 	}
 
+	@Override
 	public int getDurability(EquipmentSlot equipmentSlot_1) {
 		return BASE_DURABILITY[equipmentSlot_1.getEntitySlotId()] * this.durabilityMultiplier;
 	}
 
+	@Override
 	public int getProtectionAmount(EquipmentSlot equipmentSlot_1) {
 		return this.protectionAmounts[equipmentSlot_1.getEntitySlotId()];
 	}
 
+	@Override
 	public int getEnchantability() {
 		return this.enchantability;
 	}
 
+	@Override
 	public SoundEvent getEquipSound() {
 		return this.equipSound;
 	}
 
+	@Override
 	public Ingredient getRepairIngredient() {
 		return this.repairIngredientSupplier.get();
 	}
 
+	@Override
 	@Environment(EnvType.CLIENT)
 	public String getName() {
 		return this.name;
 	}
 
+	@Override
 	public float getToughness() {
 		return this.toughness;
 	}
 
-	@Override // kb res
-	public float method_24355() {
+	@Override
+	public float getKnockbackResistance() {
 		return 0.0F;
 	}
 }

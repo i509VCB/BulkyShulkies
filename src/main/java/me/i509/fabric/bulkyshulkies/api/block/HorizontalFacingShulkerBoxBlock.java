@@ -55,7 +55,7 @@ public abstract class HorizontalFacingShulkerBoxBlock extends AbstractShulkerBox
 
 	protected HorizontalFacingShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
 		super(settings, slotCount, color);
-		this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.UP));
+		this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.NORTH));
 	}
 
 	@Override

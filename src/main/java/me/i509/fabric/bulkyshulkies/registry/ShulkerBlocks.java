@@ -37,6 +37,7 @@ import net.fabricmc.fabric.api.tools.FabricToolTags;
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
+import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
@@ -271,6 +272,31 @@ public class ShulkerBlocks {
 	public static final Block GREEN_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.GREEN), "green_slab_shulker_box");
 	public static final Block RED_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.RED), "red_slab_shulker_box");
 	public static final Block BLACK_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.BLACK), "black_slab_shulker_box");
+
+	/*
+	 * ========================
+	 *   Cursed Shulker Boxes
+	 *       Stair Edition
+	 * ========================
+	 */
+
+	public static final Block STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, null), "stair_shulker_box");
+	public static final Block WHITE_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_stair_shulker_box");
+	public static final Block ORANGE_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_stair_shulker_box");
+	public static final Block MAGENTA_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.MAGENTA), "magenta_stair_shulker_box");
+	public static final Block LIGHT_BLUE_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.LIGHT_BLUE), "light_blue_stair_shulker_box");
+	public static final Block YELLOW_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.YELLOW), "yellow_stair_shulker_box");
+	public static final Block LIME_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.LIME), "lime_stair_shulker_box");
+	public static final Block PINK_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.PINK), "pink_stair_shulker_box");
+	public static final Block GRAY_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.GRAY), "gray_stair_shulker_box");
+	public static final Block LIGHT_GRAY_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.LIGHT_GRAY), "light_gray_stair_shulker_box");
+	public static final Block CYAN_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.CYAN), "cyan_stair_shulker_box");
+	public static final Block PURPLE_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.PURPLE), "purple_stair_shulker_box");
+	public static final Block BLUE_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.BLUE), "blue_stair_shulker_box");
+	public static final Block BROWN_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.BROWN), "brown_stair_shulker_box");
+	public static final Block GREEN_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.GREEN), "green_stair_shulker_box");
+	public static final Block RED_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.RED), "red_stair_shulker_box");
+	public static final Block BLACK_STAIR_SHULKER_BOX = registerShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.BLACK), "black_stair_shulker_box");
 
 	public static final Block ENDER_SLAB_BOX = register(new EnderSlabBoxBlock(ENDER_SLAB_SETTINGS), "ender_slab");
 

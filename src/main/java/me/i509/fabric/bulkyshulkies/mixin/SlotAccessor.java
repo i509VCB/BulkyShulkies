@@ -22,10 +22,18 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.api;
+package me.i509.fabric.bulkyshulkies.mixin;
 
-public interface SlotDuck {
-	void setXPosition(int pos);
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-	void setYPosition(int pos);
+import net.minecraft.container.Slot;
+
+@Mixin(Slot.class)
+public interface SlotAccessor {
+	@Accessor("xPosition")
+	void accessor$setX(int x);
+
+	@Accessor("yPosition")
+	void accessor$setY(int y);
 }

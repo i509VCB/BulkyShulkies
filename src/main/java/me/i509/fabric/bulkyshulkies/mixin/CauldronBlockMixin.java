@@ -65,19 +65,16 @@ public class CauldronBlockMixin {
 
 	@Redirect(
 			at = @At(value = "NEW",
-			target = "net/minecraft/item/ItemStack",
-			args = "log=true"
+			target = "net/minecraft/item/ItemStack"
 			),
 			slice = @Slice(
 				from = @At(value = "FIELD",
 					opcode = Opcodes.GETSTATIC,
-					target = "Lnet/minecraft/stat/Stats;CLEAN_BANNER:Lnet/minecraft/util/Identifier;",
-					args = "log=true"
+					target = "Lnet/minecraft/stat/Stats;CLEAN_BANNER:Lnet/minecraft/util/Identifier;"
 				),
 				to = @At(value = "FIELD",
 					opcode = Opcodes.GETSTATIC,
-					target = "Lnet/minecraft/stat/Stats;CLEAN_SHULKER_BOX:Lnet/minecraft/util/Identifier;",
-					args = "log=true"
+					target = "Lnet/minecraft/stat/Stats;CLEAN_SHULKER_BOX:Lnet/minecraft/util/Identifier;"
 				)
 			),
 			method = "onUse"

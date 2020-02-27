@@ -35,8 +35,8 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.SlotDuck;
 import me.i509.fabric.bulkyshulkies.api.SlotFactory;
+import me.i509.fabric.bulkyshulkies.mixin.SlotAccessor;
 
 /**
  * Credit: NinjaPhoenix.
@@ -140,11 +140,9 @@ public class ScrollableContainer extends Container {
 		for (Integer slotID : unsortedToSortedSlotMap) {
 			Slot slot = slots.get(slotID);
 			int y = (index / 9) - offset;
-			//slot.xPosition = 8 + 18 * (index % 9);
-			//slot.yPosition = (y >= rows || y < 0) ? -2000 : 18 + 18 * y;
-			SlotDuck duck = (SlotDuck) slot; // TODO: In the future replace this with something nicer.
-			duck.setXPosition(8 + 18 * (index % 9));
-			duck.setYPosition((y >= rows || y < 0) ? -2000 : 18 + 18 * y);
+			SlotAccessor accessor = (SlotAccessor) slot;
+			accessor.accessor$setX(8 + 18 * (index % 9));
+			accessor.accessor$setY((y >= rows || y < 0) ? -2000 : 18 + 18 * y);
 			index++;
 		}
 	}

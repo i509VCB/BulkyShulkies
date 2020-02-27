@@ -33,6 +33,7 @@ import net.minecraft.util.registry.Registry;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
@@ -234,7 +235,6 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_MISSING_TEX_SHULKER_BOX
 	);
 
-	/*
 	public static final BlockEntityType<?> STAIR = register("stair_shulker_box",
 			StairShulkerBoxBE::new,
 			ShulkerBlocks.STAIR_SHULKER_BOX,
@@ -254,7 +254,7 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.GREEN_STAIR_SHULKER_BOX,
 			ShulkerBlocks.RED_STAIR_SHULKER_BOX,
 			ShulkerBlocks.BLACK_STAIR_SHULKER_BOX
-	);*/
+	);
 
 	public static final BlockEntityType<EnderSlabBoxBE> ENDER_SLAB = register("ender_slab",
 			EnderSlabBoxBE::new,

@@ -27,8 +27,9 @@ package me.i509.fabric.bulkyshulkies.block.cursed.stair;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.DefaultedList;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -36,10 +37,16 @@ import net.minecraft.util.math.Direction;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
 public class StairShulkerBoxBE extends AbstractShulkerBoxBE {
-	public StairShulkerBoxBE(BlockEntityType<?> temp, @Nullable DyeColor color) {
-		super(temp /*ShulkerBlockEntities.STAIR*/, ShulkerBoxConstants.STAIR_SLOT_COUNT, color);
+	public StairShulkerBoxBE(@Nullable DyeColor color) {
+		super(ShulkerBlockEntities.STAIR, ShulkerBoxConstants.STAIR_SLOT_COUNT, color);
+		this.inventory = DefaultedList.ofSize(this.AVAILABLE_SLOTS.length, ItemStack.EMPTY);
+	}
+
+	public StairShulkerBoxBE() {
+		this(null);
 	}
 
 	@Override
