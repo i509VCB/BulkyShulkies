@@ -24,17 +24,29 @@
 
 package me.i509.fabric.bulkyshulkies.block.cursed.stair;
 
+import static me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock.getBaseStairShape;
+
+import java.util.List;
+
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.enums.BlockHalf;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.MovementType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
 
+import me.i509.fabric.bulkyshulkies.api.block.HorizontalFacingShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
@@ -56,16 +68,73 @@ public class StairShulkerBoxBE extends AbstractShulkerBoxBE {
 
 	@Override
 	public Box getBoundingBox(BlockState blockState) {
-		return null;
+		VoxelShape unmodified = getBaseStairShape(blockState);
+
+		if (animationProgress == 0.0D) {
+			return unmodified.getBoundingBox();
+		}
+
+		VoxelShape offset = unmodified.offset(0.0D, blockState.get(StairShulkerBoxBlock.HALF).equals(BlockHalf.BOTTOM) ? animationProgress : -1 * animationProgress, 0.0D);
+		//VoxelShape base =
+		return offset.getBoundingBox();
 	}
 
 	@Override
-	public Box getBoundingBox(Direction facing) {
-		return null;
+	public Box getCollisionBox(BlockState state) {
+		Direction opposite = state.get(HorizontalFacingShulkerBoxBlock.FACING).getOpposite();
+		return this.getBoundingBox(state).shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
 	}
 
-	@Override
-	public Box getCollisionBox(Direction facing) {
-		return null;
+	protected void pushEntities() {
+		BlockState blockState = this.world.getBlockState(this.getPos());
+
+		if (blockState.getBlock() instanceof BasicShulkerBlock) {
+			Direction direction = blockState.get(StairShulkerBoxBlock.HALF) == BlockHalf.BOTTOM ? Direction.UP : Direction.DOWN;
+			Box box = this.getCollisionBox(blockState).offset(this.pos);
+			List<Entity> list = this.world.getEntities(null, box);
+
+			if (!list.isEmpty()) {
+				for (int i = 0; i < list.size(); ++i) {
+					Entity entity = list.get(i);
+
+					if (entity.getPistonBehavior() != PistonBehavior.IGNORE) {
+						double d = 0.0D;
+						double e = 0.0D;
+						double f = 0.0D;
+						Box box2 = entity.getBoundingBox();
+						switch (direction.getAxis()) {
+						case X:
+							if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
+								d = box.x2 - box2.x1;
+							} else {
+								d = box2.x2 - box.x1;
+							}
+
+							d += 0.01D;
+							break;
+						case Y:
+							if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
+								e = box.y2 - box2.y1;
+							} else {
+								e = box2.y2 - box.y1;
+							}
+
+							e += 0.01D;
+							break;
+						case Z:
+							if (direction.getDirection() == Direction.AxisDirection.POSITIVE) {
+								f = box.z2 - box2.z1;
+							} else {
+								f = box2.z2 - box.z1;
+							}
+
+							f += 0.01D;
+						}
+
+						entity.move(MovementType.SHULKER_BOX, new Vec3d(d * (double) direction.getOffsetX(), e * (double) direction.getOffsetY(), f * (double) direction.getOffsetZ()));
+					}
+				}
+			}
+		}
 	}
 }

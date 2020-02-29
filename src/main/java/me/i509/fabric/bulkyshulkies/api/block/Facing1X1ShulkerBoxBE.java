@@ -45,20 +45,16 @@ public abstract class Facing1X1ShulkerBoxBE extends AbstractShulkerBoxBE {
 
 	@Override
 	public Box getBoundingBox(BlockState blockState) {
-		return this.getBoundingBox(blockState.get(FacingShulkerBoxBlock.FACING));
-	}
-
-	@Override
-	public Box getBoundingBox(Direction direction) {
+		Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
 		float f = this.getAnimationProgress(1.0F);
 		return VoxelShapes.fullCube()
-				.getBoundingBox()
-				.stretch(f * 0.5F * direction.getOffsetX(), f * 0.5F * direction.getOffsetY(), f * 0.5F * direction.getOffsetZ());
+			.getBoundingBox()
+			.stretch(f * 0.5F * direction.getOffsetX(), f * 0.5F * direction.getOffsetY(), f * 0.5F * direction.getOffsetZ());
 	}
 
 	@Override
-	public Box getCollisionBox(Direction facing) {
-		Direction opposite = facing.getOpposite();
-		return this.getBoundingBox(facing).shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
+	public Box getCollisionBox(BlockState state) {
+		Direction opposite = state.get(FacingShulkerBoxBlock.FACING).getOpposite();
+		return this.getBoundingBox(state).shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
 	}
 }

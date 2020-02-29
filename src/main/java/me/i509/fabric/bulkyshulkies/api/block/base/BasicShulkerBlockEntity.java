@@ -46,15 +46,7 @@ public interface BasicShulkerBlockEntity {
 	 */
 	Box getBoundingBox(BlockState blockState);
 
-	/**
-	 * Gets the bounding box of the BlockEntity.
-	 *
-	 * @param direction The direction the BlockEntity is facing.
-	 * @return The bounding box of the blockentity.
-	 */
-	Box getBoundingBox(Direction direction);
-
-	Box getCollisionBox(Direction facing);
+	Box getCollisionBox(BlockState state);
 
 	/**
 	 * Gets the current animation stage of the shulker box.

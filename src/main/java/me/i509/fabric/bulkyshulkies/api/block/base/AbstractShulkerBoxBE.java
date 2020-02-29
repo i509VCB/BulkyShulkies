@@ -83,10 +83,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	public abstract Box getBoundingBox(BlockState blockState);
 
 	@Override
-	public abstract Box getBoundingBox(Direction facing);
-
-	@Override
-	public abstract Box getCollisionBox(Direction facing);
+	public abstract Box getCollisionBox(BlockState blockState);
 
 	@Override
 	public void tick() {
@@ -139,7 +136,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 
 		if (blockState.getBlock() instanceof BasicShulkerBlock) {
 			Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
-			Box box = this.getCollisionBox(direction).offset(this.pos);
+			Box box = this.getCollisionBox(blockState).offset(this.pos);
 			List<Entity> list = this.world.getEntities(null, box);
 
 			if (!list.isEmpty()) {

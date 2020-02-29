@@ -235,7 +235,7 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_MISSING_TEX_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<?> STAIR = register("stair_shulker_box",
+	public static final BlockEntityType<StairShulkerBoxBE> STAIR = register("stair_shulker_box",
 			StairShulkerBoxBE::new,
 			ShulkerBlocks.STAIR_SHULKER_BOX,
 			ShulkerBlocks.WHITE_STAIR_SHULKER_BOX,

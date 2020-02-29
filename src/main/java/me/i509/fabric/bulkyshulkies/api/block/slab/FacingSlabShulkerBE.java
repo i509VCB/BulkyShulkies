@@ -53,20 +53,17 @@ public abstract class FacingSlabShulkerBE extends AbstractShulkerBoxBE {
 
 	@Override
 	public Box getBoundingBox(BlockState blockState) {
-		return this.getBoundingBox(blockState.get(FacingShulkerBoxBlock.FACING));
-	}
-
-	public Box getBoundingBox(Direction openDirection) {
+		Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
 		float f = this.getAnimationProgress(1.0F);
-		return AbstractCursedShulkerSlabBlock.getShape(openDirection)
-				.getBoundingBox()
-				.stretch(0.25F * f * openDirection.getOffsetX(), 0.25F * f * openDirection.getOffsetY(), 0.25F * f * openDirection.getOffsetZ());
+		return AbstractCursedShulkerSlabBlock.getShape(direction)
+			.getBoundingBox()
+			.stretch(0.25F * f * direction.getOffsetX(), 0.25F * f * direction.getOffsetY(), 0.25F * f * direction.getOffsetZ());
 	}
 
 	@Override
-	public Box getCollisionBox(Direction facing) {
-		Direction direction = facing.getOpposite();
-		return this.getBoundingBox(facing).shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
+	public Box getCollisionBox(BlockState blockState) {
+		Direction direction = blockState.get(FacingShulkerBoxBlock.FACING).getOpposite();
+		return this.getBoundingBox(blockState).shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
 	}
 
 	/**
@@ -78,7 +75,7 @@ public abstract class FacingSlabShulkerBE extends AbstractShulkerBoxBE {
 
 		if (blockState.getBlock() instanceof BasicShulkerBlock) {
 			Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
-			Box box = this.getCollisionBox(direction).offset(this.pos);
+			Box box = this.getCollisionBox(blockState).offset(this.pos);
 			List<Entity> list = this.world.getEntities(null, box);
 
 			if (!list.isEmpty()) {
