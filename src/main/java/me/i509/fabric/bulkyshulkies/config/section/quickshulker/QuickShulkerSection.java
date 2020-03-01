@@ -59,6 +59,9 @@ public class QuickShulkerSection {
 	@Setting(comment = "Whether the ender slab can be opened using quick shulker.\n")
 	private boolean canOpenEnderSlab = true;
 
+	@Setting(comment = "Whether the stair shulker box can be opened using quick shulker\n")
+	private boolean canOpenStair = true;
+
 	public boolean canOpenCopper() {
 		return this.canOpenCopper;
 	}
@@ -97,5 +100,9 @@ public class QuickShulkerSection {
 
 	public boolean canOpenEnderSlab() {
 		return this.canOpenEnderSlab;
+	}
+
+	public boolean canOpenStair() {
+		return this.canOpenStair;
 	}
 }

@@ -102,5 +102,10 @@ public class BulkyTooltipHook implements ShulkerBoxTooltipApi {
 		List<Item> missingTex = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.MISSING_TEX_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
 		missingTex.add(ShulkerBlocks.MISSING_TEX_SHULKER_BOX.asItem());
 		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.MISSING_TEX), missingTex);
+
+		// Register popup providers for Stair Shulker Boxes.
+		List<Item> stairs = Arrays.stream(DyeColor.values()).map(((AbstractShulkerBoxBlock) ShulkerBlocks.STAIR_SHULKER_BOX)::getItemStack).map(ItemStack::getItem).collect(Collectors.toList());
+		stairs.add(ShulkerBlocks.STAIR_SHULKER_BOX.asItem());
+		providers.put(new BulkyShulkerPreviewProvider(ShulkerBoxConstants.STAIR_SLOT_COUNT), stairs);
 	}
 }

@@ -55,7 +55,10 @@ public class CauldronBlockMixin {
 	@Redirect(
 			at = @At(
 				value = "CONSTANT",
-				args = "classValue=net.minecraft.block.ShulkerBoxBlock"
+				args = {
+					"classValue=net.minecraft.block.ShulkerBoxBlock",
+					"log=true"
+				}
 			),
 			method = "onUse"
 	)

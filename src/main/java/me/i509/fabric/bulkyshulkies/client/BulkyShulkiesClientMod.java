@@ -152,6 +152,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.PLATINUM);
 		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.SLAB);
 		ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.MISSING_TEX);
+		// ShulkerRenderLayers.registerSprites(atlas, registry, ShulkerBoxKeys.STAIR);
 		ShulkerRenderLayers.registerSprite(atlas, registry, ShulkerBoxKeys.ENDER_SLAB);
 	}
 

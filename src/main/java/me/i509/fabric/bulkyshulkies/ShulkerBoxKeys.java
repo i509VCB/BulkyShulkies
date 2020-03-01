@@ -36,6 +36,7 @@ public class ShulkerBoxKeys {
 	public static final String SLAB = "slab";
 	public static final String MISSING_TEX = "missing_tex";
 	public static final String ENDER_SLAB = "ender_slab";
+	public static final String STAIR = "stair";
 
 	private ShulkerBoxKeys() {
 		// NO-OP

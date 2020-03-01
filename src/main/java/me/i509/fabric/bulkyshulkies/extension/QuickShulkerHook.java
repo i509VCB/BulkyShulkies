@@ -46,6 +46,7 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
+import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlock;
@@ -81,43 +82,47 @@ public class QuickShulkerHook implements RegisterQuickShulker {
 		QuickShulkerSection config = BulkyShulkies.getInstance().getConfig().getExtensions().getQuickShulker();
 
 		if (config.canOpenCopper()) {
-			register((QuickShulkerHook::openCopperBox), CopperShulkerBoxBlock.class);
+			register(QuickShulkerHook::openCopperBox, CopperShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenIron()) {
-			register((QuickShulkerHook::openIronBox), IronShulkerBoxBlock.class);
+			register(QuickShulkerHook::openIronBox, IronShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenSilver()) {
-			register((QuickShulkerHook::openSilverBox), SilverShulkerBoxBlock.class);
+			register(QuickShulkerHook::openSilverBox, SilverShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenGold()) {
-			register((QuickShulkerHook::openGoldBox), GoldShulkerBoxBlock.class);
+			register(QuickShulkerHook::openGoldBox, GoldShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenDiamond()) {
-			register((QuickShulkerHook::openDiamondBox), DiamondShulkerBoxBlock.class);
+			register(QuickShulkerHook::openDiamondBox, DiamondShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenObsidian()) {
-			register((QuickShulkerHook::openObsidianBox), ObsidianShulkerBoxBlock.class);
+			register(QuickShulkerHook::openObsidianBox, ObsidianShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenPlatinum()) {
-			register((QuickShulkerHook::openPlatinumBox), PlatinumShulkerBoxBlock.class);
+			register(QuickShulkerHook::openPlatinumBox, PlatinumShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenSlab()) {
-			register((QuickShulkerHook::openSlabBox), CursedSlabShulkerBox.class);
+			register(QuickShulkerHook::openSlabBox, CursedSlabShulkerBox.class);
 		}
 
 		if (config.canOpenEnderSlab()) {
-			register((QuickShulkerHook::openEnderSlab), EnderSlabBoxBlock.class);
+			register(QuickShulkerHook::openEnderSlab, EnderSlabBoxBlock.class);
 		}
 
 		if (config.canOpenMissingTex()) {
-			register((QuickShulkerHook::openMissingTex), MissingTexBoxBlock.class);
+			register(QuickShulkerHook::openMissingTex, MissingTexBoxBlock.class);
+		}
+
+		if (config.canOpenStair()) {
+			register(QuickShulkerHook::openStair, StairShulkerBoxBlock.class);
 		}
 	}
 
@@ -231,6 +236,13 @@ public class QuickShulkerHook implements RegisterQuickShulker {
 		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_SCROLLABLE_CONTAINER, player, writer -> {
 			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
 			writer.writeText(ShulkerTexts.MISSING_CONTAINER);
+		});
+	}
+
+	private static void openStair(PlayerEntity player, ItemStack stack) {
+		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_SCROLLABLE_CONTAINER, player, writer -> {
+			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
+			writer.writeText(ShulkerTexts.CURSED_STAIR_CONTAINER);
 		});
 	}
 }
