@@ -40,6 +40,7 @@ public class ShulkerTexts {
 	public static final Text OBSIDIAN_CONTAINER = new TranslatableText("container.obsidianShulkerBox");
 	public static final Text PLATINUM_CONTAINER = new TranslatableText("container.platinumShulkerBox");
 	public static final Text SILVER_CONTAINER = new TranslatableText("container.silverShulkerBox");
+	public static final Text NETHERITE_CONTAINER = new TranslatableText("container.netheriteShulkerBox");
 
 	public static final Text MISSING_CONTAINER = new TranslatableText("container.missingTexBox");
 }

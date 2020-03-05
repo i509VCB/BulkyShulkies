@@ -59,7 +59,7 @@ import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
 import me.i509.fabric.bulkyshulkies.config.MainConfig;
 
 public class BulkyShulkies {
-	private static final Logger LOGGER = LogManager.getLogger(new AbstractMessageFactory() {
+	private static final Logger LOGGER = LogManager.getLogger(BulkyShulkies.class, new AbstractMessageFactory() {
 		@Override
 		public Message newMessage(String message, Object... params) {
 			return new ParameterizedMessage("[BulkyShulkies] " + message, params);

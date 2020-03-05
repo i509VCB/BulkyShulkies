@@ -26,6 +26,7 @@ package me.i509.fabric.bulkyshulkies.registry;
 
 import java.util.function.Supplier;
 
+import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBE;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -191,6 +192,27 @@ public class ShulkerBlockEntities {
 			ShulkerBlocks.GREEN_OBSIDIAN_SHULKER_BOX,
 			ShulkerBlocks.RED_OBSIDIAN_SHULKER_BOX,
 			ShulkerBlocks.BLACK_OBSIDIAN_SHULKER_BOX
+	);
+
+	public static final BlockEntityType<NetheriteShulkerBoxBE> NETHERITE_SHULKER_BOX = register("netherite_shulker_box",
+		NetheriteShulkerBoxBE::new,
+		ShulkerBlocks.NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.WHITE_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.ORANGE_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.MAGENTA_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.LIGHT_BLUE_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.YELLOW_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.LIME_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.PINK_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.GRAY_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.LIGHT_GRAY_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.CYAN_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.PURPLE_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.BLUE_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.BROWN_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.GREEN_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.RED_NETHERITE_SHULKER_BOX,
+		ShulkerBlocks.BLACK_NETHERITE_SHULKER_BOX
 	);
 
 	public static final BlockEntityType<PlatinumShulkerBoxBE> PLATINUM_SHULKER_BOX = register("platinum_shulker_box",

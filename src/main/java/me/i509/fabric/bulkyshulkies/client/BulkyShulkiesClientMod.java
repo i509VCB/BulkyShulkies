@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBlock;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -98,6 +100,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 			uncolored.put(PlatinumShulkerBoxBlock.class, new PlatinumShulkerBoxBE());
 			uncolored.put(MissingTexBoxBlock.class, new MissingTexBoxBE());
 			uncolored.put(CursedSlabShulkerBox.class, new CursedSlabShulkerBoxBE());
+			uncolored.put(NetheriteShulkerBoxBlock.class, new NetheriteShulkerBoxBE());
 			// Ender Slab, this has no coloring at all
 			uncolored.put(EnderSlabBoxBlock.class, new EnderSlabBoxBE());
 		}));
@@ -113,6 +116,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 				colored.put(PlatinumShulkerBoxBlock.class, new PlatinumShulkerBoxBE(dyeColor));
 				colored.put(MissingTexBoxBlock.class, new MissingTexBoxBE(dyeColor));
 				colored.put(CursedSlabShulkerBox.class, new CursedSlabShulkerBoxBE(dyeColor));
+				colored.put(NetheriteShulkerBoxBlock.class, new NetheriteShulkerBoxBE(dyeColor));
 			}));
 		}
 	});
