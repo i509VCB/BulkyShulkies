@@ -56,8 +56,7 @@ public class CauldronBlockMixin {
 			at = @At(
 				value = "CONSTANT",
 				args = {
-					"classValue=net.minecraft.block.ShulkerBoxBlock",
-					"log=true"
+					"classValue=net.minecraft.block.ShulkerBoxBlock" // TODO Figure out why this fails in a real client
 				}
 			),
 			method = "onUse"
