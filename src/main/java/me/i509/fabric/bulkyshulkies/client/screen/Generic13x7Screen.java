@@ -63,14 +63,14 @@ public class Generic13x7Screen extends ContainerScreen<GenericContainer13x7> {
 
 	@Override
 	protected void drawForeground(int mouseX, int mouseY) {
-		this.font.draw(this.title.asFormattedString(), 8.0F, 7.0F, 4210752);
-		this.font.draw(this.playerInventory.getDisplayName().asFormattedString(), 8.0F, (float) (this.containerHeight - 114 + 2), 4210752);
+		this.textRenderer.draw(this.title.asFormattedString(), 8.0F, 7.0F, 4210752);
+		this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8.0F, (float) (this.containerHeight - 114 + 2), 4210752);
 	}
 
 	@Override
 	protected void drawBackground(float delta, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(TEXTURE);
+		this.client.getTextureManager().bindTexture(TEXTURE);
 		int i = (this.width - this.containerWidth) / 2;
 		int j = (this.height - this.containerHeight) / 2;
 		this.blit(i, j, 0, 0, this.containerWidth, 7 * 18 + 17);

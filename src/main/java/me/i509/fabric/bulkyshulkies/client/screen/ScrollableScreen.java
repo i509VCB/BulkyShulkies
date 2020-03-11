@@ -55,14 +55,14 @@ public class ScrollableScreen extends ContainerScreen<ScrollableContainer> imple
 
 	public ScrollableScreen(ScrollableContainer container, PlayerInventory playerInventory, Text containerTitle) {
 		super(container, playerInventory, containerTitle);
-		totalRows = container.getRows();
-		topRow = 0;
-		displayedRows = hasScrollbar() ? 6 : totalRows;
-		if (hasScrollbar() && !FabricLoader.getInstance().isModLoaded("roughlyenoughitems")) containerWidth += 22;
-		containerHeight = 114 + displayedRows * 18;
-		progress = 0;
-		container.setSearchTerm("");
-		searchBoxOldText = "";
+		this.totalRows = container.getRows();
+		this.topRow = 0;
+		this.displayedRows = this.hasScrollbar() ? 6 : this.totalRows;
+		if (this.hasScrollbar() && !FabricLoader.getInstance().isModLoaded("roughlyenoughitems")) this.containerWidth += 22;
+		this.containerHeight = 114 + this.displayedRows * 18;
+		this.progress = 0;
+		this.container.setSearchTerm("");
+		this.searchBoxOldText = "";
 	}
 
 	public static ScrollableScreen createScreen(ScrollableContainer container) {
@@ -72,62 +72,62 @@ public class ScrollableScreen extends ContainerScreen<ScrollableContainer> imple
 	@Override
 	public void init() {
 		super.init();
-		searchBox = addButton(new SearchTextFieldWidget(font, this.x + 82, this.y + 127, 80, 8, ""));
-		searchBox.setMaxLength(50);
-		searchBox.setHasBorder(false);
-		searchBox.setVisible(hasScrollbar());
-		searchBox.setEditableColor(16777215);
-		searchBox.setChangedListener(str -> {
-			if (str.equals(searchBoxOldText)) return;
-			container.setSearchTerm(str);
-			progress = 0;
-			topRow = 0;
-			searchBoxOldText = str;
+		this.searchBox = this.addButton(new SearchTextFieldWidget(this.textRenderer, this.x + 82, this.y + 127, 80, 8, ""));
+		this.searchBox.setMaxLength(50);
+		this.searchBox.setHasBorder(false);
+		this.searchBox.setVisible(this.hasScrollbar());
+		this.searchBox.setEditableColor(16777215);
+		this.searchBox.setChangedListener(str -> {
+			if (str.equals(this.searchBoxOldText)) return;
+			this.container.setSearchTerm(str);
+			this.progress = 0;
+			this.topRow = 0;
+			this.searchBoxOldText = str;
 		});
 	}
 
 	@Override
 	public void tick() {
-		searchBox.tick();
+		this.searchBox.tick();
 	}
 
 	@Override
 	public void render(int mouseX, int mouseY, float lastFrameDuration) {
-		renderBackground();
-		drawBackground(lastFrameDuration, mouseX, mouseY);
+		this.renderBackground();
+		this.drawBackground(lastFrameDuration, mouseX, mouseY);
 		super.render(mouseX, mouseY, lastFrameDuration);
-		drawMouseoverTooltip(mouseX, mouseY);
+		this.drawMouseoverTooltip(mouseX, mouseY);
 	}
 
 	@Override
 	protected void drawForeground(int mouseX, int mouseY) {
-		font.draw(title.asFormattedString(), 8, 6, 4210752);
-		font.draw(playerInventory.getDisplayName().asFormattedString(), 8, containerHeight - 94, 4210752);
+		this.textRenderer.draw(this.title.asFormattedString(), 8, 6, 4210752);
+		this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8, containerHeight - 94, 4210752);
 	}
 
 	@Override
 	protected void drawBackground(float lastFrameDuration, int mouseX, int mouseY) {
 		RenderSystem.color4f(1, 1, 1, 1);
-		minecraft.getTextureManager().bindTexture(BASE_TEXTURE);
-		int x = (width - containerWidth) / 2;
-		int y = (height - containerHeight) / 2;
-		blit(x, y, 0, 0, containerWidth, displayedRows * 18 + 17);
-		blit(x, y + displayedRows * 18 + 17, 0, 126, containerWidth, 96);
+		this.client.getTextureManager().bindTexture(BASE_TEXTURE);
+		int x = (this.width - this.containerWidth) / 2;
+		int y = (this.height - this.containerHeight) / 2;
+		blit(x, y, 0, 0, this.containerWidth, this.displayedRows * 18 + 17);
+		blit(x, y + this.displayedRows * 18 + 17, 0, 126, this.containerWidth, 96);
 
 		if (hasScrollbar()) {
-			minecraft.getTextureManager().bindTexture(WIDGETS_TEXTURE);
+			this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
 			blit(x + 172, y, 0, 0, 22, 132);
 			blit(x + 174, (int) (y + 18 + 91 * progress), 22, 0, 12, 15);
 			blit(x + 79, y + 126, 34, 0, 90, 11);
-			searchBox.render(mouseX, mouseY, lastFrameDuration);
+			this.searchBox.render(mouseX, mouseY, lastFrameDuration);
 		}
 	}
 
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double scrollDelta) {
-		if (hasScrollbar()) {
-			setTopRow(topRow - (int) scrollDelta);
-			progress = ((double) topRow) / ((double) (totalRows - 6));
+		if (this.hasScrollbar()) {
+			this.setTopRow(this.topRow - (int) scrollDelta);
+			this.progress = ((double) this.topRow) / ((double) (this.totalRows - 6));
 			return true;
 		}
 
@@ -136,29 +136,29 @@ public class ScrollableScreen extends ContainerScreen<ScrollableContainer> imple
 
 	@Override
 	protected boolean isClickOutsideBounds(double mouseX, double mouseY, int left, int top, int mouseButton) {
-		boolean left_up_down = mouseX < left || mouseY < top || mouseY > top + height;
-		boolean right = mouseX > left + width;
-		if (hasScrollbar()) right = (right && mouseY > top + 132) || mouseX > left + width + 18;
+		boolean left_up_down = mouseX < left || mouseY < top || mouseY > top + this.height;
+		boolean right = mouseX > left + this.width;
+		if (hasScrollbar()) right = (right && mouseY > top + 132) || mouseX > left + this.width + 18;
 		return left_up_down || right;
 	}
 
 	@Override
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-		if (!dragging) return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
-		progress = MathHelper.clamp((mouseY - this.y - 25.5) / 90, 0, 1);
-		setTopRow((int) (progress * (totalRows - 6)));
+		if (!this.dragging) return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+		this.progress = MathHelper.clamp((mouseY - this.y - 25.5) / 90, 0, 1);
+		setTopRow((int) (this.progress * (this.totalRows - 6)));
 		return true;
 	}
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		if (searchBox.isFocused() && !searchBox.isMouseInBounds(mouseX, mouseY) && button == 0) {
-			searchBox.changeFocus(true);
+		if (this.searchBox.isFocused() && !this.searchBox.isMouseInBounds(mouseX, mouseY) && button == 0) {
+			this.searchBox.changeFocus(true);
 			this.setFocused(null);
 		}
 
 		if (button == 0 && this.x + 172 < mouseX && mouseX < this.x + 184 && this.y + 18 < mouseY && mouseY < this.y + 123) {
-			dragging = true;
+			this.dragging = true;
 			return true;
 		}
 
@@ -167,52 +167,52 @@ public class ScrollableScreen extends ContainerScreen<ScrollableContainer> imple
 
 	@Override
 	public boolean mouseReleased(double mouseX, double mouseY, int button) {
-		if (dragging && button == 0) dragging = false;
+		if (this.dragging && button == 0) this.dragging = false;
 		return super.mouseReleased(mouseX, mouseY, button);
 	}
 
 	private void setTopRow(int row) {
-		topRow = MathHelper.clamp(row, 0, totalRows - 6);
-		container.updateSlotPositions(topRow, false);
+		this.topRow = MathHelper.clamp(row, 0, this.totalRows - 6);
+		this.container.updateSlotPositions(this.topRow, false);
 	}
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		if (keyCode == 256) {
-			minecraft.player.closeContainer();
+			this.client.player.closeContainer();
 			return true;
 		}
 
-		if (!searchBox.isFocused()) {
-			if (minecraft.options.keyChat.matchesKey(keyCode, scanCode)) {
-				searchBox.changeFocus(true);
-				this.setFocused(searchBox);
-				searchBox.ignoreNextChar();
+		if (!this.searchBox.isFocused()) {
+			if (this.client.options.keyChat.matchesKey(keyCode, scanCode)) {
+				this.searchBox.changeFocus(true);
+				this.setFocused(this.searchBox);
+				this.searchBox.ignoreNextChar();
 				return true;
 			}
 
 			return super.keyPressed(keyCode, scanCode, modifiers);
 		}
 
-		return searchBox.keyPressed(keyCode, scanCode, modifiers);
+		return this.searchBox.keyPressed(keyCode, scanCode, modifiers);
 	}
 
 	@Override
 	public boolean charTyped(char character, int int_1) {
-		if (searchBox.isFocused()) return searchBox.charTyped(character, int_1);
+		if (this.searchBox.isFocused()) return this.searchBox.charTyped(character, int_1);
 		return super.charTyped(character, int_1);
 	}
 
 	@Override
 	public void resize(MinecraftClient client, int width, int height) {
-		String text = searchBox.getText();
-		boolean focused = searchBox.isFocused();
+		String text = this.searchBox.getText();
+		boolean focused = this.searchBox.isFocused();
 		super.resize(client, width, height);
-		searchBox.setText(text);
+		this.searchBox.setText(text);
 
 		if (focused) {
-			searchBox.changeFocus(true);
-			setFocused(searchBox);
+			this.searchBox.changeFocus(true);
+			this.setFocused(this.searchBox);
 		}
 	}
 
