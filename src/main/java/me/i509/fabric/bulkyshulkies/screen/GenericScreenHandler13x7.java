@@ -22,24 +22,24 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.container;
+package me.i509.fabric.bulkyshulkies.screen;
 
-import net.minecraft.container.Container;
-import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.SlotFactory;
 
-public class GenericContainer13x7 extends Container {
+public class GenericScreenHandler13x7 extends ScreenHandler {
 	private final Inventory inventory;
 	private final Text name;
 
-	public GenericContainer13x7(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text containerName) {
+	public GenericScreenHandler13x7(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text containerName) {
 		super(null, syncId);
 		this.inventory = inventory;
 		this.name = containerName;

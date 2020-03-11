@@ -24,8 +24,8 @@
 
 package me.i509.fabric.bulkyshulkies.api;
 
-import net.minecraft.container.Slot;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.screen.slot.Slot;
 
 /**
  * Represents a Function which creates a slot.

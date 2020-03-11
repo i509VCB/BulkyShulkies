@@ -40,7 +40,7 @@ import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
 import me.i509.fabric.bulkyshulkies.api.block.Facing1x1ShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
+import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 public class ObsidianShulkerBoxBlock extends Facing1x1ShulkerBoxBlock {
@@ -50,7 +50,7 @@ public class ObsidianShulkerBoxBlock extends Facing1x1ShulkerBoxBlock {
 
 	@Override
 	protected void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName) {
-		ContainerProviderRegistry.INSTANCE.openContainer(ContainerKeys.SHULKER_13x7_CONTAINER, playerEntity, (packetByteBuf -> {
+		ContainerProviderRegistry.INSTANCE.openContainer(ScreenHandlerKeys.SHULKER_13x7_CONTAINER, playerEntity, (packetByteBuf -> {
 			packetByteBuf.writeBlockPos(pos);
 			packetByteBuf.writeText(displayName);
 		}));

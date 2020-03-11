@@ -6,6 +6,8 @@ out/
 classes/
 logs/
 
+
+
 # idea
 
 .idea/
@@ -22,5 +24,5 @@ bin/
 .project
 
 # fabric
-
+remappedSrc/
 run/

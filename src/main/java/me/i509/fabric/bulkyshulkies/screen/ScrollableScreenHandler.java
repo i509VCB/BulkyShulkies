@@ -18,16 +18,16 @@
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package me.i509.fabric.bulkyshulkies.container;
+package me.i509.fabric.bulkyshulkies.screen;
 
 import java.util.Arrays;
 
-import net.minecraft.container.Container;
-import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 
 import net.fabricmc.api.EnvType;
@@ -41,7 +41,7 @@ import me.i509.fabric.bulkyshulkies.mixin.SlotAccessor;
 /**
  * Credit: NinjaPhoenix.
  */
-public class ScrollableContainer extends Container {
+public class ScrollableScreenHandler extends ScreenHandler {
 	private final Text containerName;
 	private final Inventory inventory;
 	private final int rows;
@@ -52,7 +52,7 @@ public class ScrollableContainer extends Container {
 	@Environment(EnvType.CLIENT)
 	private Integer[] unsortedToSortedSlotMap;
 
-	public ScrollableContainer(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text containerName) {
+	public ScrollableScreenHandler(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text containerName) {
 		super(null, syncId);
 		this.inventory = inventory;
 		this.containerName = containerName;

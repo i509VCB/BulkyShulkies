@@ -27,7 +27,7 @@ package me.i509.fabric.bulkyshulkies.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.ContainerScreen;
+import net.minecraft.client.gui.screen.ingame.ScreenWithHandler;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.Identifier;
 import net.minecraft.text.Text;
@@ -36,21 +36,21 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.container.GenericContainer13x7;
+import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler13x7;
 
 @Environment(EnvType.CLIENT)
-public class Generic13x7Screen extends ContainerScreen<GenericContainer13x7> {
+public class Generic13x7Screen extends ScreenWithHandler<GenericScreenHandler13x7> {
 	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_13x7.png");
 
-	public Generic13x7Screen(GenericContainer13x7 container, PlayerInventory playerInventory, Text name) {
-		super(container, playerInventory, name);
+	public Generic13x7Screen(GenericScreenHandler13x7 handler, PlayerInventory playerInventory, Text name) {
+		super(handler, playerInventory, name);
 		// containerHeight = 90 + (7 * 18); // 96
-		this.containerHeight = 132 + 7 * 18;
-		containerWidth += 36 + 36;
+		this.backgroundHeight = 132 + 7 * 18;
+		backgroundWidth += 36 + 36;
 	}
 
-	public static ContainerScreen<GenericContainer13x7> createScreen(GenericContainer13x7 container) {
-		return new Generic13x7Screen(container, MinecraftClient.getInstance().player.inventory, container.getDisplayName());
+	public static ScreenWithHandler<GenericScreenHandler13x7> createScreen(GenericScreenHandler13x7 handler) {
+		return new Generic13x7Screen(handler, MinecraftClient.getInstance().player.inventory, handler.getDisplayName());
 	}
 
 	@Override
@@ -64,16 +64,16 @@ public class Generic13x7Screen extends ContainerScreen<GenericContainer13x7> {
 	@Override
 	protected void drawForeground(int mouseX, int mouseY) {
 		this.textRenderer.draw(this.title.asFormattedString(), 8.0F, 7.0F, 4210752);
-		this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8.0F, (float) (this.containerHeight - 114 + 2), 4210752);
+		this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8.0F, (float) (this.backgroundHeight - 114 + 2), 4210752);
 	}
 
 	@Override
 	protected void drawBackground(float delta, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.client.getTextureManager().bindTexture(TEXTURE);
-		int i = (this.width - this.containerWidth) / 2;
-		int j = (this.height - this.containerHeight) / 2;
-		this.blit(i, j, 0, 0, this.containerWidth, 7 * 18 + 17);
-		this.blit(i, j + 7 * 18, 0, 126, this.containerWidth, 114);
+		int i = (this.width - this.backgroundWidth) / 2;
+		int j = (this.height - this.backgroundHeight) / 2;
+		this.blit(i, j, 0, 0, this.backgroundWidth, 7 * 18 + 17);
+		this.blit(i, j + 7 * 18, 0, 126, this.backgroundWidth, 114);
 	}
 }

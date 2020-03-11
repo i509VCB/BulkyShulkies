@@ -40,7 +40,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.container.Container;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -49,6 +48,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.DefaultedList;
@@ -338,7 +338,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	@Override
-	protected Container createContainer(int syncId, PlayerInventory playerInventory) {
+	protected final ScreenHandler createContainer(int syncId, PlayerInventory playerInventory) {
 		return null; // Our implementation does not require this method since the PropertyRetriever and Fabric-API handle the containers.
 	}
 

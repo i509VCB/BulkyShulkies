@@ -23,8 +23,8 @@ package me.i509.fabric.bulkyshulkies.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.ContainerScreen;
-import net.minecraft.client.gui.screen.ingame.ContainerProvider;
+import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
+import net.minecraft.client.gui.screen.ingame.ScreenWithHandler;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -36,13 +36,13 @@ import net.fabricmc.loader.api.FabricLoader;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.client.screen.widget.SearchTextFieldWidget;
-import me.i509.fabric.bulkyshulkies.container.ScrollableContainer;
+import me.i509.fabric.bulkyshulkies.screen.ScrollableScreenHandler;
 
 /**
  * Credit: NinjaPhenix.
  */
 @Environment(EnvType.CLIENT)
-public class ScrollableScreen extends ContainerScreen<ScrollableContainer> implements ContainerProvider<ScrollableContainer> {
+public class ScrollableScreen extends ScreenWithHandler<ScrollableScreenHandler> implements ScreenHandlerProvider<ScrollableScreenHandler> {
 	private static final Identifier BASE_TEXTURE = new Identifier("textures/gui/container/generic_54.png");
 	private static final Identifier WIDGETS_TEXTURE = BulkyShulkies.id("textures/gui/container/widgets.png");
 	private final int displayedRows;
@@ -53,20 +53,20 @@ public class ScrollableScreen extends ContainerScreen<ScrollableContainer> imple
 	private SearchTextFieldWidget searchBox;
 	private String searchBoxOldText;
 
-	public ScrollableScreen(ScrollableContainer container, PlayerInventory playerInventory, Text containerTitle) {
-		super(container, playerInventory, containerTitle);
-		this.totalRows = container.getRows();
+	public ScrollableScreen(ScrollableScreenHandler handler, PlayerInventory playerInventory, Text containerTitle) {
+		super(handler, playerInventory, containerTitle);
+		this.totalRows = handler.getRows();
 		this.topRow = 0;
 		this.displayedRows = this.hasScrollbar() ? 6 : this.totalRows;
-		if (this.hasScrollbar() && !FabricLoader.getInstance().isModLoaded("roughlyenoughitems")) this.containerWidth += 22;
-		this.containerHeight = 114 + this.displayedRows * 18;
+		if (this.hasScrollbar() && !FabricLoader.getInstance().isModLoaded("roughlyenoughitems")) this.backgroundWidth += 22;
+		this.backgroundHeight = 114 + this.displayedRows * 18;
 		this.progress = 0;
-		this.container.setSearchTerm("");
+		this.handler.setSearchTerm("");
 		this.searchBoxOldText = "";
 	}
 
-	public static ScrollableScreen createScreen(ScrollableContainer container) {
-		return new ScrollableScreen(container, MinecraftClient.getInstance().player.inventory, container.getDisplayName());
+	public static ScrollableScreen createScreen(ScrollableScreenHandler handler) {
+		return new ScrollableScreen(handler, MinecraftClient.getInstance().player.inventory, handler.getDisplayName());
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class ScrollableScreen extends ContainerScreen<ScrollableContainer> imple
 		this.searchBox.setEditableColor(16777215);
 		this.searchBox.setChangedListener(str -> {
 			if (str.equals(this.searchBoxOldText)) return;
-			this.container.setSearchTerm(str);
+			this.handler.setSearchTerm(str);
 			this.progress = 0;
 			this.topRow = 0;
 			this.searchBoxOldText = str;
@@ -102,17 +102,17 @@ public class ScrollableScreen extends ContainerScreen<ScrollableContainer> imple
 	@Override
 	protected void drawForeground(int mouseX, int mouseY) {
 		this.textRenderer.draw(this.title.asFormattedString(), 8, 6, 4210752);
-		this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8, containerHeight - 94, 4210752);
+		this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8, backgroundHeight - 94, 4210752);
 	}
 
 	@Override
 	protected void drawBackground(float lastFrameDuration, int mouseX, int mouseY) {
 		RenderSystem.color4f(1, 1, 1, 1);
 		this.client.getTextureManager().bindTexture(BASE_TEXTURE);
-		int x = (this.width - this.containerWidth) / 2;
-		int y = (this.height - this.containerHeight) / 2;
-		blit(x, y, 0, 0, this.containerWidth, this.displayedRows * 18 + 17);
-		blit(x, y + this.displayedRows * 18 + 17, 0, 126, this.containerWidth, 96);
+		int x = (this.width - this.backgroundWidth) / 2;
+		int y = (this.height - this.backgroundHeight) / 2;
+		blit(x, y, 0, 0, this.backgroundWidth, this.displayedRows * 18 + 17);
+		blit(x, y + this.displayedRows * 18 + 17, 0, 126, this.backgroundWidth, 96);
 
 		if (hasScrollbar()) {
 			this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
@@ -173,13 +173,13 @@ public class ScrollableScreen extends ContainerScreen<ScrollableContainer> imple
 
 	private void setTopRow(int row) {
 		this.topRow = MathHelper.clamp(row, 0, this.totalRows - 6);
-		this.container.updateSlotPositions(this.topRow, false);
+		this.handler.updateSlotPositions(this.topRow, false);
 	}
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		if (keyCode == 256) {
-			this.client.player.closeContainer();
+			this.client.player.closeHandledScreen();
 			return true;
 		}
 

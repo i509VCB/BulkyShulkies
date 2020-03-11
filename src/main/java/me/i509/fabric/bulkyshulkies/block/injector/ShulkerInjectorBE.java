@@ -25,11 +25,11 @@
 package me.i509.fabric.bulkyshulkies.block.injector;
 
 import net.minecraft.block.entity.LockableContainerBlockEntity;
-import net.minecraft.container.Container;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DefaultedList;
@@ -58,7 +58,7 @@ public class ShulkerInjectorBE extends LockableContainerBlockEntity implements S
 	}
 
 	@Override
-	protected Container createContainer(int i, PlayerInventory playerInventory) {
+	protected ScreenHandler createContainer(int i, PlayerInventory playerInventory) {
 		return null; // We don't use MC's create container.
 	}
 

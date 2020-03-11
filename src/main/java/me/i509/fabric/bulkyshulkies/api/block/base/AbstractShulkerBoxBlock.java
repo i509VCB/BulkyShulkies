@@ -36,7 +36,6 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.container.Container;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -47,6 +46,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -251,7 +251,7 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 			BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
 			if (blockEntity instanceof AbstractShulkerBoxBE) {
-				world.updateHorizontalAdjacent(blockPos, blockState.getBlock());
+				world.updateComparators(blockPos, blockState.getBlock());
 			}
 
 			super.onBlockRemoved(blockState, world, blockPos, otherBlockState, boolean_1);
@@ -270,7 +270,7 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 
 	@Override
 	public int getComparatorOutput(BlockState blockState, World world, BlockPos blockPos) {
-		return Container.calculateComparatorOutput((Inventory) world.getBlockEntity(blockPos));
+		return ScreenHandler.calculateComparatorOutput((Inventory) world.getBlockEntity(blockPos));
 	}
 
 	@Override

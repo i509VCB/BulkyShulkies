@@ -37,7 +37,7 @@ import net.minecraft.world.BlockView;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
-import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
+import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 public class EnderSlabBoxBlock extends CursedSlabShulkerBox {
@@ -48,7 +48,7 @@ public class EnderSlabBoxBlock extends CursedSlabShulkerBox {
 	// TODO: Instead of reading the BE for data, we instead refer to an ender like chest.
 	@Override
 	protected void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName) {
-		ContainerProviderRegistry.INSTANCE.openContainer(ContainerKeys.ENDER_SLAB, playerEntity, (packetByteBuf -> {
+		ContainerProviderRegistry.INSTANCE.openContainer(ScreenHandlerKeys.ENDER_SLAB, playerEntity, (packetByteBuf -> {
 			packetByteBuf.writeBlockPos(pos);
 			packetByteBuf.writeText(displayName);
 		}));

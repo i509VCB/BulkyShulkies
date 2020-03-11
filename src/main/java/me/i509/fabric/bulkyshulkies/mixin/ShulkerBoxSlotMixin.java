@@ -29,8 +29,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.container.ShulkerBoxSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.slot.ShulkerBoxSlot;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 

@@ -25,9 +25,9 @@
 package me.i509.fabric.bulkyshulkies.registry;
 
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.container.ShulkerBoxSlot;
-import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.screen.slot.ShulkerBoxSlot;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
@@ -37,14 +37,14 @@ import net.minecraft.world.World;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
-import me.i509.fabric.bulkyshulkies.container.GenericContainer9x7;
-import me.i509.fabric.bulkyshulkies.container.GenericContainer11x7;
-import me.i509.fabric.bulkyshulkies.container.GenericContainer13x7;
-import me.i509.fabric.bulkyshulkies.container.ScrollableContainer;
+import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler9x7;
+import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler11x7;
+import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler13x7;
+import me.i509.fabric.bulkyshulkies.screen.ScrollableScreenHandler;
 import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
 
-public class ShulkerContainers {
-	private ShulkerContainers() {
+public class ShulkerScreenHandlers {
+	private ShulkerScreenHandlers() {
 		// NO-OP
 	}
 
@@ -52,35 +52,35 @@ public class ShulkerContainers {
 		// NO-OP
 	}
 
-	public static GenericContainer13x7 create13x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
+	public static GenericScreenHandler13x7 create13x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		BlockPos pos = buf.readBlockPos();
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
-		return new GenericContainer13x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		return new GenericScreenHandler13x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
 	}
 
-	public static GenericContainer11x7 create11x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
+	public static GenericScreenHandler11x7 create11x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		BlockPos pos = buf.readBlockPos();
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
-		return new GenericContainer11x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		return new GenericScreenHandler11x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
 	}
 
-	public static GenericContainer9x7 create9x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
+	public static GenericScreenHandler9x7 create9x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		BlockPos pos = buf.readBlockPos();
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
-		return new GenericContainer9x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		return new GenericScreenHandler9x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
 	}
 
-	public static ScrollableContainer createScrollable(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
+	public static ScrollableScreenHandler createScrollable(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		BlockPos pos = buf.readBlockPos();
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
-		return new ScrollableContainer(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		return new ScrollableScreenHandler(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
 	}
 
-	public static ScrollableContainer createEnderSlab(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
+	public static ScrollableScreenHandler createEnderSlab(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		BlockPos pos = buf.readBlockPos();
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
@@ -89,6 +89,6 @@ public class ShulkerContainers {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		slab.setCurrentBlockEntity(blockEntity instanceof EnderSlabBoxBE ? (EnderSlabBoxBE) blockEntity : null);
 
-		return new ScrollableContainer(syncId, Slot::new, player.inventory, slab, name);
+		return new ScrollableScreenHandler(syncId, Slot::new, player.inventory, slab, name);
 	}
 }

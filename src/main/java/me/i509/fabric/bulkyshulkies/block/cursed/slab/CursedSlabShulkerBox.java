@@ -38,7 +38,7 @@ import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
 import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractCursedShulkerSlabBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.container.ContainerKeys;
+import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 public class CursedSlabShulkerBox extends AbstractCursedShulkerSlabBlock {
@@ -53,7 +53,7 @@ public class CursedSlabShulkerBox extends AbstractCursedShulkerSlabBlock {
 
 	@Override
 	protected void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName) {
-		ContainerProviderRegistry.INSTANCE.openContainer(ContainerKeys.SHULKER_SCROLLABLE_CONTAINER, playerEntity, (packetByteBuf -> {
+		ContainerProviderRegistry.INSTANCE.openContainer(ScreenHandlerKeys.SHULKER_SCROLLABLE_CONTAINER, playerEntity, (packetByteBuf -> {
 			packetByteBuf.writeBlockPos(pos);
 			packetByteBuf.writeText(displayName);
 		}));
