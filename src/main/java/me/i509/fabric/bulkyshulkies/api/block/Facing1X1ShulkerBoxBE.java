@@ -33,6 +33,7 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
@@ -44,17 +45,20 @@ public abstract class Facing1X1ShulkerBoxBE extends AbstractShulkerBoxBE {
 	}
 
 	@Override
-	public Box getBoundingBox(BlockState blockState) {
+	public VoxelShape getBoundingBox(BlockState blockState) {
 		Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
 		float f = this.getAnimationProgress(1.0F);
-		return VoxelShapes.fullCube()
-			.getBoundingBox()
-			.stretch(f * 0.5F * direction.getOffsetX(), f * 0.5F * direction.getOffsetY(), f * 0.5F * direction.getOffsetZ());
+
+		if (f == 0.0F) {
+			return VoxelShapes.fullCube();
+		}
+
+		return VoxelShapes.cuboid(VoxelShapes.fullCube().getBoundingBox().stretch(f * 0.5F * direction.getOffsetX(), f * 0.5F * direction.getOffsetY(), f * 0.5F * direction.getOffsetZ()));
 	}
 
 	@Override
-	public Box getCollisionBox(BlockState state) {
+	public Box getLidCollisionBox(BlockState state) {
 		Direction opposite = state.get(FacingShulkerBoxBlock.FACING).getOpposite();
-		return this.getBoundingBox(state).shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
+		return this.getBoundingBox(state).getBoundingBox().shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
 	}
 }

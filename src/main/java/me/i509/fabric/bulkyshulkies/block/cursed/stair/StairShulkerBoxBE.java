@@ -43,6 +43,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 
 import me.i509.fabric.bulkyshulkies.api.block.HorizontalFacingShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
@@ -67,22 +68,22 @@ public class StairShulkerBoxBE extends AbstractShulkerBoxBE {
 	}
 
 	@Override
-	public Box getBoundingBox(BlockState blockState) {
+	public VoxelShape getBoundingBox(BlockState blockState) {
 		VoxelShape unmodified = getBaseStairShape(blockState);
 
 		if (animationProgress == 0.0D) {
-			return unmodified.getBoundingBox();
+			return unmodified;
 		}
 
 		VoxelShape offset = unmodified.offset(0.0D, blockState.get(StairShulkerBoxBlock.HALF).equals(BlockHalf.BOTTOM) ? animationProgress : -1 * animationProgress, 0.0D);
-		//VoxelShape base =
-		return offset.getBoundingBox();
+
+		return VoxelShapes.cuboid(offset.getBoundingBox());
 	}
 
 	@Override
-	public Box getCollisionBox(BlockState state) {
+	public Box getLidCollisionBox(BlockState state) {
 		Direction opposite = state.get(HorizontalFacingShulkerBoxBlock.FACING).getOpposite();
-		return this.getBoundingBox(state).shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
+		return this.getBoundingBox(state).getBoundingBox().shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
 	}
 
 	protected void pushEntities() {
@@ -90,7 +91,7 @@ public class StairShulkerBoxBE extends AbstractShulkerBoxBE {
 
 		if (blockState.getBlock() instanceof BasicShulkerBlock) {
 			Direction direction = blockState.get(StairShulkerBoxBlock.HALF) == BlockHalf.BOTTOM ? Direction.UP : Direction.DOWN;
-			Box box = this.getCollisionBox(blockState).offset(this.pos);
+			Box box = this.getLidCollisionBox(blockState).offset(this.pos);
 			List<Entity> list = this.world.getEntities(null, box);
 
 			if (!list.isEmpty()) {

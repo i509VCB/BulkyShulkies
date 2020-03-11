@@ -82,8 +82,8 @@ public class StairShulkerBoxBlock extends HorizontalFacingShulkerBoxBlock implem
 					16.0D, (8.0D * animationProgress), 16.0D
 				)
 				: Block.createCuboidShape(
-					16.0D, 16.0D - (8.0D * animationProgress), 16.0D,
-					0.0D, 0.0D, 0.0D
+					0.0D, 16.0D - (8.0D * animationProgress), 0.0D,
+					16.0D, 16.0D, 16.0D
 				);
 		return VoxelShapes.union(offset, base);
 		// TODO fix shape issue with upside down stairs (Lower tenary operator)
@@ -162,7 +162,7 @@ public class StairShulkerBoxBlock extends HorizontalFacingShulkerBoxBlock implem
 	}
 
 	@Override
-	public Box getOpenBox(Direction facing) {
+	public Box getLidCollisionBox(Direction facing) {
 		return ShulkerLidCollisions.getLidCollisionBox(new BlockPos(0, 1, 0), facing);
 	}
 

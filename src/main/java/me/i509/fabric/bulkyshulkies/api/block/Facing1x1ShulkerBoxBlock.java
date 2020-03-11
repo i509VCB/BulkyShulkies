@@ -57,7 +57,7 @@ public abstract class Facing1x1ShulkerBoxBlock extends FacingShulkerBoxBlock {
 	}
 
 	@Override
-	public Box getOpenBox(Direction facing) {
+	public Box getLidCollisionBox(Direction facing) {
 		return VoxelShapes.fullCube().getBoundingBox()
 				.stretch(0.5F * facing.getOffsetX(), 0.5F * facing.getOffsetY(), 0.5F * facing.getOffsetZ())
 				.shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
@@ -66,6 +66,6 @@ public abstract class Facing1x1ShulkerBoxBlock extends FacingShulkerBoxBlock {
 	@Override
 	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
 		BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
-		return blockEntity instanceof BasicShulkerBlockEntity ? VoxelShapes.cuboid(((BasicShulkerBlockEntity) blockEntity).getBoundingBox(blockState)) : VoxelShapes.fullCube();
+		return blockEntity instanceof BasicShulkerBlockEntity ? ((BasicShulkerBlockEntity) blockEntity).getBoundingBox(blockState) : VoxelShapes.fullCube();
 	}
 }

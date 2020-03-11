@@ -73,7 +73,7 @@ public abstract class HorizontalFacingShulkerBoxBlock extends AbstractShulkerBox
 				boolean shouldOpen;
 
 				if (cursedBlockEntity.getAnimationStage() == BasicShulkerBlockEntity.AnimationStatus.CLOSED) {
-					Box openBox = getOpenBox(facing);
+					Box openBox = this.getLidCollisionBox(facing);
 					shouldOpen = world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
 				} else {
 					shouldOpen = true;

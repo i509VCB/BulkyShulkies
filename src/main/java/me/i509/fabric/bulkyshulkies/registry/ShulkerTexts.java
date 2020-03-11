@@ -43,4 +43,5 @@ public class ShulkerTexts {
 	public static final Text NETHERITE_CONTAINER = new TranslatableText("container.netheriteShulkerBox");
 
 	public static final Text MISSING_CONTAINER = new TranslatableText("container.missingTexBox");
+	public static final Text CLEAR_CONTAINER = new TranslatableText("container.clearShulkerBox");
 }

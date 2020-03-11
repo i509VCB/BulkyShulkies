@@ -28,8 +28,12 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
+import com.google.common.collect.ForwardingMap;
+import com.google.common.collect.ImmutableMap;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
@@ -54,6 +58,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -80,10 +86,10 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	@Override
-	public abstract Box getBoundingBox(BlockState blockState);
+	public abstract VoxelShape getBoundingBox(BlockState blockState);
 
 	@Override
-	public abstract Box getCollisionBox(BlockState blockState);
+	public abstract Box getLidCollisionBox(BlockState blockState);
 
 	@Override
 	public void tick() {
@@ -136,7 +142,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 
 		if (blockState.getBlock() instanceof BasicShulkerBlock) {
 			Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
-			Box box = this.getCollisionBox(blockState).offset(this.pos);
+			Box box = this.getLidCollisionBox(blockState).offset(this.pos);
 			List<Entity> list = this.world.getEntities(null, box);
 
 			if (!list.isEmpty()) {
@@ -316,6 +322,11 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 		return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
 	}
 
+	@Override
+	public int getProgress() {
+		return (int) (this.animationProgress * 10);
+	}
+
 	@Environment(EnvType.CLIENT)
 	public DyeColor getColor() {
 		if (this.cachedColorUpdateNeeded) {
@@ -329,5 +340,65 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	@Override
 	protected Container createContainer(int syncId, PlayerInventory playerInventory) {
 		return null; // Our implementation does not require this method since the PropertyRetriever and Fabric-API handle the containers.
+	}
+
+	public static class DirectionalShapeContainer {
+		private static final Direction[] HORIZONTAL = new Direction[] {
+			Direction.NORTH,
+			Direction.SOUTH,
+			Direction.EAST,
+			Direction.WEST
+		};
+
+		private static final Direction[] VERTICAL = new Direction[] {
+			Direction.UP,
+			Direction.DOWN
+		};
+
+		private final ForwardingMap<Direction, VoxelShape> shapes;
+
+		public DirectionalShapeContainer(ImmutableMap<Direction, VoxelShape> built) {
+			this.shapes = new ForwardingMap<Direction, VoxelShape>() {
+				@Override
+				protected Map<Direction, VoxelShape> delegate() {
+					return built;
+				}
+
+				@Override
+				public VoxelShape get(Object direction) {
+					VoxelShape v = super.get(direction);
+
+					if (v == null) {
+						return VoxelShapes.fullCube(); // Fallback
+					}
+
+					return v;
+				}
+			};
+		}
+
+		public static DirectionalShapeContainer createAll(double animation, BiFunction<Double, Direction, VoxelShape> shapeFunction) {
+			ImmutableMap.Builder<Direction, VoxelShape> builder = ImmutableMap.builder();
+
+			for (Direction value : Direction.values()) {
+				builder.put(value, shapeFunction.apply(animation, value));
+			}
+
+			return new DirectionalShapeContainer(builder.build());
+		}
+
+		public static DirectionalShapeContainer createHorizontal(double animation, BiFunction<Double, Direction, VoxelShape> shapeFunction) {
+			ImmutableMap.Builder<Direction, VoxelShape> builder = ImmutableMap.builder();
+
+			for (Direction value : DirectionalShapeContainer.HORIZONTAL) {
+				builder.put(value, shapeFunction.apply(animation, value));
+			}
+
+			return new DirectionalShapeContainer(builder.build());
+		}
+
+		public VoxelShape get(Direction direction) {
+			return this.shapes.get(direction);
+		}
 	}
 }

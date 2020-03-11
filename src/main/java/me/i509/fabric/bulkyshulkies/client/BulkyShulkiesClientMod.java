@@ -28,8 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBlock;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -66,6 +64,8 @@ import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBE;

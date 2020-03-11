@@ -31,6 +31,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
 
 /**
  * Represents a shulker box block entity and exposes some information about the blockentity's state.
@@ -44,9 +45,9 @@ public interface BasicShulkerBlockEntity {
 	 * @param blockState The blockState of the BlockEntity.
 	 * @return The bounding box of the block entity.
 	 */
-	Box getBoundingBox(BlockState blockState);
+	VoxelShape getBoundingBox(BlockState blockState);
 
-	Box getCollisionBox(BlockState state);
+	Box getLidCollisionBox(BlockState state);
 
 	/**
 	 * Gets the current animation stage of the shulker box.
@@ -64,12 +65,13 @@ public interface BasicShulkerBlockEntity {
 	DyeColor getColor();
 
 	/**
-	 * Gets the current lerped progress of the animation.
+	 * Gets the current progress of the animation.
 	 *
-	 * @param currentProgress The raw currentProgress number.
-	 * @return The current lerped progress.
+	 * @return The current progress.
 	 */
-	float getAnimationProgress(float currentProgress);
+	float getAnimationProgress(float delta);
+
+	int getProgress();
 
 	/**
 	 * Checks if an item can be inserted into an item slot.

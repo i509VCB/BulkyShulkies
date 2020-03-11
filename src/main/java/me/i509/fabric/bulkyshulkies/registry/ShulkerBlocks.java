@@ -24,7 +24,6 @@
 
 package me.i509.fabric.bulkyshulkies.registry;
 
-import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
@@ -44,10 +43,11 @@ import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBloc
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
 import me.i509.fabric.bulkyshulkies.item.ShulkerBlockItem;
 // import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBlock;
 

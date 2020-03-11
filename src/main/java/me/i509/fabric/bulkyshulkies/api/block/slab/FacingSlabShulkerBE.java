@@ -39,6 +39,8 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 
 import me.i509.fabric.bulkyshulkies.api.block.FacingShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
@@ -52,18 +54,18 @@ public abstract class FacingSlabShulkerBE extends AbstractShulkerBoxBE {
 	}
 
 	@Override
-	public Box getBoundingBox(BlockState blockState) {
+	public VoxelShape getBoundingBox(BlockState blockState) {
 		Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
 		float f = this.getAnimationProgress(1.0F);
-		return AbstractCursedShulkerSlabBlock.getShape(direction)
+		return VoxelShapes.cuboid(AbstractCursedShulkerSlabBlock.getShape(direction)
 			.getBoundingBox()
-			.stretch(0.25F * f * direction.getOffsetX(), 0.25F * f * direction.getOffsetY(), 0.25F * f * direction.getOffsetZ());
+			.stretch(0.25F * f * direction.getOffsetX(), 0.25F * f * direction.getOffsetY(), 0.25F * f * direction.getOffsetZ()));
 	}
 
 	@Override
-	public Box getCollisionBox(BlockState blockState) {
+	public Box getLidCollisionBox(BlockState blockState) {
 		Direction direction = blockState.get(FacingShulkerBoxBlock.FACING).getOpposite();
-		return this.getBoundingBox(blockState).shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
+		return this.getBoundingBox(blockState).getBoundingBox().shrink(direction.getOffsetX(), direction.getOffsetY(), direction.getOffsetZ());
 	}
 
 	/**
@@ -75,7 +77,7 @@ public abstract class FacingSlabShulkerBE extends AbstractShulkerBoxBE {
 
 		if (blockState.getBlock() instanceof BasicShulkerBlock) {
 			Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
-			Box box = this.getCollisionBox(blockState).offset(this.pos);
+			Box box = this.getLidCollisionBox(blockState).offset(this.pos);
 			List<Entity> list = this.world.getEntities(null, box);
 
 			if (!list.isEmpty()) {

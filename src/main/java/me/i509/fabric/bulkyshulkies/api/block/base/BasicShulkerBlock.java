@@ -82,7 +82,7 @@ public interface BasicShulkerBlock {
 	 * @param facing The direction the blockState is facing.
 	 * @return A Box which contains the maximum dimensions of the box.
 	 */
-	Box getOpenBox(Direction facing);
+	Box getLidCollisionBox(Direction facing);
 
 	/**
 	 * Get's the DyeColor the shulker box is.

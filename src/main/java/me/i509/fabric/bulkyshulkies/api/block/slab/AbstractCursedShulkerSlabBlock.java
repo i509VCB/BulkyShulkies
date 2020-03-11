@@ -38,7 +38,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
 import me.i509.fabric.bulkyshulkies.abstraction.DefaultReturnHashMap;
@@ -79,12 +78,12 @@ public abstract class AbstractCursedShulkerSlabBlock extends FacingShulkerBoxBlo
 	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
 		BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
 		return blockEntity instanceof FacingSlabShulkerBE
-				? VoxelShapes.cuboid(((FacingSlabShulkerBE) blockEntity).getBoundingBox(blockState))
+				? ((FacingSlabShulkerBE) blockEntity).getBoundingBox(blockState)
 				: AbstractCursedShulkerSlabBlock.getShape(blockState.get(FACING));
 	}
 
 	@Override
-	public Box getOpenBox(Direction facing) { // This is the bit above the block where collisions are checked for to verify the box can actually be opened.
+	public Box getLidCollisionBox(Direction facing) { // This is the bit above the block where collisions are checked for to verify the box can actually be opened.
 		return getShape(facing).getBoundingBox()
 				.stretch(0.25F * facing.getOffsetX(), 0.25F * facing.getOffsetY(), 0.25F * facing.getOffsetZ())
 				.shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
