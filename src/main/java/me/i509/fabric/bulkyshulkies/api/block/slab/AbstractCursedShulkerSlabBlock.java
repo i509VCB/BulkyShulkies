@@ -88,9 +88,4 @@ public abstract class AbstractCursedShulkerSlabBlock extends FacingShulkerBoxBlo
 				.stretch(0.25F * facing.getOffsetX(), 0.25F * facing.getOffsetY(), 0.25F * facing.getOffsetZ())
 				.shrink(facing.getOffsetX(), facing.getOffsetY(), facing.getOffsetZ());
 	}
-
-	@Override
-	public boolean canSuffocate(BlockState blockState, BlockView blockView, BlockPos blockPos) {
-		return false; // This is required for sub 1 block tall boxes, otherwise special math is needed or collisions break.
-	}
 }

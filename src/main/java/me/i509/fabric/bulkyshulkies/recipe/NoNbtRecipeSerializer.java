@@ -26,9 +26,9 @@ package me.i509.fabric.bulkyshulkies.recipe;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PacketByteBuf;
 
 public class NoNbtRecipeSerializer extends ShapedRecipe.Serializer {
 	public NoNbtRecipe read(Identifier identifier, JsonObject jsonObject) {

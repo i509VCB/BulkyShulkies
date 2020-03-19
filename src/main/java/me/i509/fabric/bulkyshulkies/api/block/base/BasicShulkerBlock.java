@@ -66,17 +66,6 @@ public interface BasicShulkerBlock {
 	ItemStack getItemStack(@Nullable DyeColor color);
 
 	/**
-	 * Checks weather an entity can suffocate in this block.
-	 * If your shulker box is an odd shape or is less than a block tall, this should be false or handled with the shape in the context.
-	 *
-	 * @param blockState The blockState.
-	 * @param blockView  The blockView.
-	 * @param blockPos   The blockPos.
-	 * @return true if an entity can suffocate, otherwise false.
-	 */
-	boolean canSuffocate(BlockState blockState, BlockView blockView, BlockPos blockPos);
-
-	/**
 	 * Get's the dimensions of the Box when it is fully opened.
 	 *
 	 * @param facing The direction the blockState is facing.

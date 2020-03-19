@@ -26,9 +26,9 @@ package me.i509.fabric.bulkyshulkies.recipe.injector;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PacketByteBuf;
 
 public class InjectorRecipeSerializer implements RecipeSerializer<InjectorRecipe> {
 	@Override

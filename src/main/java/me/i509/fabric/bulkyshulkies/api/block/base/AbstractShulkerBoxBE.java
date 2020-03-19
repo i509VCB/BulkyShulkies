@@ -51,9 +51,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.DefaultedList;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Tickable;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -217,7 +217,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	protected void updateNeighborStates() {
-		this.getCachedState().updateNeighborStates(this.getWorld(), this.getPos(), 3);
+		this.getCachedState().updateNeighbors(this.getWorld(), this.getPos(), 3);
 	}
 
 	@Override

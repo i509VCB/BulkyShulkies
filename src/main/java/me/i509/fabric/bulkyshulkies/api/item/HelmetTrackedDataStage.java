@@ -26,7 +26,7 @@ package me.i509.fabric.bulkyshulkies.api.item;
 
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.data.TrackedDataHandler;
-import net.minecraft.util.PacketByteBuf;
+import net.minecraft.network.PacketByteBuf;
 
 public class HelmetTrackedDataStage implements TrackedDataHandler<ShulkerBoxBlockEntity.AnimationStage> {
 	private HelmetTrackedDataStage() {

@@ -23,8 +23,8 @@ package me.i509.fabric.bulkyshulkies.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
-import net.minecraft.client.gui.screen.ingame.ScreenWithHandler;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -42,7 +42,7 @@ import me.i509.fabric.bulkyshulkies.screen.ScrollableScreenHandler;
  * Credit: NinjaPhenix.
  */
 @Environment(EnvType.CLIENT)
-public class ScrollableScreen extends ScreenWithHandler<ScrollableScreenHandler> implements ScreenHandlerProvider<ScrollableScreenHandler> {
+public class ScrollableScreen extends HandledScreen<ScrollableScreenHandler> implements ScreenHandlerProvider<ScrollableScreenHandler> {
 	private static final Identifier BASE_TEXTURE = new Identifier("textures/gui/container/generic_54.png");
 	private static final Identifier WIDGETS_TEXTURE = BulkyShulkies.id("textures/gui/container/widgets.png");
 	private final int displayedRows;
@@ -111,14 +111,14 @@ public class ScrollableScreen extends ScreenWithHandler<ScrollableScreenHandler>
 		this.client.getTextureManager().bindTexture(BASE_TEXTURE);
 		int x = (this.width - this.backgroundWidth) / 2;
 		int y = (this.height - this.backgroundHeight) / 2;
-		blit(x, y, 0, 0, this.backgroundWidth, this.displayedRows * 18 + 17);
-		blit(x, y + this.displayedRows * 18 + 17, 0, 126, this.backgroundWidth, 96);
+		drawTexture(x, y, 0, 0, this.backgroundWidth, this.displayedRows * 18 + 17);
+		drawTexture(x, y + this.displayedRows * 18 + 17, 0, 126, this.backgroundWidth, 96);
 
 		if (hasScrollbar()) {
 			this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
-			blit(x + 172, y, 0, 0, 22, 132);
-			blit(x + 174, (int) (y + 18 + 91 * progress), 22, 0, 12, 15);
-			blit(x + 79, y + 126, 34, 0, 90, 11);
+			drawTexture(x + 172, y, 0, 0, 22, 132);
+			drawTexture(x + 174, (int) (y + 18 + 91 * progress), 22, 0, 12, 15);
+			drawTexture(x + 79, y + 126, 34, 0, 90, 11);
 			this.searchBox.render(mouseX, mouseY, lastFrameDuration);
 		}
 	}

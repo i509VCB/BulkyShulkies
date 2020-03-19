@@ -31,9 +31,9 @@ import net.minecraft.screen.slot.Slot;
 
 @Mixin(Slot.class)
 public interface SlotAccessor {
-	@Accessor("xPosition")
+	@Accessor("x")
 	void accessor$setX(int x);
 
-	@Accessor("yPosition")
+	@Accessor("y")
 	void accessor$setY(int y);
 }

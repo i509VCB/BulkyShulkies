@@ -27,7 +27,7 @@ package me.i509.fabric.bulkyshulkies.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.ScreenWithHandler;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -39,7 +39,7 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler9x7;
 
 @Environment(EnvType.CLIENT)
-public class Generic9x7Screen extends ScreenWithHandler<GenericScreenHandler9x7> {
+public class Generic9x7Screen extends HandledScreen<GenericScreenHandler9x7> {
 	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_9x7.png");
 
 	public Generic9x7Screen(GenericScreenHandler9x7 container, PlayerInventory playerInventory, Text name) {
@@ -47,7 +47,7 @@ public class Generic9x7Screen extends ScreenWithHandler<GenericScreenHandler9x7>
 		this.backgroundHeight = 132 + 7 * 18;
 	}
 
-	public static ScreenWithHandler<GenericScreenHandler9x7> createScreen(GenericScreenHandler9x7 container) {
+	public static HandledScreen<GenericScreenHandler9x7> createScreen(GenericScreenHandler9x7 container) {
 		return new Generic9x7Screen(container, MinecraftClient.getInstance().player.inventory, container.getDisplayName());
 	}
 
@@ -71,7 +71,7 @@ public class Generic9x7Screen extends ScreenWithHandler<GenericScreenHandler9x7>
 		this.client.getTextureManager().bindTexture(TEXTURE);
 		int i = (this.width - this.backgroundWidth) / 2;
 		int j = (this.height - this.backgroundHeight) / 2;
-		this.blit(i, j, 0, 0, this.backgroundWidth, 7 * 18 + 17);
-		this.blit(i, j + 7 * 18 /*+ 17*/, 0, 126, this.backgroundWidth, 114); // was 114, 96
+		this.drawTexture(i, j, 0, 0, this.backgroundWidth, 7 * 18 + 17);
+		this.drawTexture(i, j + 7 * 18 /*+ 17*/, 0, 126, this.backgroundWidth, 114); // was 114, 96
 	}
 }

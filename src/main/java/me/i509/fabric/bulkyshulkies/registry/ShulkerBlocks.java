@@ -24,6 +24,7 @@
 
 package me.i509.fabric.bulkyshulkies.registry;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
@@ -53,9 +54,10 @@ import me.i509.fabric.bulkyshulkies.item.ShulkerBlockItem;
 
 public class ShulkerBlocks {
 	// Dynamic bounds are VERY IMPORTANT. Otherwise your box will make entities suffocate since the game's cached block is exactly 1 full cube, so collisions act odd for this reason without the dynamic bounds.
-	public static final Block.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque().build();
-	public static final Block.Settings EXPLOSION_PROOF_SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().build();
-	public static final Block.Settings ENDER_SLAB_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().lightLevel(7).build();
+	public static final AbstractBlock.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque().build();
+	public static final AbstractBlock.Settings SHULKER_SLAB_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque().build().suffocates((state, world, pos) -> false);
+	public static final AbstractBlock.Settings EXPLOSION_PROOF_SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().build();
+	public static final AbstractBlock.Settings ENDER_SLAB_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().lightLevel(7).build().suffocates((state, world, pos) -> false);
 
 	/*
 	 * ========================
@@ -280,23 +282,23 @@ public class ShulkerBlocks {
 	 * ========================
 	 */
 
-	public static final Block SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, null), "slab_shulker_box");
-	public static final Block WHITE_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_slab_shulker_box");
-	public static final Block ORANGE_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_slab_shulker_box");
-	public static final Block MAGENTA_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.MAGENTA), "magenta_slab_shulker_box");
-	public static final Block LIGHT_BLUE_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.LIGHT_BLUE), "light_blue_slab_shulker_box");
-	public static final Block YELLOW_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.YELLOW), "yellow_slab_shulker_box");
-	public static final Block LIME_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.LIME), "lime_slab_shulker_box");
-	public static final Block PINK_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.PINK), "pink_slab_shulker_box");
-	public static final Block GRAY_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.GRAY), "gray_slab_shulker_box");
-	public static final Block LIGHT_GRAY_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.LIGHT_GRAY), "light_gray_slab_shulker_box");
-	public static final Block CYAN_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.CYAN), "cyan_slab_shulker_box");
-	public static final Block PURPLE_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.PURPLE), "purple_slab_shulker_box");
-	public static final Block BLUE_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.BLUE), "blue_slab_shulker_box");
-	public static final Block BROWN_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.BROWN), "brown_slab_shulker_box");
-	public static final Block GREEN_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.GREEN), "green_slab_shulker_box");
-	public static final Block RED_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.RED), "red_slab_shulker_box");
-	public static final Block BLACK_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_BOX_SETTINGS, DyeColor.BLACK), "black_slab_shulker_box");
+	public static final Block SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, null), "slab_shulker_box");
+	public static final Block WHITE_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.WHITE), "white_slab_shulker_box");
+	public static final Block ORANGE_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.ORANGE), "orange_slab_shulker_box");
+	public static final Block MAGENTA_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.MAGENTA), "magenta_slab_shulker_box");
+	public static final Block LIGHT_BLUE_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.LIGHT_BLUE), "light_blue_slab_shulker_box");
+	public static final Block YELLOW_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.YELLOW), "yellow_slab_shulker_box");
+	public static final Block LIME_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.LIME), "lime_slab_shulker_box");
+	public static final Block PINK_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.PINK), "pink_slab_shulker_box");
+	public static final Block GRAY_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.GRAY), "gray_slab_shulker_box");
+	public static final Block LIGHT_GRAY_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.LIGHT_GRAY), "light_gray_slab_shulker_box");
+	public static final Block CYAN_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.CYAN), "cyan_slab_shulker_box");
+	public static final Block PURPLE_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.PURPLE), "purple_slab_shulker_box");
+	public static final Block BLUE_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.BLUE), "blue_slab_shulker_box");
+	public static final Block BROWN_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.BROWN), "brown_slab_shulker_box");
+	public static final Block GREEN_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.GREEN), "green_slab_shulker_box");
+	public static final Block RED_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.RED), "red_slab_shulker_box");
+	public static final Block BLACK_SLAB_SHULKER_BOX = registerShulker(new CursedSlabShulkerBox(SHULKER_SLAB_BOX_SETTINGS, DyeColor.BLACK), "black_slab_shulker_box");
 
 	/*
 	 * ========================
