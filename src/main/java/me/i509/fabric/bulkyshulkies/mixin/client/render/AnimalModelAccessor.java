@@ -22,23 +22,24 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies;
+package me.i509.fabric.bulkyshulkies.mixin.client.render;
 
-public final class ShulkerBoxKeys {
-	public static final String COPPER = "copper";
-	public static final String IRON = "iron";
-	public static final String SILVER = "silver";
-	public static final String GOLD = "gold";
-	public static final String DIAMOND = "diamond";
-	public static final String OBSIDIAN = "obsidian";
-	public static final String CLEAR = "clear";
-	public static final String PLATINUM = "platinum";
-	public static final String SLAB = "slab";
-	public static final String MISSING_TEX = "missing_tex";
-	public static final String ENDER_SLAB = "ender_slab";
-	public static final String STAIR = "stair";
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-	private ShulkerBoxKeys() {
-		// NO-OP
-	}
+import net.minecraft.client.render.entity.model.AnimalModel;
+
+@Mixin(AnimalModel.class)
+public interface AnimalModelAccessor {
+	@Accessor("headScaled")
+	boolean accessor$headScaled();
+
+	@Accessor("childHeadYOffset")
+	float accessor$childHeadYOffset();
+
+	@Accessor("childHeadZOffset")
+	float accessor$childHeadZOffset();
+
+	@Accessor("invertedChildHeadScale")
+	float accessor$invertedChildHeadScale();
 }

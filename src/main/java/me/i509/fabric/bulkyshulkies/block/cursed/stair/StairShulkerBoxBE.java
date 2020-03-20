@@ -68,14 +68,14 @@ public class StairShulkerBoxBE extends AbstractShulkerBoxBE {
 	}
 
 	@Override
-	public VoxelShape getBoundingBox(BlockState blockState) {
-		VoxelShape unmodified = getBaseStairShape(blockState);
+	public VoxelShape getBoundingBox(BlockState state) {
+		VoxelShape unmodified = getBaseStairShape(state);
 
 		if (animationProgress == 0.0D) {
 			return unmodified;
 		}
 
-		VoxelShape offset = unmodified.offset(0.0D, blockState.get(StairShulkerBoxBlock.HALF).equals(BlockHalf.BOTTOM) ? animationProgress : -1 * animationProgress, 0.0D);
+		VoxelShape offset = unmodified.offset(0.0D, state.get(StairShulkerBoxBlock.HALF).equals(BlockHalf.BOTTOM) ? animationProgress : -1 * animationProgress, 0.0D);
 
 		return VoxelShapes.cuboid(offset.getBoundingBox());
 	}

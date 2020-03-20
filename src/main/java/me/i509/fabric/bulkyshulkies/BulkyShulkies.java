@@ -50,6 +50,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.loader.api.FabricLoader;
@@ -94,6 +95,7 @@ public class BulkyShulkies {
 			CommentedConfigurationNode mainConfigRoot = mainConfLoader.load(ConfigurationOptions.defaults().setHeader(MainConfig.HEADER)
 					.setObjectMapperFactory(DefaultObjectMapperFactory.getInstance()).setShouldCopyDefaults(true));
 
+			//noinspection UnstableApiUsage
 			mainConf = mainConfigRoot.getValue(TypeToken.of(MainConfig.class), new MainConfig());
 			mainConfLoader.save(mainConfigRoot);
 		} catch (Exception e) {
@@ -102,21 +104,19 @@ public class BulkyShulkies {
 		}
 
 		for (String id : mainConf.getNotAllowedInShulkers()) {
-			Identifier identifier = Identifier.tryParse(id);
+			try {
+				Identifier identifier = new Identifier(id);
+				Optional<Item> item = Registry.ITEM.getOrEmpty(identifier);
 
-			if (identifier == null) {
-				getLogger().error("Item: " + id + " is not a namespaced key, so it failed to be registered into the shulker box blacklist.");
-				continue;
+				if (!item.isPresent()) {
+					getLogger().error("Tried to register item: " + identifier.toString() + " to the shulker box blacklist, but it is not present within the ITEM registry.");
+					continue;
+				}
+
+				BulkyShulkies.addDisallowedShulkerItem((stack) -> Registry.ITEM.getId(stack.getItem()).equals(identifier));
+			} catch (InvalidIdentifierException e) {
+				getLogger().error("Item: " + id + " is not a valid identifier, so it failed to be registered into the shulker box blacklist.", e);
 			}
-
-			Optional<Item> item = Registry.ITEM.getOrEmpty(identifier);
-
-			if (!item.isPresent()) {
-				getLogger().error("Tried to register item: " + identifier.toString() + " to the shulker box blacklist, but it is not present within the ITEM registry.");
-				continue;
-			}
-
-			BulkyShulkies.addDisallowedShulkerItem((stack) -> Registry.ITEM.getId(stack.getItem()).equals(identifier));
 		}
 	}
 

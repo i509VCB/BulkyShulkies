@@ -25,16 +25,14 @@
 package me.i509.fabric.bulkyshulkies.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.damage.DamageTracker;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -45,81 +43,85 @@ import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetStage;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements ShulkerHelmetStage {
-	@Shadow public abstract DamageTracker getDamageTracker();
-
 	private static final TrackedData<ShulkerBoxBlockEntity.AnimationStage> SHULKER_HELMET_STAGE = DataTracker.registerData(LivingEntity.class, HelmetTrackedDataStage.INSTANCE);
 	private static final TrackedData<Float> SHULKER_HELMET_ANIMATION_PROGRESS = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.FLOAT);
+	private static final TrackedData<Float> PREVIOUS_HELMET_ANIMATION_PROGRESS = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.FLOAT);
 
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
 
-	@Inject(at = @At("TAIL"), method = "initDataTracker")
-	private void onInitDataTrackers(CallbackInfo ci) {
+	@Inject(at = @At("TAIL"), method = "initDataTracker()V")
+	private void bulkyshulkies_initHelmetDataTrackers(CallbackInfo ci) {
 		this.getDataTracker().startTracking(SHULKER_HELMET_STAGE, ShulkerBoxBlockEntity.AnimationStage.CLOSED);
 		this.getDataTracker().startTracking(SHULKER_HELMET_ANIMATION_PROGRESS, 0.0F);
+		this.getDataTracker().startTracking(PREVIOUS_HELMET_ANIMATION_PROGRESS, 0.0F);
 	}
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tickActiveItemStack()V"), method = "tick()V")
-	private void onTick(CallbackInfo ci) {
-		if (this.getStage() != ShulkerBoxBlockEntity.AnimationStage.CLOSED || this.getStage() != ShulkerBoxBlockEntity.AnimationStage.OPENED) {
-			float animationProgress = this.getDataTracker().get(SHULKER_HELMET_ANIMATION_PROGRESS);
-			ShulkerBoxBlockEntity.AnimationStage animationStage = this.getDataTracker().get(SHULKER_HELMET_STAGE);
-
-			switch (animationStage) {
-			case CLOSED:
-				//animationProgress = 0.0F;
-				// HOTWIRE TODO: Please remove soon
-				animationProgress = 1.0F;
-				animationStage = ShulkerBoxBlockEntity.AnimationStage.OPENED;
-				// HOTWIRE TODO: Please remove soon
-				break;
-			case OPENING:
-				animationProgress += 0.1F;
-
-				if (animationProgress >= 1.0F) {
-					animationStage = ShulkerBoxBlockEntity.AnimationStage.OPENED;
-					animationProgress = 1.0F;
-				}
-
-				break;
-			case CLOSING:
-				animationProgress -= 0.1F;
-
-				if (animationProgress <= 0.0F) {
-					animationStage = ShulkerBoxBlockEntity.AnimationStage.CLOSED;
-					animationProgress = 0.0F;
-				}
-
-				break;
-			case OPENED:
-				animationProgress = 1.0F;
-				// HOTWIRE TODO: Please remove soon
-				animationStage = ShulkerBoxBlockEntity.AnimationStage.CLOSING;
-				// HOTWIRE TODO: Please remove soon
-			}
-
-			this.getDataTracker().set(SHULKER_HELMET_ANIMATION_PROGRESS, animationProgress);
-			this.getDataTracker().set(SHULKER_HELMET_STAGE, animationStage);
+	private void bulkyshulkies$tickShulkerHelmet(CallbackInfo ci) {
+		if (this.bulkyshulkies$getStage() != ShulkerBoxBlockEntity.AnimationStage.CLOSED || this.bulkyshulkies$getStage() != ShulkerBoxBlockEntity.AnimationStage.OPENED) {
+			this.bulkyshulkies$updateAnimation();
 		}
 	}
 
+	protected void bulkyshulkies$updateAnimation() {
+		float animationProgress = this.bulkyshulkies$getAnimationProgress();
+		this.bulkyshulkies$setPreviousAnimationProgress(this.bulkyshulkies$getAnimationProgress());
+
+		switch (this.bulkyshulkies$getStage()) {
+		case CLOSED:
+			this.bulkyshulkies$setAnimationProgress(0.0F);
+			break;
+		case OPENING:
+			animationProgress += 0.1F;
+
+			if (animationProgress >= 1.0F) {
+				this.bulkyshulkies$setStage(ShulkerBoxBlockEntity.AnimationStage.OPENED);
+				animationProgress = 1.0F;
+			}
+
+			break;
+		case CLOSING:
+			animationProgress -= 0.1F;
+
+			if (animationProgress <= 0.0F) {
+				this.bulkyshulkies$setStage(ShulkerBoxBlockEntity.AnimationStage.CLOSED);
+				animationProgress = 0.0F;
+			}
+
+			break;
+		case OPENED:
+			animationProgress = 1.0F;
+		}
+
+		this.bulkyshulkies$setAnimationProgress(animationProgress);
+	}
+
 	@Override
-	public void setStage(ShulkerBoxBlockEntity.AnimationStage stage) {
+	public void bulkyshulkies$setStage(ShulkerBoxBlockEntity.AnimationStage stage) {
 		this.getDataTracker().set(SHULKER_HELMET_STAGE, stage);
 	}
 
 	@Override
-	public ShulkerBoxBlockEntity.AnimationStage getStage() {
+	public ShulkerBoxBlockEntity.AnimationStage bulkyshulkies$getStage() {
 		return this.getDataTracker().get(SHULKER_HELMET_STAGE);
 	}
 
 	@Override
-	public float getAnimationProgress() {
+	public float bulkyshulkies$getAnimationProgress() {
 		return this.getDataTracker().get(SHULKER_HELMET_ANIMATION_PROGRESS);
 	}
 
-	public void setAnimationProg(float v) {
-		this.getDataTracker().set(SHULKER_HELMET_ANIMATION_PROGRESS, v);
+	public float bulkyshulkies$getPreviousAnimationProgress() {
+		return this.getDataTracker().get(PREVIOUS_HELMET_ANIMATION_PROGRESS);
+	}
+
+	public void bulkyshulkies$setAnimationProgress(float animationProgress) {
+		this.getDataTracker().set(SHULKER_HELMET_ANIMATION_PROGRESS, animationProgress);
+	}
+
+	public void bulkyshulkies$setPreviousAnimationProgress(float animationProgress) {
+		this.getDataTracker().set(PREVIOUS_HELMET_ANIMATION_PROGRESS, animationProgress);
 	}
 }

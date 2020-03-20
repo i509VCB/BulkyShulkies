@@ -51,6 +51,9 @@ public abstract class AbstractShulkerLidHelmetModel extends EntityModel<LivingEn
 
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+		// ------
+
+		// ------
 		this.lid.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 	}
 
@@ -82,8 +85,8 @@ public abstract class AbstractShulkerLidHelmetModel extends EntityModel<LivingEn
 		}
 
 		// Now actual lid movement magic
-		ShulkerHelmetStage stage = ShulkerHelmetStage.getStageFromEntity(entity);
-		this.lid.pivotY -= stage.getAnimationProgress() * 1.75F;
+		ShulkerHelmetStage stage = ShulkerHelmetStage.bulkyshulkies$getStageFromEntity(entity);
+		this.lid.pivotY -= stage.bulkyshulkies$getAnimationProgress() * 1.75F;
 
 		// Now rotate it upon the way up TODO
 	}

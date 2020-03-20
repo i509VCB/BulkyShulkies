@@ -52,7 +52,7 @@ import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
 import me.i509.fabric.bulkyshulkies.item.ShulkerBlockItem;
 // import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBlock;
 
-public class ShulkerBlocks {
+public final class ShulkerBlocks {
 	// Dynamic bounds are VERY IMPORTANT. Otherwise your box will make entities suffocate since the game's cached block is exactly 1 full cube, so collisions act odd for this reason without the dynamic bounds.
 	public static final AbstractBlock.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque().build();
 	public static final AbstractBlock.Settings SHULKER_SLAB_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque().build().suffocates((state, world, pos) -> false);

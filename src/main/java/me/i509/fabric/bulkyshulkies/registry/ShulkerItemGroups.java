@@ -33,7 +33,7 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
-public class ShulkerItemGroups {
+public final class ShulkerItemGroups {
 	public static final ItemGroup CURSED_GROUP = FabricItemGroupBuilder.build(BulkyShulkies.id("group"), () -> new ItemStack(ShulkerBlocks.CYAN_SLAB_SHULKER_BOX));
 	//public static final ItemGroup MATERIAL_GROUP = FabricItemGroupBuilder.build(BulkyShulkies.id("materialgroup"), () -> new ItemStack(Items.SHULKER_SHELL));
 

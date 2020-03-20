@@ -43,7 +43,7 @@ import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler13x7;
 import me.i509.fabric.bulkyshulkies.screen.ScrollableScreenHandler;
 import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
 
-public class ShulkerScreenHandlers {
+public final class ShulkerScreenHandlers {
 	private ShulkerScreenHandlers() {
 		// NO-OP
 	}

@@ -28,15 +28,19 @@ import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.LivingEntity;
 
 public interface ShulkerHelmetStage {
-	void setStage(ShulkerBoxBlockEntity.AnimationStage stage);
+	void bulkyshulkies$setStage(ShulkerBoxBlockEntity.AnimationStage stage);
 
-	ShulkerBoxBlockEntity.AnimationStage getStage();
+	ShulkerBoxBlockEntity.AnimationStage bulkyshulkies$getStage();
 
-	float getAnimationProgress();
+	float bulkyshulkies$getAnimationProgress();
 
-	void setAnimationProg(float v);
+	float bulkyshulkies$getPreviousAnimationProgress();
 
-	static ShulkerHelmetStage getStageFromEntity(LivingEntity entity) {
+	void bulkyshulkies$setAnimationProgress(float animationProgress);
+
+	void bulkyshulkies$setPreviousAnimationProgress(float animationProgress);
+
+	static ShulkerHelmetStage bulkyshulkies$getStageFromEntity(LivingEntity entity) {
 		return (ShulkerHelmetStage) entity;
 	}
 }

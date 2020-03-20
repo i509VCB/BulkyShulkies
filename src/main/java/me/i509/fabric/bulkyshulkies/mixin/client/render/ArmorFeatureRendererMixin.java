@@ -40,16 +40,19 @@ import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.PiglinBipedArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetItem;
+import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetStage;
 import me.i509.fabric.bulkyshulkies.client.model.AbstractShulkerLidHelmetModel;
 import me.i509.fabric.bulkyshulkies.client.model.HumanoidShulkerLidHelmetModel;
 import me.i509.fabric.bulkyshulkies.client.model.PiglinShulkerLidHelmetModel;
@@ -90,10 +93,36 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, A extend
 			ItemStack itemStack = entity.getEquippedStack(slot);
 
 			if (itemStack.getItem() instanceof ShulkerHelmetItem) {
+				ShulkerHelmetStage stage = ShulkerHelmetStage.bulkyshulkies$getStageFromEntity(entity);
 				this.bulkyshulkies$shulkerLidModel.lid.copyPositionAndRotation(this.getContextModel().head);
-				this.bulkyshulkies$shulkerLidModel.setAngles(entity, limbAngle, limbDistance, customAngle, headYaw, headPitch);
 				VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(this.bulkyshulkies_getLidTexture()));
-				this.bulkyshulkies$shulkerLidModel.render(matrices, consumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+				this.bulkyshulkies$shulkerLidModel.setAngles(entity, limbAngle, limbDistance, customAngle, headYaw, headPitch);
+
+				if (entity.isBaby()) { // Children need the little lids
+					matrices.push();
+
+					float scaleFactor;
+					AnimalModelAccessor accessor = (AnimalModelAccessor) this.getContextModel();
+
+					if (accessor.accessor$headScaled()) {
+						scaleFactor = 1.5F / accessor.accessor$invertedChildHeadScale();
+						matrices.scale(scaleFactor, scaleFactor, scaleFactor);
+					}
+
+					matrices.translate(0.0D, accessor.accessor$childHeadYOffset() / 16.0F, accessor.accessor$childHeadZOffset() / 16.0F);
+					matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F * ArmorFeatureRendererMixin.getAnimationProgress(tickDelta, stage.bulkyshulkies$getPreviousAnimationProgress(), stage.bulkyshulkies$getAnimationProgress())));
+					this.bulkyshulkies$shulkerLidModel.render(matrices, consumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+
+					matrices.pop();
+				} else {
+					// ------
+					matrices.push();
+
+					matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F * ArmorFeatureRendererMixin.getAnimationProgress(tickDelta, stage.bulkyshulkies$getPreviousAnimationProgress(), stage.bulkyshulkies$getAnimationProgress())));
+					this.bulkyshulkies$shulkerLidModel.render(matrices, consumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+
+					matrices.pop();
+				}
 			}
 		}
 	}
@@ -107,8 +136,11 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, A extend
 					method = "renderArmor(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/entity/LivingEntity;FFFFFFLnet/minecraft/entity/EquipmentSlot;ILnet/minecraft/client/render/entity/model/BipedEntityModel;)V"
 	)
 	private void bulkyshulkies_animateShulkerLidRotation(MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float customAngle, float headYaw, float headPitch, EquipmentSlot slot, int light, A armorModel, CallbackInfo ci) {
-		// Lnet/minecraft/client/render/entity/feature/ArmorFeatureRenderer;setVisible(Lnet/minecraft/client/render/entity/model/BipedEntityModel;Lnet/minecraft/entity/EquipmentSlot;)V
 		this.bulkyshulkies$shulkerLidModel.animateModel(entity, limbAngle, limbDistance, tickDelta);
+	}
+
+	private static float getAnimationProgress(float tickDelta, float prevAnimationProgress, float animationProgress) {
+		return MathHelper.lerp(tickDelta, prevAnimationProgress, animationProgress);
 	}
 
 	protected Identifier bulkyshulkies_getLidTexture() {

@@ -27,7 +27,7 @@ package me.i509.fabric.bulkyshulkies.registry;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
-public class ShulkerTexts {
+public final class ShulkerTexts {
 	public static final Text CURSED_SLAB_CONTAINER = new TranslatableText("container.slabShulkerBox");
 	public static final Text CURSED_STAIR_CONTAINER = new TranslatableText("container.stairShulkerBox");
 

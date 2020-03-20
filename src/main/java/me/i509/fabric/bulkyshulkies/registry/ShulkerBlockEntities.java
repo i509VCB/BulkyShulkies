@@ -46,7 +46,7 @@ import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBE;
 import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBE;
 // import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBE;
 
-public class ShulkerBlockEntities {
+public final class ShulkerBlockEntities {
 	public static final BlockEntityType<CopperShulkerBoxBE> COPPER_SHULKER_BOX = register("copper_shulker_box",
 			CopperShulkerBoxBE::new,
 			ShulkerBlocks.COPPER_SHULKER_BOX, // Uncolored

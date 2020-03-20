@@ -54,8 +54,8 @@ public abstract class FacingSlabShulkerBE extends AbstractShulkerBoxBE {
 	}
 
 	@Override
-	public VoxelShape getBoundingBox(BlockState blockState) {
-		Direction direction = blockState.get(FacingShulkerBoxBlock.FACING);
+	public VoxelShape getBoundingBox(BlockState state) {
+		Direction direction = state.get(FacingShulkerBoxBlock.FACING);
 		float f = this.getAnimationProgress(1.0F);
 		return VoxelShapes.cuboid(AbstractCursedShulkerSlabBlock.getShape(direction)
 			.getBoundingBox()

@@ -17,7 +17,8 @@
   "client": [
     "client.TexturedRenderLayersMixin",
     "client.BuiltinModelItemRendererMixin",
-    "client.render.ArmorFeatureRendererMixin"
+    "client.render.ArmorFeatureRendererMixin",
+    "client.render.AnimalModelAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

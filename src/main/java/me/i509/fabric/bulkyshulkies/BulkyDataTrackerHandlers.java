@@ -30,14 +30,14 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 
 import me.i509.fabric.bulkyshulkies.api.item.HelmetTrackedDataStage;
 
-public class BulkyDataTrackers {
+public class BulkyDataTrackerHandlers {
 	public static final TrackedDataHandler<ShulkerBoxBlockEntity.AnimationStage> SHULKER_ANIMATION_STAGE = HelmetTrackedDataStage.INSTANCE;
 
 	static {
 		TrackedDataHandlerRegistry.register(HelmetTrackedDataStage.INSTANCE);
 	}
 
-	private BulkyDataTrackers() {
+	private BulkyDataTrackerHandlers() {
 		// NO-OP
 	}
 }

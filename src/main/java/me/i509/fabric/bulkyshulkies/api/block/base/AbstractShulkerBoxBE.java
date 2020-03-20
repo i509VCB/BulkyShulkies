@@ -86,7 +86,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	@Override
-	public abstract VoxelShape getBoundingBox(BlockState blockState);
+	public abstract VoxelShape getBoundingBox(BlockState state);
 
 	@Override
 	public abstract Box getLidCollisionBox(BlockState blockState);

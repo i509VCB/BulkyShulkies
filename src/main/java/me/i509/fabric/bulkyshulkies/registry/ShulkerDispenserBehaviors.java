@@ -29,7 +29,7 @@ import net.minecraft.block.dispenser.BlockPlacementDispenserBehavior;
 
 import me.i509.fabric.bulkyshulkies.api.block.slab.SlabBlockPlacementDispenserBehavior;
 
-public class ShulkerDispenserBehaviors {
+public final class ShulkerDispenserBehaviors {
 	static {
 		copper();
 		iron();

@@ -44,7 +44,7 @@ public class BulkyShulkiesMod implements ModInitializer {
 	public void onInitialize() {
 		BulkyShulkies.getInstance();
 		BulkyRecipeSerializers.ABSTRACT_SHULKER_COLORING.getClass(); // Register the colorizer recipe type
-		BulkyDataTrackers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
+		BulkyDataTrackerHandlers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
 		ShulkerBlocks.init();
 		ShulkerDispenserBehaviors.init();
 		ShulkerBlockEntities.init();

@@ -40,12 +40,12 @@ import net.minecraft.util.shape.VoxelShape;
  */
 public interface BasicShulkerBlockEntity {
 	/**
-	 * Gets the bounding box of the BlockEntity. This will redirect the call to after getting the facing direction from the state {@link BasicShulkerBlockEntity#getBoundingBox(Direction)}.
+	 * Gets the bounding box of the BlockEntity. This will redirect the call to after getting the facing direction from the state {@link BasicShulkerBlockEntity#getBoundingBox(BlockState)}.
 	 *
-	 * @param blockState The blockState of the BlockEntity.
+	 * @param state The blockState of the BlockEntity.
 	 * @return The bounding box of the block entity.
 	 */
-	VoxelShape getBoundingBox(BlockState blockState);
+	VoxelShape getBoundingBox(BlockState state);
 
 	Box getLidCollisionBox(BlockState state);
 
