@@ -62,7 +62,7 @@ dependencies {
 	// Fabric Stuff.
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.minecraft_version}+build.${project.yarn_build}:v2"
-	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"\
+	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 	// Temporary exclusion until rendering api is fixed
 	modCompile ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
 		exclude(group : "net.fabricmc.fabric-api", module: "fabric-renderer-indigo")
