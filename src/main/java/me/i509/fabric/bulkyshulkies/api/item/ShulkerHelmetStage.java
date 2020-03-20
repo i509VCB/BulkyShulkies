@@ -34,6 +34,8 @@ public interface ShulkerHelmetStage {
 
 	float getAnimationProgress();
 
+	void setAnimationProg(float v);
+
 	static ShulkerHelmetStage getStageFromEntity(LivingEntity entity) {
 		return (ShulkerHelmetStage) entity;
 	}

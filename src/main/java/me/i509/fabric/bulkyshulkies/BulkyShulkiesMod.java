@@ -27,7 +27,6 @@ package me.i509.fabric.bulkyshulkies;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
-import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 import me.i509.fabric.bulkyshulkies.extension.ShulkerHooks;
 import me.i509.fabric.bulkyshulkies.recipe.BulkyRecipeSerializers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
@@ -36,6 +35,7 @@ import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerDispenserBehaviors;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerItemGroups;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerItems;
+import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 
 public class BulkyShulkiesMod implements ModInitializer {
 	public static final String MODID = "bulkyshulkies";

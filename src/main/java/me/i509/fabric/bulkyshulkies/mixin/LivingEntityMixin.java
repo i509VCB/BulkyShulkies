@@ -56,34 +56,70 @@ public abstract class LivingEntityMixin extends Entity implements ShulkerHelmetS
 
 	@Inject(at = @At("TAIL"), method = "initDataTracker")
 	private void onInitDataTrackers(CallbackInfo ci) {
-		getDataTracker().startTracking(SHULKER_HELMET_STAGE, ShulkerBoxBlockEntity.AnimationStage.CLOSED);
-		getDataTracker().startTracking(SHULKER_HELMET_ANIMATION_PROGRESS, 0.0F);
+		this.getDataTracker().startTracking(SHULKER_HELMET_STAGE, ShulkerBoxBlockEntity.AnimationStage.CLOSED);
+		this.getDataTracker().startTracking(SHULKER_HELMET_ANIMATION_PROGRESS, 0.0F);
 	}
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tickActiveItemStack()V"), method = "tick()V")
 	private void onTick(CallbackInfo ci) {
-		if (getStage() != ShulkerBoxBlockEntity.AnimationStage.CLOSED || getStage() != ShulkerBoxBlockEntity.AnimationStage.OPENED) {
-			// TODO Animation logic here
+		if (this.getStage() != ShulkerBoxBlockEntity.AnimationStage.CLOSED || this.getStage() != ShulkerBoxBlockEntity.AnimationStage.OPENED) {
+			float animationProgress = this.getDataTracker().get(SHULKER_HELMET_ANIMATION_PROGRESS);
+			ShulkerBoxBlockEntity.AnimationStage animationStage = this.getDataTracker().get(SHULKER_HELMET_STAGE);
+
+			switch (animationStage) {
+			case CLOSED:
+				//animationProgress = 0.0F;
+				// HOTWIRE TODO: Please remove soon
+				animationProgress = 1.0F;
+				animationStage = ShulkerBoxBlockEntity.AnimationStage.OPENED;
+				// HOTWIRE TODO: Please remove soon
+				break;
+			case OPENING:
+				animationProgress += 0.1F;
+
+				if (animationProgress >= 1.0F) {
+					animationStage = ShulkerBoxBlockEntity.AnimationStage.OPENED;
+					animationProgress = 1.0F;
+				}
+
+				break;
+			case CLOSING:
+				animationProgress -= 0.1F;
+
+				if (animationProgress <= 0.0F) {
+					animationStage = ShulkerBoxBlockEntity.AnimationStage.CLOSED;
+					animationProgress = 0.0F;
+				}
+
+				break;
+			case OPENED:
+				animationProgress = 1.0F;
+				// HOTWIRE TODO: Please remove soon
+				animationStage = ShulkerBoxBlockEntity.AnimationStage.CLOSING;
+				// HOTWIRE TODO: Please remove soon
+			}
+
+			this.getDataTracker().set(SHULKER_HELMET_ANIMATION_PROGRESS, animationProgress);
+			this.getDataTracker().set(SHULKER_HELMET_STAGE, animationStage);
 		}
 	}
 
 	@Override
 	public void setStage(ShulkerBoxBlockEntity.AnimationStage stage) {
-		getDataTracker().set(SHULKER_HELMET_STAGE, stage);
+		this.getDataTracker().set(SHULKER_HELMET_STAGE, stage);
 	}
 
 	@Override
 	public ShulkerBoxBlockEntity.AnimationStage getStage() {
-		return getDataTracker().get(SHULKER_HELMET_STAGE);
+		return this.getDataTracker().get(SHULKER_HELMET_STAGE);
 	}
 
 	@Override
 	public float getAnimationProgress() {
-		return getDataTracker().get(SHULKER_HELMET_ANIMATION_PROGRESS);
+		return this.getDataTracker().get(SHULKER_HELMET_ANIMATION_PROGRESS);
 	}
 
-	private void tickAnimationProgress() {
-		// TODO Animation logic
-		getDataTracker().get(SHULKER_HELMET_ANIMATION_PROGRESS);
+	public void setAnimationProg(float v) {
+		this.getDataTracker().set(SHULKER_HELMET_ANIMATION_PROGRESS, v);
 	}
 }

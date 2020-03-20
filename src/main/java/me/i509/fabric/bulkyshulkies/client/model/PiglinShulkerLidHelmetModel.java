@@ -27,7 +27,9 @@ package me.i509.fabric.bulkyshulkies.client.model;
 import net.minecraft.client.model.ModelPart;
 
 public class PiglinShulkerLidHelmetModel extends AbstractShulkerLidHelmetModel {
-	public PiglinShulkerLidHelmetModel(ModelPart lid) {
-		super(lid);
+	public PiglinShulkerLidHelmetModel() {
+		super(new ModelPart(9, 9, 0, 0));
+		this.lid.addCuboid(-6, -8.5F, -5, 12, 2, 10);  // -4 -> -6
+		//this.lid.setPivot(0, 24, 0);
 	}
 }

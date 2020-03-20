@@ -16,12 +16,12 @@ group = project.maven_group
 license {
 	header = file('HEADER.txt')
 	include '**/*.java'
-	exclude '**/ScrollableContainer.java'
+	exclude '**/ScrollableScreenHandler.java'
 	exclude '**/ScrollableScreen.java'
 	exclude '**/SearchTextFieldWidget.java'
 	style.java = 'BLOCK_COMMENT'
 
-	matching(includes: ['**/ScrollableContainer.java', '**/ScrollableScreen.java', '**/SearchTextFieldWidget.java']) {
+	matching(includes: ['**/ScrollableScreenHandler.java', '**/ScrollableScreen.java', '**/SearchTextFieldWidget.java']) {
 		header = file('LICENSE-NINJAPHENIX.txt')
 		style.java = 'BLOCK_COMMENT'
 	}
@@ -62,8 +62,15 @@ dependencies {
 	// Fabric Stuff.
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.minecraft_version}+build.${project.yarn_build}:v2"
-	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
+	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"\
+	// Temporary exclusion until rendering api is fixed
 	modCompile ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
+		exclude(group : "net.fabricmc.fabric-api", module: "fabric-renderer-indigo")
+		exclude(group : "net.fabricmc.fabric-api", module: "fabric-renderer-api-v1")
+		exclude(group : "net.fabricmc.fabric-api", module: "fabric-renderering-v0")
+		exclude(group : "net.fabricmc.fabric-api", module: "fabric-renderering-v1")
+		exclude(group : "net.fabricmc.fabric-api", module: "fabric-rendering-data-attachment-v1")
+		exclude(group : "net.fabricmc.fabric-api", module: "fabric-rendering-fluids-v1")
 	}
 
 	// For Tooltips TODO: Update when updated

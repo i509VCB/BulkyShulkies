@@ -24,14 +24,19 @@
 
 package me.i509.fabric.bulkyshulkies.client.model;
 
-import net.minecraft.client.model.Model;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.decoration.ArmorStandEntity;
 
-public abstract class AbstractShulkerLidHelmetModel extends Model {
-	protected final ModelPart lid;
+import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetStage;
+
+public abstract class AbstractShulkerLidHelmetModel extends EntityModel<LivingEntity> {
+	public final ModelPart lid;
+	private float leaningPitch;
 
 	public AbstractShulkerLidHelmetModel(ModelPart lid) {
 		super(RenderLayer::getEntityCutoutNoCull);
@@ -39,7 +44,61 @@ public abstract class AbstractShulkerLidHelmetModel extends Model {
 	}
 
 	@Override
+	public void animateModel(LivingEntity livingEntity, float f, float g, float h) {
+		this.leaningPitch = livingEntity.getLeaningPitch(h);
+		super.animateModel(livingEntity, f, g, h);
+	}
+
+	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		// TODO
+		this.lid.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	}
+
+	@Override
+	public void setAngles(LivingEntity entity, float limbAngle, float limbDistance, float customAngle, float headYaw, float headPitch) {
+		// Ah yes, radical mathematics
+		if (entity instanceof ArmorStandEntity) {
+			ArmorStandEntity armorStandEntity = (ArmorStandEntity) entity;
+			this.lid.pitch = 0.017453292F * armorStandEntity.getHeadRotation().getPitch();
+			this.lid.yaw = 0.017453292F * armorStandEntity.getHeadRotation().getYaw();
+			this.lid.roll = 0.017453292F * armorStandEntity.getHeadRotation().getRoll();
+		} else {
+			this.lid.yaw = 0.017453292F * headYaw;
+			boolean roll = entity.getRoll() > 4;
+			boolean inSwimmingPose = entity.isInSwimmingPose();
+			this.lid.yaw = headYaw * 0.017453292F;
+
+			if (roll) {
+				this.lid.pitch = -0.7853982F;
+			} else if (this.leaningPitch > 0.0F) {
+				if (inSwimmingPose) {
+					this.lid.pitch = this.lerpAngle(this.lid.pitch, -0.7853982F, this.leaningPitch);
+				} else {
+					this.lid.pitch = this.lerpAngle(this.lid.pitch, headPitch * 0.017453292F, this.leaningPitch);
+				}
+			} else {
+				this.lid.pitch = headPitch * 0.017453292F;
+			}
+		}
+
+		// Now actual lid movement magic
+		ShulkerHelmetStage stage = ShulkerHelmetStage.getStageFromEntity(entity);
+		this.lid.pivotY -= stage.getAnimationProgress() * 1.75F;
+
+		// Now rotate it upon the way up TODO
+	}
+
+	protected float lerpAngle(float from, float to, float position) {
+		float f = (to - from) % 6.2831855F;
+
+		if (f < -3.1415927F) {
+			f += 6.2831855F;
+		}
+
+		if (f >= 3.1415927F) {
+			f -= 6.2831855F;
+		}
+
+		return from + position * f;
 	}
 }
