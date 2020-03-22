@@ -40,7 +40,6 @@ import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.PiglinBipedArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -110,7 +109,9 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, A extend
 					}
 
 					matrices.translate(0.0D, accessor.accessor$childHeadYOffset() / 16.0F, accessor.accessor$childHeadZOffset() / 16.0F);
-					matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F * ArmorFeatureRendererMixin.getAnimationProgress(tickDelta, stage.bulkyshulkies$getPreviousAnimationProgress(), stage.bulkyshulkies$getAnimationProgress())));
+					// TODO LINE
+					//matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F * ArmorFeatureRendererMixin.getAnimationProgress(tickDelta, stage.bulkyshulkies$getPreviousAnimationProgress(), stage.bulkyshulkies$getAnimationProgress())));
+					// TODO LINE
 					this.bulkyshulkies$shulkerLidModel.render(matrices, consumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
 
 					matrices.pop();
@@ -118,7 +119,9 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, A extend
 					// ------
 					matrices.push();
 
-					matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F * ArmorFeatureRendererMixin.getAnimationProgress(tickDelta, stage.bulkyshulkies$getPreviousAnimationProgress(), stage.bulkyshulkies$getAnimationProgress())));
+					// TODO LINE
+					//matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F * ArmorFeatureRendererMixin.getAnimationProgress(tickDelta, stage.bulkyshulkies$getPreviousAnimationProgress(), stage.bulkyshulkies$getAnimationProgress())));
+					// TODO LINE
 					this.bulkyshulkies$shulkerLidModel.render(matrices, consumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
 
 					matrices.pop();

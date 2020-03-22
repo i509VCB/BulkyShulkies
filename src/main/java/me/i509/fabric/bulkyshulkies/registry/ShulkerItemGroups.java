@@ -44,7 +44,7 @@ public final class ShulkerItemGroups {
 	//public static final Item.Settings UPGRADES = new Item.Settings().maxCount(16).group(ShulkerItemGroups.MATERIAL_GROUP);
 
 	private ShulkerItemGroups() {
-		// NO-OP
+		throw new AssertionError("You should not be instantiating this");
 	}
 
 	public static void init() {

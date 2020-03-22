@@ -22,21 +22,20 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.screen;
+package me.i509.fabric.bulkyshulkies.registry;
 
 import net.minecraft.util.Identifier;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
-public final class ScreenHandlerKeys {
-	public static final Identifier SHULKER_SCROLLABLE_CONTAINER = BulkyShulkies.id("shulker_scrollable_container");
-	public static final Identifier ENDER_SLAB = BulkyShulkies.id("ender_slab_container");
-	public static final Identifier SHULKER_9x7_CONTAINER = BulkyShulkies.id("shulker_container_9x7");
-	public static final Identifier SHULKER_11x7_CONTAINER = BulkyShulkies.id("shulker_container_11x7");
-	public static final Identifier SHULKER_13x7_CONTAINER = BulkyShulkies.id("shulker_container_13x7");
-	public static final Identifier SHULKER_HELMET = BulkyShulkies.id("shulker_helmet");
+public final class ShulkerNetworking {
+	public static Identifier HELMET_OPEN = BulkyShulkies.id("open_helmet");
 
-	private ScreenHandlerKeys() {
+	private void ShulkerItems() {
+		throw new AssertionError("You should not be instantiating this");
+	}
+
+	public static void init() {
 		// NO-OP
 	}
 }

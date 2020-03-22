@@ -336,7 +336,7 @@ public final class ShulkerBlocks {
 	// public static final Block SHULKER_INJECTOR = registerShulker(new ShulkerInjectorBlock(FabricBlockSettings.of(Material.METAL).build()), "shulker_injector", ShulkerItemGroups.MATERIAL_SETTINGS);
 
 	private ShulkerBlocks() {
-		// NO-OP
+		throw new AssertionError("You should not be instantiating this");
 	}
 
 	public static void init() {

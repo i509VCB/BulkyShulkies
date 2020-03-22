@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import io.netty.buffer.Unpooled;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -35,6 +36,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Util;
 
@@ -46,6 +48,8 @@ import net.fabricmc.fabric.api.client.keybinding.KeyBindingRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
+import net.fabricmc.fabric.api.event.client.ClientTickCallback;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
@@ -80,6 +84,7 @@ import me.i509.fabric.bulkyshulkies.client.screen.Generic9x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic11x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic13x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerNetworking;
 import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
@@ -131,6 +136,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		ScreenProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_13x7_CONTAINER, Generic13x7Screen::createScreen);
 		ScreenProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_SCROLLABLE_CONTAINER, ScrollableScreen::createScreen);
 		ScreenProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.ENDER_SLAB, ScrollableScreen::createScreen);
+		ScreenProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_HELMET, ScrollableScreen::createScreen);
 
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX, ber -> new Facing1x1ShulkerBERenderer<>(ber, ShulkerBoxKeys.COPPER));
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX, ber -> new Facing1x1ShulkerBERenderer<>(ber, ShulkerBoxKeys.IRON));
@@ -143,6 +149,12 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.ENDER_SLAB, ber -> new FacingSlabShulkerBoxBERenderer<>(ber, ShulkerBoxKeys.ENDER_SLAB));
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SLAB_SHULKER_BOX, ber -> new FacingSlabShulkerBoxBERenderer<>(ber, ShulkerBoxKeys.SLAB));
 		ClientSpriteRegistryCallback.event(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE).register(BulkyShulkiesClientMod::registerSprites);
+
+		ClientTickCallback.EVENT.register(client -> {
+			if (OPEN_SHULKER_HELMET.wasPressed()) {
+				ClientSidePacketRegistry.INSTANCE.sendToServer(ShulkerNetworking.HELMET_OPEN, new PacketByteBuf(Unpooled.buffer()));
+			}
+		});
 	}
 
 	private static void registerSprites(SpriteAtlasTexture atlas, ClientSpriteRegistryCallback.Registry registry) {

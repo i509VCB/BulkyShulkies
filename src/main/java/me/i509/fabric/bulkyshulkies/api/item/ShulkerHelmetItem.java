@@ -24,11 +24,17 @@
 
 package me.i509.fabric.bulkyshulkies.api.item;
 
+import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
+
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
 import me.i509.fabric.bulkyshulkies.abstraction.DurabilityBasedProtection;
+import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 
 public class ShulkerHelmetItem extends ArmorItem implements DurabilityBasedProtection {
 	public ShulkerHelmetItem(Settings settings) {
@@ -38,5 +44,15 @@ public class ShulkerHelmetItem extends ArmorItem implements DurabilityBasedProte
 	@Override
 	public boolean canRepair(ItemStack stack, ItemStack ingredient) {
 		return this.type.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
+	}
+
+	public static void open(PlayerEntity playerEntity) {
+		if (playerEntity instanceof ServerPlayerEntity) {
+			ContainerProviderRegistry.INSTANCE.openContainer(ScreenHandlerKeys.SHULKER_HELMET, playerEntity, writer -> {
+				writer.writeText(playerEntity.getEquippedStack(EquipmentSlot.HEAD).getName());
+			});
+
+			ShulkerHelmetStage.bulkyshulkies$getStageFromEntity(playerEntity).bulkyshulkies$setStage(ShulkerBoxBlockEntity.AnimationStage.OPENING);
+		}
 	}
 }

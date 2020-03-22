@@ -24,13 +24,22 @@
 
 package me.i509.fabric.bulkyshulkies;
 
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.network.PacketContext;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 
+import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetItem;
 import me.i509.fabric.bulkyshulkies.extension.ShulkerHooks;
 import me.i509.fabric.bulkyshulkies.recipe.BulkyRecipeSerializers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerNetworking;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerDispenserBehaviors;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerItemGroups;
@@ -57,5 +66,26 @@ public class BulkyShulkiesMod implements ModInitializer {
 		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_9x7_CONTAINER, ShulkerScreenHandlers::create9x7);
 		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_11x7_CONTAINER, ShulkerScreenHandlers::create11x7);
 		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_13x7_CONTAINER, ShulkerScreenHandlers::create13x7);
+		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_HELMET, ShulkerScreenHandlers::createShulkerHelmet);
+
+		ServerSidePacketRegistry.INSTANCE.register(ShulkerNetworking.HELMET_OPEN, this::onOpenHelmet);
+	}
+
+	private void onOpenHelmet(PacketContext context, PacketByteBuf packetByteBuf) {
+		PlayerEntity playerEntity = context.getPlayer();
+
+		context.getTaskQueue().execute(() -> {
+			if (playerEntity.isSpectator()) {
+				return;
+			}
+
+			ItemStack stack = playerEntity.getEquippedStack(EquipmentSlot.HEAD);
+
+			if (stack.getItem() != ShulkerItems.SHULKER_HELMET) {
+				return;
+			}
+
+			ShulkerHelmetItem.open(playerEntity);
+		});
 	}
 }

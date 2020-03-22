@@ -289,7 +289,7 @@ public final class ShulkerBlockEntities {
 	);*/
 
 	private ShulkerBlockEntities() {
-		// NO-OP
+		throw new AssertionError("You should not be instantiating this");
 	}
 
 	public static void init() {

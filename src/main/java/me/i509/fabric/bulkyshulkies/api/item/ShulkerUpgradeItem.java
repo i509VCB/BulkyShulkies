@@ -22,21 +22,12 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.screen;
+package me.i509.fabric.bulkyshulkies.api.item;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.item.Item;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-
-public final class ScreenHandlerKeys {
-	public static final Identifier SHULKER_SCROLLABLE_CONTAINER = BulkyShulkies.id("shulker_scrollable_container");
-	public static final Identifier ENDER_SLAB = BulkyShulkies.id("ender_slab_container");
-	public static final Identifier SHULKER_9x7_CONTAINER = BulkyShulkies.id("shulker_container_9x7");
-	public static final Identifier SHULKER_11x7_CONTAINER = BulkyShulkies.id("shulker_container_11x7");
-	public static final Identifier SHULKER_13x7_CONTAINER = BulkyShulkies.id("shulker_container_13x7");
-	public static final Identifier SHULKER_HELMET = BulkyShulkies.id("shulker_helmet");
-
-	private ScreenHandlerKeys() {
-		// NO-OP
+public class ShulkerUpgradeItem extends Item {
+	public ShulkerUpgradeItem(Settings settings) {
+		super(settings);
 	}
 }

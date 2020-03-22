@@ -15,10 +15,11 @@
     "CauldronBlockMixin"
   ],
   "client": [
-    "client.TexturedRenderLayersMixin",
     "client.BuiltinModelItemRendererMixin",
+    "client.TexturedRenderLayersMixin",
+    "client.render.AnimalModelAccessor",
     "client.render.ArmorFeatureRendererMixin",
-    "client.render.AnimalModelAccessor"
+    "client.render.PiglinArmorFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

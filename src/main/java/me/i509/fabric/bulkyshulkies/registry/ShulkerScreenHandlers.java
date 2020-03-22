@@ -25,7 +25,11 @@
 package me.i509.fabric.bulkyshulkies.registry;
 
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.screen.slot.Slot;
@@ -34,9 +38,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.fabricmc.fabric.api.util.NbtType;
+
 import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
+import me.i509.fabric.bulkyshulkies.inventory.ShulkerHelmetInventory;
 import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler9x7;
 import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler11x7;
 import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler13x7;
@@ -45,7 +53,7 @@ import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
 
 public final class ShulkerScreenHandlers {
 	private ShulkerScreenHandlers() {
-		// NO-OP
+		throw new AssertionError("You should not be instantiating this");
 	}
 
 	public static void init() {
@@ -78,6 +86,24 @@ public final class ShulkerScreenHandlers {
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
 		return new ScrollableScreenHandler(syncId, ShulkerBoxSlot::new, player.inventory, AbstractShulkerBoxBlock.getInventoryStatically(world, pos), name);
+	}
+
+	public static ScrollableScreenHandler createShulkerHelmet(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
+		Text name = buf.readText();
+
+		ItemStack stack = player.getEquippedStack(EquipmentSlot.HEAD);
+		CompoundTag blockEntityTag = stack.getSubTag("BlockEntityTag");
+		ListTag items = new ListTag();
+
+		if (blockEntityTag != null) {
+			if (blockEntityTag.contains("Items", NbtType.LIST)) {
+				items = blockEntityTag.getList("Items", NbtType.LIST);
+			}
+		}
+
+		ShulkerHelmetInventory inventory = new ShulkerHelmetInventory(player.getEquippedStack(EquipmentSlot.HEAD), ShulkerBoxConstants.SLAB_SLOT_COUNT);
+
+		return new ScrollableScreenHandler(syncId, ShulkerBoxSlot::new, player.inventory, inventory, name);
 	}
 
 	public static ScrollableScreenHandler createEnderSlab(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {

@@ -34,6 +34,7 @@ public final class ShulkerItems {
 	public static final Item SHULKER_HELMET = register(new ShulkerHelmetItem(new Item.Settings().group(ShulkerItemGroups.CURSED_GROUP).maxCount(1)), "shulker_helmet");
 
 	private ShulkerItems() {
+		throw new AssertionError("You should not be instantiating this");
 	}
 
 	public static void init() {
