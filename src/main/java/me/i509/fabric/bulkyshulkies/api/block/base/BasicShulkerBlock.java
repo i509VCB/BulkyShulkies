@@ -27,7 +27,7 @@ package me.i509.fabric.bulkyshulkies.api.block.base;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityContext;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
@@ -52,10 +52,10 @@ public interface BasicShulkerBlock {
 	 * @param blockState    The blockState.
 	 * @param blockView     The blockView.
 	 * @param blockPos      The blockPos.
-	 * @param entityContext The entityContext.
+	 * @param shapeContext The entityContext.
 	 * @return A VoxelShape which is the collision bounds and outline shape for the shulker box.
 	 */
-	VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext);
+	VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, ShapeContext shapeContext);
 
 	/**
 	 * Gets the ItemStack which represents this shulker box.

@@ -28,11 +28,11 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.block.enums.StairShape;
-import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.mob.ShulkerLidCollisions;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -99,7 +99,7 @@ public class StairShulkerBoxBlock extends HorizontalFacingShulkerBoxBlock implem
 	}
 
 	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext ePos) {
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext shapeContext) {
 		BlockEntity blockEntity = view.getBlockEntity(pos);
 
 		if (blockEntity instanceof StairShulkerBoxBE) {

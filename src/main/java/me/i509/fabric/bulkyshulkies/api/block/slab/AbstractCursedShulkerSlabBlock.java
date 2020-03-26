@@ -30,8 +30,8 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.EntityContext;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -70,12 +70,12 @@ public abstract class AbstractCursedShulkerSlabBlock extends FacingShulkerBoxBlo
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
-		return getOutlineShape(blockState, blockView, blockPos, entityContext);
+	public VoxelShape getCollisionShape(BlockState blockState, BlockView blockView, BlockPos blockPos, ShapeContext shapeContext) {
+		return getOutlineShape(blockState, blockView, blockPos, shapeContext);
 	}
 
 	@Override
-	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, EntityContext entityContext) {
+	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, ShapeContext shapeContext) {
 		BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
 		return blockEntity instanceof FacingSlabShulkerBE
 				? ((FacingSlabShulkerBE) blockEntity).getBoundingBox(blockState)

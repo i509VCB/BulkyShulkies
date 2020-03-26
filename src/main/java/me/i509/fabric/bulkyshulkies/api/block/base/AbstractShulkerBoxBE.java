@@ -249,8 +249,8 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	@Override
-	public void fromTag(CompoundTag input) {
-		super.fromTag(input);
+	public void fromTag(BlockState state, CompoundTag input) {
+		super.fromTag(state, input);
 		this.deserializeInventory(input);
 	}
 
