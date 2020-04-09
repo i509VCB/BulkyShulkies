@@ -65,10 +65,14 @@ dependencies {
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "com.misterpemodder:shulkerboxtooltip:${project.shulkerboxtooltip_version}"
+	modImplementation ("com.misterpemodder:shulkerboxtooltip:${project.shulkerboxtooltip_version}") {
+		exclude(group : "net.fabricmc.fabric-api")
+	}
 
 	//QuickShulker support
-	modImplementation "net.kyrptonaught:quickshulker:${project.quickshulker_version}"
+	modImplementation ("net.kyrptonaught:quickshulker:${project.quickshulker_version}") {
+		exclude(group : "net.fabricmc.fabric-api")
+	}
 
 	// Cotton Resources -- Uncomment when 1.15 is pushed, this should be modRuntime due to LibCD handling the tags.
 	// modImplementation ("io.github.cottonmc:cotton-resources:${cotton_resources_version}") { // We use our own version of modmenu and REI
