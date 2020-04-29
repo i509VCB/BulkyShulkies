@@ -22,24 +22,24 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.mixin;
+package me.i509.fabric.bulkyshulkies.mixin.core.screen.slot;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.StairsBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.screen.slot.ShulkerBoxSlot;
 
-import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
-@Mixin(StairsBlock.class)
-public abstract class StairsBlockMixin {
-	@Inject(at = @At("HEAD"), method = "isStairs", cancellable = true)
-	private static void bulky_isStairs(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-		if (state.getBlock() instanceof StairShulkerBoxBlock) {
-			cir.setReturnValue(true);
+@Mixin(ShulkerBoxSlot.class)
+public class ShulkerBoxSlotMixin {
+	@Inject(at = @At("HEAD"), method = "canInsert", cancellable = true)
+	private void canInsert(ItemStack stack, CallbackInfoReturnable<Boolean> cib) {
+		if (!BulkyShulkies.getInstance().canInsertItem(stack)) {
+			cib.setReturnValue(false);
 		}
 	}
 }

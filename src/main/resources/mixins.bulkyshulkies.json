@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "me.i509.fabric.bulkyshulkies.mixin.core",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "block.CauldronBlockMixin",
+    "block.StairsBlockMixin",
+    "block.entity.ShulkerBoxBlockEntityMixin",
+    "enchantment.EnchantmentTargetMixin",
+    "entity.LivingEntityMixin",
+    "entity.PlayerEntityMixin",
+    "entity.ServerPlayerEntityMixin",
+    "item.ItemStackMixin",
+    "screen.slot.ShulkerBoxSlotMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

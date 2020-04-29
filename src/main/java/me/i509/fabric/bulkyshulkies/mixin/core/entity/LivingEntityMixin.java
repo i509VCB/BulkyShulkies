@@ -22,22 +22,28 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.mixin;
+package me.i509.fabric.bulkyshulkies.mixin.core.entity;
+
+import java.util.Iterator;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
+import net.minecraft.entity.DamageUtil;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.world.World;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ItemStack;
 
+import me.i509.fabric.bulkyshulkies.abstraction.DurabilityBasedProtection;
 import me.i509.fabric.bulkyshulkies.api.item.HelmetTrackedDataStage;
 import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetStage;
 
@@ -47,8 +53,29 @@ public abstract class LivingEntityMixin extends Entity implements ShulkerHelmetS
 	private static final TrackedData<Float> SHULKER_HELMET_ANIMATION_PROGRESS = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.FLOAT);
 	private static final TrackedData<Float> PREVIOUS_HELMET_ANIMATION_PROGRESS = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.FLOAT);
 
-	public LivingEntityMixin(EntityType<?> type, World world) {
-		super(type, world);
+	@Shadow public abstract Iterable<ItemStack> getArmorItems();
+
+	private LivingEntityMixin() {
+		super(null, null);
+	}
+
+	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/DamageUtil;getDamageLeft(FFF)F"), method = "applyArmorToDamage")
+	public float onApplyArmorToDamage(float damageTaken, float armorPoints, float v) {
+		float realArmorPoints = armorPoints; // This is the original armor points.
+		Iterator<ItemStack> armorItems = this.getArmorItems().iterator();
+
+		do {
+			ItemStack stack = armorItems.next();
+
+			if (stack.getItem() instanceof DurabilityBasedProtection) {
+				if (DurabilityBasedProtection.canDamage(stack)) {
+					realArmorPoints -= ((ArmorItem) stack.getItem()).getProtection(); // Here we remove the armor points logically supplied by the server.
+					// TODO Maybe change armor point icon in that context.
+				}
+			}
+		} while (armorItems.hasNext());
+
+		return DamageUtil.getDamageLeft(damageTaken, realArmorPoints, v);
 	}
 
 	@Inject(at = @At("TAIL"), method = "initDataTracker()V")

@@ -63,52 +63,52 @@ public class ShulkerInjectorBE extends LockableContainerBlockEntity implements S
 	}
 
 	@Override
-	public int[] getInvAvailableSlots(Direction side) {
+	public int[] getAvailableSlots(Direction side) {
 		return new int[0];
 	}
 
 	@Override
-	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir) {
+	public boolean canInsert(int slot, ItemStack stack, Direction dir) {
 		return false;
 	}
 
 	@Override
-	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
+	public boolean canExtract(int slot, ItemStack stack, Direction dir) {
 		return false;
 	}
 
 	@Override
-	public int getInvSize() {
+	public int size() {
 		return 0;
 	}
 
 	@Override
-	public boolean isInvEmpty() {
+	public boolean isEmpty() {
 		return false;
 	}
 
 	@Override
-	public ItemStack getInvStack(int slot) {
+	public ItemStack getStack(int slot) {
 		return null;
 	}
 
 	@Override
-	public ItemStack takeInvStack(int slot, int amount) {
+	public ItemStack removeStack(int slot, int amount) {
 		return null;
 	}
 
 	@Override
-	public ItemStack removeInvStack(int slot) {
+	public ItemStack removeStack(int slot) {
 		return null;
 	}
 
 	@Override
-	public void setInvStack(int slot, ItemStack stack) {
+	public void setStack(int slot, ItemStack stack) {
 		// TODO:
 	}
 
 	@Override
-	public boolean canPlayerUseInv(PlayerEntity player) {
+	public boolean canPlayerUse(PlayerEntity player) {
 		return false;
 	}
 

@@ -67,15 +67,15 @@ public class BulkyShulkies {
 		}
 	});
 
-	private static final BulkyShulkies instance;
+	private static final BulkyShulkies INSTANCE;
 	private static List<Predicate<ItemStack>> disallowedItems = new ArrayList<>();
 
 	private MainConfig mainConf;
 	private ConfigurationLoader<CommentedConfigurationNode> mainConfLoader;
 
 	private BulkyShulkies() throws IOException {
-		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
-		disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof BasicShulkerBlock);
+		BulkyShulkies.disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
+		BulkyShulkies.disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof BasicShulkerBlock);
 
 		Path configLocation = FabricLoader.getInstance().getConfigDirectory().toPath().resolve("bulkyshulkies");
 		Path configFile = configLocation.resolve("bulkyshulkies.conf");
@@ -89,39 +89,39 @@ public class BulkyShulkies {
 		}
 
 		try {
-			mainConfLoader = HoconConfigurationLoader.builder()
+			this.mainConfLoader = HoconConfigurationLoader.builder()
 					.setPath(configFile).build();
 
-			CommentedConfigurationNode mainConfigRoot = mainConfLoader.load(ConfigurationOptions.defaults().setHeader(MainConfig.HEADER)
+			CommentedConfigurationNode mainConfigRoot = this.mainConfLoader.load(ConfigurationOptions.defaults().setHeader(MainConfig.HEADER)
 					.setObjectMapperFactory(DefaultObjectMapperFactory.getInstance()).setShouldCopyDefaults(true));
 
 			//noinspection UnstableApiUsage
-			mainConf = mainConfigRoot.getValue(TypeToken.of(MainConfig.class), new MainConfig());
-			mainConfLoader.save(mainConfigRoot);
+			this.mainConf = mainConfigRoot.getValue(TypeToken.of(MainConfig.class), new MainConfig());
+			this.mainConfLoader.save(mainConfigRoot);
 		} catch (Exception e) {
 			e.printStackTrace(); // Well some invalid syntax
 			return;
 		}
 
-		for (String id : mainConf.getNotAllowedInShulkers()) {
+		for (String id : this.mainConf.getNotAllowedInShulkers()) {
 			try {
 				Identifier identifier = new Identifier(id);
 				Optional<Item> item = Registry.ITEM.getOrEmpty(identifier);
 
 				if (!item.isPresent()) {
-					getLogger().error("Tried to register item: " + identifier.toString() + " to the shulker box blacklist, but it is not present within the ITEM registry.");
+					this.getLogger().error("Tried to register item: " + identifier.toString() + " to the shulker box blacklist, but it is not present within the ITEM registry.");
 					continue;
 				}
 
 				BulkyShulkies.addDisallowedShulkerItem((stack) -> Registry.ITEM.getId(stack.getItem()).equals(identifier));
 			} catch (InvalidIdentifierException e) {
-				getLogger().error("Item: " + id + " is not a valid identifier, so it failed to be registered into the shulker box blacklist.", e);
+				this.getLogger().error("Item: " + id + " is not a valid identifier, so it failed to be registered into the shulker box blacklist.", e);
 			}
 		}
 	}
 
 	public static BulkyShulkies getInstance() {
-		return instance;
+		return BulkyShulkies.INSTANCE;
 	}
 
 	public static Identifier id(String path) {
@@ -129,7 +129,7 @@ public class BulkyShulkies {
 	}
 
 	public Logger getLogger() {
-		return LOGGER;
+		return BulkyShulkies.LOGGER;
 	}
 
 	public MainConfig getConfig() {
@@ -137,7 +137,7 @@ public class BulkyShulkies {
 	}
 
 	public static void addDisallowedShulkerItem(Predicate<ItemStack> predicate) {
-		disallowedItems.add(predicate);
+		BulkyShulkies.disallowedItems.add(predicate);
 	}
 
 	public boolean canInsertItem(ItemStack stack) {
@@ -145,7 +145,7 @@ public class BulkyShulkies {
 			return true;
 		}
 
-		for (Predicate<ItemStack> disallowedItems : disallowedItems) {
+		for (Predicate<ItemStack> disallowedItems : BulkyShulkies.disallowedItems) {
 			if (disallowedItems.test(stack)) {
 				return false;
 			}
@@ -155,15 +155,15 @@ public class BulkyShulkies {
 	}
 
 	static {
-		BulkyShulkies tmp;
+		BulkyShulkies instance;
 
 		try {
-			tmp = new BulkyShulkies();
+			instance = new BulkyShulkies();
 		} catch (IOException e) {
 			e.printStackTrace();
-			tmp = null;
+			instance = null;
 		}
 
-		instance = tmp;
+		INSTANCE = instance;
 	}
 }

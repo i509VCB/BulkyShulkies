@@ -28,6 +28,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -52,26 +53,26 @@ public class Generic9x7Screen extends HandledScreen<GenericScreenHandler9x7> {
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float delta) {
-		this.renderBackground();
-		this.drawBackground(delta, mouseX, mouseX);
-		super.render(mouseX, mouseY, delta);
-		this.drawMouseoverTooltip(mouseX, mouseY);
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+		this.renderBackground(matrices);
+		this.drawBackground(matrices, delta, mouseX, mouseX);
+		super.render(matrices, mouseX, mouseY, delta);
+		this.drawMouseoverTooltip(matrices, mouseX, mouseY);
 	}
 
 	@Override
-	protected void drawForeground(int mouseX, int mouseY) {
-		this.textRenderer.draw(this.title.asFormattedString(), 8.0F, 7.0F, 4210752);
-		this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8.0F, (float) (this.backgroundHeight - 114 + 2), 4210752);
+	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
+		this.textRenderer.draw(matrices, this.title.asString(), 8.0F, 7.0F, 4210752);
+		this.textRenderer.draw(matrices, this.playerInventory.getDisplayName().asString(), 8.0F, (float) (this.backgroundHeight - 114 + 2), 4210752);
 	}
 
 	@Override
-	protected void drawBackground(float delta, int mouseX, int mouseY) {
+	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.client.getTextureManager().bindTexture(TEXTURE);
 		int i = (this.width - this.backgroundWidth) / 2;
 		int j = (this.height - this.backgroundHeight) / 2;
-		this.drawTexture(i, j, 0, 0, this.backgroundWidth, 7 * 18 + 17);
-		this.drawTexture(i, j + 7 * 18 /*+ 17*/, 0, 126, this.backgroundWidth, 114); // was 114, 96
+		this.drawTexture(matrices, i, j, 0, 0, this.backgroundWidth, 7 * 18 + 17);
+		this.drawTexture(matrices, i, j + 7 * 18 /*+ 17*/, 0, 126, this.backgroundWidth, 114); // was 114, 96
 	}
 }

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.mixin;
+package me.i509.fabric.bulkyshulkies.mixin.core.block;
 
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -48,7 +48,7 @@ import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
 import me.i509.fabric.bulkyshulkies.item.ShulkerBlockItem;
 
 @Mixin(CauldronBlock.class)
-public class CauldronBlockMixin {
+public abstract class CauldronBlockMixin {
 	/**
 	 * @reason Redirect so we can use the exact same logic.
 	 */

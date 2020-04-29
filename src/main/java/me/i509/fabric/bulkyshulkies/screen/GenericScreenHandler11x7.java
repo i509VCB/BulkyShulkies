@@ -43,7 +43,7 @@ public class GenericScreenHandler11x7 extends ScreenHandler {
 		super(null, syncId);
 		this.inventory = inventory;
 		this.name = name;
-		this.inventory.onInvOpen(playerInventory.player);
+		this.inventory.onOpen(playerInventory.player);
 
 		for (int row = 0; row < 7; ++row) {
 			for (int column = 0; column < 11; ++column) {
@@ -64,7 +64,7 @@ public class GenericScreenHandler11x7 extends ScreenHandler {
 
 	@Override
 	public boolean canUse(PlayerEntity player) {
-		return this.inventory.canPlayerUseInv(player);
+		return this.inventory.canPlayerUse(player);
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class GenericScreenHandler11x7 extends ScreenHandler {
 	@Override
 	public void close(PlayerEntity player) {
 		super.close(player);
-		this.inventory.onInvClose(player);
+		this.inventory.onClose(player);
 	}
 
 	public Inventory getInventory() {

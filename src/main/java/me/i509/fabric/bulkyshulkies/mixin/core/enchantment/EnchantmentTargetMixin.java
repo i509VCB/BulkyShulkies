@@ -22,18 +22,11 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.mixin;
+package me.i509.fabric.bulkyshulkies.mixin.core.enchantment;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
 
-import net.minecraft.screen.slot.Slot;
-
-@Mixin(Slot.class)
-public interface SlotAccessor {
-	@Accessor("x")
-	void accessor$setX(int x);
-
-	@Accessor("y")
-	void accessor$setY(int y);
+@Mixin(targets = "net/minecraft/enchantment/EnchantmentTarget$13")
+public class EnchantmentTargetMixin {
+	// TODO, prevent curse of binding from applying to the shulker box helmet at all.
 }

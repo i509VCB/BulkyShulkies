@@ -25,6 +25,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -92,34 +93,34 @@ public class ScrollableScreen extends HandledScreen<ScrollableScreenHandler> imp
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float lastFrameDuration) {
-		this.renderBackground();
-		this.drawBackground(lastFrameDuration, mouseX, mouseY);
-		super.render(mouseX, mouseY, lastFrameDuration);
-		this.drawMouseoverTooltip(mouseX, mouseY);
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float tickDelta) {
+		this.renderBackground(matrices);
+		this.drawBackground(matrices, tickDelta, mouseX, mouseY);
+		super.render(matrices, mouseX, mouseY, tickDelta);
+		this.drawMouseoverTooltip(matrices, mouseX, mouseY);
 	}
 
 	@Override
-	protected void drawForeground(int mouseX, int mouseY) {
-		this.textRenderer.draw(this.title.asFormattedString(), 8, 6, 4210752);
-		this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8, backgroundHeight - 94, 4210752);
+	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
+		this.textRenderer.draw(matrices, this.title.asString(), 8, 6, 4210752);
+		this.textRenderer.draw(matrices, this.playerInventory.getDisplayName().asString(), 8, backgroundHeight - 94, 4210752);
 	}
 
 	@Override
-	protected void drawBackground(float lastFrameDuration, int mouseX, int mouseY) {
+	protected void drawBackground(MatrixStack matrices, float tickDelta, int mouseX, int mouseY) {
 		RenderSystem.color4f(1, 1, 1, 1);
 		this.client.getTextureManager().bindTexture(BASE_TEXTURE);
 		int x = (this.width - this.backgroundWidth) / 2;
 		int y = (this.height - this.backgroundHeight) / 2;
-		drawTexture(x, y, 0, 0, this.backgroundWidth, this.displayedRows * 18 + 17);
-		drawTexture(x, y + this.displayedRows * 18 + 17, 0, 126, this.backgroundWidth, 96);
+		this.drawTexture(matrices, x, y, 0, 0, this.backgroundWidth, this.displayedRows * 18 + 17);
+		this.drawTexture(matrices, x, y + this.displayedRows * 18 + 17, 0, 126, this.backgroundWidth, 96);
 
 		if (hasScrollbar()) {
 			this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
-			drawTexture(x + 172, y, 0, 0, 22, 132);
-			drawTexture(x + 174, (int) (y + 18 + 91 * progress), 22, 0, 12, 15);
-			drawTexture(x + 79, y + 126, 34, 0, 90, 11);
-			this.searchBox.render(mouseX, mouseY, lastFrameDuration);
+			this.drawTexture(matrices, x + 172, y, 0, 0, 22, 132);
+			this.drawTexture(matrices, x + 174, (int) (y + 18 + 91 * this.progress), 22, 0, 12, 15);
+			this.drawTexture(matrices, x + 79, y + 126, 34, 0, 90, 11);
+			this.searchBox.render(matrices, mouseX, mouseY, tickDelta);
 		}
 	}
 

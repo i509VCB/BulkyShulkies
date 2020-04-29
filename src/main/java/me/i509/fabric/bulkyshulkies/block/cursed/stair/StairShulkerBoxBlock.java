@@ -60,7 +60,7 @@ import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import me.i509.fabric.bulkyshulkies.api.block.HorizontalFacingShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
-import me.i509.fabric.bulkyshulkies.mixin.StairsBlockAccessor;
+import me.i509.fabric.bulkyshulkies.mixin.accessor.StairsBlockAccessor;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 public class StairShulkerBoxBlock extends HorizontalFacingShulkerBoxBlock implements Waterloggable {

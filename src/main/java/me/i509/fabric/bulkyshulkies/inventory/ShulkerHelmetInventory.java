@@ -60,16 +60,16 @@ public class ShulkerHelmetInventory extends BasicInventory {
 	public void readTags(ListTag listTag) {
 		int j;
 
-		for (j = 0; j < this.getInvSize(); ++j) {
-			this.setInvStack(j, ItemStack.EMPTY);
+		for (j = 0; j < this.size(); ++j) {
+			this.setStack(j, ItemStack.EMPTY);
 		}
 
 		for (j = 0; j < listTag.size(); ++j) {
 			CompoundTag compoundTag = listTag.getCompound(j);
 			int k = compoundTag.getByte("Slot") & 255;
 
-			if (k >= 0 && k < this.getInvSize()) {
-				this.setInvStack(k, ItemStack.fromTag(compoundTag));
+			if (k >= 0 && k < this.size()) {
+				this.setStack(k, ItemStack.fromTag(compoundTag));
 			}
 		}
 	}
@@ -78,8 +78,8 @@ public class ShulkerHelmetInventory extends BasicInventory {
 	public ListTag getTags() {
 		ListTag listTag = new ListTag();
 
-		for (int i = 0; i < this.getInvSize(); ++i) {
-			ItemStack itemStack = this.getInvStack(i);
+		for (int i = 0; i < this.size(); ++i) {
+			ItemStack itemStack = this.getStack(i);
 
 			if (!itemStack.isEmpty()) {
 				CompoundTag compoundTag = new CompoundTag();
@@ -97,17 +97,17 @@ public class ShulkerHelmetInventory extends BasicInventory {
 		super.markDirty();
 		CompoundTag compoundTag = this.stack.getSubTag("BlockEntityTag");
 
-		if (this.isInvEmpty()) {
+		if (this.isEmpty()) {
 			this.stack.removeSubTag("BlockEntityTag");
 		} else {
 			if (compoundTag == null) {
 				compoundTag = this.stack.getOrCreateSubTag("BlockEntityTag");
 			}
 
-			DefaultedList<ItemStack> itemStacks = DefaultedList.ofSize(this.getInvSize(), ItemStack.EMPTY);
+			DefaultedList<ItemStack> itemStacks = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
 
-			for (int i = 0; i < this.getInvSize(); ++i) {
-				itemStacks.set(i, this.getInvStack(i));
+			for (int i = 0; i < this.size(); ++i) {
+				itemStacks.set(i, this.getStack(i));
 			}
 
 			Inventories.toTag(compoundTag, itemStacks);
@@ -115,7 +115,7 @@ public class ShulkerHelmetInventory extends BasicInventory {
 	}
 
 	@Override
-	public void onInvClose(PlayerEntity playerEntity) {
+	public void onClose(PlayerEntity playerEntity) {
 		this.markDirty();
 		ShulkerHelmetStage.bulkyshulkies$getStageFromEntity(playerEntity).bulkyshulkies$setStage(ShulkerBoxBlockEntity.AnimationStage.CLOSING);
 	}

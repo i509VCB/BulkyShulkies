@@ -22,6 +22,7 @@ package me.i509.fabric.bulkyshulkies.client.screen.widget;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.text.LiteralText;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -34,14 +35,14 @@ public class SearchTextFieldWidget extends TextFieldWidget {
 	private boolean ignoreNextChar;
 
 	public SearchTextFieldWidget(TextRenderer textRenderer, int x, int y, int width, int height, String message) {
-		super(textRenderer, x, y, width, height, message);
-		ignoreNextChar = false;
+		super(textRenderer, x, y, width, height, new LiteralText(message));
+		this.ignoreNextChar = false;
 	}
 
 	@Override
 	public boolean mouseClicked(double x, double y, int button) {
-		if (isVisible() && button == 1 && clicked(x, y)) {
-			setText("");
+		if (this.isVisible() && button == 1 && clicked(x, y)) {
+			this.setText("");
 			return true;
 		}
 
@@ -50,8 +51,8 @@ public class SearchTextFieldWidget extends TextFieldWidget {
 
 	@Override
 	public boolean charTyped(char character, int int_1) {
-		if (ignoreNextChar) {
-			ignoreNextChar = false;
+		if (this.ignoreNextChar) {
+			this.ignoreNextChar = false;
 			return false;
 		}
 
@@ -59,10 +60,10 @@ public class SearchTextFieldWidget extends TextFieldWidget {
 	}
 
 	public boolean isMouseInBounds(double x, double y) {
-		return clicked(x, y);
+		return this.clicked(x, y);
 	}
 
 	public void ignoreNextChar() {
-		ignoreNextChar = true;
+		this.ignoreNextChar = true;
 	}
 }

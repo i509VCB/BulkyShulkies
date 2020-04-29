@@ -22,26 +22,32 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.mixin;
+package me.i509.fabric.bulkyshulkies.mixin.core.item;
 
-import org.jetbrains.annotations.Nullable;
+import java.util.Random;
+
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Direction;
+import net.minecraft.server.network.ServerPlayerEntity;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
+import me.i509.fabric.bulkyshulkies.abstraction.DurabilityBasedProtection;
 
-@Mixin(ShulkerBoxBlockEntity.class)
-public abstract class ShulkerBoxBlockEntityMixin {
-	@Inject(at = @At("HEAD"), method = "canInsertInvStack", cancellable = true)
-	private void canInsert(int inventorySlot, ItemStack stack, @Nullable Direction direction, CallbackInfoReturnable<Boolean> cib) {
-		if (!BulkyShulkies.getInstance().canInsertItem(stack)) {
-			cib.setReturnValue(false);
+@Mixin(ItemStack.class)
+public abstract class ItemStackMixin {
+	@Shadow public abstract Item getItem();
+
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getLevel(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/item/ItemStack;)I"), method = "damage(ILjava/util/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z", cancellable = true)
+	public void onDamaged(int damageTaken, Random random, ServerPlayerEntity serverPlayerEntity, CallbackInfoReturnable<Boolean> cir) {
+		if (this.getItem() instanceof DurabilityBasedProtection) {
+			if (DurabilityBasedProtection.canDamage((ItemStack) (Object) this)) { // This check also says if the armor is at minimum durability.
+				cir.setReturnValue(false);
+			}
 		}
 	}
 }

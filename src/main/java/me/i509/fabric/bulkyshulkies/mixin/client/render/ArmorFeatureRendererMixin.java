@@ -55,6 +55,7 @@ import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetStage;
 import me.i509.fabric.bulkyshulkies.client.model.AbstractShulkerLidHelmetModel;
 import me.i509.fabric.bulkyshulkies.client.model.HumanoidShulkerLidHelmetModel;
 import me.i509.fabric.bulkyshulkies.client.model.PiglinShulkerLidHelmetModel;
+import me.i509.fabric.bulkyshulkies.mixin.accessor.client.AnimalModelAccessor;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ArmorFeatureRenderer.class)

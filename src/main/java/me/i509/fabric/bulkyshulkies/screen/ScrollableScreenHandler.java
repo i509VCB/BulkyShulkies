@@ -36,7 +36,7 @@ import net.fabricmc.loader.api.FabricLoader;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.SlotFactory;
-import me.i509.fabric.bulkyshulkies.mixin.SlotAccessor;
+import me.i509.fabric.bulkyshulkies.mixin.accessor.SlotAccessor;
 
 /**
  * Credit: NinjaPhoenix.
@@ -56,7 +56,7 @@ public class ScrollableScreenHandler extends ScreenHandler {
 		super(null, syncId);
 		this.inventory = inventory;
 		this.containerName = containerName;
-		realRows = inventory.getInvSize() / 9;
+		realRows = inventory.size() / 9;
 		rows = realRows > 6 ? 6 : realRows;
 
 		// todo eval if fabric loader removes this statement on server side
@@ -65,7 +65,7 @@ public class ScrollableScreenHandler extends ScreenHandler {
 		}
 
 		int int_3 = (rows - 4) * 18;
-		inventory.onInvOpen(playerInventory.player);
+		inventory.onOpen(playerInventory.player);
 
 		for (int y = 0; y < realRows; ++y) {
 			int yPos = -2000;
@@ -112,13 +112,13 @@ public class ScrollableScreenHandler extends ScreenHandler {
 
 	@Override
 	public boolean canUse(PlayerEntity player) {
-		return inventory.canPlayerUseInv(player);
+		return inventory.canPlayerUse(player);
 	}
 
 	@Override
 	public void close(PlayerEntity player) {
 		super.close(player);
-		inventory.onInvClose(player);
+		inventory.onClose(player);
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -179,11 +179,11 @@ public class ScrollableScreenHandler extends ScreenHandler {
 			ItemStack slotStack = slot.getStack();
 			stack = slotStack.copy();
 
-			if (slotIndex < inventory.getInvSize()) {
-				if (!insertItem(slotStack, inventory.getInvSize(), slots.size(), true)) {
+			if (slotIndex < inventory.size()) {
+				if (!insertItem(slotStack, inventory.size(), slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!insertItem(slotStack, 0, inventory.getInvSize(), false)) {
+			} else if (!insertItem(slotStack, 0, inventory.size(), false)) {
 				return ItemStack.EMPTY;
 			}
 

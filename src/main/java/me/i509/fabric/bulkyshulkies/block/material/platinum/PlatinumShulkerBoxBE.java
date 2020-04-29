@@ -90,7 +90,7 @@ public class PlatinumShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 		SidedInventory inventory = AbstractShulkerBoxBlock.getInventoryStatically(this.getWorld(), this.getPos());
 		ItemStack stack = itemEntity.getStack();
 
-		if (!inventory.canInsertInvStack(0, stack, Direction.UP)) { // We do this to make sure people don't try to do recursive shulker boxes.
+		if (!inventory.canInsert(0, stack, Direction.UP)) { // We do this to make sure people don't try to do recursive shulker boxes.
 			return;
 		}
 
@@ -112,11 +112,11 @@ public class PlatinumShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 	}
 
 	private void addToNewSlot(ItemStack stack, Inventory inventory) {
-		for (int i = 0; i < inventory.getInvSize(); ++i) {
-			ItemStack itemStack = this.getInvStack(i);
+		for (int i = 0; i < inventory.size(); ++i) {
+			ItemStack itemStack = this.getStack(i);
 
 			if (itemStack.isEmpty()) {
-				this.setInvStack(i, stack.copy());
+				this.setStack(i, stack.copy());
 				stack.setCount(0);
 				return;
 			}
@@ -124,8 +124,8 @@ public class PlatinumShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 	}
 
 	private void addToExistingSlot(ItemStack stack, Inventory inventory) {
-		for (int i = 0; i < inventory.getInvSize(); ++i) {
-			ItemStack itemStack = this.getInvStack(i);
+		for (int i = 0; i < inventory.size(); ++i) {
+			ItemStack itemStack = this.getStack(i);
 
 			if (ItemStack.areItemsEqualIgnoreDamage(itemStack, stack)) {
 				this.transfer(stack, itemStack, inventory);
@@ -138,7 +138,7 @@ public class PlatinumShulkerBoxBE extends Facing1X1ShulkerBoxBE {
 	}
 
 	private void transfer(ItemStack source, ItemStack target, Inventory inventory) {
-		int i = Math.min(this.getInvMaxStackAmount(), target.getMaxCount());
+		int i = Math.min(this.getMaxCountPerStack(), target.getMaxCount());
 		int j = Math.min(source.getCount(), i - target.getCount());
 
 		if (j > 0) {

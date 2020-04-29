@@ -28,7 +28,6 @@ import dev.emi.iteminventory.api.ItemInventory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -45,7 +44,7 @@ import me.i509.fabric.bulkyshulkies.item.ShulkerBlockItem;
 public abstract class ShulkerBlockItemMixin_Compat extends BlockItem implements ItemInventory {
 	@Shadow public abstract AbstractShulkerBoxBlock shadow$getBlock();
 
-	public ShulkerBlockItemMixin_Compat(Block block, Settings settings) {
+	private ShulkerBlockItemMixin_Compat() {
 		super(null, null);
 	}
 
@@ -57,14 +56,14 @@ public abstract class ShulkerBlockItemMixin_Compat extends BlockItem implements 
 	@Override
 	public ItemStack getStack(ItemStack invStack, int slot) {
 		try (AutoCloseableInventory inventory = this.impl$getInventory(invStack)) {
-			return inventory.getInvStack(slot);
+			return inventory.getStack(slot);
 		}
 	}
 
 	@Override
 	public void setStack(ItemStack invStack, int slot, ItemStack stackToSet) {
 		try (AutoCloseableInventory inventory = this.impl$getInventory(invStack)) {
-			inventory.setInvStack(slot, stackToSet);
+			inventory.setStack(slot, stackToSet);
 		}
 	}
 

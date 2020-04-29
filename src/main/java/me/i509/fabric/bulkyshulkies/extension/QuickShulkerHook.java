@@ -129,28 +129,28 @@ public class QuickShulkerHook implements RegisterQuickShulker {
 	public static GenericScreenHandler13x7 create13x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		int invSlot = buf.readInt();
 		Text name = buf.readText();
-		ItemStack stack = player.inventory.getInvStack(invSlot);
+		ItemStack stack = player.inventory.getStack(invSlot);
 		return new GenericScreenHandler13x7(syncId, ShulkerBoxSlot::new, player.inventory, new ItemStackInventory(stack, getSlotCount(stack)), name);
 	}
 
 	public static GenericScreenHandler11x7 create11x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		int invSlot = buf.readInt();
 		Text name = buf.readText();
-		ItemStack stack = player.inventory.getInvStack(invSlot);
+		ItemStack stack = player.inventory.getStack(invSlot);
 		return new GenericScreenHandler11x7(syncId, ShulkerBoxSlot::new, player.inventory, new ItemStackInventory(stack, getSlotCount(stack)), name);
 	}
 
 	public static GenericScreenHandler9x7 create9x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		int invSlot = buf.readInt();
 		Text name = buf.readText();
-		ItemStack stack = player.inventory.getInvStack(invSlot);
+		ItemStack stack = player.inventory.getStack(invSlot);
 		return new GenericScreenHandler9x7(syncId, ShulkerBoxSlot::new, player.inventory, new ItemStackInventory(stack, getSlotCount(stack)), name);
 	}
 
 	public static ScrollableScreenHandler createScrollable(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		int invSlot = buf.readInt();
 		Text name = buf.readText();
-		ItemStack stack = player.inventory.getInvStack(invSlot);
+		ItemStack stack = player.inventory.getStack(invSlot);
 		return new ScrollableScreenHandler(syncId, ShulkerBoxSlot::new, player.inventory, new ItemStackInventory(stack, getSlotCount(stack)), name);
 	}
 

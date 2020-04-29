@@ -22,24 +22,26 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.mixin.client.render;
+package me.i509.fabric.bulkyshulkies.mixin.core.block.entity;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.client.render.entity.model.AnimalModel;
+import net.minecraft.block.entity.ShulkerBoxBlockEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Direction;
 
-@Mixin(AnimalModel.class)
-public interface AnimalModelAccessor {
-	@Accessor("headScaled")
-	boolean accessor$headScaled();
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
-	@Accessor("childHeadYOffset")
-	float accessor$childHeadYOffset();
-
-	@Accessor("childHeadZOffset")
-	float accessor$childHeadZOffset();
-
-	@Accessor("invertedChildHeadScale")
-	float accessor$invertedChildHeadScale();
+@Mixin(ShulkerBoxBlockEntity.class)
+public abstract class ShulkerBoxBlockEntityMixin {
+	@Inject(at = @At("HEAD"), method = "canInsert", cancellable = true)
+	private void canInsert(int inventorySlot, ItemStack stack, @Nullable Direction direction, CallbackInfoReturnable<Boolean> cib) {
+		if (!BulkyShulkies.getInstance().canInsertItem(stack)) {
+			cib.setReturnValue(false);
+		}
+	}
 }

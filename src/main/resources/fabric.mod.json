@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "bulkyshulkies",
   "version": "${version}",
-
   "name": "Bulky Shulkies",
   "description": "More Bulky Shulker boxes.",
   "authors": [
@@ -31,7 +30,6 @@
 
   "license": "MIT",
   "icon": "assets/bulkyshulkies/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -57,11 +55,11 @@
     ]
   },
   "mixins": [
-    "mixins.abstraction.json",
-    "mixins.cursed.json",
-    "mixins.compat.iteminventory.json"
+    "mixins.accessors.bulkyshulkies.json",
+    "mixins.bulkyshulkies.json",
+    "mixins.client.bulkyshulkies.json",
+    "mixins.iteminventory.compat.bulkyshulkies.json"
   ],
-
   "depends": {
     "libcd": "*",
     "fabricloader": ">=0.7.0",
@@ -70,7 +68,5 @@
   "suggests": {
     "cotton-resources": ">=1.4.1",
     "shulkerboxtooltip": ">=1.4.3"
-  },
-  "custom": {
   }
 }

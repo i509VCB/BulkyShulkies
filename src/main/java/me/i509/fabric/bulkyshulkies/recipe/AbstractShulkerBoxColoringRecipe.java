@@ -49,8 +49,8 @@ public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 		int i = 0;
 		int j = 0;
 
-		for (int k = 0; k < craftingInventory.getInvSize(); ++k) {
-			ItemStack itemStack = craftingInventory.getInvStack(k);
+		for (int k = 0; k < craftingInventory.size(); ++k) {
+			ItemStack itemStack = craftingInventory.getStack(k);
 
 			if (!itemStack.isEmpty()) {
 				if (Block.getBlockFromItem(itemStack.getItem()) instanceof BasicShulkerBlock) {
@@ -76,8 +76,8 @@ public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 		ItemStack itemStack = ItemStack.EMPTY;
 		DyeItem dyeItem = (DyeItem) Items.WHITE_DYE;
 
-		for (int i = 0; i < craftingInventory.getInvSize(); ++i) {
-			ItemStack selectedStack = craftingInventory.getInvStack(i);
+		for (int i = 0; i < craftingInventory.size(); ++i) {
+			ItemStack selectedStack = craftingInventory.getStack(i);
 
 			if (!selectedStack.isEmpty()) {
 				Item item = selectedStack.getItem();

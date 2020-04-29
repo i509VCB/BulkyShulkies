@@ -54,16 +54,16 @@ public class EnderSlabInventory extends BasicInventory implements SidedInventory
 	public void readTags(ListTag listTag) {
 		int j;
 
-		for (j = 0; j < this.getInvSize(); ++j) {
-			this.setInvStack(j, ItemStack.EMPTY);
+		for (j = 0; j < this.size(); ++j) {
+			this.setStack(j, ItemStack.EMPTY);
 		}
 
 		for (j = 0; j < listTag.size(); ++j) {
 			CompoundTag compoundTag = listTag.getCompound(j);
 			int k = compoundTag.getByte("Slot") & 255;
 
-			if (k >= 0 && k < this.getInvSize()) {
-				this.setInvStack(k, ItemStack.fromTag(compoundTag));
+			if (k >= 0 && k < this.size()) {
+				this.setStack(k, ItemStack.fromTag(compoundTag));
 			}
 		}
 	}
@@ -71,8 +71,8 @@ public class EnderSlabInventory extends BasicInventory implements SidedInventory
 	public ListTag getTags() {
 		ListTag listTag = new ListTag();
 
-		for (int i = 0; i < this.getInvSize(); ++i) {
-			ItemStack itemStack = this.getInvStack(i);
+		for (int i = 0; i < this.size(); ++i) {
+			ItemStack itemStack = this.getStack(i);
 
 			if (!itemStack.isEmpty()) {
 				CompoundTag compoundTag = new CompoundTag();
@@ -85,39 +85,39 @@ public class EnderSlabInventory extends BasicInventory implements SidedInventory
 		return listTag;
 	}
 
-	public boolean canPlayerUseInv(PlayerEntity player) {
-		return this.currentBlockEntity != null && !this.currentBlockEntity.canPlayerUseInv(player) ? false : super.canPlayerUseInv(player);
+	public boolean canPlayerUse(PlayerEntity player) {
+		return this.currentBlockEntity != null && !this.currentBlockEntity.canPlayerUse(player) ? false : super.canPlayerUse(player);
 	}
 
-	public void onInvOpen(PlayerEntity player) {
+	public void onOpen(PlayerEntity player) {
 		if (this.currentBlockEntity != null) {
-			this.currentBlockEntity.onInvOpen(player);
+			this.currentBlockEntity.onOpen(player);
 		}
 
-		super.onInvOpen(player);
+		super.onOpen(player);
 	}
 
-	public void onInvClose(PlayerEntity player) {
+	public void onClose(PlayerEntity player) {
 		if (this.currentBlockEntity != null) {
-			this.currentBlockEntity.onInvClose(player);
+			this.currentBlockEntity.onClose(player);
 		}
 
-		super.onInvClose(player);
+		super.onClose(player);
 		this.currentBlockEntity = null;
 	}
 
 	@Override
-	public int[] getInvAvailableSlots(Direction side) {
+	public int[] getAvailableSlots(Direction side) {
 		return IntStream.range(0, ShulkerBoxConstants.SLAB_SLOT_COUNT).toArray();
 	}
 
 	@Override
-	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir) {
+	public boolean canInsert(int slot, ItemStack stack, Direction dir) {
 		return true;
 	}
 
 	@Override
-	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir) {
+	public boolean canExtract(int slot, ItemStack stack, Direction dir) {
 		return true;
 	}
 }

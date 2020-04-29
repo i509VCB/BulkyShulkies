@@ -81,7 +81,7 @@ public interface BasicShulkerBlockEntity {
 	 * @param direction     The facing direction of the BlockEntity.
 	 * @return If true, the item will enter the inventory, otherwise the item will not enter the inventory.
 	 */
-	boolean canInsertInvStack(int inventorySlot, ItemStack stack, @Nullable Direction direction);
+	boolean canInsert(int inventorySlot, ItemStack stack, @Nullable Direction direction);
 
 	enum AnimationStatus {
 		OPENED,

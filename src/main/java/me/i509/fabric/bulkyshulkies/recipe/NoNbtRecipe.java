@@ -33,7 +33,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-import me.i509.fabric.bulkyshulkies.mixin.ShapedRecipeAccessor;
+import me.i509.fabric.bulkyshulkies.mixin.accessor.ShapedRecipeAccessor;
 
 public class NoNbtRecipe extends ShapedRecipe {
 	private final int width;
@@ -82,11 +82,11 @@ public class NoNbtRecipe extends ShapedRecipe {
 					}
 				}
 
-				if (inv.getInvStack(i + j * inv.getWidth()).hasTag()) {
+				if (inv.getStack(i + j * inv.getWidth()).hasTag()) {
 					return false;
 				}
 
-				if (!ingredient.test(inv.getInvStack(i + j * inv.getWidth()))) {
+				if (!ingredient.test(inv.getStack(i + j * inv.getWidth()))) {
 					return false;
 				}
 			}

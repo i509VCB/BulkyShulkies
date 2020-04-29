@@ -191,7 +191,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	@Override
-	public int getInvSize() {
+	public int size() {
 		return this.inventory.size();
 	}
 
@@ -221,7 +221,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	@Override
-	public void onInvOpen(PlayerEntity playerEntity) {
+	public void onOpen(PlayerEntity playerEntity) {
 		if (!playerEntity.isSpectator()) {
 			if (this.viewerCount < 0) {
 				this.viewerCount = 0;
@@ -237,7 +237,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	@Override
-	public void onInvClose(PlayerEntity playerEntity) {
+	public void onClose(PlayerEntity playerEntity) {
 		if (!playerEntity.isSpectator()) {
 			--this.viewerCount;
 			this.world.addBlockAction(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
@@ -261,7 +261,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	public void deserializeInventory(CompoundTag tag) {
-		this.inventory = DefaultedList.ofSize(this.getInvSize(), ItemStack.EMPTY);
+		this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
 
 		if (!this.deserializeLootTable(tag) && tag.contains("Items", 9)) {
 			Inventories.fromTag(tag, this.inventory);
@@ -287,7 +287,7 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	@Override
-	public boolean isInvEmpty() {
+	public boolean isEmpty() {
 		Iterator<ItemStack> stackIterator = this.inventory.iterator();
 
 		ItemStack currentStack;
@@ -303,17 +303,17 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	@Override
-	public int[] getInvAvailableSlots(Direction direction) {
+	public int[] getAvailableSlots(Direction direction) {
 		return AVAILABLE_SLOTS;
 	}
 
 	@Override
-	public boolean canExtractInvStack(int inventorySlot, ItemStack stack, Direction direction) {
+	public boolean canExtract(int inventorySlot, ItemStack stack, Direction direction) {
 		return true;
 	}
 
 	@Override
-	public boolean canInsertInvStack(int inventorySlot, ItemStack stack, @Nullable Direction direction) {
+	public boolean canInsert(int inventorySlot, ItemStack stack, @Nullable Direction direction) {
 		return BulkyShulkies.getInstance().canInsertItem(stack);
 	}
 

@@ -27,7 +27,8 @@ package me.i509.fabric.bulkyshulkies.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.shedaniel.math.api.Rectangle;
+import me.shedaniel.math.Rectangle;
+import me.shedaniel.rei.api.BaseBoundsHandler;
 import me.shedaniel.rei.api.DisplayHelper;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
@@ -44,8 +45,6 @@ import net.minecraft.util.Identifier;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.SemanticVersion;
-import net.fabricmc.loader.util.version.VersionParsingException;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
@@ -53,12 +52,7 @@ import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 @Environment(EnvType.CLIENT)
 public class BulkyShulkiesREIPlugin implements REIPluginV0 {
-	private static List<EntryStack> entryList;
-
-	@Override
-	public SemanticVersion getMinimumVersion() throws VersionParsingException {
-		return SemanticVersion.parse("3.0-pre");
-	}
+	private static List<EntryStack> ENTRY_LIST;
 
 	@Override
 	public Identifier getPluginIdentifier() {
@@ -67,16 +61,19 @@ public class BulkyShulkiesREIPlugin implements REIPluginV0 {
 
 	@Override
 	public void registerBounds(DisplayHelper displayHelper) {
-		displayHelper.getBaseBoundsHandler().registerExclusionZones(ScrollableScreen.class, isOnRightSide -> {
-			ScrollableScreen screen = (ScrollableScreen) MinecraftClient.getInstance().currentScreen;
-			ArrayList<Rectangle> rv = new ArrayList<>(1);
+		BaseBoundsHandler boundsHandler = BaseBoundsHandler.getInstance();
+		boundsHandler.registerExclusionZones(ScrollableScreen.class, this::createScrollableExclusionZones);
+	}
 
-			if (isOnRightSide && screen.hasScrollbar()) {
-				rv.add(new Rectangle(screen.getLeft() + 172, screen.getTop(), 22, 132));
-			}
+	private List<Rectangle> createScrollableExclusionZones() {
+		ScrollableScreen screen = (ScrollableScreen) MinecraftClient.getInstance().currentScreen;
+		ArrayList<Rectangle> rectangles = new ArrayList<>(1);
 
-			return rv;
-		});
+		if (screen.hasScrollbar()) {
+			rectangles.add(new Rectangle(screen.getLeft() + 172, screen.getTop(), 22, 132));
+		}
+
+		return rectangles;
 	}
 
 	@Override
@@ -86,19 +83,19 @@ public class BulkyShulkiesREIPlugin implements REIPluginV0 {
 	}
 
 	private static List<EntryStack> createAllEntries() {
-		if (entryList == null) {
-			entryList = new ArrayList<>();
+		if (ENTRY_LIST == null) {
+			ENTRY_LIST = new ArrayList<>();
 			Tag<Item> itemTags = ItemTags.getContainer().get(BulkyShulkies.id("slab_shulker_boxes"));
 
 			if (itemTags != null) {
-				itemTags.values().forEach(item -> entryList.add(EntryStack.create(item)));
+				itemTags.values().forEach(item -> ENTRY_LIST.add(EntryStack.create(item)));
 			} else {
 				BulkyShulkies.getInstance().getLogger().error("Could not find 'slab_shulker_boxes' tag to generate REI info for.");
 			}
 
-			entryList.add(EntryStack.create(ShulkerBlocks.ENDER_SLAB_BOX));
+			ENTRY_LIST.add(EntryStack.create(ShulkerBlocks.ENDER_SLAB_BOX));
 		}
 
-		return entryList;
+		return ENTRY_LIST;
 	}
 }

@@ -49,6 +49,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -160,9 +161,9 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 
 						if (currentPosition <= 4) {
 							++currentPosition;
-							Text text_1 = stack.getName().deepCopy();
-							text_1.append(" x").append(String.valueOf(stack.getCount()));
-							list.add(text_1);
+							MutableText text = stack.getName().copy();
+							text.append(" x").append(String.valueOf(stack.getCount()));
+							list.add(text);
 						}
 					}
 				}
@@ -181,7 +182,7 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 		if (blockEntity instanceof AbstractShulkerBoxBE) {
 			AbstractShulkerBoxBE abstractShulkerBoxBlockEntity = (AbstractShulkerBoxBE) blockEntity;
 
-			if (!world.isClient && playerEntity.isCreative() && !abstractShulkerBoxBlockEntity.isInvEmpty()) {
+			if (!world.isClient && playerEntity.isCreative() && !abstractShulkerBoxBlockEntity.isEmpty()) {
 				ItemStack stack = getItemStack(this.getColor());
 				CompoundTag serializedInventory = abstractShulkerBoxBlockEntity.serializeInventory(new CompoundTag());
 
@@ -211,8 +212,8 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 		if (blockEntity instanceof AbstractShulkerBoxBE) {
 			AbstractShulkerBoxBE abstractShulkerBoxBlockEntity = (AbstractShulkerBoxBE) blockEntity;
 			builder = builder.putDrop(CONTENTS, (lootContext, consumer) -> {
-				for (int inventoryPos = 0; inventoryPos < abstractShulkerBoxBlockEntity.getInvSize(); ++inventoryPos) {
-					consumer.accept(abstractShulkerBoxBlockEntity.getInvStack(inventoryPos));
+				for (int inventoryPos = 0; inventoryPos < abstractShulkerBoxBlockEntity.size(); ++inventoryPos) {
+					consumer.accept(abstractShulkerBoxBlockEntity.getStack(inventoryPos));
 				}
 			});
 		}

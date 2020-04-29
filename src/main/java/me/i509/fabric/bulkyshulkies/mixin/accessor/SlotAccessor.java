@@ -22,24 +22,18 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.mixin;
+package me.i509.fabric.bulkyshulkies.mixin.accessor;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.ShulkerBoxSlot;
+import net.minecraft.screen.slot.Slot;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
+@Mixin(Slot.class)
+public interface SlotAccessor {
+	@Accessor("x")
+	void accessor$setX(int x);
 
-@Mixin(ShulkerBoxSlot.class)
-public class ShulkerBoxSlotMixin {
-	@Inject(at = @At("HEAD"), method = "canInsert", cancellable = true)
-	private void canInsert(ItemStack stack, CallbackInfoReturnable<Boolean> cib) {
-		if (!BulkyShulkies.getInstance().canInsertItem(stack)) {
-			cib.setReturnValue(false);
-		}
-	}
+	@Accessor("y")
+	void accessor$setY(int y);
 }
