@@ -28,12 +28,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
-import com.google.common.collect.ForwardingMap;
-import com.google.common.collect.ImmutableMap;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
@@ -59,7 +55,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -191,11 +186,6 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 	}
 
 	@Override
-	public int size() {
-		return this.inventory.size();
-	}
-
-	@Override
 	public boolean onBlockAction(int value, int interactorCount) {
 		if (value == 1) {
 			this.viewerCount = interactorCount;
@@ -218,6 +208,50 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 
 	protected void updateNeighborStates() {
 		this.getCachedState().updateNeighbors(this.getWorld(), this.getPos(), 3);
+	}
+
+	@Override
+	public void fromTag(BlockState state, CompoundTag input) {
+		super.fromTag(state, input);
+		this.deserializeInventory(input);
+	}
+
+	@Override
+	public CompoundTag toTag(CompoundTag output) {
+		super.toTag(output);
+		return this.serializeInventory(output);
+	}
+
+	@Override
+	public float getAnimationProgress(float currentProgress) {
+		return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
+	}
+
+	@Override
+	public int getProgress() {
+		return (int) (this.animationProgress * 10);
+	}
+
+	@Environment(EnvType.CLIENT)
+	public DyeColor getColor() {
+		if (this.cachedColorUpdateNeeded) {
+			this.cachedColor = AbstractShulkerBoxBlock.getColor(this.getCachedState().getBlock());
+			this.cachedColorUpdateNeeded = false;
+		}
+
+		return this.cachedColor;
+	}
+
+	@Override
+	protected final ScreenHandler createContainer(int syncId, PlayerInventory playerInventory) {
+		return null; // Our implementation does not require this method since the PropertyRetriever and Fabric-API handle the containers.
+	}
+
+	// INVENTORY METHODS
+
+	@Override
+	public int size() {
+		return this.inventory.size();
 	}
 
 	@Override
@@ -246,34 +280,6 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 				this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
 			}
 		}
-	}
-
-	@Override
-	public void fromTag(BlockState state, CompoundTag input) {
-		super.fromTag(state, input);
-		this.deserializeInventory(input);
-	}
-
-	@Override
-	public CompoundTag toTag(CompoundTag output) {
-		super.toTag(output);
-		return this.serializeInventory(output);
-	}
-
-	public void deserializeInventory(CompoundTag tag) {
-		this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-
-		if (!this.deserializeLootTable(tag) && tag.contains("Items", 9)) {
-			Inventories.fromTag(tag, this.inventory);
-		}
-	}
-
-	public CompoundTag serializeInventory(CompoundTag output) {
-		if (!this.serializeLootTable(output)) {
-			Inventories.toTag(output, this.inventory, false);
-		}
-
-		return output;
 	}
 
 	@Override
@@ -317,88 +323,19 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 		return BulkyShulkies.getInstance().canInsertItem(stack);
 	}
 
-	@Override
-	public float getAnimationProgress(float currentProgress) {
-		return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
+	public void deserializeInventory(CompoundTag tag) {
+		this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
+
+		if (!this.deserializeLootTable(tag) && tag.contains("Items", 9)) {
+			Inventories.fromTag(tag, this.inventory);
+		}
 	}
 
-	@Override
-	public int getProgress() {
-		return (int) (this.animationProgress * 10);
-	}
-
-	@Environment(EnvType.CLIENT)
-	public DyeColor getColor() {
-		if (this.cachedColorUpdateNeeded) {
-			this.cachedColor = AbstractShulkerBoxBlock.getColor(this.getCachedState().getBlock());
-			this.cachedColorUpdateNeeded = false;
+	public CompoundTag serializeInventory(CompoundTag output) {
+		if (!this.serializeLootTable(output)) {
+			Inventories.toTag(output, this.inventory, false);
 		}
 
-		return this.cachedColor;
-	}
-
-	@Override
-	protected final ScreenHandler createContainer(int syncId, PlayerInventory playerInventory) {
-		return null; // Our implementation does not require this method since the PropertyRetriever and Fabric-API handle the containers.
-	}
-
-	public static class DirectionalShapeContainer {
-		private static final Direction[] HORIZONTAL = new Direction[] {
-			Direction.NORTH,
-			Direction.SOUTH,
-			Direction.EAST,
-			Direction.WEST
-		};
-
-		private static final Direction[] VERTICAL = new Direction[] {
-			Direction.UP,
-			Direction.DOWN
-		};
-
-		private final ForwardingMap<Direction, VoxelShape> shapes;
-
-		public DirectionalShapeContainer(ImmutableMap<Direction, VoxelShape> built) {
-			this.shapes = new ForwardingMap<Direction, VoxelShape>() {
-				@Override
-				protected Map<Direction, VoxelShape> delegate() {
-					return built;
-				}
-
-				@Override
-				public VoxelShape get(Object direction) {
-					VoxelShape v = super.get(direction);
-
-					if (v == null) {
-						return VoxelShapes.fullCube(); // Fallback
-					}
-
-					return v;
-				}
-			};
-		}
-
-		public static DirectionalShapeContainer createAll(double animation, BiFunction<Double, Direction, VoxelShape> shapeFunction) {
-			ImmutableMap.Builder<Direction, VoxelShape> builder = ImmutableMap.builder();
-
-			for (Direction value : Direction.values()) {
-				builder.put(value, shapeFunction.apply(animation, value));
-			}
-
-			return new DirectionalShapeContainer(builder.build());
-		}
-
-		public static DirectionalShapeContainer createHorizontal(double animation, BiFunction<Double, Direction, VoxelShape> shapeFunction) {
-			ImmutableMap.Builder<Direction, VoxelShape> builder = ImmutableMap.builder();
-
-			for (Direction value : DirectionalShapeContainer.HORIZONTAL) {
-				builder.put(value, shapeFunction.apply(animation, value));
-			}
-
-			return new DirectionalShapeContainer(builder.build());
-		}
-
-		public VoxelShape get(Direction direction) {
-			return this.shapes.get(direction);
-		}
+		return output;
 	}
 }

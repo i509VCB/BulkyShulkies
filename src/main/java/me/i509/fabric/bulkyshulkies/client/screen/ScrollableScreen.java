@@ -102,8 +102,8 @@ public class ScrollableScreen extends HandledScreen<ScrollableScreenHandler> imp
 
 	@Override
 	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-		this.textRenderer.draw(matrices, this.title.asString(), 8, 6, 4210752);
-		this.textRenderer.draw(matrices, this.playerInventory.getDisplayName().asString(), 8, backgroundHeight - 94, 4210752);
+		this.textRenderer.draw(matrices, this.title, 8, 6, 4210752);
+		this.textRenderer.draw(matrices, this.playerInventory.getDisplayName(), 8, backgroundHeight - 94, 4210752);
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class ScrollableScreen extends HandledScreen<ScrollableScreenHandler> imp
 		this.drawTexture(matrices, x, y, 0, 0, this.backgroundWidth, this.displayedRows * 18 + 17);
 		this.drawTexture(matrices, x, y + this.displayedRows * 18 + 17, 0, 126, this.backgroundWidth, 96);
 
-		if (hasScrollbar()) {
+		if (this.hasScrollbar()) {
 			this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
 			this.drawTexture(matrices, x + 172, y, 0, 0, 22, 132);
 			this.drawTexture(matrices, x + 174, (int) (y + 18 + 91 * this.progress), 22, 0, 12, 15);
