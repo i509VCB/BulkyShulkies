@@ -36,26 +36,26 @@ import net.minecraft.world.BlockView;
 
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
-import me.i509.fabric.bulkyshulkies.api.block.Facing1x1ShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.colored.Facing1x1ColoredInventoryShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
-public class DiamondShulkerBoxBlock extends Facing1x1ShulkerBoxBlock {
+public class DiamondShulkerBoxBlock extends Facing1x1ColoredInventoryShulkerBoxBlock {
 	public DiamondShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
 		super(settings, ShulkerBoxConstants.DIAMOND_SLOT_COUNT, color);
 	}
 
 	@Override
 	public BlockEntity createBlockEntity(BlockView blockView) {
-		return new DiamondShulkerBoxBE(this.getColor());
+		return new DiamondShulkerBoxBlockEntity(this.getColor());
 	}
 
 	@Override
-	protected void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName) {
+	protected void openScreen(BlockPos pos, PlayerEntity playerEntity, Text title) {
 		ContainerProviderRegistry.INSTANCE.openContainer(ScreenHandlerKeys.SHULKER_11x7_CONTAINER, playerEntity, (packetByteBuf -> {
 			packetByteBuf.writeBlockPos(pos);
-			packetByteBuf.writeText(displayName);
+			packetByteBuf.writeText(title);
 		}));
 	}
 

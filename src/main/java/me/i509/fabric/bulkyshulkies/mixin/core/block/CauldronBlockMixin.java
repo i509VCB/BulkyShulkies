@@ -43,9 +43,8 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
-import me.i509.fabric.bulkyshulkies.item.ShulkerBlockItem;
+import me.i509.fabric.bulkyshulkies.api.block.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.item.InventoryShulkerBlockItem;
 
 @Mixin(CauldronBlock.class)
 public abstract class CauldronBlockMixin {
@@ -62,7 +61,7 @@ public abstract class CauldronBlockMixin {
 			method = "onUse"
 	)
 	private boolean bulkyshulkies_onUseCleanBulkyBox(Object reference, Class clazz) {
-		return reference instanceof ShulkerBoxBlock || reference instanceof AbstractShulkerBoxBlock && !(reference instanceof EnderSlabBoxBlock);
+		return reference instanceof ShulkerBoxBlock || reference instanceof AbstractShulkerBoxBlock;
 	}
 
 	@Redirect(
@@ -85,8 +84,8 @@ public abstract class CauldronBlockMixin {
 		ItemStack handStack = player.getStackInHand(hand);
 		BlockItem item = (BlockItem) handStack.getItem();
 
-		if (item instanceof ShulkerBlockItem) { // This will not include the ender slab.
-			ShulkerBlockItem shulkerBlockItem = (ShulkerBlockItem) item;
+		if (item instanceof InventoryShulkerBlockItem) { // This will not include the ender slab.
+			InventoryShulkerBlockItem shulkerBlockItem = (InventoryShulkerBlockItem) item;
 			return shulkerBlockItem.getBlock().getItemStack(null).copy();
 		}
 

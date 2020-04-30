@@ -43,11 +43,11 @@ import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.base.InventoryShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
-import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBox;
+import me.i509.fabric.bulkyshulkies.block.cursed.slab.ColoredSlabShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBlock;
 import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlock;
@@ -110,11 +110,11 @@ public class QuickShulkerHook implements RegisterQuickShulker {
 		}
 
 		if (config.canOpenSlab()) {
-			register(QuickShulkerHook::openSlabBox, CursedSlabShulkerBox.class);
+			register(QuickShulkerHook::openSlabBox, ColoredSlabShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenEnderSlab()) {
-			register(QuickShulkerHook::openEnderSlab, EnderSlabBoxBlock.class);
+			register(QuickShulkerHook::openEnderSlab, EnderSlabBlock.class);
 		}
 
 		if (config.canOpenMissingTex()) {
@@ -164,8 +164,8 @@ public class QuickShulkerHook implements RegisterQuickShulker {
 		if (stack.getItem() instanceof BlockItem) {
 			Block block = ((BlockItem) stack.getItem()).getBlock();
 
-			if (block instanceof AbstractShulkerBoxBlock) {
-				return ((AbstractShulkerBoxBlock) block).getSlotCount();
+			if (block instanceof InventoryShulkerBoxBlock) {
+				return ((InventoryShulkerBoxBlock) block).getSlots();
 			}
 		}
 

@@ -24,11 +24,10 @@
 
 package me.i509.fabric.bulkyshulkies.api.block;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.stat.Stats;
@@ -38,7 +37,6 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -46,15 +44,13 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.entity.AbstractShulkerBoxBlockEntity;
 
 public abstract class FacingShulkerBoxBlock extends AbstractShulkerBoxBlock {
 	public static final DirectionProperty FACING = Properties.FACING;
 
-	protected FacingShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
-		super(settings, slotCount, color);
+	protected FacingShulkerBoxBlock(Settings settings) {
+		super(settings);
 		this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.UP));
 	}
 
@@ -67,12 +63,12 @@ public abstract class FacingShulkerBoxBlock extends AbstractShulkerBoxBlock {
 		} else {
 			BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
-			if (blockEntity instanceof AbstractShulkerBoxBE) {
+			if (blockEntity instanceof AbstractShulkerBoxBlockEntity) {
 				Direction facing = blockState.get(FACING);
-				AbstractShulkerBoxBE cursedBlockEntity = (AbstractShulkerBoxBE) blockEntity;
+				AbstractShulkerBoxBlockEntity cursedBlockEntity = (AbstractShulkerBoxBlockEntity) blockEntity;
 				boolean shouldOpen;
 
-				if (cursedBlockEntity.getAnimationStage() == BasicShulkerBlockEntity.AnimationStatus.CLOSED) {
+				if (cursedBlockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
 					Box openBox = getLidCollisionBox(facing);
 					shouldOpen = world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
 				} else {
@@ -80,11 +76,8 @@ public abstract class FacingShulkerBoxBlock extends AbstractShulkerBoxBlock {
 				}
 
 				if (shouldOpen) {
-					if (cursedBlockEntity.checkUnlocked(player)) {
-						cursedBlockEntity.checkLootInteraction(player);
-						openContainer(blockPos, player, cursedBlockEntity.getDisplayName());
-						player.incrementStat(Stats.OPEN_SHULKER_BOX);
-					}
+					this.openScreen(blockPos, player, ((AbstractShulkerBoxBlockEntity) blockEntity).getDisplayName()); // TODO: delegate getDisplayName to BlockEntity?
+					player.incrementStat(Stats.OPEN_SHULKER_BOX);
 				}
 
 				return ActionResult.SUCCESS;

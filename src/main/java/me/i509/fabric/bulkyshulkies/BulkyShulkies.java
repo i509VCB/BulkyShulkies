@@ -56,7 +56,7 @@ import net.minecraft.util.registry.Registry;
 import net.fabricmc.loader.api.FabricLoader;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBlock;
 import me.i509.fabric.bulkyshulkies.config.MainConfig;
 
 public class BulkyShulkies {
@@ -141,7 +141,7 @@ public class BulkyShulkies {
 	}
 
 	public boolean canInsertItem(ItemStack stack) {
-		if (stack.getItem() instanceof BlockItem && ((BlockItem) stack.getItem()).getBlock() instanceof EnderSlabBoxBlock) {
+		if (stack.getItem() instanceof BlockItem && ((BlockItem) stack.getItem()).getBlock() instanceof EnderSlabBlock) {
 			return true;
 		}
 

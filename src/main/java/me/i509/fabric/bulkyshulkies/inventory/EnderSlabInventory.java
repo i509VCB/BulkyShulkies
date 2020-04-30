@@ -37,17 +37,17 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.util.math.Direction;
 
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
 
 public class EnderSlabInventory extends BasicInventory implements SidedInventory {
 	@Nullable
-	private EnderSlabBoxBE currentBlockEntity;
+	private EnderSlabBoxBlockEntity currentBlockEntity;
 
 	public EnderSlabInventory() {
 		super(ShulkerBoxConstants.SLAB_SLOT_COUNT);
 	}
 
-	public void setCurrentBlockEntity(EnderSlabBoxBE enderSlabBoxBE) {
+	public void setCurrentBlockEntity(EnderSlabBoxBlockEntity enderSlabBoxBE) {
 		this.currentBlockEntity = enderSlabBoxBE;
 	}
 
@@ -86,7 +86,8 @@ public class EnderSlabInventory extends BasicInventory implements SidedInventory
 	}
 
 	public boolean canPlayerUse(PlayerEntity player) {
-		return this.currentBlockEntity != null && !this.currentBlockEntity.canPlayerUse(player) ? false : super.canPlayerUse(player);
+		//return this.currentBlockEntity != null && !this.currentBlockEntity.canPlayerUse(player) ? false : super.canPlayerUse(player);
+		return super.canPlayerUse(player); // TOOD: Fix
 	}
 
 	public void onOpen(PlayerEntity player) {

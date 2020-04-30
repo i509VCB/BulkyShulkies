@@ -24,16 +24,18 @@
 
 package me.i509.fabric.bulkyshulkies.extension.tooltip;
 
+import com.misterpemodder.shulkerboxtooltip.api.PreviewContext;
 import com.misterpemodder.shulkerboxtooltip.api.provider.BlockEntityPreviewProvider;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.util.DyeColor;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.colored.ColoredShulkerBoxBlock;
 
 @Environment(EnvType.CLIENT)
 public class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
@@ -44,20 +46,27 @@ public class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
 	}
 
 	@Override
-	public float[] getWindowColor(ItemStack stack) {
-		DyeColor dye = ((AbstractShulkerBoxBlock) Block.getBlockFromItem(stack.getItem())).getColor();
+	public float[] getWindowColor(PreviewContext context) {
+		Item item = context.getStack().getItem();
 
-		if (dye != null) {
-			float[] components = dye.getColorComponents();
-			return new float[] {Math.max(0.15f, components[0]), Math.max(0.15f, components[1]),
-				Math.max(0.15f, components[2])};
-		} else {
-			return SHULKER_BOX_COLOR;
+		if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof ColoredShulkerBoxBlock) {
+			DyeColor dye = ((ColoredShulkerBoxBlock) Block.getBlockFromItem(item)).getColor();
+
+			if (dye != null) {
+				float[] components = dye.getColorComponents();
+				return new float[] {
+						Math.max(0.15f, components[0]),
+						Math.max(0.15f, components[1]),
+						Math.max(0.15f, components[2])
+				};
+			}
 		}
+
+		return SHULKER_BOX_COLOR;
 	}
 
 	@Override
-	public boolean showTooltipHints(ItemStack stack) {
+	public boolean showTooltipHints(PreviewContext context) {
 		return true;
 	}
 }

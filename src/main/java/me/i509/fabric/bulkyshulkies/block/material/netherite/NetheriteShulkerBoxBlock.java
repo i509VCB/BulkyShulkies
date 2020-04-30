@@ -36,21 +36,21 @@ import net.minecraft.world.BlockView;
 
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
-import me.i509.fabric.bulkyshulkies.api.block.Facing1x1ShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.colored.Facing1x1ColoredInventoryShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
-public class NetheriteShulkerBoxBlock extends Facing1x1ShulkerBoxBlock {
+public class NetheriteShulkerBoxBlock extends Facing1x1ColoredInventoryShulkerBoxBlock {
 	public NetheriteShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
 		super(settings, ShulkerBoxConstants.NETHERITE_SLOT_COUNT, color);
 	}
 
 	@Override
-	protected void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName) {
+	protected void openScreen(BlockPos pos, PlayerEntity playerEntity, Text title) {
 		ContainerProviderRegistry.INSTANCE.openContainer(ScreenHandlerKeys.SHULKER_13x7_CONTAINER, playerEntity, (packetByteBuf -> {
 			packetByteBuf.writeBlockPos(pos);
-			packetByteBuf.writeText(displayName);
+			packetByteBuf.writeText(title);
 		}));
 	}
 
@@ -99,6 +99,6 @@ public class NetheriteShulkerBoxBlock extends Facing1x1ShulkerBoxBlock {
 
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
-		return new NetheriteShulkerBoxBE(this.color);
+		return new NetheriteShulkerBoxBlockEntity(this.color);
 	}
 }

@@ -39,6 +39,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
+import me.i509.fabric.bulkyshulkies.api.block.colored.ColoredShulkerBoxBlock;
 
 public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 	public AbstractShulkerBoxColoringRecipe(Identifier identifier) {
@@ -53,7 +54,7 @@ public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 			ItemStack itemStack = craftingInventory.getStack(k);
 
 			if (!itemStack.isEmpty()) {
-				if (Block.getBlockFromItem(itemStack.getItem()) instanceof BasicShulkerBlock) {
+				if (Block.getBlockFromItem(itemStack.getItem()) instanceof ColoredShulkerBoxBlock) {
 					++i;
 				} else {
 					if (!(itemStack.getItem() instanceof DyeItem)) {
@@ -82,7 +83,7 @@ public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 			if (!selectedStack.isEmpty()) {
 				Item item = selectedStack.getItem();
 
-				if (Block.getBlockFromItem(item) instanceof BasicShulkerBlock) {
+				if (Block.getBlockFromItem(item) instanceof ColoredShulkerBoxBlock) {
 					itemStack = selectedStack;
 				} else if (item instanceof DyeItem) {
 					dyeItem = (DyeItem) item;

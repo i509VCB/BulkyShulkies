@@ -57,13 +57,13 @@ import net.minecraft.world.IWorld;
 
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
-import me.i509.fabric.bulkyshulkies.api.block.HorizontalFacingShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.colored.ColoredHorizontalFacingShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 import me.i509.fabric.bulkyshulkies.mixin.accessor.StairsBlockAccessor;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
-public class StairShulkerBoxBlock extends HorizontalFacingShulkerBoxBlock implements Waterloggable {
+public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock implements Waterloggable {
 	public static final EnumProperty<StairShape> SHAPE = Properties.STAIR_SHAPE;
 	public static final EnumProperty<BlockHalf> HALF = Properties.BLOCK_HALF;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -102,8 +102,8 @@ public class StairShulkerBoxBlock extends HorizontalFacingShulkerBoxBlock implem
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext shapeContext) {
 		BlockEntity blockEntity = view.getBlockEntity(pos);
 
-		if (blockEntity instanceof StairShulkerBoxBE) {
-			float f = ((StairShulkerBoxBE) blockEntity).getAnimationProgress(1.0F);
+		if (blockEntity instanceof StairShulkerBoxBlockEntity) {
+			float f = ((StairShulkerBoxBlockEntity) blockEntity).getAnimationProgress(1.0F);
 			return StairShulkerBoxBlock.getShape(f, state, view, pos);
 		}
 
@@ -111,10 +111,10 @@ public class StairShulkerBoxBlock extends HorizontalFacingShulkerBoxBlock implem
 	}
 
 	@Override
-	protected void openContainer(BlockPos pos, PlayerEntity playerEntity, Text displayName) {
+	protected void openScreen(BlockPos pos, PlayerEntity playerEntity, Text title) {
 		ContainerProviderRegistry.INSTANCE.openContainer(ScreenHandlerKeys.SHULKER_SCROLLABLE_CONTAINER, playerEntity, (packetByteBuf -> {
 			packetByteBuf.writeBlockPos(pos);
-			packetByteBuf.writeText(displayName);
+			packetByteBuf.writeText(title);
 		}));
 	}
 
@@ -168,7 +168,7 @@ public class StairShulkerBoxBlock extends HorizontalFacingShulkerBoxBlock implem
 
 	@Override
 	public BlockEntity createBlockEntity(BlockView view) {
-		return new StairShulkerBoxBE(this.color); // TODO temp
+		return new StairShulkerBoxBlockEntity(this.color); // TODO temp
 	}
 
 	@Override

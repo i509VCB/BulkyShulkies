@@ -36,13 +36,15 @@ import net.minecraft.nbt.ListTag;
 import net.fabricmc.fabric.api.util.NbtType;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.block.base.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.base.InventoryShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.inventory.AutoCloseableInventory;
-import me.i509.fabric.bulkyshulkies.item.ShulkerBlockItem;
+import me.i509.fabric.bulkyshulkies.item.InventoryShulkerBlockItem;
 
-@Mixin(value = ShulkerBlockItem.class, remap = false)
+@Mixin(value = InventoryShulkerBlockItem.class, remap = false)
 public abstract class ShulkerBlockItemMixin_Compat extends BlockItem implements ItemInventory {
 	@Shadow public abstract AbstractShulkerBoxBlock shadow$getBlock();
+	@Shadow public abstract InventoryShulkerBoxBlock shadow$getAsInventoryType();
 
 	private ShulkerBlockItemMixin_Compat() {
 		super(null, null);
@@ -50,7 +52,7 @@ public abstract class ShulkerBlockItemMixin_Compat extends BlockItem implements 
 
 	@Override
 	public int getInvSize(ItemStack itemStack) {
-		return this.shadow$getBlock().getSlotCount();
+		return this.shadow$getAsInventoryType().getSlots();
 	}
 
 	@Override
@@ -82,7 +84,7 @@ public abstract class ShulkerBlockItemMixin_Compat extends BlockItem implements 
 			}
 		}
 
-		AutoCloseableInventory inventory = new AutoCloseableInventory(items, this.shadow$getBlock().getSlotCount(), invStack);
+		AutoCloseableInventory inventory = new AutoCloseableInventory(items, this.shadow$getAsInventoryType().getSlots(), invStack);
 		return inventory;
 	}
 }

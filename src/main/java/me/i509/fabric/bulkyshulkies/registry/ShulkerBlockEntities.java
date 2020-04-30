@@ -32,23 +32,23 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.registry.Registry;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBE;
-import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBE;
-import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBE;
+import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.missing.MissingTextureShulkerBoxBlockEntity;
 // import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBE;
 
 public final class ShulkerBlockEntities {
-	public static final BlockEntityType<CopperShulkerBoxBE> COPPER_SHULKER_BOX = register("copper_shulker_box",
-			CopperShulkerBoxBE::new,
+	public static final BlockEntityType<CopperShulkerBoxBlockEntity> COPPER_SHULKER_BOX = register("copper_shulker_box",
+			CopperShulkerBoxBlockEntity::new,
 			ShulkerBlocks.COPPER_SHULKER_BOX, // Uncolored
 			ShulkerBlocks.WHITE_COPPER_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_COPPER_SHULKER_BOX,
@@ -68,8 +68,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_COPPER_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<IronShulkerBoxBE> IRON_SHULKER_BOX = register("iron_shulker_box",
-			IronShulkerBoxBE::new,
+	public static final BlockEntityType<IronShulkerBoxBlockEntity> IRON_SHULKER_BOX = register("iron_shulker_box",
+			IronShulkerBoxBlockEntity::new,
 			ShulkerBlocks.IRON_SHULKER_BOX, // Uncolored
 			ShulkerBlocks.WHITE_IRON_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_IRON_SHULKER_BOX,
@@ -89,8 +89,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_IRON_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<SilverShulkerBoxBE> SILVER_SHULKER_BOX = register("silver_shulker_box",
-			SilverShulkerBoxBE::new,
+	public static final BlockEntityType<SilverShulkerBoxBlockEntity> SILVER_SHULKER_BOX = register("silver_shulker_box",
+			SilverShulkerBoxBlockEntity::new,
 			ShulkerBlocks.SILVER_SHULKER_BOX, // Uncolored
 			ShulkerBlocks.WHITE_SILVER_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_SILVER_SHULKER_BOX,
@@ -110,8 +110,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_SILVER_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<GoldShulkerBoxBE> GOLD_SHULKER_BOX = register("gold_shulker_box",
-			GoldShulkerBoxBE::new,
+	public static final BlockEntityType<GoldShulkerBoxBlockEntity> GOLD_SHULKER_BOX = register("gold_shulker_box",
+			GoldShulkerBoxBlockEntity::new,
 			ShulkerBlocks.GOLD_SHULKER_BOX, // Uncolored
 			ShulkerBlocks.WHITE_GOLD_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_GOLD_SHULKER_BOX,
@@ -131,8 +131,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_GOLD_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<DiamondShulkerBoxBE> DIAMOND_SHULKER_BOX = register("diamond_shulker_box",
-			DiamondShulkerBoxBE::new,
+	public static final BlockEntityType<DiamondShulkerBoxBlockEntity> DIAMOND_SHULKER_BOX = register("diamond_shulker_box",
+			DiamondShulkerBoxBlockEntity::new,
 			ShulkerBlocks.DIAMOND_SHULKER_BOX, // Uncolored
 			ShulkerBlocks.WHITE_DIAMOND_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_DIAMOND_SHULKER_BOX,
@@ -152,8 +152,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_DIAMOND_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<CursedSlabShulkerBoxBE> SLAB_SHULKER_BOX = register("slab_shulker_box",
-			CursedSlabShulkerBoxBE::new,
+	public static final BlockEntityType<CursedSlabShulkerBoxBlockEntity> SLAB_SHULKER_BOX = register("slab_shulker_box",
+			CursedSlabShulkerBoxBlockEntity::new,
 			ShulkerBlocks.SLAB_SHULKER_BOX,
 			ShulkerBlocks.WHITE_SLAB_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_SLAB_SHULKER_BOX,
@@ -173,8 +173,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_SLAB_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<ObsidianShulkerBoxBE> OBSIDIAN_SHULKER_BOX = register("obsidian_shulker_box",
-			ObsidianShulkerBoxBE::new,
+	public static final BlockEntityType<ObsidianShulkerBoxBlockEntity> OBSIDIAN_SHULKER_BOX = register("obsidian_shulker_box",
+			ObsidianShulkerBoxBlockEntity::new,
 			ShulkerBlocks.OBSIDIAN_SHULKER_BOX,
 			ShulkerBlocks.WHITE_OBSIDIAN_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_OBSIDIAN_SHULKER_BOX,
@@ -194,8 +194,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_OBSIDIAN_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<NetheriteShulkerBoxBE> NETHERITE_SHULKER_BOX = register("netherite_shulker_box",
-			NetheriteShulkerBoxBE::new,
+	public static final BlockEntityType<NetheriteShulkerBoxBlockEntity> NETHERITE_SHULKER_BOX = register("netherite_shulker_box",
+			NetheriteShulkerBoxBlockEntity::new,
 			ShulkerBlocks.NETHERITE_SHULKER_BOX,
 			ShulkerBlocks.WHITE_NETHERITE_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_NETHERITE_SHULKER_BOX,
@@ -215,8 +215,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_NETHERITE_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<PlatinumShulkerBoxBE> PLATINUM_SHULKER_BOX = register("platinum_shulker_box",
-			PlatinumShulkerBoxBE::new,
+	public static final BlockEntityType<PlatinumShulkerBoxBlockEntity> PLATINUM_SHULKER_BOX = register("platinum_shulker_box",
+			PlatinumShulkerBoxBlockEntity::new,
 			ShulkerBlocks.PLATINUM_SHULKER_BOX,
 			ShulkerBlocks.WHITE_PLATINUM_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_PLATINUM_SHULKER_BOX,
@@ -236,8 +236,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_PLATINUM_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<MissingTexBoxBE> MISSING_TEX = register("missing_tex_box",
-			MissingTexBoxBE::new,
+	public static final BlockEntityType<MissingTextureShulkerBoxBlockEntity> MISSING_TEX = register("missing_tex_box",
+			MissingTextureShulkerBoxBlockEntity::new,
 			ShulkerBlocks.MISSING_TEX_SHULKER_BOX,
 			ShulkerBlocks.WHITE_MISSING_TEX_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_MISSING_TEX_SHULKER_BOX,
@@ -257,8 +257,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_MISSING_TEX_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<StairShulkerBoxBE> STAIR = register("stair_shulker_box",
-			StairShulkerBoxBE::new,
+	public static final BlockEntityType<StairShulkerBoxBlockEntity> STAIR = register("stair_shulker_box",
+			StairShulkerBoxBlockEntity::new,
 			ShulkerBlocks.STAIR_SHULKER_BOX,
 			ShulkerBlocks.WHITE_STAIR_SHULKER_BOX,
 			ShulkerBlocks.ORANGE_STAIR_SHULKER_BOX,
@@ -278,8 +278,8 @@ public final class ShulkerBlockEntities {
 			ShulkerBlocks.BLACK_STAIR_SHULKER_BOX
 	);
 
-	public static final BlockEntityType<EnderSlabBoxBE> ENDER_SLAB = register("ender_slab",
-			EnderSlabBoxBE::new,
+	public static final BlockEntityType<EnderSlabBoxBlockEntity> ENDER_SLAB = register("ender_slab",
+			EnderSlabBoxBlockEntity::new,
 			ShulkerBlocks.ENDER_SLAB_BOX
 	);
 

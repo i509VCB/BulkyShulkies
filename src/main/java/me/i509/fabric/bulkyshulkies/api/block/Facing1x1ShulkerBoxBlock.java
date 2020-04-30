@@ -24,13 +24,10 @@
 
 package me.i509.fabric.bulkyshulkies.api.block;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -38,14 +35,14 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.entity.BasicShulkerBlockEntity;
 
 /**
  * Represents a shulker box which is 1x1x1 (when closed).
  */
 public abstract class Facing1x1ShulkerBoxBlock extends FacingShulkerBoxBlock {
-	protected Facing1x1ShulkerBoxBlock(Settings settings, int slotCount, @Nullable DyeColor color) {
-		super(settings, slotCount, color);
+	protected Facing1x1ShulkerBoxBlock(Settings settings) {
+		super(settings);
 	}
 
 	public boolean canSuffocate(BlockState state, BlockView view, BlockPos pos) {

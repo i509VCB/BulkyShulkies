@@ -40,8 +40,6 @@ import net.minecraft.world.BlockView;
 
 /**
  * This represents all the base methods to a shulker box.
- *
- * <p>It is recommended to use {@link AbstractShulkerBoxBlock} instead, which will handle most of the boilerplate from container based storage blocks.
  */
 public interface BasicShulkerBlock {
 	DirectionProperty FACING = Properties.FACING;
@@ -74,17 +72,12 @@ public interface BasicShulkerBlock {
 	Box getLidCollisionBox(Direction facing);
 
 	/**
-	 * Get's the DyeColor the shulker box is.
+	 * Get's the dimensions of the Box when it is fully opened.
 	 *
-	 * @return A DyeColor that is box is, or null if the box is not colored.
+	 * @param state the block state
+	 * @return A Box which contains the maximum dimensions of the box.
 	 */
-	@Nullable
-	DyeColor getColor();
-
-	/**
-	 * Gets the amount of inventory slots this shulker box has.
-	 *
-	 * @return
-	 */
-	int getSlotCount();
+	default Box getLidCollisionBox(BlockState state) {
+		return this.getLidCollisionBox(state.get(FACING));
+	}
 }
