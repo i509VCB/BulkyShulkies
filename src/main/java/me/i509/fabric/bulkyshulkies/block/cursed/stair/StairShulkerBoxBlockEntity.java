@@ -24,8 +24,6 @@
 
 package me.i509.fabric.bulkyshulkies.block.cursed.stair;
 
-import static me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock.getBaseStairShape;
-
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
@@ -59,7 +57,7 @@ public class StairShulkerBoxBlockEntity extends ColoredHorizontalFacingShulkerBo
 
 	@Override
 	public VoxelShape getBoundingBox(BlockState state) {
-		VoxelShape unmodified = getBaseStairShape(state);
+		VoxelShape unmodified = StairShulkerBoxBlock.getBaseStairShape(state);
 
 		if (this.animationProgress == 0.0D) {
 			return unmodified;

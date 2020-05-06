@@ -69,7 +69,7 @@ public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
 	public static VoxelShape getShape(double animationProgress, BlockState state, BlockView blockView, BlockPos pos) {
-		VoxelShape unmodified = getBaseStairShape(state);
+		VoxelShape unmodified = StairShulkerBoxBlock.getBaseStairShape(state);
 
 		if (animationProgress == 0.0D) {
 			return unmodified;
@@ -90,12 +90,18 @@ public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock
 	}
 
 	public static VoxelShape getBaseStairShape(BlockState state) {
-		return (state.get(HALF) == BlockHalf.TOP ? StairsBlockAccessor.getTopShapes() : StairsBlockAccessor.getBottomShapes())[StairsBlockAccessor.getShapeIndices()[getShapeIndexIndex(state)]];
+		return (state.get(HALF) == BlockHalf.TOP ? StairsBlockAccessor.getTopShapes()
+				: StairsBlockAccessor.getBottomShapes())[StairsBlockAccessor.getShapeIndices()[getShapeIndexIndex(state)]];
 	}
 
 	public StairShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
 		super(settings, ShulkerBoxConstants.STAIR_SLOT_COUNT, color);
-		this.setDefaultState(this.getStateManager().getDefaultState().with(SHAPE, StairShape.STRAIGHT).with(HALF, BlockHalf.BOTTOM).with(FACING, Direction.NORTH).with(WATERLOGGED, false));
+		this.setDefaultState(this.getStateManager().getDefaultState()
+				.with(SHAPE, StairShape.STRAIGHT)
+				.with(HALF, BlockHalf.BOTTOM)
+				.with(FACING, Direction.NORTH)
+				.with(WATERLOGGED, false)
+		);
 	}
 
 	@Override
@@ -168,7 +174,7 @@ public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock
 
 	@Override
 	public BlockEntity createBlockEntity(BlockView view) {
-		return new StairShulkerBoxBlockEntity(this.color); // TODO temp
+		return new StairShulkerBoxBlockEntity(this.color);
 	}
 
 	@Override
