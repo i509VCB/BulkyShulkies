@@ -2,6 +2,6 @@
   "when": [
     {"bulkyshulkies:uses_resources": true},
     {"libcd:item_tag_exists": "c:silver_ingot"}, 
-	{"libcd:item_tag_exists": "c:silver_block"} 
+	{"libcd:item_tag_exists": "c:silver_blocks"} 
   ]
 }

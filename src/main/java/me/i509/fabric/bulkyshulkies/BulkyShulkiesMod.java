@@ -35,6 +35,7 @@ import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 
 import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetItem;
+import me.i509.fabric.bulkyshulkies.event.ShulkerEvents;
 import me.i509.fabric.bulkyshulkies.extension.ShulkerHooks;
 import me.i509.fabric.bulkyshulkies.recipe.BulkyRecipeSerializers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
@@ -57,6 +58,7 @@ public class BulkyShulkiesMod implements ModInitializer {
 		ShulkerBlocks.init();
 		ShulkerDispenserBehaviors.init();
 		ShulkerBlockEntities.init();
+		ShulkerEvents.init();
 		ShulkerItems.init();
 		ShulkerItemGroups.init();
 		ShulkerHooks.init();

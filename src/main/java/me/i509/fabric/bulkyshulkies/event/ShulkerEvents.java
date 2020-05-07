@@ -22,53 +22,36 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.item;
-
-import org.checkerframework.checker.nullness.qual.Nullable;
+package me.i509.fabric.bulkyshulkies.event;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CauldronBlock;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 
-import me.i509.fabric.bulkyshulkies.api.block.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.base.InventoryShulkerBoxBlock;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+
 import me.i509.fabric.bulkyshulkies.api.block.colored.ColoredShulkerBoxBlock;
 
-public class InventoryShulkerBlockItem extends BlockItem {
-	public InventoryShulkerBlockItem(AbstractShulkerBoxBlock block, Settings settings) {
-		super(block, settings);
-
-		if (!(block instanceof InventoryShulkerBoxBlock)) {
-			throw new IllegalArgumentException("InventoryShulkerBlockItem must implement InventoryShulkerBoxBlock");
-		}
+public final class ShulkerEvents {
+	public static void init() {
+		// NO-OP
 	}
 
-	@Override
-	public AbstractShulkerBoxBlock getBlock() {
-		return (AbstractShulkerBoxBlock) super.getBlock();
-	}
+	static {
+		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
+			if (world.isClient()) {
+				return ActionResult.PASS;
+			}
 
-	// TODO: Implement this in a plain non-inventory shulker box?
-	@Override
-	public ActionResult useOnBlock(ItemUsageContext context) {
-		if (context.getWorld().isClient()) { // Fail fast in a client world
-			return super.useOnBlock(context);
-		}
-
-		@Nullable final PlayerEntity player = context.getPlayer();
-
-		if (player != null) {
-			final BlockState blockState = context.getWorld().getBlockState(context.getBlockPos());
+			final BlockState blockState = world.getBlockState(hitResult.getBlockPos());
 
 			// Test if we are using a cauldron
 			if (blockState.getBlock() instanceof CauldronBlock) { // TODO: Add a hook method to verify we have a cauldron for custom cauldrons
-				final ItemStack handStack = player.getStackInHand(context.getHand());
+				final ItemStack handStack = player.getStackInHand(hand);
 
 				if (handStack.getItem() instanceof BlockItem) {
 					final Block block = ((BlockItem) handStack.getItem()).getBlock();
@@ -78,6 +61,10 @@ public class InventoryShulkerBlockItem extends BlockItem {
 						// TODO: Get level from custom cauldron?
 						final int level = blockState.get(CauldronBlock.LEVEL);
 
+						if (level == 0) { // Pass on if we have no water
+							return ActionResult.PASS;
+						}
+
 						final ItemStack newStack = ((ColoredShulkerBoxBlock) block).getItemStack(null); // Get the uncolored item
 
 						if (handStack.hasTag()) {
@@ -85,21 +72,17 @@ public class InventoryShulkerBlockItem extends BlockItem {
 						}
 
 						// Copied logic from cauldron
-						player.setStackInHand(context.getHand(), newStack);
+						player.setStackInHand(hand, newStack);
 						// TODO: Custom level decrement?
-						((CauldronBlock) blockState.getBlock()).setLevel(context.getWorld(), context.getBlockPos(), blockState, level - 1);
+						((CauldronBlock) blockState.getBlock()).setLevel(world, hitResult.getBlockPos(), blockState, level - 1);
 						player.incrementStat(Stats.CLEAN_SHULKER_BOX);
 
 						return ActionResult.SUCCESS;
 					}
 				}
 			}
-		}
 
-		return super.useOnBlock(context);
-	}
-
-	public InventoryShulkerBoxBlock getAsInventoryType() {
-		return (InventoryShulkerBoxBlock) super.getBlock();
+			return ActionResult.PASS;
+		});
 	}
 }

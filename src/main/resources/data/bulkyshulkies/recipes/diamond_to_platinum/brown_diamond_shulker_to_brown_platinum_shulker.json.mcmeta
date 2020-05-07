@@ -1,7 +1,7 @@
 {
   "when": [
     {"bulkyshulkies:uses_resources": true},
-    {"libcd:item_tag_exists": "c:platinum_ingot"}, 
+    {"libcd:item_tag_exists": "c:platinum_ingots"}, 
 	{"libcd:item_tag_exists": "c:copper_block"} 
   ]
 }

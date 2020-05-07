@@ -3,7 +3,6 @@
   "package": "me.i509.fabric.bulkyshulkies.mixin.core",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "block.CauldronBlockMixin",
     "block.StairsBlockMixin",
     "block.entity.ShulkerBoxBlockEntityMixin",
     "enchantment.EnchantmentTargetMixin",
