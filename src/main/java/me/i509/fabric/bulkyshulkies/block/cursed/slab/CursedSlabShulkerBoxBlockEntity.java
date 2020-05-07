@@ -24,7 +24,7 @@
 
 package me.i509.fabric.bulkyshulkies.block.cursed.slab;
 
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;

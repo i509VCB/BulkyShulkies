@@ -26,7 +26,7 @@ package me.i509.fabric.bulkyshulkies.inventory;
 
 import java.util.stream.IntStream;
 
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.BasicInventory;

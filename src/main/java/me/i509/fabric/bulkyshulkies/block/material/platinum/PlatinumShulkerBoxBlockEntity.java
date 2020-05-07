@@ -26,7 +26,7 @@ package me.i509.fabric.bulkyshulkies.block.material.platinum;
 
 import java.util.List;
 
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;

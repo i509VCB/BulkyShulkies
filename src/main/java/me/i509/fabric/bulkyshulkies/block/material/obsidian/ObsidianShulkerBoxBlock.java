@@ -24,7 +24,7 @@
 
 package me.i509.fabric.bulkyshulkies.block.material.obsidian;
 
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

@@ -24,7 +24,7 @@
 
 package me.i509.fabric.bulkyshulkies.block.missing;
 
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;

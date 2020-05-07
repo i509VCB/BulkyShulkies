@@ -27,7 +27,7 @@ package me.i509.fabric.bulkyshulkies.client;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;

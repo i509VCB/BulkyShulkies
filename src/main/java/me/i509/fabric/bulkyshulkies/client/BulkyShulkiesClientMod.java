@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import io.netty.buffer.Unpooled;
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.block.entity.BlockEntity;

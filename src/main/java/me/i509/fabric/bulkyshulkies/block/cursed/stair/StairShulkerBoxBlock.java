@@ -24,7 +24,7 @@
 
 package me.i509.fabric.bulkyshulkies.block.cursed.stair;
 
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

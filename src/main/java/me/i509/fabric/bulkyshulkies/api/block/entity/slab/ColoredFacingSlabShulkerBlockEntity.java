@@ -24,7 +24,7 @@
 
 package me.i509.fabric.bulkyshulkies.api.block.entity.slab;
 
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
