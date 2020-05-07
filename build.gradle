@@ -37,12 +37,13 @@ repositories {
 	maven { url = "https://repo.spongepowered.org/maven" }
 	maven { url = "http://server.bbkr.space:8081/artifactory/libs-release" }
 	maven { url = "https://www.jitpack.io" }
-	maven { url   "https://dl.bintray.com/kyrptonaught/Quickshulker/"}
+	maven { url = "https://dl.bintray.com/kyrptonaught/Quickshulker/" }
+	maven { url = "https://dl.bintray.com/kyrptonaught/kyrptconfig/" } // For QuickShulker Dependencies
 }
 
 logger.lifecycle("""
 	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	Building Bulky Shulkies Boxes   
+	Building Bulky Shulkies   
 
 	Version: ${project.mod_version}
 	Minecraft Version: ${project.minecraft_version}
@@ -62,24 +63,16 @@ dependencies {
 	// Fabric Stuff.
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.minecraft_version}+build.${project.yarn_build}:v2"
-	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	// Temporary exclusion until rendering api is fixed
-	modCompile ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
-		exclude(group : "net.fabricmc.fabric-api", module: "fabric-renderer-indigo")
-		exclude(group : "net.fabricmc.fabric-api", module: "fabric-renderer-api-v1")
-		exclude(group : "net.fabricmc.fabric-api", module: "fabric-renderering-v0")
-		exclude(group : "net.fabricmc.fabric-api", module: "fabric-renderering-v1")
-		exclude(group : "net.fabricmc.fabric-api", module: "fabric-rendering-data-attachment-v1")
-		exclude(group : "net.fabricmc.fabric-api", module: "fabric-rendering-fluids-v1")
-	}
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// For Tooltips TODO: Update when updated
-	modImplementation ("com.misterpemodder:shulkerboxtooltip:${project.shulkerboxtooltip_version}") {
+	modImplementation("com.misterpemodder:shulkerboxtooltip:${project.shulkerboxtooltip_version}") {
 		exclude(group : "net.fabricmc.fabric-api")
 	}
 
 	// QuickShulker support
-	modImplementation ("net.kyrptonaught:quickshulker:${project.quickshulker_version}") {
+	modImplementation("net.kyrptonaught:quickshulker:${project.quickshulker_version}") {
 		exclude(group : "net.fabricmc.fabric-api")
 	}
 
@@ -91,25 +84,22 @@ dependencies {
 	//include "io.github.cottonmc:cotton-resources:${cotton_resources_version}" // JIJ time
 
 	// Optional Mods - We have this for looking up items and verifying recipes plus some info tabs.
-	modCompileOnly ("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
+	modCompileOnly("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
 		exclude(group : "net.fabricmc.fabric-api")
 	}
 
-	modImplementation ("com.github.emilyploszaj:item-inventory:v1.1.0") {
+	modImplementation(include("com.github.emilyploszaj:item-inventory:v1.1.0")) {
 		exclude(group : "net.fabricmc.fabric-api")
 	}
-	include "com.github.emilyploszaj:item-inventory:v1.1.0"
 
 	// LibCD is how we only load the CottonResources recipes IF CottonResources is present. We only use it at runtime and we also JIJ it out of the box.
-	modImplementation ("io.github.cottonmc:LibCD:${project.libcd_version}") {
+	modImplementation(include("io.github.cottonmc:LibCD:${project.libcd_version}")) {
 		exclude(group : "net.fabricmc.fabric-api")
 		exclude module: "modmenu"
 	}
-	include "io.github.cottonmc:LibCD:${project.libcd_version}"
 
 	// Configs
-	modImplementation "ca.stellardrift:confabricate:${project.confabricate_version}"
-	include "ca.stellardrift:confabricate:${project.confabricate_version}"
+	modImplementation(include("ca.stellardrift:confabricate:${project.confabricate_version}"))
 
 	// Annotations
 	compileOnly "org.checkerframework:checker-qual:${project.checker_version}"

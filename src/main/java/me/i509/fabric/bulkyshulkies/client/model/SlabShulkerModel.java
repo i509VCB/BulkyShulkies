@@ -50,7 +50,7 @@ public class SlabShulkerModel<T extends ShulkerEntity> extends CompositeEntityMo
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float customAngle, float headYaw, float headPitch) {
 		float k = customAngle - (float) entity.age;
-		float l = (0.5F + entity.method_7116(k)) * 3.1415927F;
+		float l = (0.5F + entity.getOpenProgress(k)) * 3.1415927F;
 		float m = -1.0F + MathHelper.sin(l);
 		float n = 0.0F;
 
@@ -60,7 +60,7 @@ public class SlabShulkerModel<T extends ShulkerEntity> extends CompositeEntityMo
 
 		this.topShell.setPivot(0.0F, 16.0F + MathHelper.sin(l) * 8.0F + n, 0.0F);
 
-		if (entity.method_7116(k) > 0.3F) {
+		if (entity.getOpenProgress(k) > 0.3F) {
 			this.topShell.yaw = m * m * m * m * 3.1415927F * 0.125F;
 		} else {
 			this.topShell.yaw = 0.0F;

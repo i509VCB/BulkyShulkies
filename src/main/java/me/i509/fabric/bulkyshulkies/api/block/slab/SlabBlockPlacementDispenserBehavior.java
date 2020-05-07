@@ -38,14 +38,14 @@ import net.minecraft.util.math.Direction;
 public class SlabBlockPlacementDispenserBehavior extends FallibleItemDispenserBehavior {
 	// TODO: Make this result in the actual orientation of the slab block.
 	protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-		this.success = false;
+		this.method_27955(false);
 		Item item = stack.getItem();
 
 		if (item instanceof BlockItem) {
 			Direction dispenserFacing = pointer.getBlockState().get(DispenserBlock.FACING);
 			BlockPos blockPos = pointer.getBlockPos().offset(dispenserFacing);
 			Direction direction2 = pointer.getWorld().isAir(blockPos.down()) ? dispenserFacing : Direction.UP;
-			this.success = ((BlockItem) item).place(new AutomaticItemPlacementContext(pointer.getWorld(), blockPos, dispenserFacing, stack, direction2)) == ActionResult.SUCCESS;
+			this.method_27955(((BlockItem) item).place(new AutomaticItemPlacementContext(pointer.getWorld(), blockPos, dispenserFacing, stack, direction2)) == ActionResult.SUCCESS);
 		}
 
 		return stack;

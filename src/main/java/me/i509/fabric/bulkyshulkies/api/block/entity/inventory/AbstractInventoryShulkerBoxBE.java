@@ -108,7 +108,7 @@ public abstract class AbstractInventoryShulkerBoxBE extends AbstractSidedInvento
 	}
 
 	@Override
-	public boolean onBlockAction(int value, int interactorCount) {
+	public boolean onSyncedBlockEvent(int value, int interactorCount) {
 		if (value == 1) {
 			this.viewerCount = interactorCount;
 
@@ -124,7 +124,7 @@ public abstract class AbstractInventoryShulkerBoxBE extends AbstractSidedInvento
 
 			return true;
 		} else {
-			return super.onBlockAction(value, interactorCount);
+			return super.onSyncedBlockEvent(value, interactorCount);
 		}
 	}
 
@@ -136,7 +136,7 @@ public abstract class AbstractInventoryShulkerBoxBE extends AbstractSidedInvento
 			}
 
 			++this.viewerCount;
-			this.world.addBlockAction(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
+			this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
 
 			if (this.viewerCount == 1) {
 				this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
@@ -148,7 +148,7 @@ public abstract class AbstractInventoryShulkerBoxBE extends AbstractSidedInvento
 	public void onClose(PlayerEntity playerEntity) {
 		if (!playerEntity.isSpectator()) {
 			--this.viewerCount;
-			this.world.addBlockAction(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
+			this.world.addSyncedBlockEvent(this.pos, this.getCachedState().getBlock(), 1, this.viewerCount);
 
 			if (this.viewerCount <= 0) {
 				this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);

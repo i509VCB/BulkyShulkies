@@ -248,7 +248,7 @@ public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock
 		BlockPos blockPos = ctx.getBlockPos();
 		FluidState fluidState = ctx.getWorld().getFluidState(blockPos);
 		BlockState blockState = this.getDefaultState().with(FACING, ctx.getPlayerFacing()).with(HALF, direction != Direction.DOWN && (direction == Direction.UP || ctx.getHitPos().y - blockPos.getY() <= 0.5D) ? BlockHalf.BOTTOM : BlockHalf.TOP).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
-		return blockState.with(SHAPE, StairsBlockAccessor.method_10675(blockState, ctx.getWorld(), blockPos));
+		return blockState.with(SHAPE, StairsBlockAccessor.getStairShape(blockState, ctx.getWorld(), blockPos));
 	}
 
 	@Override
@@ -257,7 +257,7 @@ public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock
 			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		}
 
-		return facing.getAxis().isHorizontal() ? state.with(SHAPE, StairsBlockAccessor.method_10675(state, world, pos)) : super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
+		return facing.getAxis().isHorizontal() ? state.with(SHAPE, StairsBlockAccessor.getStairShape(state, world, pos)) : super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
 	}
 
 	private static int getShapeIndexIndex(BlockState state) {

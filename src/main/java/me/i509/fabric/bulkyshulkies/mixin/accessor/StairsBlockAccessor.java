@@ -37,8 +37,8 @@ import net.minecraft.world.BlockView;
 
 @Mixin(StairsBlock.class)
 public interface StairsBlockAccessor {
-	@Invoker("method_10675")
-	static StairShape method_10675(BlockState blockState, BlockView blockView, BlockPos blockPos) {
+	@Invoker("getStairShape")
+	static StairShape getStairShape(BlockState blockState, BlockView blockView, BlockPos blockPos) {
 		throw new AssertionError("Untransformed Accessor!");
 	}
 
