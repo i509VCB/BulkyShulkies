@@ -24,7 +24,6 @@
 
 package me.i509.fabric.bulkyshulkies.client.model;
 
-import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -32,13 +31,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 
-import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetStage;
-
 public abstract class AbstractShulkerLidHelmetModel extends EntityModel<LivingEntity> {
-	public final ModelPart lid;
+	public final ShulkerModelPart lid;
 	private float leaningPitch;
 
-	public AbstractShulkerLidHelmetModel(ModelPart lid) {
+	public AbstractShulkerLidHelmetModel(ShulkerModelPart lid) {
 		super(RenderLayer::getEntityCutoutNoCull);
 		this.lid = lid;
 	}
@@ -80,10 +77,6 @@ public abstract class AbstractShulkerLidHelmetModel extends EntityModel<LivingEn
 				this.lid.pitch = headPitch * 0.017453292F;
 			}
 		}
-
-		// Now actual lid movement magic
-		ShulkerHelmetStage stage = ShulkerHelmetStage.bulkyshulkies$getStageFromEntity(entity);
-		this.lid.pivotY -= stage.bulkyshulkies$getAnimationProgress() * 1.75F;
 	}
 
 	protected float lerpAngle(float from, float to, float position) {

@@ -3,8 +3,6 @@
   "package": "me.i509.fabric.bulkyshulkies.mixin.client",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "render.ArmorFeatureRendererMixin",
-    "render.PiglinArmorFeatureRendererMixin",
     "BuiltinModelItemRendererMixin",
     "TexturedRenderLayersMixin"
   ],

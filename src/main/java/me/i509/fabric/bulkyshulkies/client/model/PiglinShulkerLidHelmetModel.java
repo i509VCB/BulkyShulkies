@@ -24,12 +24,18 @@
 
 package me.i509.fabric.bulkyshulkies.client.model;
 
-import net.minecraft.client.model.ModelPart;
+import net.minecraft.util.Identifier;
+
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
 public class PiglinShulkerLidHelmetModel extends AbstractShulkerLidHelmetModel {
 	public PiglinShulkerLidHelmetModel() {
-		super(new ModelPart(9, 9, 0, 0));
+		super(new ShulkerModelPart(9, 9, 0, 0) {
+			@Override
+			public Identifier getTexture() {
+				return BulkyShulkies.id("piglin_shulker_helmet_lid");
+			}
+		});
 		this.lid.addCuboid(-6, -8.5F, -5, 12, 2, 10);  // -4 -> -6
-		//this.lid.setPivot(0, 24, 0);
 	}
 }
