@@ -11,7 +11,7 @@
     "entity.PlayerEntityMixin",
     "entity.ServerPlayerEntityMixin",
     "item.ItemStackMixin",
-    "screen.slot.ShulkerBoxSlotMixin",
+    "screen.slot.ShulkerBoxSlotMixin"
   ],
   "injectors": {
     "defaultRequire": 1
