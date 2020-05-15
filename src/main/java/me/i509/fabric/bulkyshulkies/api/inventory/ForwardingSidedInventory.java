@@ -22,29 +22,32 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.block.material.copper;
+package me.i509.fabric.bulkyshulkies.api.inventory;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
+import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Direction;
 
-import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
+public interface ForwardingSidedInventory extends ForwardingInventory, SidedInventory {
+	@Override
+	SidedInventory getInventory();
 
-public class CopperShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlockEntity {
-	public CopperShulkerBoxBlockEntity(@Nullable DyeColor color) {
-		super(ShulkerBlockEntities.COPPER_SHULKER_BOX, ShulkerBoxConstants.COPPER_SLOT_COUNT, color);
-	}
+	// SIDED INVENTORY METHODS
 
-	public CopperShulkerBoxBlockEntity() {
-		this(null);
+	@Override
+	default int[] getAvailableSlots(Direction side) {
+		return this.getInventory().getAvailableSlots(side);
 	}
 
 	@Override
-	protected Text getDefaultName() {
-		return ShulkerTexts.COPPER_CONTAINER;
+	default boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
+		return this.getInventory().canInsert(slot, stack, dir);
+	}
+
+	@Override
+	default boolean canExtract(int slot, ItemStack stack, Direction dir) {
+		return this.getInventory().canExtract(slot, stack, dir);
 	}
 }

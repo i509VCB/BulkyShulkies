@@ -55,7 +55,7 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
 import me.i509.fabric.bulkyshulkies.api.block.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.entity.BasicShulkerBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.ShulkerBlockEntity;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.ColoredSlabShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
@@ -95,7 +95,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 	/**
 	 * Provides the BlockEntity to use for the ItemRenderer.
 	 */
-	private static final Map<DyeColor, Map<Class<? extends AbstractShulkerBoxBlock>, ? extends BasicShulkerBlockEntity>> DYE_COLOR_TO_RENDER_BE = Util.make(new HashMap<>(), map -> {
+	private static final Map<DyeColor, Map<Class<? extends AbstractShulkerBoxBlock>, ? extends ShulkerBlockEntity>> DYE_COLOR_TO_RENDER_BE = Util.make(new HashMap<>(), map -> {
 		map.put(null, Util.make(new HashMap<>(), uncolored -> {
 			uncolored.put(CopperShulkerBoxBlock.class, new CopperShulkerBoxBlockEntity());
 			uncolored.put(IronShulkerBoxBlock.class, new IronShulkerBoxBlockEntity());

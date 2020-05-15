@@ -35,7 +35,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
-import me.i509.fabric.bulkyshulkies.api.block.entity.BasicShulkerBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.ShulkerBlockEntity;
 
 /**
  * Represents a shulker box which is 1x1x1 (when closed).
@@ -45,10 +45,7 @@ public abstract class Facing1x1ShulkerBoxBlock extends FacingShulkerBoxBlock {
 		super(settings);
 	}
 
-	public boolean canSuffocate(BlockState state, BlockView view, BlockPos pos) {
-		return true;
-	}
-
+	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.ENTITYBLOCK_ANIMATED;
 	}
@@ -63,6 +60,6 @@ public abstract class Facing1x1ShulkerBoxBlock extends FacingShulkerBoxBlock {
 	@Override
 	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, ShapeContext shapeContext) {
 		BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
-		return blockEntity instanceof BasicShulkerBlockEntity ? ((BasicShulkerBlockEntity) blockEntity).getBoundingBox(blockState) : VoxelShapes.fullCube();
+		return blockEntity instanceof ShulkerBlockEntity ? ((ShulkerBlockEntity) blockEntity).getBoundingBox(blockState) : VoxelShapes.fullCube();
 	}
 }

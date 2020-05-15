@@ -35,9 +35,9 @@ import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.PiglinBrain;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.nbt.CompoundTag;
@@ -58,7 +58,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -66,12 +65,11 @@ import net.fabricmc.fabric.api.util.NbtType;
 
 import me.i509.fabric.bulkyshulkies.api.block.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.InventoryShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractInventoryShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractInventoryShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.extension.ShulkerHooks;
 
 public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractShulkerBoxBlock implements ColoredShulkerBoxBlock, InventoryShulkerBoxBlock {
 	protected static final Identifier CONTENTS = new Identifier("contents");
-	protected static final SingleTypePropertyRetriever<SidedInventory> INVENTORY_RETRIEVER = blockEntity -> blockEntity;
 
 	protected final DyeColor color;
 	protected final int slots;
@@ -93,8 +91,8 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 		if (itemStack.hasCustomName()) {
 			BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
-			if (blockEntity instanceof AbstractInventoryShulkerBoxBE) {
-				((AbstractInventoryShulkerBoxBE) blockEntity).setCustomName(itemStack.getName());
+			if (blockEntity instanceof AbstractInventoryShulkerBoxBlockEntity) {
+				((AbstractInventoryShulkerBoxBlockEntity) blockEntity).setCustomName(itemStack.getName());
 			}
 		}
 	}
@@ -106,10 +104,10 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 
 	@Override
 	@Environment(EnvType.CLIENT)
-	public ItemStack getPickStack(BlockView blockView, BlockPos blockPos, BlockState blockState) {
-		ItemStack pickStack = super.getPickStack(blockView, blockPos, blockState);
-		AbstractInventoryShulkerBoxBE blockEntity = (AbstractInventoryShulkerBoxBE) blockView.getBlockEntity(blockPos);
-		CompoundTag serializedInventory = blockEntity.serializeInventory(new CompoundTag());
+	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+		ItemStack pickStack = super.getPickStack(world, pos, state);
+		AbstractInventoryShulkerBoxBlockEntity blockEntity = (AbstractInventoryShulkerBoxBlockEntity) world.getBlockEntity(pos);
+		CompoundTag serializedInventory = blockEntity.inventoryToTag(new CompoundTag());
 
 		if (!serializedInventory.isEmpty()) {
 			pickStack.putSubTag("BlockEntityTag", serializedInventory);
@@ -119,11 +117,11 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 	}
 
 	@Override
-	public List<ItemStack> getDroppedStacks(BlockState blockState, net.minecraft.loot.context.LootContext.Builder builder) {
+	public List<ItemStack> getDroppedStacks(BlockState state, net.minecraft.loot.context.LootContext.Builder builder) {
 		BlockEntity blockEntity = builder.getNullable(LootContextParameters.BLOCK_ENTITY);
 
-		if (blockEntity instanceof AbstractInventoryShulkerBoxBE) {
-			AbstractInventoryShulkerBoxBE abstractShulkerBoxBlockEntity = (AbstractInventoryShulkerBoxBE) blockEntity;
+		if (blockEntity instanceof AbstractInventoryShulkerBoxBlockEntity) {
+			AbstractInventoryShulkerBoxBlockEntity abstractShulkerBoxBlockEntity = (AbstractInventoryShulkerBoxBlockEntity) blockEntity;
 			builder = builder.putDrop(CONTENTS, (lootContext, consumer) -> {
 				for (int inventoryPos = 0; inventoryPos < abstractShulkerBoxBlockEntity.size(); ++inventoryPos) {
 					consumer.accept(abstractShulkerBoxBlockEntity.getStack(inventoryPos));
@@ -131,35 +129,37 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 			});
 		}
 
-		return super.getDroppedStacks(blockState, builder);
+		return super.getDroppedStacks(state, builder);
 	}
 
 	@Override
-	public ActionResult onUse(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockHitResult hitResult) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
-		} else if (player.isSpectator()) {
+		} else if (playerEntity.isSpectator()) {
 			return ActionResult.SUCCESS;
 		} else {
-			BlockEntity blockEntity = world.getBlockEntity(blockPos);
+			BlockEntity blockEntity = world.getBlockEntity(pos);
 
-			if (blockEntity instanceof AbstractInventoryShulkerBoxBE) {
+			if (blockEntity instanceof AbstractInventoryShulkerBoxBlockEntity) {
 				Direction facing = Direction.UP;
-				AbstractInventoryShulkerBoxBE cursedBlockEntity = (AbstractInventoryShulkerBoxBE) blockEntity;
+				AbstractInventoryShulkerBoxBlockEntity cursedBlockEntity = (AbstractInventoryShulkerBoxBlockEntity) blockEntity;
 				boolean shouldOpen;
 
 				if (cursedBlockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
 					Box openBox = getLidCollisionBox(facing);
-					shouldOpen = world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
+					shouldOpen = world.doesNotCollide(openBox.offset(pos.offset(facing)));
 				} else {
 					shouldOpen = true;
 				}
 
 				if (shouldOpen) {
-					if (cursedBlockEntity.checkUnlocked(player)) {
-						cursedBlockEntity.checkLootInteraction(player);
-						openScreen(blockPos, player, cursedBlockEntity.getDisplayName());
-						player.incrementStat(Stats.OPEN_SHULKER_BOX);
+					if (cursedBlockEntity.checkUnlocked(playerEntity)) {
+						cursedBlockEntity.checkLootInteraction(playerEntity);
+						openScreen(pos, playerEntity, cursedBlockEntity.getDisplayName());
+						playerEntity.incrementStat(Stats.OPEN_SHULKER_BOX);
+						// Replicate vanilla
+						PiglinBrain.onGoldBlockBroken(playerEntity);
 					}
 				}
 
@@ -171,15 +171,15 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 	}
 
 	@Override
-	public void onBreak(World world, BlockPos blockPos, BlockState blockState, PlayerEntity playerEntity) {
-		BlockEntity blockEntity = world.getBlockEntity(blockPos);
+	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity playerEntity) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
 
-		if (blockEntity instanceof AbstractInventoryShulkerBoxBE) {
-			AbstractInventoryShulkerBoxBE abstractShulkerBoxBlockEntity = (AbstractInventoryShulkerBoxBE) blockEntity;
+		if (blockEntity instanceof AbstractInventoryShulkerBoxBlockEntity) {
+			AbstractInventoryShulkerBoxBlockEntity abstractShulkerBoxBlockEntity = (AbstractInventoryShulkerBoxBlockEntity) blockEntity;
 
 			if (!world.isClient && playerEntity.isCreative() && !abstractShulkerBoxBlockEntity.isEmpty()) {
 				ItemStack stack = getItemStack(this.getColor());
-				CompoundTag serializedInventory = abstractShulkerBoxBlockEntity.serializeInventory(new CompoundTag());
+				CompoundTag serializedInventory = abstractShulkerBoxBlockEntity.inventoryToTag(new CompoundTag());
 
 				if (!serializedInventory.isEmpty()) {
 					stack.putSubTag("BlockEntityTag", serializedInventory);
@@ -189,7 +189,7 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 					stack.setCustomName(abstractShulkerBoxBlockEntity.getCustomName());
 				}
 
-				ItemEntity itemEntity = new ItemEntity(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
+				ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 				itemEntity.setToDefaultPickupDelay();
 				world.spawnEntity(itemEntity);
 			} else {
@@ -197,13 +197,13 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 			}
 		}
 
-		super.onBreak(world, blockPos, blockState, playerEntity);
+		super.onBreak(world, pos, state, playerEntity);
 	}
 
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void buildTooltip(ItemStack itemStack, @Nullable BlockView blockView, List<Text> list, TooltipContext tooltipContext) {
-		super.buildTooltip(itemStack, blockView, list, tooltipContext);
+	public void buildTooltip(ItemStack itemStack, @Nullable BlockView world, List<Text> list, TooltipContext context) {
+		super.buildTooltip(itemStack, world, list, context);
 
 		if (ShulkerHooks.shulkerTooltipsArePresent()) {
 			return; // Shulker Tooltips will handle the Tooltip itself if installed.
@@ -243,24 +243,5 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 				}
 			}
 		}
-	}
-
-	public interface SingleTypePropertyRetriever<T> {
-		T getFromShulker(AbstractInventoryShulkerBoxBE blockEntity);
-	}
-
-	public static SidedInventory getInventoryStatically(WorldAccess world, BlockPos pos) {
-		return retrieve(world.getBlockState(pos), world, pos, INVENTORY_RETRIEVER);
-	}
-
-	private static <T> T retrieve(BlockState clickedState, WorldAccess world, BlockPos clickedPos, SingleTypePropertyRetriever<T> propertyRetriever) {
-		BlockEntity clickedBlockEntity = world.getBlockEntity(clickedPos);
-
-		if (clickedBlockEntity instanceof AbstractInventoryShulkerBoxBE) {
-			AbstractInventoryShulkerBoxBE abstractShulkerBoxBlockEntity = (AbstractInventoryShulkerBoxBE) clickedBlockEntity;
-			return propertyRetriever.getFromShulker(abstractShulkerBoxBlockEntity);
-		}
-
-		return null;
 	}
 }

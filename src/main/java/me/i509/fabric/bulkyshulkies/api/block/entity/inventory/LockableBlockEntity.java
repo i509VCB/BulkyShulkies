@@ -22,29 +22,30 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.block.material.copper;
+package me.i509.fabric.bulkyshulkies.api.block.entity.inventory;
 
-import org.checkerframework.checker.nullness.qual.Nullable;
+import net.minecraft.block.entity.LootableContainerBlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.ContainerLock;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Nameable;
 
-import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
-
-import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
-
-public class CopperShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlockEntity {
-	public CopperShulkerBoxBlockEntity(@Nullable DyeColor color) {
-		super(ShulkerBlockEntities.COPPER_SHULKER_BOX, ShulkerBoxConstants.COPPER_SLOT_COUNT, color);
+public interface LockableBlockEntity extends Nameable {
+	default boolean checkUnlocked(PlayerEntity playerEntity) {
+		return LootableContainerBlockEntity.checkUnlocked(playerEntity, this.getLock(), this.getDisplayName());
 	}
 
-	public CopperShulkerBoxBlockEntity() {
-		this(null);
+	ContainerLock getLock();
+
+	void setLock(ContainerLock lock);
+
+	default void lockFromTag(CompoundTag tag) {
+		this.setLock(ContainerLock.fromTag(tag));
 	}
 
-	@Override
-	protected Text getDefaultName() {
-		return ShulkerTexts.COPPER_CONTAINER;
+	default CompoundTag lockToTag(CompoundTag tag) {
+		this.getLock().toTag(tag);
+
+		return tag;
 	}
 }

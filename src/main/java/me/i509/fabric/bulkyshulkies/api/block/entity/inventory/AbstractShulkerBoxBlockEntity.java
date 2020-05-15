@@ -24,33 +24,25 @@
 
 package me.i509.fabric.bulkyshulkies.api.block.entity.inventory;
 
-import org.checkerframework.checker.nullness.qual.Nullable;
-
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.block.entity.BasicShulkerBlockEntity;
-
-public abstract class AbstractInventoryShulkerBoxBE extends AbstractSidedInventoryBlockEntity implements BasicShulkerBlockEntity {
+public abstract class AbstractShulkerBoxBlockEntity extends BlockEntity implements ShulkerBlockEntity {
 	private final DirectionProperty directionProperty;
 	protected ShulkerBoxBlockEntity.AnimationStage animationStage = ShulkerBoxBlockEntity.AnimationStage.CLOSED;
 	protected float animationProgress;
 	protected float prevAnimationProgress;
-	private int viewerCount;
+	protected int viewerCount;
 
-	protected AbstractInventoryShulkerBoxBE(BlockEntityType<? extends AbstractInventoryShulkerBoxBE> blockEntityType,
-											DirectionProperty directionProperty, int slots) {
-		super(blockEntityType, slots);
+	public AbstractShulkerBoxBlockEntity(BlockEntityType<? extends AbstractShulkerBoxBlockEntity> type,
+			DirectionProperty directionProperty) {
+		super(type);
 		this.directionProperty = directionProperty;
 	}
 
@@ -128,7 +120,6 @@ public abstract class AbstractInventoryShulkerBoxBE extends AbstractSidedInvento
 		}
 	}
 
-	@Override
 	public void onOpen(PlayerEntity playerEntity) {
 		if (!playerEntity.isSpectator()) {
 			if (this.viewerCount < 0) {
@@ -144,7 +135,6 @@ public abstract class AbstractInventoryShulkerBoxBE extends AbstractSidedInvento
 		}
 	}
 
-	@Override
 	public void onClose(PlayerEntity playerEntity) {
 		if (!playerEntity.isSpectator()) {
 			--this.viewerCount;
@@ -154,20 +144,5 @@ public abstract class AbstractInventoryShulkerBoxBE extends AbstractSidedInvento
 				this.world.playSound(null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
 			}
 		}
-	}
-
-	@Override
-	public boolean canExtract(int inventorySlot, ItemStack stack, Direction direction) {
-		return true;
-	}
-
-	@Override
-	public boolean canInsert(int inventorySlot, ItemStack stack, @Nullable Direction direction) {
-		return BulkyShulkies.getInstance().canInsertItem(stack);
-	}
-
-	@Override
-	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-		return null; // TODO: ScreenHandler api
 	}
 }

@@ -44,7 +44,7 @@ public class GoldShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlockEn
 	}
 
 	@Override
-	protected Text getContainerName() {
+	protected Text getDefaultName() {
 		return ShulkerTexts.GOLD_CONTAINER;
 	}
 }

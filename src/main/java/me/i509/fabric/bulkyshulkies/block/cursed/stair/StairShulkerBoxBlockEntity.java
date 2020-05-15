@@ -51,7 +51,7 @@ public class StairShulkerBoxBlockEntity extends ColoredHorizontalFacingShulkerBo
 	}
 
 	@Override
-	protected Text getContainerName() {
+	protected Text getDefaultName() {
 		return ShulkerTexts.CURSED_STAIR_CONTAINER;
 	}
 

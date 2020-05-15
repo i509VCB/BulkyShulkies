@@ -44,7 +44,7 @@ public class DiamondShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBloc
 	}
 
 	@Override
-	protected Text getContainerName() {
+	protected Text getDefaultName() {
 		return ShulkerTexts.DIAMOND_CONTAINER;
 	}
 }

@@ -4,13 +4,14 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "block.StairsBlockMixin",
+    "block.entity.LootableContainerBlockEntityMixin",
     "block.entity.ShulkerBoxBlockEntityMixin",
     "enchantment.EnchantmentTargetMixin",
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",
     "entity.ServerPlayerEntityMixin",
     "item.ItemStackMixin",
-    "screen.slot.ShulkerBoxSlotMixin"
+    "screen.slot.ShulkerBoxSlotMixin",
   ],
   "injectors": {
     "defaultRequire": 1

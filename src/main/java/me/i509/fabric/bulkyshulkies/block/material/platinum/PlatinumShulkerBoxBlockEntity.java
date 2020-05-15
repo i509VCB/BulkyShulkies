@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.Inventory;
@@ -40,7 +41,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.block.colored.AbstractColoredInventoryShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.api.event.MagnetismCollectionCallback;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
@@ -62,7 +62,7 @@ public class PlatinumShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlo
 		super.tick();
 
 		if (BulkyShulkies.getInstance().getConfig().shouldPlatinumUseMagnetism()) {
-			tickMagnets();
+			this.tickMagnets();
 		}
 	}
 
@@ -78,7 +78,7 @@ public class PlatinumShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlo
 				// Attempt to insert the items into the box
 
 				for (ItemEntity itemEntity : entities) {
-					this.attemptInsertion(itemEntity, this);
+					this.attemptInsertion(itemEntity);
 				}
 			}
 
@@ -86,12 +86,14 @@ public class PlatinumShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlo
 		}
 	}
 
-	private void attemptInsertion(ItemEntity itemEntity, PlatinumShulkerBoxBlockEntity shulkerBoxBE) {
-		SidedInventory inventory = AbstractColoredInventoryShulkerBoxBlock.getInventoryStatically(this.getWorld(), this.getPos());
+	private void attemptInsertion(ItemEntity itemEntity) {
+		Inventory inventory = HopperBlockEntity.getInventoryAt(this.getWorld(), this.getPos());
 		ItemStack stack = itemEntity.getStack();
 
-		if (!inventory.canInsert(0, stack, Direction.UP)) { // We do this to make sure people don't try to do recursive shulker boxes.
-			return;
+		if (inventory instanceof SidedInventory) {
+			if (!((SidedInventory) inventory).canInsert(0, stack, Direction.UP)) { // We do this to make sure people don't try to do recursive shulker boxes.
+				return;
+			}
 		}
 
 		ItemStack result = this.add(stack, inventory);
@@ -149,7 +151,7 @@ public class PlatinumShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlo
 	}
 
 	@Override
-	protected Text getContainerName() {
+	protected Text getDefaultName() {
 		return ShulkerTexts.PLATINUM_CONTAINER;
 	}
 }

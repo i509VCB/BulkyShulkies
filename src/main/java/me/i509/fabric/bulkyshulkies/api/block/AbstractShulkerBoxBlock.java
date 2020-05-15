@@ -38,7 +38,7 @@ import net.minecraft.world.World;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
 import me.i509.fabric.bulkyshulkies.api.block.base.InventoryShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.entity.AbstractShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractShulkerBoxBlockEntity;
 
 /**
  * Represents an abstract implementation of a shulker box with no strict physical size or inventory size.

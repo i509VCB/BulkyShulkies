@@ -71,7 +71,7 @@ public class Facing1x1ShulkerBlockEntityRenderer<BE extends ColoredFacing1X1Shul
 		if (blockEntity.hasWorld()) {
 			BlockState blockState = blockEntity.getCachedState();
 
-			if (blockState.getBlock() instanceof FacingShulkerBoxBlock) {
+			if (blockState.contains(FacingShulkerBoxBlock.FACING)) {
 				direction = blockState.get(FacingShulkerBoxBlock.FACING);
 			}
 		}

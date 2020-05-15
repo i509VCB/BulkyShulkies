@@ -25,6 +25,7 @@
 package me.i509.fabric.bulkyshulkies.registry;
 
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -40,7 +41,6 @@ import net.minecraft.world.World;
 
 import net.fabricmc.fabric.api.util.NbtType;
 
-import me.i509.fabric.bulkyshulkies.api.block.colored.AbstractColoredInventoryShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
@@ -64,28 +64,28 @@ public final class ShulkerScreenHandlers {
 		BlockPos pos = buf.readBlockPos();
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
-		return new GenericScreenHandler13x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractColoredInventoryShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		return new GenericScreenHandler13x7(syncId, ShulkerBoxSlot::new, player.inventory, HopperBlockEntity.getInventoryAt(world, pos), name);
 	}
 
 	public static GenericScreenHandler11x7 create11x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		BlockPos pos = buf.readBlockPos();
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
-		return new GenericScreenHandler11x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractColoredInventoryShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		return new GenericScreenHandler11x7(syncId, ShulkerBoxSlot::new, player.inventory, HopperBlockEntity.getInventoryAt(world, pos), name);
 	}
 
 	public static GenericScreenHandler9x7 create9x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		BlockPos pos = buf.readBlockPos();
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
-		return new GenericScreenHandler9x7(syncId, ShulkerBoxSlot::new, player.inventory, AbstractColoredInventoryShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		return new GenericScreenHandler9x7(syncId, ShulkerBoxSlot::new, player.inventory, HopperBlockEntity.getInventoryAt(world, pos), name);
 	}
 
 	public static ScrollableScreenHandler createScrollable(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
 		BlockPos pos = buf.readBlockPos();
 		Text name = buf.readText();
 		World world = player.getEntityWorld();
-		return new ScrollableScreenHandler(syncId, ShulkerBoxSlot::new, player.inventory, AbstractColoredInventoryShulkerBoxBlock.getInventoryStatically(world, pos), name);
+		return new ScrollableScreenHandler(syncId, ShulkerBoxSlot::new, player.inventory, HopperBlockEntity.getInventoryAt(world, pos), name);
 	}
 
 	public static ScrollableScreenHandler createShulkerHelmet(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {

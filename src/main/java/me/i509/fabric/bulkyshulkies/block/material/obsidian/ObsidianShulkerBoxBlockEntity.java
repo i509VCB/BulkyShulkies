@@ -44,7 +44,7 @@ public class ObsidianShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlo
 	}
 
 	@Override
-	protected Text getContainerName() {
+	protected Text getDefaultName() {
 		return ShulkerTexts.OBSIDIAN_CONTAINER;
 	}
 }

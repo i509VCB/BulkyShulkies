@@ -31,9 +31,8 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.DyeColor;
 
 import me.i509.fabric.bulkyshulkies.api.block.colored.ColoredShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.entity.ColoredShulkerBoxBlockEntity;
 
-public abstract class AbstractColoredInventoryShulkerBoxBlockEntity extends AbstractInventoryShulkerBoxBE implements ColoredShulkerBoxBlockEntity {
+public abstract class AbstractColoredInventoryShulkerBoxBlockEntity extends AbstractInventoryShulkerBoxBlockEntity implements ColoredShulkerBoxBlockEntity {
 	@Nullable private DyeColor cachedColor;
 	private boolean cachedColorUpdateNeeded;
 

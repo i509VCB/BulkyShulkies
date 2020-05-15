@@ -41,7 +41,6 @@ import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.FacingShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractColoredInventorySlabShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
 import me.i509.fabric.bulkyshulkies.client.model.SlabShulkerModel;
@@ -63,8 +62,7 @@ public class EnderSlabBlockEntityRenderer extends BlockEntityRenderer<EnderSlabB
 		if (blockEntity.hasWorld()) {
 			BlockState blockState = blockEntity.getCachedState();
 
-			if (blockState.getBlock() instanceof FacingShulkerBoxBlock
-							|| blockState.getBlock() instanceof AbstractColoredInventorySlabShulkerBoxBlock) {
+			if (blockState.contains(FacingShulkerBoxBlock.FACING)) {
 				direction = blockState.get(FacingShulkerBoxBlock.FACING);
 			}
 		}

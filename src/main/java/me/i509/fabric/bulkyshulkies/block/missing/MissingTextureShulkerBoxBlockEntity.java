@@ -44,7 +44,7 @@ public class MissingTextureShulkerBoxBlockEntity extends ColoredFacing1X1Shulker
 	}
 
 	@Override
-	protected Text getContainerName() {
+	protected Text getDefaultName() {
 		return ShulkerTexts.MISSING_CONTAINER;
 	}
 }

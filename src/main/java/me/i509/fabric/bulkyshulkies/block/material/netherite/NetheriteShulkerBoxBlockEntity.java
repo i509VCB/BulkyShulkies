@@ -44,7 +44,7 @@ public class NetheriteShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBl
 	}
 
 	@Override
-	protected Text getContainerName() {
+	protected Text getDefaultName() {
 		return ShulkerTexts.NETHERITE_CONTAINER;
 	}
 }

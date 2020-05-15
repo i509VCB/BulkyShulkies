@@ -48,7 +48,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractInventoryShulkerBoxBE;
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractInventoryShulkerBoxBlockEntity;
 
 public abstract class ColoredHorizontalFacingShulkerBoxBlock extends AbstractColoredInventoryShulkerBoxBlock {
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
@@ -59,31 +59,31 @@ public abstract class ColoredHorizontalFacingShulkerBoxBlock extends AbstractCol
 	}
 
 	@Override
-	public ActionResult onUse(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockHitResult hitResult) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
-		} else if (player.isSpectator()) {
+		} else if (playerEntity.isSpectator()) {
 			return ActionResult.SUCCESS;
 		} else {
-			BlockEntity blockEntity = world.getBlockEntity(blockPos);
+			BlockEntity blockEntity = world.getBlockEntity(pos);
 
-			if (blockEntity instanceof AbstractInventoryShulkerBoxBE) {
-				Direction facing = blockState.get(FACING);
-				AbstractInventoryShulkerBoxBE cursedBlockEntity = (AbstractInventoryShulkerBoxBE) blockEntity;
+			if (blockEntity instanceof AbstractInventoryShulkerBoxBlockEntity) {
+				Direction facing = state.get(FACING);
+				AbstractInventoryShulkerBoxBlockEntity cursedBlockEntity = (AbstractInventoryShulkerBoxBlockEntity) blockEntity;
 				boolean shouldOpen;
 
 				if (cursedBlockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
 					Box openBox = this.getLidCollisionBox(facing);
-					shouldOpen = world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
+					shouldOpen = world.doesNotCollide(openBox.offset(pos.offset(facing)));
 				} else {
 					shouldOpen = true;
 				}
 
 				if (shouldOpen) {
-					if (cursedBlockEntity.checkUnlocked(player)) {
-						cursedBlockEntity.checkLootInteraction(player);
-						openScreen(blockPos, player, cursedBlockEntity.getDisplayName());
-						player.incrementStat(Stats.OPEN_SHULKER_BOX);
+					if (cursedBlockEntity.checkUnlocked(playerEntity)) {
+						cursedBlockEntity.checkLootInteraction(playerEntity);
+						openScreen(pos, playerEntity, cursedBlockEntity.getDisplayName());
+						playerEntity.incrementStat(Stats.OPEN_SHULKER_BOX);
 					}
 				}
 

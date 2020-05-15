@@ -22,29 +22,13 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.block.material.copper;
+package me.i509.fabric.bulkyshulkies.api.block.entity.inventory;
 
-import org.checkerframework.checker.nullness.qual.Nullable;
+import net.minecraft.entity.player.PlayerEntity;
 
-import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
-
-import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
-
-public class CopperShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlockEntity {
-	public CopperShulkerBoxBlockEntity(@Nullable DyeColor color) {
-		super(ShulkerBlockEntities.COPPER_SHULKER_BOX, ShulkerBoxConstants.COPPER_SLOT_COUNT, color);
-	}
-
-	public CopperShulkerBoxBlockEntity() {
-		this(null);
-	}
-
+public interface LockableAndLootableBlockEntity extends LockableBlockEntity, LootableBlockEntity {
 	@Override
-	protected Text getDefaultName() {
-		return ShulkerTexts.COPPER_CONTAINER;
+	default boolean checkUnlocked(PlayerEntity playerEntity) {
+		return LockableBlockEntity.super.checkUnlocked(playerEntity) && (this.getLootTableId() == null || !playerEntity.isSpectator());
 	}
 }

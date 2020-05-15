@@ -44,7 +44,7 @@ public class SilverShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlock
 	}
 
 	@Override
-	protected Text getContainerName() {
+	protected Text getDefaultName() {
 		return ShulkerTexts.SILVER_CONTAINER;
 	}
 }

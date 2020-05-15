@@ -44,7 +44,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import me.i509.fabric.bulkyshulkies.api.block.entity.AbstractShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractShulkerBoxBlockEntity;
 
 public abstract class FacingShulkerBoxBlock extends AbstractShulkerBoxBlock {
 	public static final DirectionProperty FACING = Properties.FACING;
@@ -88,8 +88,8 @@ public abstract class FacingShulkerBoxBlock extends AbstractShulkerBoxBlock {
 	}
 
 	@Override
-	public BlockState getPlacementState(ItemPlacementContext placementContext) {
-		return this.getDefaultState().with(FACING, placementContext.getSide());
+	public BlockState getPlacementState(ItemPlacementContext context) {
+		return this.getDefaultState().with(FACING, context.getSide());
 	}
 
 	@Override

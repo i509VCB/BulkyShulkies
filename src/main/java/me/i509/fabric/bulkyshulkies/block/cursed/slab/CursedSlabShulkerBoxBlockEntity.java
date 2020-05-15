@@ -44,7 +44,7 @@ public class CursedSlabShulkerBoxBlockEntity extends ColoredFacingSlabShulkerBlo
 	}
 
 	@Override
-	protected Text getContainerName() {
+	protected Text getDefaultName() {
 		return ShulkerTexts.CURSED_SLAB_CONTAINER;
 	}
 }

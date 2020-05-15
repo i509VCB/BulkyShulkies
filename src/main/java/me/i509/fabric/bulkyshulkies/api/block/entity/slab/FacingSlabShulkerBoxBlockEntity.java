@@ -33,7 +33,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 
 import me.i509.fabric.bulkyshulkies.api.block.FacingShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.entity.AbstractShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.api.block.slab.AbstractShulkerSlabBlock;
 
 public abstract class FacingSlabShulkerBoxBlockEntity extends AbstractShulkerBoxBlockEntity {

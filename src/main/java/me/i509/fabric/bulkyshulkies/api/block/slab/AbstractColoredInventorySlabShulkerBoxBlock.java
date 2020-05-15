@@ -49,7 +49,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import me.i509.fabric.bulkyshulkies.api.block.colored.AbstractColoredInventoryShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.entity.BasicShulkerBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.ShulkerBlockEntity;
 
 public abstract class AbstractColoredInventorySlabShulkerBoxBlock extends AbstractColoredInventoryShulkerBoxBlock {
 	protected AbstractColoredInventorySlabShulkerBoxBlock(Settings settings, int slots, @Nullable DyeColor color) {
@@ -65,8 +65,8 @@ public abstract class AbstractColoredInventorySlabShulkerBoxBlock extends Abstra
 	@Override
 	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, ShapeContext shapeContext) {
 		BlockEntity blockEntity = blockView.getBlockEntity(blockPos);
-		return blockEntity instanceof BasicShulkerBlockEntity
-						? ((BasicShulkerBlockEntity) blockEntity).getBoundingBox(blockState)
+		return blockEntity instanceof ShulkerBlockEntity
+						? ((ShulkerBlockEntity) blockEntity).getBoundingBox(blockState)
 						: AbstractShulkerSlabBlock.getShape(blockState.get(FACING));
 	}
 
@@ -78,29 +78,29 @@ public abstract class AbstractColoredInventorySlabShulkerBoxBlock extends Abstra
 	}
 
 	@Override
-	public ActionResult onUse(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockHitResult hitResult) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
-		} else if (player.isSpectator()) {
+		} else if (playerEntity.isSpectator()) {
 			return ActionResult.SUCCESS;
 		} else {
-			BlockEntity blockEntity = world.getBlockEntity(blockPos);
+			BlockEntity blockEntity = world.getBlockEntity(pos);
 
-			if (blockEntity instanceof BasicShulkerBlockEntity) {
-				Direction facing = blockState.get(FACING);
-				BasicShulkerBlockEntity cursedBlockEntity = (BasicShulkerBlockEntity) blockEntity;
+			if (blockEntity instanceof ShulkerBlockEntity) {
+				Direction facing = state.get(FACING);
+				ShulkerBlockEntity cursedBlockEntity = (ShulkerBlockEntity) blockEntity;
 				boolean shouldOpen;
 
 				if (cursedBlockEntity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
 					Box openBox = getLidCollisionBox(facing);
-					shouldOpen = world.doesNotCollide(openBox.offset(blockPos.offset(facing)));
+					shouldOpen = world.doesNotCollide(openBox.offset(pos.offset(facing)));
 				} else {
 					shouldOpen = true;
 				}
 
 				if (shouldOpen) {
-					this.openScreen(blockPos, player, ((BasicShulkerBlockEntity) blockEntity).getDisplayName()); // TODO: delegate getDisplayName to BlockEntity?
-					player.incrementStat(Stats.OPEN_SHULKER_BOX);
+					this.openScreen(pos, playerEntity, ((ShulkerBlockEntity) blockEntity).getDisplayName()); // TODO: delegate getDisplayName to BlockEntity?
+					playerEntity.incrementStat(Stats.OPEN_SHULKER_BOX);
 				}
 
 				return ActionResult.SUCCESS;

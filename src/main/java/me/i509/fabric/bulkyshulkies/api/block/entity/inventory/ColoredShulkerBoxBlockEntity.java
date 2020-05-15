@@ -22,13 +22,13 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.api.block.entity;
+package me.i509.fabric.bulkyshulkies.api.block.entity.inventory;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.util.DyeColor;
 
-public interface ColoredShulkerBoxBlockEntity extends BasicShulkerBlockEntity {
+public interface ColoredShulkerBoxBlockEntity extends ShulkerBlockEntity {
 	/**
 	 * Gets the color of the shulker box.
 	 *
