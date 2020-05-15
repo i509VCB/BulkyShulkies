@@ -34,11 +34,12 @@ repositories {
 	maven { url = "https://maven.misterpemodder.com/libs-release/" }
 	maven { url = "http://maven.sargunv.s3-website-us-west-2.amazonaws.com/" }
 	maven { url = "http://server.bbkr.space:8081/artifactory/libs-release/" }
-	maven { url = "https://repo.spongepowered.org/maven" }
+	//maven { url = "https://repo.spongepowered.org/maven" }
 	maven { url = "http://server.bbkr.space:8081/artifactory/libs-release" }
 	maven { url = "https://www.jitpack.io" }
 	maven { url = "https://dl.bintray.com/kyrptonaught/Quickshulker/" }
 	maven { url = "https://dl.bintray.com/kyrptonaught/kyrptconfig/" } // For QuickShulker Dependencies
+	maven { url = "https://repo.glaremasters.me/repository/permissionsex" } // Confabricate Snapshots
 }
 
 logger.lifecycle("""
@@ -84,7 +85,7 @@ dependencies {
 	//include "io.github.cottonmc:cotton-resources:${cotton_resources_version}" // JIJ time
 
 	// Optional Mods - We have this for looking up items and verifying recipes plus some info tabs.
-	modCompileOnly("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
+	modImplementation("me.shedaniel:RoughlyEnoughItems:${project.rei_version}") {
 		exclude(group : "net.fabricmc.fabric-api")
 	}
 
@@ -93,7 +94,7 @@ dependencies {
 	}
 
 	// LibCD is how we only load the CottonResources recipes IF CottonResources is present. We only use it at runtime and we also JIJ it out of the box.
-	modImplementation(include("io.github.cottonmc:LibCD:${project.libcd_version}")) {
+	/*modImplementation*/modCompileOnly(include("io.github.cottonmc:LibCD:${project.libcd_version}")) {
 		exclude(group : "net.fabricmc.fabric-api")
 		exclude module: "modmenu"
 	}

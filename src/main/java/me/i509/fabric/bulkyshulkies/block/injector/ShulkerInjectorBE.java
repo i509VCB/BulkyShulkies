@@ -58,7 +58,7 @@ public class ShulkerInjectorBE extends LockableContainerBlockEntity implements S
 	}
 
 	@Override
-	protected ScreenHandler createContainer(int i, PlayerInventory playerInventory) {
+	protected ScreenHandler createScreenHandler(int i, PlayerInventory playerInventory) {
 		return null; // We don't use MC's create container.
 	}
 

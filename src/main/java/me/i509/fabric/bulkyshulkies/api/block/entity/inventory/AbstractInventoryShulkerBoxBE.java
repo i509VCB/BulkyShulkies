@@ -167,7 +167,7 @@ public abstract class AbstractInventoryShulkerBoxBE extends AbstractSidedInvento
 	}
 
 	@Override
-	protected ScreenHandler createContainer(int syncId, PlayerInventory playerInventory) {
+	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
 		return null; // TODO: ScreenHandler api
 	}
 }

@@ -57,8 +57,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -249,11 +249,11 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 		T getFromShulker(AbstractInventoryShulkerBoxBE blockEntity);
 	}
 
-	public static SidedInventory getInventoryStatically(IWorld world, BlockPos pos) {
+	public static SidedInventory getInventoryStatically(WorldAccess world, BlockPos pos) {
 		return retrieve(world.getBlockState(pos), world, pos, INVENTORY_RETRIEVER);
 	}
 
-	private static <T> T retrieve(BlockState clickedState, IWorld world, BlockPos clickedPos, SingleTypePropertyRetriever<T> propertyRetriever) {
+	private static <T> T retrieve(BlockState clickedState, WorldAccess world, BlockPos clickedPos, SingleTypePropertyRetriever<T> propertyRetriever) {
 		BlockEntity clickedBlockEntity = world.getBlockEntity(clickedPos);
 
 		if (clickedBlockEntity instanceof AbstractInventoryShulkerBoxBE) {
