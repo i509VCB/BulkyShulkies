@@ -26,8 +26,8 @@ package me.i509.fabric.bulkyshulkies.inventory;
 
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.BasicInventory;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -35,7 +35,7 @@ import net.minecraft.util.collection.DefaultedList;
 
 import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetStage;
 
-public class ShulkerHelmetInventory extends BasicInventory {
+public class ShulkerHelmetInventory extends SimpleInventory {
 	private final int invSize;
 	private ItemStack stack;
 

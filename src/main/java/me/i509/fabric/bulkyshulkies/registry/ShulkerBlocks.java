@@ -53,11 +53,12 @@ import me.i509.fabric.bulkyshulkies.item.InventoryShulkerBlockItem;
 // import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBlock;
 
 public final class ShulkerBlocks {
+	private static final AbstractBlock.ContextPredicate FALSE_CTX = (state, world, pos) -> false;
 	// Dynamic bounds are VERY IMPORTANT. Otherwise your box will make entities suffocate since the game's cached block is exactly 1 full cube, so collisions act odd for this reason without the dynamic bounds.
 	public static final AbstractBlock.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque();
-	public static final AbstractBlock.Settings SHULKER_SLAB_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque().suffocates((state, world, pos) -> false);
+	public static final AbstractBlock.Settings SHULKER_SLAB_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque().suffocates(ShulkerBlocks.FALSE_CTX);
 	public static final AbstractBlock.Settings EXPLOSION_PROOF_SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque();
-	public static final AbstractBlock.Settings ENDER_SLAB_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().lightLevel(7).suffocates((state, world, pos) -> false);
+	public static final AbstractBlock.Settings ENDER_SLAB_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().lightLevel(7).suffocates(ShulkerBlocks.FALSE_CTX);
 
 	/*
 	 * ========================

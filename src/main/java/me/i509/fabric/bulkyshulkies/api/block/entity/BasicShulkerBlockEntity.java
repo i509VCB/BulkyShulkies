@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.api.block.entity.inventory;
+package me.i509.fabric.bulkyshulkies.api.block.entity;
 
 import java.util.List;
 
@@ -41,15 +41,16 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractInventoryShulkerBoxBE;
 
 /**
  * Represents a shulker box block entity and exposes some information about the blockentity's state.
  *
- * <p>It is recommended to use {@link AbstractInventoryShulkerBoxBlockEntity} instead, which will handle most of the boilerplate from container based storage blocks.
+ * <p>It is recommended to use {@link AbstractInventoryShulkerBoxBE} instead, which will handle most of the boilerplate from container based storage blocks.
  */
-public interface ShulkerBlockEntity extends Tickable {
+public interface BasicShulkerBlockEntity extends Tickable {
 	/**
-	 * Gets the bounding box of the BlockEntity. This will redirect the call to after getting the facing direction from the state {@link ShulkerBlockEntity#getBoundingBox(BlockState)}.
+	 * Gets the bounding box of the BlockEntity. This will redirect the call to after getting the facing direction from the state {@link BasicShulkerBlockEntity#getBoundingBox(BlockState)}.
 	 *
 	 * @param state The blockState of the BlockEntity.
 	 * @return The bounding box of the block entity.

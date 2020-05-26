@@ -24,12 +24,12 @@
 
 package me.i509.fabric.bulkyshulkies.api.inventory;
 
-import net.minecraft.inventory.BasicInventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 
-public class AutoCloseableInventory extends BasicInventory implements AutoCloseable {
+public class AutoCloseableInventory extends SimpleInventory implements AutoCloseable {
 	private ListTag items;
 	private ItemStack itemRef;
 

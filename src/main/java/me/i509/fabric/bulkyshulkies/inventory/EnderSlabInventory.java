@@ -29,8 +29,8 @@ import java.util.stream.IntStream;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.BasicInventory;
 import net.minecraft.inventory.SidedInventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -39,7 +39,7 @@ import net.minecraft.util.math.Direction;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
 
-public class EnderSlabInventory extends BasicInventory implements SidedInventory {
+public class EnderSlabInventory extends SimpleInventory implements SidedInventory {
 	@Nullable
 	private EnderSlabBoxBlockEntity currentBlockEntity;
 

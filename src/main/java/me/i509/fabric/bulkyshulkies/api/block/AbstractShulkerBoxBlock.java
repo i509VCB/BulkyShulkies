@@ -54,7 +54,7 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 	}
 
 	@Override
-	public void onBlockRemoved(BlockState blockState, World world, BlockPos blockPos, BlockState otherBlockState, boolean notify) {
+	public void onStateReplaced(BlockState blockState, World world, BlockPos blockPos, BlockState otherBlockState, boolean notify) {
 		if (blockState.getBlock() != otherBlockState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
@@ -62,7 +62,7 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 				world.updateComparators(blockPos, blockState.getBlock());
 			}
 
-			super.onBlockRemoved(blockState, world, blockPos, otherBlockState, notify);
+			super.onStateReplaced(blockState, world, blockPos, otherBlockState, notify);
 		}
 	}
 

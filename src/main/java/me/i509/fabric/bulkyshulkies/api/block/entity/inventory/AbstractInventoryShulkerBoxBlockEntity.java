@@ -32,9 +32,9 @@ import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.BasicInventory;
 import net.minecraft.inventory.ContainerLock;
 import net.minecraft.inventory.SidedInventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContext;
@@ -128,7 +128,7 @@ public abstract class AbstractInventoryShulkerBoxBlockEntity
 			LootTable lootTable = this.world.getServer().getLootManager().getTable(this.lootTableId);
 
 			if (playerEntity instanceof ServerPlayerEntity) {
-				Criteria.field_24479.method_27993((ServerPlayerEntity) playerEntity, this.lootTableId);
+				Criteria.PLAYER_GENERATES_CONTAINER_LOOT.test((ServerPlayerEntity) playerEntity, this.lootTableId);
 			}
 
 			this.lootTableId = null;
@@ -174,7 +174,7 @@ public abstract class AbstractInventoryShulkerBoxBlockEntity
 		return this.inventory;
 	}
 
-	protected class ShulkerInventory extends BasicInventory implements SidedInventory {
+	protected class ShulkerInventory extends SimpleInventory implements SidedInventory {
 		protected ShulkerInventory(int slots) {
 			super(slots);
 		}
