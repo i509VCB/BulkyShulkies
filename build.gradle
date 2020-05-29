@@ -88,13 +88,11 @@ dependencies {
 		exclude(group : "net.fabricmc.fabric-api")
 	}
 
-	modImplementation(include("com.github.emilyploszaj:item-inventory:v1.1.0")) {
-		exclude(group : "net.fabricmc.fabric-api")
-	}
+	modImplementation(include("com.github.emilyploszaj:item-inventory:v1.1.0")){transitive = false}
 
 	// LibCD is how we only load the CottonResources recipes IF CottonResources is present. We only use it at runtime and we also JIJ it out of the box.
 	/*modImplementation*/modCompileOnly(include("io.github.cottonmc:LibCD:${project.libcd_version}")) {
-		exclude(group : "net.fabricmc.fabric-api")
+		exclude(group : "net.fabricmc.*")
 		exclude module: "modmenu"
 	}
 

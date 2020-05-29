@@ -41,12 +41,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 
 import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
-import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractInventoryShulkerBoxBE;
 
 /**
  * Represents a shulker box block entity and exposes some information about the blockentity's state.
  *
- * <p>It is recommended to use {@link AbstractInventoryShulkerBoxBE} instead, which will handle most of the boilerplate from container based storage blocks.
+ * <p>It is recommended to use {@link me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractInventoryShulkerBoxBlockEntity} instead, which will handle most of the boilerplate from container based storage blocks.
  */
 public interface BasicShulkerBlockEntity extends Tickable {
 	/**
