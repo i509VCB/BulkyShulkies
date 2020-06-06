@@ -27,7 +27,6 @@ package me.i509.fabric.bulkyshulkies.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.shedaniel.math.api.Rectangle;
 import me.shedaniel.rei.api.DisplayHelper;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
@@ -35,7 +34,6 @@ import me.shedaniel.rei.api.plugins.REIPluginV0;
 import me.shedaniel.rei.plugin.DefaultPlugin;
 import me.shedaniel.rei.plugin.information.DefaultInformationDisplay;
 
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.Tag;
@@ -48,7 +46,6 @@ import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.util.version.VersionParsingException;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 @Environment(EnvType.CLIENT)
@@ -67,7 +64,7 @@ public class BulkyShulkiesREIPlugin implements REIPluginV0 {
 
 	@Override
 	public void registerBounds(DisplayHelper displayHelper) {
-		displayHelper.getBaseBoundsHandler().registerExclusionZones(ScrollableScreen.class, isOnRightSide -> {
+		/*displayHelper.getBaseBoundsHandler().registerExclusionZones(ScrollableScreen.class, isOnRightSide -> {
 			ScrollableScreen screen = (ScrollableScreen) MinecraftClient.getInstance().currentScreen;
 			ArrayList<Rectangle> rv = new ArrayList<>(1);
 
@@ -76,7 +73,7 @@ public class BulkyShulkiesREIPlugin implements REIPluginV0 {
 			}
 
 			return rv;
-		});
+		});*/
 	}
 
 	@Override

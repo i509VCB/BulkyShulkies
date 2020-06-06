@@ -55,9 +55,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.FacingShulkerBoxBlock;
 
@@ -319,7 +316,6 @@ public abstract class AbstractShulkerBoxBE extends LootableContainerBlockEntity 
 		return MathHelper.lerp(currentProgress, this.prevAnimationProgress, this.animationProgress);
 	}
 
-	@Environment(EnvType.CLIENT)
 	public DyeColor getColor() {
 		if (this.cachedColorUpdateNeeded) {
 			this.cachedColor = AbstractShulkerBoxBlock.getColor(this.getCachedState().getBlock());

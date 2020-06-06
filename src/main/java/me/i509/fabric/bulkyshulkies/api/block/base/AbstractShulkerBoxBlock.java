@@ -288,13 +288,11 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 	}
 
 	@Nullable
-	@Environment(EnvType.CLIENT)
 	public static DyeColor getColor(Item item) {
 		return getColor(Block.getBlockFromItem(item));
 	}
 
 	@Nullable
-	@Environment(EnvType.CLIENT)
 	public static DyeColor getColor(@Nullable Block block) {
 		return block instanceof BasicShulkerBlock ? ((BasicShulkerBlock) block).getColor() : null;
 	}
