@@ -107,11 +107,6 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
 		ItemStack pickStack = super.getPickStack(world, pos, state);
 		AbstractInventoryShulkerBoxBlockEntity blockEntity = (AbstractInventoryShulkerBoxBlockEntity) world.getBlockEntity(pos);
-
-		if (blockEntity == null) {
-			return pickStack; // Just return
-		}
-
 		CompoundTag serializedInventory = blockEntity.inventoryToTag(new CompoundTag());
 
 		if (!serializedInventory.isEmpty()) {

@@ -35,6 +35,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -51,8 +52,9 @@ import me.i509.fabric.bulkyshulkies.client.BulkyShulkiesClientMod;
 @Environment(EnvType.CLIENT)
 @Mixin(BuiltinModelItemRenderer.class)
 public class BuiltinModelItemRendererMixin {
+	// TODO: Move to callback
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/item/BlockItem;getBlock()Lnet/minecraft/block/Block;", shift = At.Shift.AFTER), method = "render")
-	private void bulkyshulkies_onRender(ItemStack stack, MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, CallbackInfo ci) {
+	private void bulkyshulkies_onRender(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, CallbackInfo ci) {
 		Block block = ((BlockItem) stack.getItem()).getBlock();
 
 		if (block instanceof BasicShulkerBlock) {

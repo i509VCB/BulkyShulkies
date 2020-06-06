@@ -32,12 +32,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.DyeColor;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import me.i509.fabric.bulkyshulkies.api.block.colored.ColoredShulkerBoxBlock;
 
-@Environment(EnvType.CLIENT)
 public class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
 	private static float[] SHULKER_BOX_COLOR = new float[] {0.592f, 0.403f, 0.592f};
 

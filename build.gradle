@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.7-SNAPSHOT'
+	id 'fabric-loom' version '0.4-SNAPSHOT'
 	id 'com.github.johnrengelman.shadow' version '5.2.0'
 	id 'maven-publish'
 	id 'checkstyle'
@@ -91,7 +91,7 @@ dependencies {
 	modImplementation(include("com.github.emilyploszaj:item-inventory:v1.1.0")){transitive = false}
 
 	// LibCD is how we only load the CottonResources recipes IF CottonResources is present. We only use it at runtime and we also JIJ it out of the box.
-	/*modImplementation*/modCompileOnly(include("io.github.cottonmc:LibCD:${project.libcd_version}")) {
+	modImplementation/*modCompileOnly*/(include("io.github.cottonmc:LibCD:${project.libcd_version}")) {
 		exclude(group : "net.fabricmc.*")
 		exclude module: "modmenu"
 	}

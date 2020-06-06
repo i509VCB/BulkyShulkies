@@ -36,9 +36,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.api.block.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
@@ -48,7 +45,6 @@ import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 /**
  * A hook to allow the Bulky Shulker Boxes to support Shulker Box Tooltips.
  */
-@Environment(EnvType.CLIENT)
 public class BulkyTooltipHook implements ShulkerBoxTooltipApi {
 	@Override
 	public String getModId() {
