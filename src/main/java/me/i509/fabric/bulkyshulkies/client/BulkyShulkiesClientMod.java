@@ -33,6 +33,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
@@ -81,6 +82,7 @@ import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.EnderSlabBlockEntityRenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.Facing1x1ShulkerBlockEntityRenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.FacingSlabShulkerBoxBlockEntityRenderer;
+import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.PlatinumShulkerBlockEntityRenderer;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic9x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic11x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic13x7Screen;
@@ -151,8 +153,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.DIAMOND));
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.OBSIDIAN_SHULKER_BOX,
 						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.OBSIDIAN));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.PLATINUM_SHULKER_BOX,
-						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.PLATINUM));
+		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.PLATINUM_SHULKER_BOX, PlatinumShulkerBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.MISSING_TEX,
 						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.MISSING_TEX));
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.ENDER_SLAB,
@@ -161,11 +162,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 						d -> new FacingSlabShulkerBoxBlockEntityRenderer<>(d, ShulkerBoxKeys.SLAB));
 		ClientSpriteRegistryCallback.event(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE).register(BulkyShulkiesClientMod::registerSprites);
 
-		ClientTickCallback.EVENT.register(client -> {
-			if (OPEN_SHULKER_HELMET.wasPressed()) {
-				ClientSidePacketRegistry.INSTANCE.sendToServer(ShulkerNetworking.HELMET_OPEN, new PacketByteBuf(Unpooled.buffer()));
-			}
-		});
+		ClientTickCallback.EVENT.register(BulkyShulkiesClientMod::tickHelmet);
 	}
 
 	private static void registerSprites(SpriteAtlasTexture atlas, ClientSpriteRegistryCallback.Registry registry) {
@@ -199,5 +196,11 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 
 	public static BlockEntity getRenderBlockEntity(AbstractShulkerBoxBlock block, @Nullable DyeColor color) {
 		return (BlockEntity) DYE_COLOR_TO_RENDER_BE.get(color).get(block.getClass());
+	}
+
+	private static void tickHelmet(MinecraftClient client) {
+		if (OPEN_SHULKER_HELMET.wasPressed()) {
+			ClientSidePacketRegistry.INSTANCE.sendToServer(ShulkerNetworking.HELMET_OPEN, new PacketByteBuf(Unpooled.buffer()));
+		}
 	}
 }

@@ -22,27 +22,22 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.registry;
+package me.i509.fabric.bulkyshulkies.item;
 
 import net.minecraft.item.Item;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.tag.Tag;
+
+import net.fabricmc.fabric.api.tag.TagRegistry;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetItem;
-import me.i509.fabric.bulkyshulkies.item.ShulkerMagnetWand;
 
-public final class ShulkerItems {
-	public static final Item SHULKER_MAGNET_WAND = register(new ShulkerMagnetWand(new Item.Settings().group(ShulkerItemGroups.CURSED_GROUP).maxCount(1)), "shulker_magnet_wand");
-	public static final Item SHULKER_HELMET = register(new ShulkerHelmetItem(new Item.Settings().group(ShulkerItemGroups.CURSED_GROUP).maxCount(1)), "shulker_helmet");
-
-	private ShulkerItems() {
-		throw new AssertionError("You should not be instantiating this");
+public final class ShulkerItemTags {
+	private ShulkerItemTags() {
 	}
 
-	public static void init() {
-	}
+	public static final Tag<Item> SHULKER_MAGNET_WAND = register("shulker_magnet_wands");
 
-	public static Item register(Item item, String path) {
-		return Registry.register(Registry.ITEM, BulkyShulkies.id(path), item);
+	private static Tag<Item> register(String name) {
+		return TagRegistry.item(BulkyShulkies.id(name));
 	}
 }

@@ -39,6 +39,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
@@ -67,11 +68,17 @@ public class PlatinumShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlo
 	}
 
 	private void tickMagnets() {
-		if (this.hasWorld() && !this.getWorld().isClient) {
+		if (this.hasWorld() && !this.getWorld().isClient()) {
 			if (lastMagnetTick >= BulkyShulkies.getInstance().getConfig().getMagnetismTickDelay()) {
 				this.lastMagnetTick = 0;
 				int range = BulkyShulkies.getInstance().getConfig().getPlatinumMagnetMaxRange();
-				Box box = new Box(this.getPos()).stretch(range, range, range);
+
+				final Direction facing = this.getWorld().getBlockState(this.getPos()).get(PlatinumShulkerBoxBlock.FACING);
+
+				Box box = new Box(0, 0, 0, range, range, range)
+								.offset(this.getPos())
+								.offset(PlatinumShulkerBoxBlockEntity.getDirectionalBoxOffset(facing));
+
 				List<ItemEntity> entities = this.getWorld().getEntities(EntityType.ITEM, box, EntityPredicates.VALID_ENTITY);
 
 				MagnetismCollectionCallback.EVENT.invoker().onMagnetismTick(entities, this.getWorld(), this.getPos(), this);
@@ -153,5 +160,25 @@ public class PlatinumShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlo
 	@Override
 	protected Text getDefaultName() {
 		return ShulkerTexts.PLATINUM_CONTAINER;
+	}
+
+	public static Vec3d getDirectionalBoxOffset(Direction direction) {
+		final int size = BulkyShulkies.getInstance().getConfig().getPlatinumMagnetMaxRange() - 1;
+
+		switch (direction) {
+		case NORTH:
+			return new Vec3d(-size / 2.0D, -size / 2.0D, -size);
+		case SOUTH:
+			return new Vec3d(-size / 2.0D, -size / 2.0D, 0);
+		case WEST:
+			return new Vec3d(-size, -size / 2.0D, -size / 2.0D);
+		case EAST:
+			return new Vec3d(0, -size / 2.0D, -size / 2.0D);
+		case DOWN:
+			return new Vec3d(-size / 2.0D, -size, -size / 2.0D);
+		case UP:
+		default:
+			return new Vec3d(-size / 2.0D, 0, -size / 2.0D);
+		}
 	}
 }
