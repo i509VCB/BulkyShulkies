@@ -60,7 +60,6 @@ public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEnt
 	public void render(ColoredFacing1X1ShulkerBoxBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int i, int defaultUV) {
 		super.render(blockEntity, tickDelta, matrices, vertexConsumerProvider, i, defaultUV);
 
-		// TODO: In the future for a config screen, let the border show in screen with a block entity so colors can be adjusted there
 		if (blockEntity.hasWorld()) {
 			final ClientPlayerEntity player = MinecraftClient.getInstance().player;
 

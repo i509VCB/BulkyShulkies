@@ -24,16 +24,16 @@
 
 package me.i509.fabric.bulkyshulkies.mixin.client.render;
 
-import org.spongepowered.asm.mixin.Mixin;
+//import org.spongepowered.asm.mixin.Mixin;
 
-import net.minecraft.client.render.entity.feature.PiglinBipedArmorFeatureRenderer;
+//import net.minecraft.client.render.entity.feature.PiglinBipedArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
-@Mixin(PiglinBipedArmorFeatureRenderer.class)
+//@Mixin(PiglinBipedArmorFeatureRenderer.class)
 public abstract class PiglinArmorFeatureRendererMixin<T extends LivingEntity, A extends BipedEntityModel<T>, M extends BipedEntityModel<T>> extends ArmorFeatureRendererMixin<T, M, A> {
 	@Override
 	protected Identifier bulkyshulkies_getLidTexture() {

@@ -54,9 +54,9 @@ import net.fabricmc.fabric.api.util.NbtType;
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.inventory.ForwardingSidedInventory;
 
-public abstract class AbstractInventoryShulkerBoxBlockEntity
-		extends AbstractShulkerBoxBlockEntity
-		implements LockableAndLootableBlockEntityWithInventory, ForwardingSidedInventory {
+public abstract class AbstractInventoryShulkerBoxBlockEntity extends AbstractShulkerBoxBlockEntity implements
+				LockableAndLootableBlockEntityWithInventory,
+				ForwardingSidedInventory {
 	private final ShulkerInventory inventory;
 	private final int[] availibleSlots;
 	private ContainerLock lock = ContainerLock.EMPTY;

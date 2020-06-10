@@ -159,7 +159,7 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 						openScreen(pos, playerEntity, cursedBlockEntity.getDisplayName());
 						playerEntity.incrementStat(Stats.OPEN_SHULKER_BOX);
 						// Replicate vanilla
-						PiglinBrain.onGoldBlockBroken(playerEntity);
+						PiglinBrain.onGoldBlockBroken(playerEntity, true);
 					}
 				}
 

@@ -27,35 +27,18 @@ package me.i509.fabric.bulkyshulkies.mixin.client.render;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.PiglinBipedArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetItem;
-import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetStage;
 import me.i509.fabric.bulkyshulkies.client.model.AbstractShulkerLidHelmetModel;
-import me.i509.fabric.bulkyshulkies.client.model.HumanoidShulkerLidHelmetModel;
-import me.i509.fabric.bulkyshulkies.client.model.PiglinShulkerLidHelmetModel;
-import me.i509.fabric.bulkyshulkies.mixin.accessor.client.AnimalModelAccessor;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ArmorFeatureRenderer.class)
@@ -70,6 +53,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, A extend
 		super(null);
 	}
 
+	/*
 	@Inject(at = @At("TAIL"), method = "<init>")
 	private void bulkyshulkies_initHelmetModel(CallbackInfo ci) {
 		//noinspection ConstantConditions -- Mixin
@@ -145,7 +129,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, A extend
 
 	private static float getAnimationProgress(float tickDelta, float prevAnimationProgress, float animationProgress) {
 		return MathHelper.lerp(tickDelta, prevAnimationProgress, animationProgress);
-	}
+	}*/
 
 	protected Identifier bulkyshulkies_getLidTexture() {
 		return BulkyShulkies.id("shulker_helmet_lid");
