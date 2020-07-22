@@ -102,8 +102,8 @@ public class ScrollableScreen extends HandledScreen<ScrollableScreenHandler> imp
 
 	@Override
 	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-		this.textRenderer.draw(matrices, this.title, 8, 6, 4210752);
-		this.textRenderer.draw(matrices, this.playerInventory.getDisplayName(), 8, backgroundHeight - 94, 4210752);
+		this.textRenderer.method_30883(matrices, this.title, 8, 6, 4210752);
+		this.textRenderer.method_30883(matrices, this.playerInventory.getDisplayName(), 8, backgroundHeight - 94, 4210752);
 	}
 
 	@Override

@@ -64,8 +64,8 @@ dependencies {
     optionalMod("net.kyrptonaught:quickshulker:$quickShulkerVersion", true)
 
     // Nice to have
-    optionalMod("io.github.prospector:modmenu:$modMenuVersion", true)
-    optionalMod("me.shedaniel:RoughlyEnoughItems:$reiVersion", true)
+    optionalMod("io.github.prospector:modmenu:$modMenuVersion", false)
+    optionalMod("me.shedaniel:RoughlyEnoughItems:$reiVersion", false)
 
     // Annotations
     implementation("org.checkerframework:checker-qual:3.0.1")
