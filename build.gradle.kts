@@ -15,7 +15,7 @@ val loaderVersion: String by project
 val fabricApiVersion: String by project
 
 val configurateVersion: String by project
-//val confabricateVersion: String by project
+val confabricateVersion: String by project
 
 // Optional dependencies
 val shulkerBoxTooltipVersion: String by project
@@ -53,7 +53,7 @@ dependencies {
     `fabric-loader`(loaderVersion)
     `fabric-api`(fabricApiVersion)
 
-    // Confabricate needs updating to 20w29a
+    // Confabricate needs updating to 20w30a
     //confabricate(configurateVersion, confabricateVersion, true)
     configurate(ConfigurateType.HOCON, configurateVersion, true)?.let {
         include(it)

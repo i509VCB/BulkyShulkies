@@ -40,9 +40,6 @@ import ninja.leaping.configurate.loader.ConfigurationLoader;
 import ninja.leaping.configurate.objectmapping.DefaultObjectMapperFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.AbstractMessageFactory;
-import org.apache.logging.log4j.message.Message;
-import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
@@ -60,12 +57,7 @@ import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBlock;
 import me.i509.fabric.bulkyshulkies.config.MainConfig;
 
 public class BulkyShulkies {
-	private static final Logger LOGGER = LogManager.getLogger(BulkyShulkies.class, new AbstractMessageFactory() {
-		@Override
-		public Message newMessage(String message, Object... params) {
-			return new ParameterizedMessage("[BulkyShulkies] " + message, params);
-		}
-	});
+	private static final Logger LOGGER = LogManager.getLogger(BulkyShulkies.class);
 
 	private static final BulkyShulkies INSTANCE;
 	private static List<Predicate<ItemStack>> disallowedItems = new ArrayList<>();
@@ -77,7 +69,7 @@ public class BulkyShulkies {
 		BulkyShulkies.disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
 		BulkyShulkies.disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof BasicShulkerBlock);
 
-		Path configLocation = FabricLoader.getInstance().getConfigDirectory().toPath().resolve("bulkyshulkies");
+		Path configLocation = FabricLoader.getInstance().getConfigDir().resolve("bulkyshulkies");
 		Path configFile = configLocation.resolve("bulkyshulkies.conf");
 
 		if (!Files.exists(configLocation)) {
@@ -93,7 +85,7 @@ public class BulkyShulkies {
 					.setPath(configFile).build();
 
 			CommentedConfigurationNode mainConfigRoot = this.mainConfLoader.load(ConfigurationOptions.defaults().setHeader(MainConfig.HEADER)
-					.setObjectMapperFactory(DefaultObjectMapperFactory.getInstance()).setShouldCopyDefaults(true));
+					.withObjectMapperFactory(DefaultObjectMapperFactory.getInstance()).withShouldCopyDefaults(true));
 
 			//noinspection UnstableApiUsage
 			this.mainConf = mainConfigRoot.getValue(TypeToken.of(MainConfig.class), new MainConfig());
