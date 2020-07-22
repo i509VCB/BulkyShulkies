@@ -31,7 +31,6 @@ import net.fabricmc.loader.api.FabricLoader;
 public class ShulkerHooks {
 	private static final FabricLoader LOADER = FabricLoader.getInstance();
 	static boolean resourcesPresent;
-	@Environment(EnvType.CLIENT)
 	static boolean shulkerTooltipsPresent;
 
 	private ShulkerHooks() {

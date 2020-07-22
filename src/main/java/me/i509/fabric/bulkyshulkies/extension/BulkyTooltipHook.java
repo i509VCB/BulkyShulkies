@@ -39,7 +39,6 @@ import net.minecraft.util.DyeColor;
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.api.block.AbstractShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.extension.tooltip.BulkyShulkerPreviewProvider;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 /**

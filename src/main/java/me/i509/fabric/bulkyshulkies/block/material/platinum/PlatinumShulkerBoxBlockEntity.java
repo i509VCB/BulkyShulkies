@@ -79,7 +79,7 @@ public class PlatinumShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlo
 								.offset(this.getPos())
 								.offset(PlatinumShulkerBoxBlockEntity.getDirectionalBoxOffset(facing));
 
-				List<ItemEntity> entities = this.getWorld().getEntities(EntityType.ITEM, box, EntityPredicates.VALID_ENTITY);
+				List<ItemEntity> entities = this.getWorld().getEntitiesByType(EntityType.ITEM, box, EntityPredicates.VALID_ENTITY);
 
 				MagnetismCollectionCallback.EVENT.invoker().onMagnetismTick(entities, this.getWorld(), this.getPos(), this);
 				// Attempt to insert the items into the box

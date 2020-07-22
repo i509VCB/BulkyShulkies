@@ -95,7 +95,7 @@ public interface BasicShulkerBlockEntity extends Tickable {
 		if (blockState.getBlock() instanceof BasicShulkerBlock) {
 			Direction direction = blockState.get(directionProperty);
 			Box box = this.getLidCollisionBox(blockState).offset(blockEntity.getPos());
-			List<Entity> list = blockEntity.getWorld().getEntities(null, box);
+			List<Entity> list = blockEntity.getWorld().getOtherEntities(null, box);
 
 			if (!list.isEmpty()) {
 				for (int i = 0; i < list.size(); ++i) {

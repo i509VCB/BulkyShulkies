@@ -159,7 +159,7 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 						openScreen(pos, playerEntity, cursedBlockEntity.getDisplayName());
 						playerEntity.incrementStat(Stats.OPEN_SHULKER_BOX);
 						// Replicate vanilla
-						PiglinBrain.onGoldBlockBroken(playerEntity, true);
+						PiglinBrain.onGuardedBlockBroken(playerEntity, true);
 					}
 				}
 
@@ -202,8 +202,8 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void buildTooltip(ItemStack itemStack, @Nullable BlockView world, List<Text> list, TooltipContext context) {
-		super.buildTooltip(itemStack, world, list, context);
+	public void appendTooltip(ItemStack itemStack, @Nullable BlockView world, List<Text> list, TooltipContext context) {
+		super.appendTooltip(itemStack, world, list, context);
 
 		if (ShulkerHooks.shulkerTooltipsArePresent()) {
 			return; // Shulker Tooltips will handle the Tooltip itself if installed.

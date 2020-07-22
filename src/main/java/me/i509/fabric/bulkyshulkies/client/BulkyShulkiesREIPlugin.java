@@ -85,13 +85,9 @@ public class BulkyShulkiesREIPlugin implements REIPluginV0 {
 	private static List<EntryStack> createAllEntries() {
 		if (ENTRY_LIST == null) {
 			ENTRY_LIST = new ArrayList<>();
-			Tag<Item> itemTags = ItemTags.getContainer().get(BulkyShulkies.id("slab_shulker_boxes"));
 
-			if (itemTags != null) {
-				itemTags.values().forEach(item -> ENTRY_LIST.add(EntryStack.create(item)));
-			} else {
-				BulkyShulkies.getInstance().getLogger().error("Could not find 'slab_shulker_boxes' tag to generate REI info for.");
-			}
+			Tag<Item> itemTags = ItemTags.getTagGroup().getTagOrEmpty(BulkyShulkies.id("slab_shulker_boxes"));
+			itemTags.values().forEach(item -> ENTRY_LIST.add(EntryStack.create(item)));
 
 			ENTRY_LIST.add(EntryStack.create(ShulkerBlocks.ENDER_SLAB_BOX));
 		}

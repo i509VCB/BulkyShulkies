@@ -41,9 +41,6 @@
     "rei_plugins_v0": [
       "me.i509.fabric.bulkyshulkies.client.BulkyShulkiesREIPlugin"
     ],
-    "libcd": [
-      "me.i509.fabric.bulkyshulkies.extension.BulkyLibCDHooks"
-    ],
     "shulkerboxtooltip": [
       "me.i509.fabric.bulkyshulkies.extension.BulkyTooltipHook"
     ],
@@ -57,8 +54,7 @@
   "mixins": [
     "mixins.accessors.bulkyshulkies.json",
     "mixins.bulkyshulkies.json",
-    "mixins.client.bulkyshulkies.json",
-    "mixins.iteminventory.compat.bulkyshulkies.json"
+    "mixins.client.bulkyshulkies.json"
   ],
   "depends": {
     "fabricloader": ">=0.7.0",
@@ -67,10 +63,5 @@
   "suggests": {
     "cotton-resources": ">=1.4.1",
     "shulkerboxtooltip": ">=1.4.3"
-  },
-  "custom": {
-    "temp_removed_deps": {
-      "libcd": "*"
-    }
   }
 }

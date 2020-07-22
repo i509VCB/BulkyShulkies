@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.extension.tooltip;
+package me.i509.fabric.bulkyshulkies.extension;
 
 import com.misterpemodder.shulkerboxtooltip.api.PreviewContext;
 import com.misterpemodder.shulkerboxtooltip.api.provider.BlockEntityPreviewProvider;
@@ -34,10 +34,10 @@ import net.minecraft.util.DyeColor;
 
 import me.i509.fabric.bulkyshulkies.api.block.colored.ColoredShulkerBoxBlock;
 
-public class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
+class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
 	private static float[] SHULKER_BOX_COLOR = new float[] {0.592f, 0.403f, 0.592f};
 
-	public BulkyShulkerPreviewProvider(int maxInvSize) {
+	BulkyShulkerPreviewProvider(int maxInvSize) {
 		super(maxInvSize, true);
 	}
 

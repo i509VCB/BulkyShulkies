@@ -63,7 +63,7 @@ public abstract class AbstractShulkerBoxBlockEntity extends BlockEntity implemen
 
 	@Override
 	public void updateNeighborStates() {
-		this.getCachedState().updateNeighbors(this.getWorld(), this.getPos(), 3);
+		this.getCachedState().method_30101(this.getWorld(), this.getPos(), 3);
 	}
 
 	@Override
