@@ -30,6 +30,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -45,6 +47,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
+import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
+import me.i509.fabric.bulkyshulkies.screen.GenericCustomSlotContainerScreenHandler;
 
 public abstract class FacingShulkerBoxBlock extends AbstractShulkerBoxBlock {
 	public static final DirectionProperty FACING = Properties.FACING;
@@ -76,7 +83,13 @@ public abstract class FacingShulkerBoxBlock extends AbstractShulkerBoxBlock {
 				}
 
 				if (shouldOpen) {
-					this.openScreen(blockPos, player, ((AbstractShulkerBoxBlockEntity) blockEntity).getDisplayName()); // TODO: delegate getDisplayName to BlockEntity?
+					// TODO: Abstract this logic for opening screens
+					// FIXME: Abstract ender slab logic to ender slab
+					player.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inv, playerEntity) -> {
+						final EnderSlabBridge slabBridge = (EnderSlabBridge) player;
+						slabBridge.bridge$getEnderSlabInventory().setCurrentBlockEntity((EnderSlabBoxBlockEntity) cursedBlockEntity);
+						return GenericCustomSlotContainerScreenHandler.createGeneric9x2(ShulkerScreenHandlers.ENDER_SLAB, syncId, playerEntity.inventory, slabBridge.bridge$getEnderSlabInventory(), Slot::new);
+					}, ShulkerTexts.ENDER_SLAB));
 					player.incrementStat(Stats.OPEN_SHULKER_BOX);
 				}
 

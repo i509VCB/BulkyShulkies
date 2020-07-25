@@ -50,6 +50,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractInventoryShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.ShulkerBlockEntity;
 
 public abstract class Facing1x1ColoredInventoryShulkerBoxBlock extends AbstractColoredInventoryShulkerBoxBlock {
@@ -84,7 +85,7 @@ public abstract class Facing1x1ColoredInventoryShulkerBoxBlock extends AbstractC
 		} else {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 
-			if (blockEntity instanceof ShulkerBlockEntity) {
+			if (blockEntity instanceof AbstractInventoryShulkerBoxBlockEntity) {
 				Direction facing = state.get(FACING);
 				ShulkerBlockEntity shulkerBlockEntity = (ShulkerBlockEntity) blockEntity;
 				boolean shouldOpen;
@@ -97,7 +98,8 @@ public abstract class Facing1x1ColoredInventoryShulkerBoxBlock extends AbstractC
 				}
 
 				if (shouldOpen) {
-					this.openScreen(pos, playerEntity, ((ShulkerBlockEntity) blockEntity).getDisplayName());
+					// TODO: Abstract this logic for opening screens
+					playerEntity.openHandledScreen((AbstractInventoryShulkerBoxBlockEntity) blockEntity);
 					playerEntity.incrementStat(Stats.OPEN_SHULKER_BOX);
 				}
 

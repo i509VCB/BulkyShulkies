@@ -26,19 +26,13 @@ package me.i509.fabric.bulkyshulkies.block.material.silver;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
-
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
 import me.i509.fabric.bulkyshulkies.api.block.colored.Facing1x1ColoredInventoryShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 public class SilverShulkerBoxBlock extends Facing1x1ColoredInventoryShulkerBoxBlock {
@@ -49,14 +43,6 @@ public class SilverShulkerBoxBlock extends Facing1x1ColoredInventoryShulkerBoxBl
 	@Override
 	public BlockEntity createBlockEntity(BlockView blockView) {
 		return new SilverShulkerBoxBlockEntity(this.getColor());
-	}
-
-	@Override
-	protected void openScreen(BlockPos pos, PlayerEntity playerEntity, Text title) {
-		ContainerProviderRegistry.INSTANCE.openContainer(ScreenHandlerKeys.SHULKER_SCROLLABLE_CONTAINER, playerEntity, (packetByteBuf -> {
-			packetByteBuf.writeBlockPos(pos);
-			packetByteBuf.writeText(title);
-		}));
 	}
 
 	@Override

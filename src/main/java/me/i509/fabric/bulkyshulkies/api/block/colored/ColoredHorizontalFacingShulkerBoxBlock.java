@@ -80,9 +80,10 @@ public abstract class ColoredHorizontalFacingShulkerBoxBlock extends AbstractCol
 				}
 
 				if (shouldOpen) {
+					// TODO: Abstract this logic for opening screens
 					if (cursedBlockEntity.checkUnlocked(playerEntity)) {
 						cursedBlockEntity.checkLootInteraction(playerEntity);
-						openScreen(pos, playerEntity, cursedBlockEntity.getDisplayName());
+						playerEntity.openHandledScreen(cursedBlockEntity);
 						playerEntity.incrementStat(Stats.OPEN_SHULKER_BOX);
 					}
 				}

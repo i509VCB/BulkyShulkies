@@ -24,96 +24,54 @@
 
 package me.i509.fabric.bulkyshulkies.registry;
 
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.HopperBlockEntity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
-import net.fabricmc.fabric.api.util.NbtType;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 
-import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.inventory.ShulkerHelmetInventory;
+import me.i509.fabric.bulkyshulkies.screen.GenericCustomSlotContainerScreenHandler;
 import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler9x7;
 import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler11x7;
 import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler13x7;
-import me.i509.fabric.bulkyshulkies.screen.ScrollableScreenHandler;
-import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
+import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 
 public final class ShulkerScreenHandlers {
+	public static final ScreenHandlerType<GenericCustomSlotContainerScreenHandler> SHULKER_9x1_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(ScreenHandlerKeys.SHULKER_9x1_CONTAINER, (syncId, playerInventory) -> {
+		return GenericCustomSlotContainerScreenHandler.createGeneric9x1(ShulkerScreenHandlers.SHULKER_9x1_SCREEN_HANDLER, syncId, playerInventory, ShulkerBoxSlot::new);
+	});
+	public static final ScreenHandlerType<GenericCustomSlotContainerScreenHandler> SHULKER_9x2_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(ScreenHandlerKeys.SHULKER_9x2_CONTAINER, (syncId, playerInventory) -> {
+		return GenericCustomSlotContainerScreenHandler.createGeneric9x2(ShulkerScreenHandlers.SHULKER_9x2_SCREEN_HANDLER, syncId, playerInventory, ShulkerBoxSlot::new);
+	});
+	public static final ScreenHandlerType<GenericCustomSlotContainerScreenHandler> SHULKER_9x3_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(ScreenHandlerKeys.SHULKER_9x3_CONTAINER, (syncId, playerInventory) -> {
+		return GenericCustomSlotContainerScreenHandler.createGeneric9x3(ShulkerScreenHandlers.SHULKER_9x3_SCREEN_HANDLER, syncId, playerInventory, ShulkerBoxSlot::new);
+	});
+	public static final ScreenHandlerType<GenericCustomSlotContainerScreenHandler> SHULKER_9x4_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(ScreenHandlerKeys.SHULKER_9x4_CONTAINER, (syncId, playerInventory) -> {
+		return GenericCustomSlotContainerScreenHandler.createGeneric9x4(ShulkerScreenHandlers.SHULKER_9x4_SCREEN_HANDLER, syncId, playerInventory, ShulkerBoxSlot::new);
+	});
+	public static final ScreenHandlerType<GenericCustomSlotContainerScreenHandler> SHULKER_9x5_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(ScreenHandlerKeys.SHULKER_9x5_CONTAINER, (syncId, playerInventory) -> {
+		return GenericCustomSlotContainerScreenHandler.createGeneric9x5(ShulkerScreenHandlers.SHULKER_9x5_SCREEN_HANDLER, syncId, playerInventory, ShulkerBoxSlot::new);
+	});
+	public static final ScreenHandlerType<GenericCustomSlotContainerScreenHandler> SHULKER_9x6_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(ScreenHandlerKeys.SHULKER_9x6_CONTAINER, (syncId, playerInventory) -> {
+		return GenericCustomSlotContainerScreenHandler.createGeneric9x6(ShulkerScreenHandlers.SHULKER_9x6_SCREEN_HANDLER, syncId, playerInventory, ShulkerBoxSlot::new);
+	});
+	public static final ScreenHandlerType<GenericScreenHandler9x7> SHULKER_9x7_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(ScreenHandlerKeys.SHULKER_9x7_CONTAINER, (syncId, playerInventory) -> {
+		return new GenericScreenHandler9x7(ShulkerScreenHandlers.SHULKER_9x7_SCREEN_HANDLER, syncId, playerInventory, ShulkerBoxSlot::new);
+	});
+	public static final ScreenHandlerType<GenericScreenHandler11x7> SHULKER_11x7_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(ScreenHandlerKeys.SHULKER_11x7_CONTAINER, (syncId, playerInventory) -> {
+		return new GenericScreenHandler11x7(ShulkerScreenHandlers.SHULKER_11x7_SCREEN_HANDLER, syncId, playerInventory, ShulkerBoxSlot::new);
+	});
+	public static final ScreenHandlerType<GenericScreenHandler13x7> SHULKER_13x7_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(ScreenHandlerKeys.SHULKER_13x7_CONTAINER, (syncId, playerInventory) -> {
+		return new GenericScreenHandler13x7(ShulkerScreenHandlers.SHULKER_13x7_SCREEN_HANDLER, syncId, playerInventory, ShulkerBoxSlot::new);
+	});
+	public static final ScreenHandlerType<GenericCustomSlotContainerScreenHandler> ENDER_SLAB = ScreenHandlerRegistry.registerSimple(ScreenHandlerKeys.ENDER_SLAB, (syncId, playerInventory) -> {
+		return GenericCustomSlotContainerScreenHandler.createGeneric9x2(ShulkerScreenHandlers.ENDER_SLAB, syncId, playerInventory, Slot::new);
+	});
+
 	private ShulkerScreenHandlers() {
 		throw new AssertionError("You should not be instantiating this");
 	}
 
 	static void init() {
-	}
-
-	public static GenericScreenHandler13x7 create13x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		BlockPos pos = buf.readBlockPos();
-		Text name = buf.readText();
-		World world = player.getEntityWorld();
-		return new GenericScreenHandler13x7(syncId, ShulkerBoxSlot::new, player.inventory, HopperBlockEntity.getInventoryAt(world, pos), name);
-	}
-
-	public static GenericScreenHandler11x7 create11x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		BlockPos pos = buf.readBlockPos();
-		Text name = buf.readText();
-		World world = player.getEntityWorld();
-		return new GenericScreenHandler11x7(syncId, ShulkerBoxSlot::new, player.inventory, HopperBlockEntity.getInventoryAt(world, pos), name);
-	}
-
-	public static GenericScreenHandler9x7 create9x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		BlockPos pos = buf.readBlockPos();
-		Text name = buf.readText();
-		World world = player.getEntityWorld();
-		return new GenericScreenHandler9x7(syncId, ShulkerBoxSlot::new, player.inventory, HopperBlockEntity.getInventoryAt(world, pos), name);
-	}
-
-	public static ScrollableScreenHandler createScrollable(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		BlockPos pos = buf.readBlockPos();
-		Text name = buf.readText();
-		World world = player.getEntityWorld();
-		return new ScrollableScreenHandler(syncId, ShulkerBoxSlot::new, player.inventory, HopperBlockEntity.getInventoryAt(world, pos), name);
-	}
-
-	public static ScrollableScreenHandler createShulkerHelmet(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		Text name = buf.readText();
-
-		ItemStack stack = player.getEquippedStack(EquipmentSlot.HEAD);
-		CompoundTag blockEntityTag = stack.getSubTag("BlockEntityTag");
-		ListTag items = new ListTag();
-
-		if (blockEntityTag != null) {
-			if (blockEntityTag.contains("Items", NbtType.LIST)) {
-				items = blockEntityTag.getList("Items", NbtType.LIST);
-			}
-		}
-
-		ShulkerHelmetInventory inventory = new ShulkerHelmetInventory(player.getEquippedStack(EquipmentSlot.HEAD), ShulkerBoxConstants.SLAB_SLOT_COUNT);
-
-		return new ScrollableScreenHandler(syncId, ShulkerBoxSlot::new, player.inventory, inventory, name);
-	}
-
-	public static ScrollableScreenHandler createEnderSlab(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		BlockPos pos = buf.readBlockPos();
-		Text name = buf.readText();
-		World world = player.getEntityWorld();
-
-		EnderSlabInventory slab = ((EnderSlabBridge) player).bridge$getEnderSlabInventory();
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		slab.setCurrentBlockEntity(blockEntity instanceof EnderSlabBoxBlockEntity ? (EnderSlabBoxBlockEntity) blockEntity : null);
-
-		return new ScrollableScreenHandler(syncId, Slot::new, player.inventory, slab, name);
 	}
 }

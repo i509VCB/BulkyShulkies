@@ -26,7 +26,6 @@ package me.i509.fabric.bulkyshulkies.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -48,10 +47,6 @@ public class Generic13x7Screen extends HandledScreen<GenericScreenHandler13x7> {
 		// containerHeight = 90 + (7 * 18); // 96
 		this.backgroundHeight = 132 + 7 * 18;
 		this.backgroundWidth += 36 + 36;
-	}
-
-	public static HandledScreen<GenericScreenHandler13x7> createScreen(GenericScreenHandler13x7 handler) {
-		return new Generic13x7Screen(handler, MinecraftClient.getInstance().player.inventory, handler.getDisplayName());
 	}
 
 	@Override

@@ -26,13 +26,18 @@ package me.i509.fabric.bulkyshulkies.block.missing;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 
 import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
+import me.i509.fabric.bulkyshulkies.screen.GenericCustomSlotContainerScreenHandler;
 
 public class MissingTextureShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlockEntity {
 	public MissingTextureShulkerBoxBlockEntity(@Nullable DyeColor color) {
@@ -46,5 +51,10 @@ public class MissingTextureShulkerBoxBlockEntity extends ColoredFacing1X1Shulker
 	@Override
 	protected Text getDefaultName() {
 		return ShulkerTexts.MISSING_CONTAINER;
+	}
+
+	@Override
+	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+		return GenericCustomSlotContainerScreenHandler.createGeneric9x3(ShulkerScreenHandlers.SHULKER_9x3_SCREEN_HANDLER, syncId, playerInventory, this, ShulkerBoxSlot::new);
 	}
 }

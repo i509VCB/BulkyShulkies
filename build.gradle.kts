@@ -86,21 +86,8 @@ configure<JavaPluginConvention> {
 license {
     header = file("HEADER.txt")
 
-    // Apply NinjaPhenix's license header to the scrollable stuff
-    val exclusions = setOf(
-        "**/ScrollableScreenHandler.java",
-        "**/ScrollableScreen.java",
-        "**/SearchTextFieldWidget.java"
-    )
-
     include("**/*.java")
-    exclude(exclusions)
     style("java", HeaderStyle.BLOCK_COMMENT)
-
-    // Apply NinjaPhenix's license header to the scrollable widgets
-    matching(exclusions) {
-        it.header = file("LICENSE-NINJAPHENIX.txt")
-    }
 }
 
 checkstyle {

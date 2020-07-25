@@ -26,6 +26,9 @@ package me.i509.fabric.bulkyshulkies.block.material.gold;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 
@@ -33,6 +36,8 @@ import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredFacing1X1Shu
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
+import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler9x7;
 
 public class GoldShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlockEntity {
 	public GoldShulkerBoxBlockEntity(@Nullable DyeColor color) {
@@ -46,5 +51,10 @@ public class GoldShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlockEn
 	@Override
 	protected Text getDefaultName() {
 		return ShulkerTexts.GOLD_CONTAINER;
+	}
+
+	@Override
+	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+		return new GenericScreenHandler9x7(ShulkerScreenHandlers.SHULKER_9x7_SCREEN_HANDLER, syncId, playerInventory, this, ShulkerBoxSlot::new);
 	}
 }

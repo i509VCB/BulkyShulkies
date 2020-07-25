@@ -35,40 +35,32 @@ import net.minecraft.util.Identifier;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler11x7;
+import me.i509.fabric.bulkyshulkies.screen.GenericCustomSlotContainerScreenHandler;
 
 @Environment(EnvType.CLIENT)
-public class Generic11x7Screen extends HandledScreen<GenericScreenHandler11x7> {
-	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_11x7.png");
+public class GenericCustomSlotContainerScreen extends HandledScreen<GenericCustomSlotContainerScreenHandler> {
+	private static final Identifier TEXTURE = new Identifier("minecraft", "textures/gui/container/generic_54.png");
+	private final int rows;
 
-	public Generic11x7Screen(GenericScreenHandler11x7 handler, PlayerInventory playerInventory, Text title) {
-		super(handler, playerInventory, title);
-		this.backgroundHeight = 132 + 7 * 18;
-		this.backgroundWidth += 36;
+	public GenericCustomSlotContainerScreen(GenericCustomSlotContainerScreenHandler handler, PlayerInventory inventory, Text title) {
+		super(handler, inventory, title);
+		this.rows = handler.getRows();
+		this.backgroundHeight = 114 + this.rows * 18;
+		this.playerInventoryTitleY = this.backgroundHeight - 94;
 	}
 
-	@Override
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float tickDelta) {
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 		this.renderBackground(matrices);
-		this.drawBackground(matrices, tickDelta, mouseX, mouseY);
-		super.render(matrices, mouseX, mouseY, tickDelta);
+		super.render(matrices, mouseX, mouseY, delta);
 		this.drawMouseoverTooltip(matrices, mouseX, mouseY);
 	}
 
-	@Override
-	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-		this.textRenderer.method_30883(matrices, this.title, 8.0F, 7.0F, 4210752);
-		this.textRenderer.method_30883(matrices, this.playerInventory.getDisplayName(), 8.0F, (float) (this.backgroundHeight - 114 + 2), 4210752);
-	}
-
-	@Override
-	protected void drawBackground(MatrixStack matrices, float tickDelta, int mouseX, int mouseY) {
+	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.client.getTextureManager().bindTexture(TEXTURE);
 		int i = (this.width - this.backgroundWidth) / 2;
 		int j = (this.height - this.backgroundHeight) / 2;
-		this.drawTexture(matrices, i, j, 0, 0, this.backgroundWidth, 7 * 18 + 17);
-		this.drawTexture(matrices, i, j + 7 * 18, 0, 126, this.backgroundWidth, 114);
+		this.drawTexture(matrices, i, j, 0, 0, this.backgroundWidth, this.rows * 18 + 17);
+		this.drawTexture(matrices, i, j + this.rows * 18 + 17, 0, 126, this.backgroundWidth, 96);
 	}
 }

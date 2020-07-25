@@ -26,6 +26,9 @@ package me.i509.fabric.bulkyshulkies.block.cursed.slab;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 
@@ -33,6 +36,8 @@ import me.i509.fabric.bulkyshulkies.api.block.entity.slab.ColoredFacingSlabShulk
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
+import me.i509.fabric.bulkyshulkies.screen.GenericCustomSlotContainerScreenHandler;
 
 public class CursedSlabShulkerBoxBlockEntity extends ColoredFacingSlabShulkerBlockEntity {
 	public CursedSlabShulkerBoxBlockEntity(@Nullable DyeColor color) {
@@ -46,5 +51,10 @@ public class CursedSlabShulkerBoxBlockEntity extends ColoredFacingSlabShulkerBlo
 	@Override
 	protected Text getDefaultName() {
 		return ShulkerTexts.CURSED_SLAB_CONTAINER;
+	}
+
+	@Override
+	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+		return GenericCustomSlotContainerScreenHandler.createGeneric9x2(ShulkerScreenHandlers.SHULKER_9x2_SCREEN_HANDLER, syncId, playerInventory, this, ShulkerBoxSlot::new);
 	}
 }

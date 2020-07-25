@@ -31,10 +31,13 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
@@ -46,7 +49,9 @@ import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredFacing1X1Shu
 import me.i509.fabric.bulkyshulkies.api.event.MagnetismCollectionCallback;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
+import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler13x7;
 
 public class PlatinumShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlockEntity {
 	private int lastMagnetTick = 0;
@@ -160,6 +165,11 @@ public class PlatinumShulkerBoxBlockEntity extends ColoredFacing1X1ShulkerBoxBlo
 	@Override
 	protected Text getDefaultName() {
 		return ShulkerTexts.PLATINUM_CONTAINER;
+	}
+
+	@Override
+	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+		return new GenericScreenHandler13x7(ShulkerScreenHandlers.SHULKER_13x7_SCREEN_HANDLER, syncId, playerInventory, this, ShulkerBoxSlot::new);
 	}
 
 	public static Vec3d getDirectionalBoxOffset(Direction direction) {

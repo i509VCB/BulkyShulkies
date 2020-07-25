@@ -28,6 +28,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.BlockHalf;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
@@ -40,6 +43,8 @@ import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredHorizontalFa
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
+import me.i509.fabric.bulkyshulkies.screen.GenericCustomSlotContainerScreenHandler;
 
 public class StairShulkerBoxBlockEntity extends ColoredHorizontalFacingShulkerBoxBlockEntity {
 	public StairShulkerBoxBlockEntity(@Nullable DyeColor color) {
@@ -72,6 +77,11 @@ public class StairShulkerBoxBlockEntity extends ColoredHorizontalFacingShulkerBo
 	public Box getLidCollisionBox(BlockState state) {
 		Direction opposite = state.get(ColoredHorizontalFacingShulkerBoxBlock.FACING).getOpposite();
 		return this.getBoundingBox(state).getBoundingBox().shrink(opposite.getOffsetX(), opposite.getOffsetY(), opposite.getOffsetZ());
+	}
+
+	@Override
+	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+		return GenericCustomSlotContainerScreenHandler.createGeneric9x3(ShulkerScreenHandlers.SHULKER_9x3_SCREEN_HANDLER, syncId, playerInventory, this, ShulkerBoxSlot::new);
 	}
 
 	// TODO: Modify pushEntities

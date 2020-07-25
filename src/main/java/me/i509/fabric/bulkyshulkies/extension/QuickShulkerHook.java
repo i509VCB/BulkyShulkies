@@ -26,25 +26,18 @@ package me.i509.fabric.bulkyshulkies.extension;
 
 import static net.kyrptonaught.quickshulker.api.QuickOpenableRegistry.register;
 
-import net.kyrptonaught.quickshulker.api.Util;
 import net.kyrptonaught.quickshulker.api.ItemStackInventory;
 import net.kyrptonaught.quickshulker.api.RegisterQuickShulker;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.block.base.InventoryShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
+import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
 import me.i509.fabric.bulkyshulkies.block.cursed.slab.ColoredSlabShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBlock;
@@ -56,29 +49,16 @@ import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBl
 import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
 import me.i509.fabric.bulkyshulkies.config.section.quickshulker.QuickShulkerSection;
+import me.i509.fabric.bulkyshulkies.screen.GenericCustomSlotContainerScreenHandler;
 import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler11x7;
 import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler13x7;
 import me.i509.fabric.bulkyshulkies.screen.GenericScreenHandler9x7;
-import me.i509.fabric.bulkyshulkies.screen.ScrollableScreenHandler;
-import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerTexts;
 
 public class QuickShulkerHook implements RegisterQuickShulker {
-	public static final Identifier QS$SHULKER_SCROLLABLE_CONTAINER = BulkyShulkies.id("qs_shulker_scrollable_container");
-	public static final Identifier QS$SHULKER_9x7_CONTAINER = BulkyShulkies.id("qs_shulker_container_9x7");
-	public static final Identifier QS$SHULKER_11x7_CONTAINER = BulkyShulkies.id("qs_shulker_container_11x7");
-	public static final Identifier QS$SHULKER_13x7_CONTAINER = BulkyShulkies.id("qs_shulker_container_13x7");
-	public static final Identifier QS$ENDER_SLAB = BulkyShulkies.id("qs_ender_slab_container");
-
 	@Override
 	public void registerProviders() {
-		ContainerProviderRegistry.INSTANCE.registerFactory(QS$SHULKER_SCROLLABLE_CONTAINER, QuickShulkerHook::createScrollable);
-		ContainerProviderRegistry.INSTANCE.registerFactory(QS$SHULKER_9x7_CONTAINER, QuickShulkerHook::create9x7);
-		ContainerProviderRegistry.INSTANCE.registerFactory(QS$SHULKER_11x7_CONTAINER, QuickShulkerHook::create11x7);
-		ContainerProviderRegistry.INSTANCE.registerFactory(QS$SHULKER_13x7_CONTAINER, QuickShulkerHook::create13x7);
-		ContainerProviderRegistry.INSTANCE.registerFactory(QS$ENDER_SLAB, QuickShulkerHook::createEnderSlab);
-
 		QuickShulkerSection config = BulkyShulkies.getInstance().getConfig().getExtensions().getQuickShulker();
 
 		if (config.canOpenCopper()) {
@@ -126,123 +106,69 @@ public class QuickShulkerHook implements RegisterQuickShulker {
 		}
 	}
 
-	public static GenericScreenHandler13x7 create13x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		int invSlot = buf.readInt();
-		Text name = buf.readText();
-		ItemStack stack = player.inventory.getStack(invSlot);
-		return new GenericScreenHandler13x7(syncId, ShulkerBoxSlot::new, player.inventory, new ItemStackInventory(stack, getSlotCount(stack)), name);
+	public static void openCopperBox(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return GenericCustomSlotContainerScreenHandler.createGeneric9x4(ShulkerScreenHandlers.SHULKER_9x4_SCREEN_HANDLER, syncId, inventory, new ItemStackInventory(stack, ShulkerBoxConstants.COPPER_SLOT_COUNT), ShulkerBoxSlot::new);
+		}, stack.getName()));
 	}
 
-	public static GenericScreenHandler11x7 create11x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		int invSlot = buf.readInt();
-		Text name = buf.readText();
-		ItemStack stack = player.inventory.getStack(invSlot);
-		return new GenericScreenHandler11x7(syncId, ShulkerBoxSlot::new, player.inventory, new ItemStackInventory(stack, getSlotCount(stack)), name);
+	public static void openIronBox(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return GenericCustomSlotContainerScreenHandler.createGeneric9x5(ShulkerScreenHandlers.SHULKER_9x5_SCREEN_HANDLER, syncId, inventory, new ItemStackInventory(stack, ShulkerBoxConstants.IRON_SLOT_COUNT), ShulkerBoxSlot::new);
+		}, stack.getName()));
 	}
 
-	public static GenericScreenHandler9x7 create9x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		int invSlot = buf.readInt();
-		Text name = buf.readText();
-		ItemStack stack = player.inventory.getStack(invSlot);
-		return new GenericScreenHandler9x7(syncId, ShulkerBoxSlot::new, player.inventory, new ItemStackInventory(stack, getSlotCount(stack)), name);
+	public static void openSilverBox(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return GenericCustomSlotContainerScreenHandler.createGeneric9x6(ShulkerScreenHandlers.SHULKER_9x6_SCREEN_HANDLER, syncId, inventory, new ItemStackInventory(stack, ShulkerBoxConstants.SILVER_SLOT_COUNT), ShulkerBoxSlot::new);
+		}, stack.getName()));
 	}
 
-	public static ScrollableScreenHandler createScrollable(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		int invSlot = buf.readInt();
-		Text name = buf.readText();
-		ItemStack stack = player.inventory.getStack(invSlot);
-		return new ScrollableScreenHandler(syncId, ShulkerBoxSlot::new, player.inventory, new ItemStackInventory(stack, getSlotCount(stack)), name);
+	public static void openGoldBox(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return new GenericScreenHandler9x7(ShulkerScreenHandlers.SHULKER_9x7_SCREEN_HANDLER, syncId, inventory, new ItemStackInventory(stack, ShulkerBoxConstants.GOLD_SLOT_COUNT), ShulkerBoxSlot::new);
+		}, stack.getName()));
 	}
 
-	public static ScrollableScreenHandler createEnderSlab(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {
-		Text name = buf.readText();
-		EnderSlabInventory slab = ((EnderSlabBridge) player).bridge$getEnderSlabInventory();
-		return new ScrollableScreenHandler(syncId, Slot::new, player.inventory, slab, name);
+	public static void openDiamondBox(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return new GenericScreenHandler11x7(ShulkerScreenHandlers.SHULKER_11x7_SCREEN_HANDLER, syncId, inventory, new ItemStackInventory(stack, ShulkerBoxConstants.DIAMOND_SLOT_COUNT), ShulkerBoxSlot::new);
+		}, stack.getName()));
 	}
 
-	public static int getSlotCount(ItemStack stack) {
-		if (stack.getItem() instanceof BlockItem) {
-			Block block = ((BlockItem) stack.getItem()).getBlock();
-
-			if (block instanceof InventoryShulkerBoxBlock) {
-				return ((InventoryShulkerBoxBlock) block).getSlots();
-			}
-		}
-
-		return 0;
+	public static void openObsidianBox(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return new GenericScreenHandler13x7(ShulkerScreenHandlers.SHULKER_13x7_SCREEN_HANDLER, syncId, inventory, new ItemStackInventory(stack, ShulkerBoxConstants.OBSIDIAN_SLOT_COUNT), ShulkerBoxSlot::new);
+		}, stack.getName()));
 	}
 
-	public static void openCopperBox(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_SCROLLABLE_CONTAINER, player, writer -> {
-			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
-			writer.writeText(ShulkerTexts.COPPER_CONTAINER);
-		});
+	public static void openPlatinumBox(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return new GenericScreenHandler13x7(ShulkerScreenHandlers.SHULKER_13x7_SCREEN_HANDLER, syncId, inventory, new ItemStackInventory(stack, ShulkerBoxConstants.PLATINUM_SLOT_COUNT), ShulkerBoxSlot::new);
+		}, stack.getName()));
 	}
 
-	public static void openIronBox(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_SCROLLABLE_CONTAINER, player, writer -> {
-			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
-			writer.writeText(ShulkerTexts.IRON_CONTAINER);
-		});
+	public static void openSlabBox(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return GenericCustomSlotContainerScreenHandler.createGeneric9x2(ShulkerScreenHandlers.SHULKER_9x2_SCREEN_HANDLER, syncId, inventory, new ItemStackInventory(stack, ShulkerBoxConstants.SLAB_SLOT_COUNT), ShulkerBoxSlot::new);
+		}, stack.getName()));
 	}
 
-	public static void openSilverBox(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_SCROLLABLE_CONTAINER, player, writer -> {
-			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
-			writer.writeText(ShulkerTexts.SILVER_CONTAINER);
-		});
+	public static void openEnderSlab(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return GenericCustomSlotContainerScreenHandler.createGeneric9x2(ShulkerScreenHandlers.ENDER_SLAB, syncId, inventory, ((EnderSlabBridge) player).bridge$getEnderSlabInventory(), Slot::new);
+		}, stack.getName()));
 	}
 
-	public static void openGoldBox(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_9x7_CONTAINER, player, writer -> {
-			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
-			writer.writeText(ShulkerTexts.GOLD_CONTAINER);
-		});
+	public static void openMissingTex(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return GenericCustomSlotContainerScreenHandler.createGeneric9x3(ShulkerScreenHandlers.SHULKER_9x3_SCREEN_HANDLER, syncId, inventory, new ItemStackInventory(stack, ShulkerBoxConstants.MISSING_TEX), ShulkerBoxSlot::new);
+		}, stack.getName()));
 	}
 
-	public static void openDiamondBox(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_11x7_CONTAINER, player, writer -> {
-			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
-			writer.writeText(ShulkerTexts.DIAMOND_CONTAINER);
-		});
-	}
-
-	public static void openObsidianBox(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_13x7_CONTAINER, player, writer -> {
-			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
-			writer.writeText(ShulkerTexts.OBSIDIAN_CONTAINER);
-		});
-	}
-
-	public static void openPlatinumBox(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_13x7_CONTAINER, player, writer -> {
-			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
-			writer.writeText(ShulkerTexts.PLATINUM_CONTAINER);
-		});
-	}
-
-	public static void openSlabBox(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_SCROLLABLE_CONTAINER, player, writer -> {
-			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
-			writer.writeText(ShulkerTexts.CURSED_SLAB_CONTAINER);
-		});
-	}
-
-	public static void openEnderSlab(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$ENDER_SLAB, player, writer -> writer.writeText(ShulkerTexts.ENDER_SLAB));
-	}
-
-	public static void openMissingTex(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_SCROLLABLE_CONTAINER, player, writer -> {
-			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
-			writer.writeText(ShulkerTexts.MISSING_CONTAINER);
-		});
-	}
-
-	private static void openStair(PlayerEntity player, ItemStack stack) {
-		ContainerProviderRegistry.INSTANCE.openContainer(QS$SHULKER_SCROLLABLE_CONTAINER, player, writer -> {
-			writer.writeInt(Util.getSlotWithStack(player.inventory, stack));
-			writer.writeText(ShulkerTexts.CURSED_STAIR_CONTAINER);
-		});
+	private static void openStair(PlayerEntity user, ItemStack stack) {
+		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
+			return GenericCustomSlotContainerScreenHandler.createGeneric9x3(ShulkerScreenHandlers.SHULKER_9x3_SCREEN_HANDLER, syncId, inventory, new ItemStackInventory(stack, ShulkerBoxConstants.STAIR_SLOT_COUNT), ShulkerBoxSlot::new);
+		}, stack.getName()));
 	}
 }

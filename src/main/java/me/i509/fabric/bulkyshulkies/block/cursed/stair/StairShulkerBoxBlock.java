@@ -34,7 +34,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.block.enums.StairShape;
 import net.minecraft.entity.mob.ShulkerLidCollisions;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemConvertible;
@@ -43,7 +42,6 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.DyeColor;
@@ -55,11 +53,8 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-
 import me.i509.fabric.bulkyshulkies.api.block.colored.ColoredHorizontalFacingShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 import me.i509.fabric.bulkyshulkies.mixin.accessor.StairsBlockAccessor;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
@@ -114,14 +109,6 @@ public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock
 		}
 
 		return StairShulkerBoxBlock.getShape(0.0D, state, view, pos);
-	}
-
-	@Override
-	protected void openScreen(BlockPos pos, PlayerEntity playerEntity, Text title) {
-		ContainerProviderRegistry.INSTANCE.openContainer(ScreenHandlerKeys.SHULKER_SCROLLABLE_CONTAINER, playerEntity, (packetByteBuf -> {
-			packetByteBuf.writeBlockPos(pos);
-			packetByteBuf.writeText(title);
-		}));
 	}
 
 	@Override

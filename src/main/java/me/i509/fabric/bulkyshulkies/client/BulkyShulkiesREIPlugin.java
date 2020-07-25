@@ -27,16 +27,12 @@ package me.i509.fabric.bulkyshulkies.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.api.BaseBoundsHandler;
-import me.shedaniel.rei.api.DisplayHelper;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
 import me.shedaniel.rei.plugin.DefaultPlugin;
 import me.shedaniel.rei.plugin.information.DefaultInformationDisplay;
 
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.Tag;
@@ -47,7 +43,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 
 @Environment(EnvType.CLIENT)
@@ -57,23 +52,6 @@ public class BulkyShulkiesREIPlugin implements REIPluginV0 {
 	@Override
 	public Identifier getPluginIdentifier() {
 		return BulkyShulkies.id("reiplugin");
-	}
-
-	@Override
-	public void registerBounds(DisplayHelper displayHelper) {
-		BaseBoundsHandler boundsHandler = BaseBoundsHandler.getInstance();
-		boundsHandler.registerExclusionZones(ScrollableScreen.class, this::createScrollableExclusionZones);
-	}
-
-	private List<Rectangle> createScrollableExclusionZones() {
-		ScrollableScreen screen = (ScrollableScreen) MinecraftClient.getInstance().currentScreen;
-		ArrayList<Rectangle> rectangles = new ArrayList<>(1);
-
-		if (screen.hasScrollbar()) {
-			rectangles.add(new Rectangle(screen.getLeft() + 172, screen.getTop(), 22, 132));
-		}
-
-		return rectangles;
 	}
 
 	@Override

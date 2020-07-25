@@ -50,7 +50,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
@@ -85,14 +85,14 @@ import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.EnderSlabBlockE
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.Facing1x1ShulkerBlockEntityRenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.FacingSlabShulkerBoxBlockEntityRenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.PlatinumShulkerBlockEntityRenderer;
+import me.i509.fabric.bulkyshulkies.client.screen.GenericCustomSlotContainerScreen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic9x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic11x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic13x7Screen;
-import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerNetworking;
-import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
 
 @Environment(EnvType.CLIENT)
 public class BulkyShulkiesClientMod implements ClientModInitializer {
@@ -141,6 +141,17 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x1_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
+		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x2_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
+		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x3_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
+		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x4_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
+		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x5_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
+		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x6_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
+		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x7_SCREEN_HANDLER, Generic9x7Screen::new);
+		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_11x7_SCREEN_HANDLER, Generic11x7Screen::new);
+		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_13x7_SCREEN_HANDLER, Generic13x7Screen::new);
+		ScreenRegistry.register(ShulkerScreenHandlers.ENDER_SLAB, GenericCustomSlotContainerScreen::new);
+
 		ShulkerBlocks.iterateColors(ShulkerBlocks.COPPER_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
 		ShulkerBlocks.iterateColors(ShulkerBlocks.IRON_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
 		ShulkerBlocks.iterateColors(ShulkerBlocks.SILVER_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
@@ -153,13 +164,6 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		ShulkerBlocks.iterateColors(ShulkerBlocks.SLAB_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
 		ShulkerBlocks.iterateColors(ShulkerBlocks.STAIR_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
 		BulkyShulkiesClientMod.registerRenderer(ShulkerBlocks.ENDER_SLAB_BOX, null);
-
-		ScreenProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_9x7_CONTAINER, Generic9x7Screen::createScreen);
-		ScreenProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_11x7_CONTAINER, Generic11x7Screen::createScreen);
-		ScreenProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_13x7_CONTAINER, Generic13x7Screen::createScreen);
-		ScreenProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_SCROLLABLE_CONTAINER, ScrollableScreen::createScreen);
-		ScreenProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.ENDER_SLAB, ScrollableScreen::createScreen);
-		ScreenProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_HELMET, ScrollableScreen::createScreen);
 
 		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX,
 						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.COPPER));

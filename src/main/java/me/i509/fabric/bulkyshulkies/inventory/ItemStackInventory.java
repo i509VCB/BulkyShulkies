@@ -24,33 +24,34 @@
 
 package me.i509.fabric.bulkyshulkies.inventory;
 
-import java.util.stream.IntStream;
-
-import org.checkerframework.checker.nullness.qual.Nullable;
-
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.SidedInventory;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.collection.DefaultedList;
 
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
+public class ItemStackInventory extends SimpleInventory {
+	private final ItemStack stack;
 
-public class EnderSlabInventory extends SimpleInventory implements SidedInventory {
-	@Nullable
-	private EnderSlabBoxBlockEntity currentBlockEntity;
-
-	public EnderSlabInventory() {
-		super(ShulkerBoxConstants.SLAB_SLOT_COUNT);
+	public ItemStackInventory(ItemStack stack, int inventorySize) {
+		super(getStacks(stack, inventorySize).toArray(new ItemStack[inventorySize]));
+		this.stack = stack;
 	}
 
-	public void setCurrentBlockEntity(EnderSlabBoxBlockEntity blockEntity) {
-		this.currentBlockEntity = blockEntity;
+	private static DefaultedList<ItemStack> getStacks(ItemStack usedStack, int SIZE) {
+		CompoundTag compoundTag = usedStack.getSubTag("BlockEntityTag");
+		DefaultedList<ItemStack> itemStacks = DefaultedList.ofSize(SIZE, ItemStack.EMPTY);
+
+		if (compoundTag != null && compoundTag.contains("Items", 9)) {
+			Inventories.fromTag(compoundTag, itemStacks);
+		}
+
+		return itemStacks;
 	}
 
+	@Override
 	public void readTags(ListTag listTag) {
 		int j;
 
@@ -68,6 +69,7 @@ public class EnderSlabInventory extends SimpleInventory implements SidedInventor
 		}
 	}
 
+	@Override
 	public ListTag getTags() {
 		ListTag listTag = new ListTag();
 
@@ -85,40 +87,30 @@ public class EnderSlabInventory extends SimpleInventory implements SidedInventor
 		return listTag;
 	}
 
-	public boolean canPlayerUse(PlayerEntity player) {
-		//return this.currentBlockEntity != null && !this.currentBlockEntity.canPlayerUse(player) ? false : super.canPlayerUse(player);
-		return super.canPlayerUse(player); // TOOD: Fix
-	}
+	@Override
+	public void markDirty() {
+		super.markDirty();
+		CompoundTag compoundTag = this.stack.getSubTag("BlockEntityTag");
 
-	public void onOpen(PlayerEntity player) {
-		if (this.currentBlockEntity != null) {
-			this.currentBlockEntity.onOpen(player);
+		if (this.isEmpty()) {
+			this.stack.removeSubTag("BlockEntityTag");
+		} else {
+			if (compoundTag == null) {
+				compoundTag = this.stack.getOrCreateSubTag("BlockEntityTag");
+			}
+
+			DefaultedList<ItemStack> itemStacks = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
+
+			for (int i = 0; i < this.size(); ++i) {
+				itemStacks.set(i, this.getStack(i));
+			}
+
+			Inventories.toTag(compoundTag, itemStacks);
 		}
-
-		super.onOpen(player);
-	}
-
-	public void onClose(PlayerEntity player) {
-		if (this.currentBlockEntity != null) {
-			this.currentBlockEntity.onClose(player);
-		}
-
-		super.onClose(player);
-		this.currentBlockEntity = null;
 	}
 
 	@Override
-	public int[] getAvailableSlots(Direction side) {
-		return IntStream.range(0, ShulkerBoxConstants.SLAB_SLOT_COUNT).toArray();
-	}
-
-	@Override
-	public boolean canInsert(int slot, ItemStack stack, Direction dir) {
-		return true;
-	}
-
-	@Override
-	public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-		return true;
+	public void onClose(PlayerEntity playerEntity) {
+		this.markDirty();
 	}
 }

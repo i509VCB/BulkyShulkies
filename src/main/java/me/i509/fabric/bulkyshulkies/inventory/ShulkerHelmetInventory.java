@@ -26,97 +26,18 @@ package me.i509.fabric.bulkyshulkies.inventory;
 
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.util.collection.DefaultedList;
 
 import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetStage;
 
-public class ShulkerHelmetInventory extends SimpleInventory {
-	private final int invSize;
-	private ItemStack stack;
-
-	public ShulkerHelmetInventory(ItemStack stack, int invSize) {
-		super(getStacks(stack, invSize).toArray(new ItemStack[invSize]));
-		this.stack = stack;
-		this.invSize = invSize;
-	}
-
-	private static DefaultedList<ItemStack> getStacks(ItemStack usedStack, int SIZE) {
-		CompoundTag compoundTag = usedStack.getSubTag("BlockEntityTag");
-		DefaultedList<ItemStack> itemStacks = DefaultedList.ofSize(SIZE, ItemStack.EMPTY);
-
-		if (compoundTag != null && compoundTag.contains("Items", 9)) {
-			Inventories.fromTag(compoundTag, itemStacks);
-		}
-
-		return itemStacks;
-	}
-
-	@Override
-	public void readTags(ListTag listTag) {
-		int j;
-
-		for (j = 0; j < this.size(); ++j) {
-			this.setStack(j, ItemStack.EMPTY);
-		}
-
-		for (j = 0; j < listTag.size(); ++j) {
-			CompoundTag compoundTag = listTag.getCompound(j);
-			int k = compoundTag.getByte("Slot") & 255;
-
-			if (k >= 0 && k < this.size()) {
-				this.setStack(k, ItemStack.fromTag(compoundTag));
-			}
-		}
-	}
-
-	@Override
-	public ListTag getTags() {
-		ListTag listTag = new ListTag();
-
-		for (int i = 0; i < this.size(); ++i) {
-			ItemStack itemStack = this.getStack(i);
-
-			if (!itemStack.isEmpty()) {
-				CompoundTag compoundTag = new CompoundTag();
-				compoundTag.putByte("Slot", (byte) i);
-				itemStack.toTag(compoundTag);
-				listTag.add(compoundTag);
-			}
-		}
-
-		return listTag;
-	}
-
-	@Override
-	public void markDirty() {
-		super.markDirty();
-		CompoundTag compoundTag = this.stack.getSubTag("BlockEntityTag");
-
-		if (this.isEmpty()) {
-			this.stack.removeSubTag("BlockEntityTag");
-		} else {
-			if (compoundTag == null) {
-				compoundTag = this.stack.getOrCreateSubTag("BlockEntityTag");
-			}
-
-			DefaultedList<ItemStack> itemStacks = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-
-			for (int i = 0; i < this.size(); ++i) {
-				itemStacks.set(i, this.getStack(i));
-			}
-
-			Inventories.toTag(compoundTag, itemStacks);
-		}
+public class ShulkerHelmetInventory extends ItemStackInventory {
+	public ShulkerHelmetInventory(ItemStack stack, int inventorySize) {
+		super(stack, inventorySize);
 	}
 
 	@Override
 	public void onClose(PlayerEntity playerEntity) {
-		this.markDirty();
+		super.onClose(playerEntity);
 		ShulkerHelmetStage.bulkyshulkies$getStageFromEntity(playerEntity).bulkyshulkies$setStage(ShulkerBoxBlockEntity.AnimationStage.CLOSING);
 	}
 }

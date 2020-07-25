@@ -27,22 +27,25 @@ package me.i509.fabric.bulkyshulkies.screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.SlotFactory;
 
 public class GenericScreenHandler13x7 extends ScreenHandler {
 	private final Inventory inventory;
-	private final Text name;
 
-	public GenericScreenHandler13x7(int syncId, SlotFactory slotFactory, PlayerInventory playerInventory, Inventory inventory, Text containerName) {
-		super(null, syncId);
+	public GenericScreenHandler13x7(ScreenHandlerType<GenericScreenHandler13x7> type, int syncId, PlayerInventory playerInventory, SlotFactory slotFactory) {
+		this(type, syncId, playerInventory, new SimpleInventory(91), slotFactory);
+	}
+
+	public GenericScreenHandler13x7(ScreenHandlerType<GenericScreenHandler13x7> type, int syncId, PlayerInventory playerInventory, Inventory inventory, SlotFactory slotFactory) {
+		super(type, syncId);
 		this.inventory = inventory;
-		this.name = containerName;
 		inventory.onOpen(playerInventory.player);
 
 		for (int row = 0; row < 7; ++row) {
@@ -102,11 +105,8 @@ public class GenericScreenHandler13x7 extends ScreenHandler {
 		return this.inventory;
 	}
 
-	public Text getDisplayName() {
-		return this.name;
-	}
-
 	public boolean canInsertIntoSlot(ItemStack stack, Slot slot) {
+		// TODO: Make generic
 		return BulkyShulkies.getInstance().canInsertItem(stack);
 	}
 }

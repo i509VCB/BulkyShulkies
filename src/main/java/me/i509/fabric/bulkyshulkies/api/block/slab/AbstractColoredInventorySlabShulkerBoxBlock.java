@@ -49,6 +49,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import me.i509.fabric.bulkyshulkies.api.block.colored.AbstractColoredInventoryShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.AbstractInventoryShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.ShulkerBlockEntity;
 
 public abstract class AbstractColoredInventorySlabShulkerBoxBlock extends AbstractColoredInventoryShulkerBoxBlock {
@@ -86,7 +87,7 @@ public abstract class AbstractColoredInventorySlabShulkerBoxBlock extends Abstra
 		} else {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 
-			if (blockEntity instanceof ShulkerBlockEntity) {
+			if (blockEntity instanceof AbstractInventoryShulkerBoxBlockEntity) {
 				Direction facing = state.get(FACING);
 				ShulkerBlockEntity cursedBlockEntity = (ShulkerBlockEntity) blockEntity;
 				boolean shouldOpen;
@@ -99,7 +100,8 @@ public abstract class AbstractColoredInventorySlabShulkerBoxBlock extends Abstra
 				}
 
 				if (shouldOpen) {
-					this.openScreen(pos, playerEntity, ((ShulkerBlockEntity) blockEntity).getDisplayName()); // TODO: delegate getDisplayName to BlockEntity?
+					// TODO: Abstract this logic for opening screens
+					playerEntity.openHandledScreen((AbstractInventoryShulkerBoxBlockEntity) blockEntity);
 					playerEntity.incrementStat(Stats.OPEN_SHULKER_BOX);
 				}
 

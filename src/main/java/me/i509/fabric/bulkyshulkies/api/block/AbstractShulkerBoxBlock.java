@@ -29,10 +29,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -84,10 +82,4 @@ public abstract class AbstractShulkerBoxBlock extends BlockWithEntity implements
 
 		return super.getComparatorOutput(blockState, world, blockPos);
 	}
-
-	/**
-	 * Migrate to ScreenHandler based system in the future.
-	 */
-	@Deprecated
-	protected abstract void openScreen(BlockPos pos, PlayerEntity playerEntity, Text title);
 }

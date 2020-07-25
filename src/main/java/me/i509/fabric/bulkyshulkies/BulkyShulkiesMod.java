@@ -30,16 +30,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 
 import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetItem;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerNetworking;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerRegistries;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerItems;
-import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 
 public class BulkyShulkiesMod implements ModInitializer {
 	public static final String MODID = "bulkyshulkies";
@@ -48,13 +45,6 @@ public class BulkyShulkiesMod implements ModInitializer {
 	public void onInitialize() {
 		BulkyShulkies.getInstance();
 		ShulkerRegistries.init();
-
-		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.ENDER_SLAB, ShulkerScreenHandlers::createEnderSlab);
-		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_SCROLLABLE_CONTAINER, (ShulkerScreenHandlers::createScrollable));
-		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_9x7_CONTAINER, ShulkerScreenHandlers::create9x7);
-		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_11x7_CONTAINER, ShulkerScreenHandlers::create11x7);
-		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_13x7_CONTAINER, ShulkerScreenHandlers::create13x7);
-		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_HELMET, ShulkerScreenHandlers::createShulkerHelmet);
 
 		ServerSidePacketRegistry.INSTANCE.register(ShulkerNetworking.HELMET_OPEN, this::onOpenHelmet);
 	}

@@ -32,6 +32,7 @@ import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ContainerLock;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.inventory.SimpleInventory;
@@ -41,6 +42,8 @@ import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.DirectionProperty;
@@ -56,7 +59,8 @@ import me.i509.fabric.bulkyshulkies.api.inventory.ForwardingSidedInventory;
 
 public abstract class AbstractInventoryShulkerBoxBlockEntity extends AbstractShulkerBoxBlockEntity implements
 				LockableAndLootableBlockEntityWithInventory,
-				ForwardingSidedInventory {
+				ForwardingSidedInventory,
+				NamedScreenHandlerFactory {
 	private final ShulkerInventory inventory;
 	private final int[] availibleSlots;
 	private ContainerLock lock = ContainerLock.EMPTY;
@@ -164,6 +168,13 @@ public abstract class AbstractInventoryShulkerBoxBlockEntity extends AbstractShu
 	public void setCustomName(Text customName) {
 		this.customName = customName;
 	}
+
+	@Nullable
+	public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+		return this.checkUnlocked(player) ? this.createScreenHandler(syncId, playerInventory) : null;
+	}
+
+	protected abstract ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory);
 
 	protected abstract Text getDefaultName();
 
