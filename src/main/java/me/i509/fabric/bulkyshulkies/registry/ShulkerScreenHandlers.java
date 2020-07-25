@@ -56,8 +56,7 @@ public final class ShulkerScreenHandlers {
 		throw new AssertionError("You should not be instantiating this");
 	}
 
-	public static void init() {
-		// NO-OP
+	static void init() {
 	}
 
 	public static GenericScreenHandler13x7 create13x7(int syncId, Identifier identifier, PlayerEntity player, PacketByteBuf buf) {

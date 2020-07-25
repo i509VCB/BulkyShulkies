@@ -35,15 +35,9 @@ import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 
 import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetItem;
-import me.i509.fabric.bulkyshulkies.event.ShulkerEvents;
-import me.i509.fabric.bulkyshulkies.extension.ShulkerHooks;
-import me.i509.fabric.bulkyshulkies.recipe.BulkyRecipeSerializers;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerNetworking;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerRegistries;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerDispenserBehaviors;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerItemGroups;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerItems;
 import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
 
@@ -53,15 +47,7 @@ public class BulkyShulkiesMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		BulkyShulkies.getInstance();
-		BulkyRecipeSerializers.ABSTRACT_SHULKER_COLORING.getClass(); // Register the colorizer recipe type
-		BulkyDataTrackerHandlers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
-		ShulkerBlocks.init();
-		ShulkerDispenserBehaviors.init();
-		ShulkerBlockEntities.init();
-		ShulkerEvents.init();
-		ShulkerItems.init();
-		ShulkerItemGroups.init();
-		ShulkerHooks.init();
+		ShulkerRegistries.init();
 
 		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.ENDER_SLAB, ShulkerScreenHandlers::createEnderSlab);
 		ContainerProviderRegistry.INSTANCE.registerFactory(ScreenHandlerKeys.SHULKER_SCROLLABLE_CONTAINER, (ShulkerScreenHandlers::createScrollable));

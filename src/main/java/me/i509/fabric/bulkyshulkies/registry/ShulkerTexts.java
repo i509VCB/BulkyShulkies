@@ -44,4 +44,7 @@ public final class ShulkerTexts {
 
 	public static final Text MISSING_CONTAINER = new TranslatableText("container.missingTexBox");
 	public static final Text CLEAR_CONTAINER = new TranslatableText("container.clearShulkerBox");
+
+	private ShulkerTexts() {
+	}
 }

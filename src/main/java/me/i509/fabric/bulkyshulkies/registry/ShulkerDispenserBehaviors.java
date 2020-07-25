@@ -43,8 +43,7 @@ public final class ShulkerDispenserBehaviors {
 		slab();
 	}
 
-	public static void init() {
-		// NO-OP
+	static void init() {
 	}
 
 	private static void copper() {

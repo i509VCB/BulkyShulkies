@@ -47,7 +47,6 @@ public final class ShulkerItemGroups {
 		throw new AssertionError("You should not be instantiating this");
 	}
 
-	public static void init() {
-		// NO-OP
+	static void init() {
 	}
 }

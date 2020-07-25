@@ -345,8 +345,7 @@ public final class ShulkerBlocks {
 		throw new AssertionError("You should not be instantiating this");
 	}
 
-	public static void init() {
-		// NO-OP
+	static void init() {
 	}
 
 	public static void iterateColors(Block block, BiConsumer<ItemConvertible, @Nullable DyeColor> consumer) {

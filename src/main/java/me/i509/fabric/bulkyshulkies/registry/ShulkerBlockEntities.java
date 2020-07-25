@@ -292,8 +292,7 @@ public final class ShulkerBlockEntities {
 		throw new AssertionError("You should not be instantiating this");
 	}
 
-	public static void init() {
-		// NO-OP
+	static void init() {
 	}
 
 	private static <B extends BlockEntity> BlockEntityType<B> register(String name, Supplier<B> supplier, Block... supportedBlocks) {

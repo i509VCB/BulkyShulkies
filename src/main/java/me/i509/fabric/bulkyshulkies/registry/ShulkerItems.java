@@ -39,7 +39,7 @@ public final class ShulkerItems {
 		throw new AssertionError("You should not be instantiating this");
 	}
 
-	public static void init() {
+	static void init() {
 	}
 
 	public static Item register(Item item, String path) {
