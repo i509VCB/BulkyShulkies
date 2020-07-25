@@ -25,6 +25,7 @@
 package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -35,6 +36,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -61,7 +64,8 @@ public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEnt
 		super.render(blockEntity, tickDelta, matrices, vertexConsumerProvider, i, defaultUV);
 
 		if (blockEntity.hasWorld()) {
-			final ClientPlayerEntity player = MinecraftClient.getInstance().player;
+			final MinecraftClient client = MinecraftClient.getInstance();
+			final ClientPlayerEntity player = client.player;
 
 			if (player != null) {
 				final Tag<Item> tag = ShulkerItemTags.SHULKER_MAGNET_WAND;
@@ -69,6 +73,27 @@ public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEnt
 				if (player.getMainHandStack().getItem().isIn(tag) || player.getOffHandStack().getItem().isIn(tag)) {
 					final BlockPos blockEntityPos = blockEntity.getPos();
 					final BlockState state = player.world.getBlockState(blockEntityPos);
+
+					if (client.crosshairTarget.getType() == HitResult.Type.BLOCK) {
+						final BlockHitResult blockHitResult = (BlockHitResult) client.crosshairTarget;
+						final BlockEntity hitResultBlockEntity = player.world.getBlockEntity(blockHitResult.getBlockPos());
+
+						if (hitResultBlockEntity instanceof PlatinumShulkerBoxBlockEntity) {
+							if (hitResultBlockEntity.getPos().equals(blockEntity.getPos())) {
+								// If the block entity at the crosshair is this block entity, render the box only for that block entity.
+								if (state.getBlock() instanceof PlatinumShulkerBoxBlock) {
+									final Direction facing = state.get(PlatinumShulkerBoxBlock.FACING);
+
+									int size = BulkyShulkies.getInstance().getConfig().getPlatinumMagnetMaxRange();
+									final Box box = new Box(0.0D, 0.0D, 0.0D, size, size, size);
+
+									PlatinumShulkerBlockEntityRenderer.renderMagneticBox(matrices, vertexConsumerProvider, box, facing, 1.0F, 0.5F, 0.5F, 0.5F);
+								}
+							} else {
+								return;
+							}
+						}
+					}
 
 					if (state.getBlock() instanceof PlatinumShulkerBoxBlock) {
 						final Direction facing = state.get(PlatinumShulkerBoxBlock.FACING);
