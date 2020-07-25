@@ -28,7 +28,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
@@ -55,45 +55,45 @@ public class MissingTexBoxBlock extends Facing1x1ColoredInventoryShulkerBoxBlock
 	}
 
 	@Override
-	public ItemStack getItemStack(@Nullable DyeColor color) {
+	public ItemConvertible getItem(@Nullable DyeColor color) {
 		if (color == null) {
-			return new ItemStack(ShulkerBlocks.MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.MISSING_TEX_SHULKER_BOX;
 		}
 
 		switch (color) {
 		case WHITE:
-			return new ItemStack(ShulkerBlocks.WHITE_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.WHITE_MISSING_TEX_SHULKER_BOX;
 		case ORANGE:
-			return new ItemStack(ShulkerBlocks.ORANGE_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.ORANGE_MISSING_TEX_SHULKER_BOX;
 		case MAGENTA:
-			return new ItemStack(ShulkerBlocks.MAGENTA_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.MAGENTA_MISSING_TEX_SHULKER_BOX;
 		case LIGHT_BLUE:
-			return new ItemStack(ShulkerBlocks.LIGHT_BLUE_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.LIGHT_BLUE_MISSING_TEX_SHULKER_BOX;
 		case YELLOW:
-			return new ItemStack(ShulkerBlocks.YELLOW_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.YELLOW_MISSING_TEX_SHULKER_BOX;
 		case LIME:
-			return new ItemStack(ShulkerBlocks.LIME_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.LIME_MISSING_TEX_SHULKER_BOX;
 		case PINK:
-			return new ItemStack(ShulkerBlocks.PINK_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.PINK_MISSING_TEX_SHULKER_BOX;
 		case GRAY:
-			return new ItemStack(ShulkerBlocks.GRAY_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.GRAY_MISSING_TEX_SHULKER_BOX;
 		case LIGHT_GRAY:
-			return new ItemStack(ShulkerBlocks.LIGHT_GRAY_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.LIGHT_GRAY_MISSING_TEX_SHULKER_BOX;
 		case CYAN:
-			return new ItemStack(ShulkerBlocks.CYAN_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.CYAN_MISSING_TEX_SHULKER_BOX;
 		case PURPLE:
 		default:
-			return new ItemStack(ShulkerBlocks.PURPLE_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.PURPLE_MISSING_TEX_SHULKER_BOX;
 		case BLUE:
-			return new ItemStack(ShulkerBlocks.BLUE_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.BLUE_MISSING_TEX_SHULKER_BOX;
 		case BROWN:
-			return new ItemStack(ShulkerBlocks.BROWN_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.BROWN_MISSING_TEX_SHULKER_BOX;
 		case GREEN:
-			return new ItemStack(ShulkerBlocks.GREEN_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.GREEN_MISSING_TEX_SHULKER_BOX;
 		case RED:
-			return new ItemStack(ShulkerBlocks.RED_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.RED_MISSING_TEX_SHULKER_BOX;
 		case BLACK:
-			return new ItemStack(ShulkerBlocks.BLACK_MISSING_TEX_SHULKER_BOX);
+			return ShulkerBlocks.BLACK_MISSING_TEX_SHULKER_BOX;
 		}
 	}
 

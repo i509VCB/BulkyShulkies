@@ -28,7 +28,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
@@ -59,7 +59,7 @@ public class EnderSlabBlock extends AbstractShulkerSlabBlock {
 	}
 
 	@Override
-	public ItemStack getItemStack(@Nullable DyeColor color) {
-		return new ItemStack(ShulkerBlocks.ENDER_SLAB_BOX);
+	public ItemConvertible getItem(@Nullable DyeColor color) {
+		return ShulkerBlocks.ENDER_SLAB_BOX;
 	}
 }

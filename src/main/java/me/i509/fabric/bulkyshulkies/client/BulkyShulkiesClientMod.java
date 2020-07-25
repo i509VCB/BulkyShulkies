@@ -34,9 +34,11 @@ import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Util;
@@ -47,6 +49,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
 import net.fabricmc.fabric.api.client.keybinding.KeyBindingRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.client.ClientTickCallback;
@@ -87,9 +90,10 @@ import me.i509.fabric.bulkyshulkies.client.screen.Generic9x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic11x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.Generic13x7Screen;
 import me.i509.fabric.bulkyshulkies.client.screen.ScrollableScreen;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerNetworking;
 import me.i509.fabric.bulkyshulkies.screen.ScreenHandlerKeys;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
 
 @Environment(EnvType.CLIENT)
 public class BulkyShulkiesClientMod implements ClientModInitializer {
@@ -129,8 +133,28 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		}
 	});
 
+	private static void registerRenderer(ItemConvertible item, @Nullable DyeColor color) {
+		BuiltinItemRendererRegistry.INSTANCE.register(item.asItem(), (stack, matrices, vertexConsumers, light, overlay) -> {
+			BlockEntity blockEntity = BulkyShulkiesClientMod.getRenderBlockEntity((AbstractShulkerBoxBlock) item, color);
+			BlockEntityRenderDispatcher.INSTANCE.renderEntity(blockEntity, matrices, vertexConsumers, light, overlay);
+		});
+	}
+
 	@Override
 	public void onInitializeClient() {
+		ShulkerBlocks.iterateColors(ShulkerBlocks.COPPER_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.IRON_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.SILVER_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.GOLD_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.DIAMOND_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.OBSIDIAN_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.PLATINUM_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.NETHERITE_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.MISSING_TEX_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.SLAB_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.STAIR_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
+		BulkyShulkiesClientMod.registerRenderer(ShulkerBlocks.ENDER_SLAB_BOX, null);
+
 		KeyBindingRegistry.INSTANCE.addCategory(BulkyShulkiesMod.MODID);
 		KeyBindingRegistry.INSTANCE.register(OPEN_SHULKER_HELMET);
 

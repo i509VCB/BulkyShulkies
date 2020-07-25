@@ -28,6 +28,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
@@ -61,7 +62,11 @@ public interface BasicShulkerBlock {
 	 * @param color The DyeColor the box should be in, may be null.
 	 * @return An itemstack which represents a shulker box in the color, or uncolored if color is null.
 	 */
-	ItemStack getItemStack(@Nullable DyeColor color);
+	default ItemStack getItemStack(@Nullable DyeColor color) {
+		return new ItemStack(this.getItem(color));
+	}
+
+	ItemConvertible getItem(@Nullable DyeColor color);
 
 	/**
 	 * Get's the dimensions of the Box when it is fully opened.

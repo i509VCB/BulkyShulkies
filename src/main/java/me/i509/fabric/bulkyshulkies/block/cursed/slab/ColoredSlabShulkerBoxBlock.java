@@ -28,7 +28,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
@@ -60,45 +60,45 @@ public class ColoredSlabShulkerBoxBlock extends AbstractColoredInventorySlabShul
 	}
 
 	@Override
-	public ItemStack getItemStack(@Nullable DyeColor color) {
+	public ItemConvertible getItem(@Nullable DyeColor color) {
 		if (color == null) {
-			return new ItemStack(ShulkerBlocks.SLAB_SHULKER_BOX);
+			return ShulkerBlocks.SLAB_SHULKER_BOX;
 		}
 
 		switch (color) {
 		case WHITE:
-			return new ItemStack(ShulkerBlocks.WHITE_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.WHITE_SLAB_SHULKER_BOX;
 		case ORANGE:
-			return new ItemStack(ShulkerBlocks.ORANGE_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.ORANGE_SLAB_SHULKER_BOX;
 		case MAGENTA:
-			return new ItemStack(ShulkerBlocks.MAGENTA_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.MAGENTA_SLAB_SHULKER_BOX;
 		case LIGHT_BLUE:
-			return new ItemStack(ShulkerBlocks.LIGHT_BLUE_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.LIGHT_BLUE_SLAB_SHULKER_BOX;
 		case YELLOW:
-			return new ItemStack(ShulkerBlocks.YELLOW_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.YELLOW_SLAB_SHULKER_BOX;
 		case LIME:
-			return new ItemStack(ShulkerBlocks.LIME_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.LIME_SLAB_SHULKER_BOX;
 		case PINK:
-			return new ItemStack(ShulkerBlocks.PINK_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.PINK_SLAB_SHULKER_BOX;
 		case GRAY:
-			return new ItemStack(ShulkerBlocks.GRAY_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.GRAY_SLAB_SHULKER_BOX;
 		case LIGHT_GRAY:
-			return new ItemStack(ShulkerBlocks.LIGHT_GRAY_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.LIGHT_GRAY_SLAB_SHULKER_BOX;
 		case CYAN:
-			return new ItemStack(ShulkerBlocks.CYAN_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.CYAN_SLAB_SHULKER_BOX;
 		case PURPLE:
 		default:
-			return new ItemStack(ShulkerBlocks.PURPLE_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.PURPLE_SLAB_SHULKER_BOX;
 		case BLUE:
-			return new ItemStack(ShulkerBlocks.BLUE_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.BLUE_SLAB_SHULKER_BOX;
 		case BROWN:
-			return new ItemStack(ShulkerBlocks.BROWN_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.BROWN_SLAB_SHULKER_BOX;
 		case GREEN:
-			return new ItemStack(ShulkerBlocks.GREEN_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.GREEN_SLAB_SHULKER_BOX;
 		case RED:
-			return new ItemStack(ShulkerBlocks.RED_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.RED_SLAB_SHULKER_BOX;
 		case BLACK:
-			return new ItemStack(ShulkerBlocks.BLACK_SLAB_SHULKER_BOX);
+			return ShulkerBlocks.BLACK_SLAB_SHULKER_BOX;
 		}
 	}
 }

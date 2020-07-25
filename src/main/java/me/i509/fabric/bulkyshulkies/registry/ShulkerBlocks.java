@@ -24,11 +24,16 @@
 
 package me.i509.fabric.bulkyshulkies.registry;
 
+import java.util.function.BiConsumer;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.registry.Registry;
 
@@ -50,7 +55,7 @@ import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBl
 import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
 import me.i509.fabric.bulkyshulkies.item.InventoryShulkerBlockItem;
-// import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBlock;
+import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
 
 public final class ShulkerBlocks {
 	private static final AbstractBlock.ContextPredicate FALSE_CTX = (state, world, pos) -> false;
@@ -342,6 +347,16 @@ public final class ShulkerBlocks {
 
 	public static void init() {
 		// NO-OP
+	}
+
+	public static void iterateColors(Block block, BiConsumer<ItemConvertible, @Nullable DyeColor> consumer) {
+		if (block instanceof BasicShulkerBlock) {
+			for (DyeColor color : DyeColor.values()) {
+				consumer.accept(((BasicShulkerBlock) block).getItem(color), color);
+			}
+
+			consumer.accept(((BasicShulkerBlock) block).getItem(null), null);
+		}
 	}
 
 	public static Block registerInvulInventoryShulker(AbstractShulkerBoxBlock block, String path) {

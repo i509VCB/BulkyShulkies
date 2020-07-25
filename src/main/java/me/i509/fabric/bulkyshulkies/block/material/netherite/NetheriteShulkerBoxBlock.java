@@ -28,7 +28,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
@@ -55,45 +55,45 @@ public class NetheriteShulkerBoxBlock extends Facing1x1ColoredInventoryShulkerBo
 	}
 
 	@Override
-	public ItemStack getItemStack(@Nullable DyeColor color) {
+	public ItemConvertible getItem(@Nullable DyeColor color) {
 		if (color == null) {
-			return new ItemStack(ShulkerBlocks.NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.NETHERITE_SHULKER_BOX;
 		}
 
 		switch (color) {
 		case WHITE:
-			return new ItemStack(ShulkerBlocks.WHITE_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.WHITE_NETHERITE_SHULKER_BOX;
 		case ORANGE:
-			return new ItemStack(ShulkerBlocks.ORANGE_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.ORANGE_NETHERITE_SHULKER_BOX;
 		case MAGENTA:
-			return new ItemStack(ShulkerBlocks.MAGENTA_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.MAGENTA_NETHERITE_SHULKER_BOX;
 		case LIGHT_BLUE:
-			return new ItemStack(ShulkerBlocks.LIGHT_BLUE_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.LIGHT_BLUE_NETHERITE_SHULKER_BOX;
 		case YELLOW:
-			return new ItemStack(ShulkerBlocks.YELLOW_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.YELLOW_NETHERITE_SHULKER_BOX;
 		case LIME:
-			return new ItemStack(ShulkerBlocks.LIME_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.LIME_NETHERITE_SHULKER_BOX;
 		case PINK:
-			return new ItemStack(ShulkerBlocks.PINK_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.PINK_NETHERITE_SHULKER_BOX;
 		case GRAY:
-			return new ItemStack(ShulkerBlocks.GRAY_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.GRAY_NETHERITE_SHULKER_BOX;
 		case LIGHT_GRAY:
-			return new ItemStack(ShulkerBlocks.LIGHT_GRAY_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.LIGHT_GRAY_NETHERITE_SHULKER_BOX;
 		case CYAN:
-			return new ItemStack(ShulkerBlocks.CYAN_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.CYAN_NETHERITE_SHULKER_BOX;
 		case PURPLE:
 		default:
-			return new ItemStack(ShulkerBlocks.PURPLE_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.PURPLE_NETHERITE_SHULKER_BOX;
 		case BLUE:
-			return new ItemStack(ShulkerBlocks.BLUE_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.BLUE_NETHERITE_SHULKER_BOX;
 		case BROWN:
-			return new ItemStack(ShulkerBlocks.BROWN_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.BROWN_NETHERITE_SHULKER_BOX;
 		case GREEN:
-			return new ItemStack(ShulkerBlocks.GREEN_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.GREEN_NETHERITE_SHULKER_BOX;
 		case RED:
-			return new ItemStack(ShulkerBlocks.RED_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.RED_NETHERITE_SHULKER_BOX;
 		case BLACK:
-			return new ItemStack(ShulkerBlocks.BLACK_NETHERITE_SHULKER_BOX);
+			return ShulkerBlocks.BLACK_NETHERITE_SHULKER_BOX;
 		}
 	}
 
