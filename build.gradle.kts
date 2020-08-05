@@ -1,4 +1,3 @@
-import net.fabricmc.loom.task.RemapJarTask
 import net.minecrell.gradle.licenser.header.HeaderStyle
 
 plugins {
@@ -26,12 +25,12 @@ val reiVersion: String by project
 val modMenuVersion: String by project
 
 val baseVersion: String by project
-val modVersion: String = "$baseVersion+$minecraftVersion"
+version = "$baseVersion+$minecraftVersion"
 
 val archivesBaseName: String by project
 
 logger.lifecycle("""
-Building Bulky Shulkies $modVersion 
+Building Bulky Shulkies $version 
 """)
 
 val main by sourceSets
@@ -74,7 +73,7 @@ dependencies {
 
 tasks.withType(ProcessResources::class).configureEach {
     filesMatching("fabric.mod.json") {
-        expand("version" to modVersion)
+        expand("version" to version)
     }
 }
 
@@ -102,16 +101,6 @@ tasks.withType(JavaCompile::class) {
 task<Jar>("sourcesJar") {
     classifier = "sources"
     from(main.allSource)
-}
-
-// Okay Kotlin DSL is funky here
-tasks.withType(Jar::class) {
-    from("LICENSE")
-    this.version = modVersion
-}
-
-tasks.withType(RemapJarTask::class) {
-    this.version = modVersion
 }
 
 // TODO: Publishing
