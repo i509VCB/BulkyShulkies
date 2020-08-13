@@ -24,48 +24,56 @@
 
 package me.i509.fabric.bulkyshulkies.client.model;
 
+import java.util.Collections;
+
+import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.model.AnimalModel;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 
-public abstract class AbstractShulkerLidHelmetModel extends EntityModel<LivingEntity> {
+public abstract class AbstractShulkerLidHelmetModel<T extends LivingEntity, M extends EntityModel<T>> extends AnimalModel<T> {
+	private final FeatureRendererContext<T, M> context;
 	public final ShulkerModelPart lid;
 	private float leaningPitch;
 
-	public AbstractShulkerLidHelmetModel(ShulkerModelPart lid) {
-		super(RenderLayer::getEntityCutoutNoCull);
+	public AbstractShulkerLidHelmetModel(FeatureRendererContext<T, M> context, ShulkerModelPart lid) {
+		super(false, 5.0F, 2.0F);
+		this.context = context;
 		this.lid = lid;
 	}
 
 	@Override
-	public void animateModel(LivingEntity livingEntity, float f, float g, float h) {
-		this.leaningPitch = livingEntity.getLeaningPitch(h);
-		super.animateModel(livingEntity, f, g, h);
+	public void animateModel(T livingEntity, float limbAngle, float limbDistance, float tickDelta) {
+		this.leaningPitch = livingEntity.getLeaningPitch(tickDelta);
+		super.animateModel(livingEntity, limbAngle, limbDistance, tickDelta);
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		this.lid.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+		super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
 
 	@Override
-	public void setAngles(LivingEntity entity, float limbAngle, float limbDistance, float customAngle, float headYaw, float headPitch) {
-		// Ah yes, radical mathematics
+	public void setAngles(T entity, float limbAngle, float limbDistance, float customAngle, float headYaw, float headPitch) {
+		// Ah yes, magic values
 		if (entity instanceof ArmorStandEntity) {
 			ArmorStandEntity armorStandEntity = (ArmorStandEntity) entity;
 			this.lid.pitch = 0.017453292F * armorStandEntity.getHeadRotation().getPitch();
 			this.lid.yaw = 0.017453292F * armorStandEntity.getHeadRotation().getYaw();
 			this.lid.roll = 0.017453292F * armorStandEntity.getHeadRotation().getRoll();
+			this.lid.setPivot(0.0F, -1.0F, 0.0F);
 		} else {
 			this.lid.yaw = 0.017453292F * headYaw;
-			boolean roll = entity.getRoll() > 4;
-			boolean inSwimmingPose = entity.isInSwimmingPose();
+			final boolean rolling = entity.getRoll() > 4;
+			final boolean inSwimmingPose = entity.isInSwimmingPose();
 			this.lid.yaw = headYaw * 0.017453292F;
 
-			if (roll) {
+			if (rolling) {
 				this.lid.pitch = -0.7853982F;
 			} else if (this.leaningPitch > 0.0F) {
 				if (inSwimmingPose) {
@@ -77,6 +85,9 @@ public abstract class AbstractShulkerLidHelmetModel extends EntityModel<LivingEn
 				this.lid.pitch = headPitch * 0.017453292F;
 			}
 		}
+
+		// Lower the helmet if an entity is sneaking
+		this.lid.pivotY = entity.isSneaking() ? 4.2F : 0.0F;
 	}
 
 	protected float lerpAngle(float from, float to, float position) {
@@ -91,5 +102,15 @@ public abstract class AbstractShulkerLidHelmetModel extends EntityModel<LivingEn
 		}
 
 		return from + position * f;
+	}
+
+	@Override
+	protected Iterable<ModelPart> getHeadParts() {
+		return Collections.singleton(this.lid);
+	}
+
+	@Override
+	protected Iterable<ModelPart> getBodyParts() {
+		return Collections.emptySet();
 	}
 }

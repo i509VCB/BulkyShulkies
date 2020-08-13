@@ -24,10 +24,32 @@
 
 package me.i509.fabric.bulkyshulkies.item;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
 
 public class ShulkerMagnetWand extends Item {
+	private static final Multimap<EntityAttribute, EntityAttributeModifier> MODIFIERS = ImmutableMultimap.of(
+			EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ShulkerMagnetWand.ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", 1.5F, EntityAttributeModifier.Operation.ADDITION),
+			EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ShulkerMagnetWand.ATTACK_SPEED_MODIFIER_ID, "Tool modifier", -3.0D, EntityAttributeModifier.Operation.ADDITION)
+	);
+
 	public ShulkerMagnetWand(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+		if (slot == EquipmentSlot.MAINHAND) {
+			return ShulkerMagnetWand.MODIFIERS;
+		}
+
+		return super.getAttributeModifiers(slot);
 	}
 }

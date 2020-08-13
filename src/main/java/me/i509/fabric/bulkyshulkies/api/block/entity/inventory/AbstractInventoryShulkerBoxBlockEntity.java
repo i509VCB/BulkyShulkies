@@ -51,6 +51,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 
 import net.fabricmc.fabric.api.util.NbtType;
 
@@ -137,7 +138,7 @@ public abstract class AbstractInventoryShulkerBoxBlockEntity extends AbstractShu
 
 			this.lootTableId = null;
 			LootContext.Builder builder = new LootContext.Builder((ServerWorld) this.world)
-					.parameter(LootContextParameters.POSITION, new BlockPos(this.pos))
+					.parameter(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.pos))
 					.random(this.lootTableSeed);
 			if (playerEntity != null) {
 				builder.luck(playerEntity.getLuck())

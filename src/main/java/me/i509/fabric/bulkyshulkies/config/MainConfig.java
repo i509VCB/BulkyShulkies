@@ -33,6 +33,7 @@ import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 import me.i509.fabric.bulkyshulkies.config.section.ExtensionConfigSection;
+import me.i509.fabric.bulkyshulkies.config.section.RenderingConfigSection;
 
 @ConfigSerializable
 public class MainConfig {
@@ -105,5 +106,12 @@ public class MainConfig {
 
 	public ExtensionConfigSection getExtensions() {
 		return this.extensions;
+	}
+
+	@Setting
+	private RenderingConfigSection rendering = new RenderingConfigSection();
+
+	public RenderingConfigSection getRendering() {
+		return this.rendering;
 	}
 }

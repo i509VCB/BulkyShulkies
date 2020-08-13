@@ -24,18 +24,22 @@
 
 package me.i509.fabric.bulkyshulkies.client.model;
 
+import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
-public class HumanoidShulkerLidHelmetModel extends AbstractShulkerLidHelmetModel {
-	public HumanoidShulkerLidHelmetModel() {
-		super(new ShulkerModelPart(9, 9, 0, 0) {
+public class HumanoidShulkerLidHelmetModel<T extends LivingEntity, M extends EntityModel<T>> extends AbstractShulkerLidHelmetModel<T, M> {
+	public HumanoidShulkerLidHelmetModel(FeatureRendererContext<T, M> context) {
+		super(context, new ShulkerModelPart(9, 9, 0, 0) {
 			@Override
 			public Identifier getTexture() {
 				return BulkyShulkies.id("shulker_helmet_lid");
 			}
 		});
+
 		this.lid.addCuboid(-5, -8.5F, -5, 10, 2, 10);
 	}
 }

@@ -63,7 +63,7 @@ public abstract class FacingShulkerBoxBlock extends AbstractShulkerBoxBlock {
 
 	@Override
 	public ActionResult onUse(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
-		if (world.isClient) {
+		if (world.isClient()) {
 			return ActionResult.SUCCESS;
 		} else if (player.isSpectator()) {
 			return ActionResult.SUCCESS;

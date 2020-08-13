@@ -24,8 +24,12 @@
 
 package me.i509.fabric.bulkyshulkies.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import io.netty.buffer.Unpooled;
@@ -36,25 +40,43 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.client.render.entity.ArmorStandEntityRenderer;
+import net.minecraft.client.render.entity.GiantEntityRenderer;
+import net.minecraft.client.render.entity.LivingEntityRenderer;
+import net.minecraft.client.render.entity.PiglinEntityRenderer;
+import net.minecraft.client.render.entity.PlayerEntityRenderer;
+import net.minecraft.client.render.entity.SkeletonEntityRenderer;
+import net.minecraft.client.render.entity.ZombieBaseEntityRenderer;
+import net.minecraft.client.render.entity.ZombieVillagerEntityRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.Util;
+import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.client.ClientTickCallback;
+import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
 import me.i509.fabric.bulkyshulkies.api.block.AbstractShulkerBoxBlock;
@@ -97,6 +119,9 @@ import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
 @Environment(EnvType.CLIENT)
 public class BulkyShulkiesClientMod implements ClientModInitializer {
 	public static final KeyBinding OPEN_SHULKER_HELMET = KeyBindingHelper.registerKeyBinding(new KeyBinding("bulkyshulkies.keybinding.open_helmet", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, BulkyShulkiesMod.MODID));
+	// Copy the list
+	private static final List<String> HELMET_LID_TARGETS = new ArrayList<>(BulkyShulkies.getInstance().getConfig().getRendering().getHelmetRenderingAdditions());
+	private static final List<EntityType<?>> DETECTED_TARGETS = new ArrayList<>();
 	/**
 	 * Provides the BlockEntity to use for the ItemRenderer.
 	 */
@@ -186,7 +211,81 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 						d -> new FacingSlabShulkerBoxBlockEntityRenderer<>(d, ShulkerBoxKeys.SLAB));
 		ClientSpriteRegistryCallback.event(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE).register(BulkyShulkiesClientMod::registerSprites);
 
-		ClientTickCallback.EVENT.register(BulkyShulkiesClientMod::tickHelmet);
+		ClientTickEvents.END_CLIENT_TICK.register(BulkyShulkiesClientMod::tickHelmet);
+
+		final Iterator<String> iterator = BulkyShulkiesClientMod.HELMET_LID_TARGETS.iterator();
+
+		// Iterator is used because arraylist comodification isn't allowed
+		while (iterator.hasNext()) {
+			final String next = iterator.next();
+			Identifier id;
+
+			try {
+				id = new Identifier(next);
+			} catch (InvalidIdentifierException e) {
+				BulkyShulkies.getInstance().getLogger().error(() -> {
+					return String.format("Could not apply helmet renderer to %s due to an invalid identifier", next);
+				}, e);
+				continue;
+			}
+
+			final Optional<EntityType<?>> entityType = Registry.ENTITY_TYPE.getOrEmpty(id);
+			if (!entityType.isPresent()) {
+				// Probably not loaded yet, move on for now
+				continue;
+			}
+
+			if (BulkyShulkiesClientMod.isReservedEntityType(entityType.get())) {
+				BulkyShulkies.getInstance().getLogger().warn("Tried to register helmet renderer for {} but it has a builtin renderer already.", next);
+				continue;
+			}
+
+			BulkyShulkiesClientMod.DETECTED_TARGETS.add(entityType.get());
+			iterator.remove();
+			BulkyShulkies.getInstance().getLogger().debug("Applying shulker renderer to entity type \"{}\"", next);
+		}
+
+		// Listen for mods which are register their entity types after us
+		RegistryEntryAddedCallback.event(Registry.ENTITY_TYPE).register((rawId, id, entityType) -> {
+			if (BulkyShulkiesClientMod.HELMET_LID_TARGETS.contains(id.toString())) {
+				BulkyShulkiesClientMod.HELMET_LID_TARGETS.remove(id.toString());
+				BulkyShulkiesClientMod.DETECTED_TARGETS.add(entityType);
+				BulkyShulkies.getInstance().getLogger().debug("Applying shulker renderer to entity type \"{}\"", id.toString());
+			}
+		});
+
+		LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper) -> {
+			if (BulkyShulkiesClientMod.shouldUseFeatureRenderer(entityType, entityRenderer)) {
+				registrationHelper.register(new ShulkerHelmetLidFeatureRenderer<>(entityRenderer));
+			}
+		});
+	}
+
+	private static boolean isReservedEntityType(EntityType<?> entityType) {
+		return entityType == EntityType.ARMOR_STAND
+				|| entityType == EntityType.GIANT
+				|| entityType == EntityType.PIGLIN
+				|| entityType == EntityType.ZOMBIFIED_PIGLIN
+				|| entityType == EntityType.PIGLIN_BRUTE
+				|| entityType == EntityType.PLAYER
+				|| entityType == EntityType.SKELETON
+				|| entityType == EntityType.WITHER_SKELETON
+				|| entityType == EntityType.STRAY
+				|| entityType == EntityType.ZOMBIE
+				|| entityType == EntityType.DROWNED
+				|| entityType == EntityType.HUSK
+				|| entityType == EntityType.ZOMBIE_VILLAGER;
+	}
+
+	private static boolean shouldUseFeatureRenderer(EntityType<? extends LivingEntity> entityType, LivingEntityRenderer<?, ?> entityRenderer) {
+		return entityRenderer instanceof ArmorStandEntityRenderer
+				|| entityRenderer instanceof GiantEntityRenderer
+				|| entityRenderer instanceof PiglinEntityRenderer
+				|| entityRenderer instanceof PlayerEntityRenderer
+				|| entityRenderer instanceof SkeletonEntityRenderer
+				|| entityRenderer instanceof ZombieBaseEntityRenderer
+				|| entityRenderer instanceof ZombieVillagerEntityRenderer
+				|| BulkyShulkiesClientMod.DETECTED_TARGETS.contains(entityType);
 	}
 
 	private static void registerSprites(SpriteAtlasTexture atlas, ClientSpriteRegistryCallback.Registry registry) {
