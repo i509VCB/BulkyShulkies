@@ -64,7 +64,6 @@ import net.minecraft.util.registry.Registry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
@@ -72,37 +71,36 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.LivingEntityFeatureRend
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
-import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
 import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
-import me.i509.fabric.bulkyshulkies.api.block.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.ShulkerBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.cursed.slab.ColoredSlabShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBlock;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.missing.MissingTextureShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.old.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.old.entity.inventory.ShulkerBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.cursed.slab.ColoredSlabShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.cursed.slab.CursedSlabShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.ender.EnderSlabBlock;
+import me.i509.fabric.bulkyshulkies.block.old.ender.EnderSlabBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.CopperShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.CopperShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.DiamondShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.DiamondShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.GoldShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.GoldShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.IronShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.IronShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.NetheriteShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.NetheriteShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.ObsidianShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.ObsidianShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.SilverShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.SilverShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.MissingTexBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.MissingTextureShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.EnderSlabBlockEntityRenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.Facing1x1ShulkerBlockEntityRenderer;
 import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.FacingSlabShulkerBoxBlockEntityRenderer;
@@ -158,7 +156,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 	});
 
 	private static void registerRenderer(ItemConvertible item, @Nullable DyeColor color) {
-		BuiltinItemRendererRegistry.INSTANCE.register(item.asItem(), (stack, matrices, vertexConsumers, light, overlay) -> {
+		BuiltinItemRendererRegistry.INSTANCE.register(item.asItem(), (stack, mode, matrices, vertexConsumers, light, overlay) -> {
 			BlockEntity blockEntity = BulkyShulkiesClientMod.getRenderBlockEntity((AbstractShulkerBoxBlock) item, color);
 			BlockEntityRenderDispatcher.INSTANCE.renderEntity(blockEntity, matrices, vertexConsumers, light, overlay);
 		});

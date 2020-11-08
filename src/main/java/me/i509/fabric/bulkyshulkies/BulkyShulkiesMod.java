@@ -38,7 +38,7 @@ import me.i509.fabric.bulkyshulkies.registry.ShulkerNetworking;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerRegistries;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerItems;
 
-public class BulkyShulkiesMod implements ModInitializer {
+public final class BulkyShulkiesMod implements ModInitializer {
 	public static final String MODID = "bulkyshulkies";
 
 	@Override

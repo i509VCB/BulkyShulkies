@@ -27,6 +27,7 @@ package me.i509.fabric.bulkyshulkies.mixin.core.enchantment;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(targets = "net/minecraft/enchantment/EnchantmentTarget$13")
-public class EnchantmentTargetMixin {
+abstract class EnchantmentTargetMixin {
 	// TODO, prevent curse of binding from applying to the shulker box helmet at all.
+	// TODO: Enchantment API covers this so it won't be needed
 }

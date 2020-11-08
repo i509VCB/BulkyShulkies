@@ -27,7 +27,7 @@ package me.i509.fabric.bulkyshulkies.registry;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.BlockPlacementDispenserBehavior;
 
-import me.i509.fabric.bulkyshulkies.api.block.slab.SlabBlockPlacementDispenserBehavior;
+import me.i509.fabric.bulkyshulkies.api.block.old.slab.SlabBlockPlacementDispenserBehavior;
 
 public final class ShulkerDispenserBehaviors {
 	static {

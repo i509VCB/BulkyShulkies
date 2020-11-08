@@ -32,12 +32,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StairsBlock;
 
-import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.cursed.stair.StairShulkerBoxBlock;
 
 @Mixin(StairsBlock.class)
-public abstract class StairsBlockMixin {
+abstract class StairsBlockMixin {
 	@Inject(at = @At("HEAD"), method = "isStairs", cancellable = true)
-	private static void bulky_isStairs(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+	private static void isShulkerBoxStairs(BlockState state, CallbackInfoReturnable<Boolean> cir) {
 		if (state.getBlock() instanceof StairShulkerBoxBlock) {
 			cir.setReturnValue(true);
 		}

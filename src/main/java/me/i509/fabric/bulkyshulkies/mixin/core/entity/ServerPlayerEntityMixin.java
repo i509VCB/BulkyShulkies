@@ -31,17 +31,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
+import me.i509.fabric.bulkyshulkies.inventory.PlayerEntityExtensions;
 
 @Mixin(ServerPlayerEntity.class)
-public abstract class ServerPlayerEntityMixin extends PlayerEntityMixin {
+abstract class ServerPlayerEntityMixin extends PlayerEntityMixin {
+	// TODO: Replace with player copy from event
 	/**
 	 * @author i509vcb
 	 * @reason When a player dies, we have to copy the ender slab inventory or the player will lose their ender slab inventory.
 	 */
 	@Inject(at = @At("TAIL"), method = "copyFrom")
 	private void copyEnderSlabData(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
-		EnderSlabBridge oldAccess = (EnderSlabBridge) oldPlayer;
-		this.bulky$enderSlabInventory = oldAccess.bridge$getEnderSlabInventory();
+		PlayerEntityExtensions oldAccess = (PlayerEntityExtensions) oldPlayer;
+		this.bulky$enderSlabInventory = oldAccess.getEnderSlabInventory();
 	}
 }

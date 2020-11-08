@@ -22,7 +22,7 @@ import me.i509.fabric.bulkyshulkies.registry.ShulkerItems;
 
 public class ShulkerHelmetLidFeatureRenderer<T extends LivingEntity, M extends EntityModel<T>> extends FeatureRenderer<T, M> {
 	private static final Identifier TEXTURE = BulkyShulkies.id("textures/armor/shulker_helmet_lid.png");
-	private final AbstractShulkerLidHelmetModel<T> helmetLidModel;
+	private final AbstractShulkerLidHelmetModel<T, M> helmetLidModel;
 
 	public ShulkerHelmetLidFeatureRenderer(FeatureRendererContext<T, M> context) {
 		super(context);

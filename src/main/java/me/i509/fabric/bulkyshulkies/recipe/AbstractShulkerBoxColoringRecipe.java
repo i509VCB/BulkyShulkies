@@ -38,8 +38,8 @@ import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
-import me.i509.fabric.bulkyshulkies.api.block.colored.ColoredShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.old.base.OldShulkerBox;
+import me.i509.fabric.bulkyshulkies.api.block.old.colored.ColoredShulkerBoxBlock;
 
 public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 	public AbstractShulkerBoxColoringRecipe(Identifier identifier) {
@@ -91,7 +91,7 @@ public class AbstractShulkerBoxColoringRecipe extends SpecialCraftingRecipe {
 			}
 		}
 
-		ItemStack newColor = ((BasicShulkerBlock) Block.getBlockFromItem(itemStack.getItem())).getItemStack(dyeItem.getColor());
+		ItemStack newColor = ((OldShulkerBox) Block.getBlockFromItem(itemStack.getItem())).getItemStack(dyeItem.getColor());
 
 		if (itemStack.hasTag()) {
 			newColor.setTag(itemStack.getTag().copy()); // Here is where we transfer all the NBT data.

@@ -24,8 +24,7 @@
 
 package me.i509.fabric.bulkyshulkies.mixin.core.entity;
 
-import java.util.Iterator;
-
+import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,12 +42,12 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 
-import me.i509.fabric.bulkyshulkies.abstraction.DurabilityBasedProtection;
 import me.i509.fabric.bulkyshulkies.api.item.HelmetTrackedDataStage;
 import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetStage;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements ShulkerHelmetStage {
+abstract class LivingEntityMixin extends Entity implements ShulkerHelmetStage {
+	// TODO: Better solution to remove the tracked data
 	private static final TrackedData<ShulkerBoxBlockEntity.AnimationStage> SHULKER_HELMET_STAGE = DataTracker.registerData(LivingEntity.class, HelmetTrackedDataStage.INSTANCE);
 	private static final TrackedData<Float> SHULKER_HELMET_ANIMATION_PROGRESS = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.FLOAT);
 	private static final TrackedData<Float> PREVIOUS_HELMET_ANIMATION_PROGRESS = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.FLOAT);
@@ -59,21 +58,18 @@ public abstract class LivingEntityMixin extends Entity implements ShulkerHelmetS
 		super(null, null);
 	}
 
+	// TODO: Convert to ModifyArg
 	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/DamageUtil;getDamageLeft(FFF)F"), method = "applyArmorToDamage")
 	public float onApplyArmorToDamage(float damageTaken, float armorPoints, float v) {
 		float realArmorPoints = armorPoints; // This is the original armor points.
-		Iterator<ItemStack> armorItems = this.getArmorItems().iterator();
 
-		do {
-			ItemStack stack = armorItems.next();
-
-			if (stack.getItem() instanceof DurabilityBasedProtection) {
-				if (DurabilityBasedProtection.canDamage(stack)) {
+		for (ItemStack stack : this.getArmorItems()) {
+			if (stack.getItem() instanceof ShulkerHelmetItem) {
+				if (stack.getMaxDamage() - 1 <= stack.getDamage()) {
 					realArmorPoints -= ((ArmorItem) stack.getItem()).getProtection(); // Here we remove the armor points logically supplied by the server.
-					// TODO Maybe change armor point icon in that context.
 				}
 			}
-		} while (armorItems.hasNext());
+		}
 
 		return DamageUtil.getDamageLeft(damageTaken, realArmorPoints, v);
 	}

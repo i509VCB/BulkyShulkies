@@ -40,8 +40,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.block.FacingShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.old.FacingShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.ender.EnderSlabBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
 import me.i509.fabric.bulkyshulkies.client.model.SlabShulkerModel;
 

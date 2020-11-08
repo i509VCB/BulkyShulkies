@@ -34,7 +34,7 @@ import net.minecraft.util.Identifier;
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
 //@Mixin(PiglinBipedArmorFeatureRenderer.class)
-public abstract class PiglinArmorFeatureRendererMixin<T extends LivingEntity, A extends BipedEntityModel<T>, M extends BipedEntityModel<T>> extends ArmorFeatureRendererMixin<T, M, A> {
+abstract class PiglinArmorFeatureRendererMixin<T extends LivingEntity, A extends BipedEntityModel<T>, M extends BipedEntityModel<T>> extends ArmorFeatureRendererMixin<T, M, A> {
 	@Override
 	protected Identifier bulkyshulkies_getLidTexture() {
 		return BulkyShulkies.id("piglin_shulker_helmet_lid");

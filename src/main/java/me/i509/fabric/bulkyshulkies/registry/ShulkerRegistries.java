@@ -34,6 +34,7 @@ public final class ShulkerRegistries {
 		BulkyRecipeSerializers.ABSTRACT_SHULKER_COLORING.getClass(); // Register the colorizer recipe type
 		BulkyDataTrackerHandlers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
 		ShulkerBlocks.init();
+		ShulkerBoxTypes.init();
 		ShulkerDispenserBehaviors.init();
 		ShulkerBlockEntities.init();
 		ShulkerEvents.init();

@@ -31,9 +31,11 @@ import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.item.ShulkerHelmetItem;
 import me.i509.fabric.bulkyshulkies.item.ShulkerMagnetWand;
 
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+
 public final class ShulkerItems {
-	public static final Item SHULKER_MAGNET_WAND = register(new ShulkerMagnetWand(new Item.Settings().group(ShulkerItemGroups.CURSED_GROUP).maxCount(1)), "shulker_magnet_wand");
-	public static final Item SHULKER_HELMET = register(new ShulkerHelmetItem(new Item.Settings().group(ShulkerItemGroups.CURSED_GROUP).maxCount(1)), "shulker_helmet");
+	public static final Item SHULKER_MAGNET_WAND = register(new ShulkerMagnetWand(new Item.Settings().group(ShulkerItemGroups.BULKY_SHULKIES).maxCount(1)), "shulker_magnet_wand");
+	public static final Item SHULKER_HELMET = register(new ShulkerHelmetItem(new FabricItemSettings().customDamage(ShulkerHelmetItem::handleItemDamage).group(ShulkerItemGroups.BULKY_SHULKIES).maxCount(1)), "shulker_helmet");
 
 	private ShulkerItems() {
 		throw new AssertionError("You should not be instantiating this");

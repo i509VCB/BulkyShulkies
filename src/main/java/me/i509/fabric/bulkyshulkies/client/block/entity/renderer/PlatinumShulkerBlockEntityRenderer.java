@@ -47,10 +47,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
+import me.i509.fabric.bulkyshulkies.api.Magnetism;
 import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
-import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.old.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.item.ShulkerItemTags;
 
 @Environment(EnvType.CLIENT)
@@ -112,7 +113,7 @@ public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEnt
 		matrices.push();
 
 		final VertexConsumer buffer = vertexConsumerProvider.getBuffer(RenderLayer.getLines());
-		final Vec3d offset = PlatinumShulkerBoxBlockEntity.getDirectionalBoxOffset(facing);
+		final Vec3d offset = Magnetism.getDirectionalBoxOffset(facing);
 
 		matrices.translate(offset.getX(), offset.getY(), offset.getZ());
 		WorldRenderer.drawBox(matrices, buffer, box, red, green, blue, alpha);

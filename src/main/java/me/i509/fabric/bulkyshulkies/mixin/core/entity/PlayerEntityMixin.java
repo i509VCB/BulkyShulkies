@@ -24,7 +24,10 @@
 
 package me.i509.fabric.bulkyshulkies.mixin.core.entity;
 
+import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventoryImpl;
+import me.i509.fabric.bulkyshulkies.inventory.PlayerEntityExtensions;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -34,16 +37,14 @@ import net.minecraft.nbt.CompoundTag;
 
 import net.fabricmc.fabric.api.util.NbtType;
 
-import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
-import me.i509.fabric.bulkyshulkies.inventory.EnderSlabInventory;
-
 @Mixin(PlayerEntity.class)
-public class PlayerEntityMixin implements EnderSlabBridge {
-	protected EnderSlabInventory bulky$enderSlabInventory = new EnderSlabInventory();
+abstract class PlayerEntityMixin implements PlayerEntityExtensions {
+	@Unique
+	protected EnderSlabInventoryImpl bulky$enderSlabInventory = new EnderSlabInventoryImpl();
 
 	@Override
-	public EnderSlabInventory bridge$getEnderSlabInventory() {
-		return bulky$enderSlabInventory;
+	public EnderSlabInventoryImpl getEnderSlabInventory() {
+		return this.bulky$enderSlabInventory;
 	}
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerAbilities;deserialize(Lnet/minecraft/nbt/CompoundTag;)V"), method = "readCustomDataFromTag")

@@ -3,6 +3,7 @@
   "package": "me.i509.fabric.bulkyshulkies.mixin.core",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "block.AbstractBlockStateMixin",
     "block.StairsBlockMixin",
     "block.entity.LootableContainerBlockEntityMixin",
     "block.entity.ShulkerBoxBlockEntityMixin",
@@ -10,7 +11,6 @@
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",
     "entity.ServerPlayerEntityMixin",
-    "item.ItemStackMixin",
     "screen.slot.ShulkerBoxSlotMixin"
   ],
   "injectors": {

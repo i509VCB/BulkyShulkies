@@ -34,7 +34,7 @@ import net.minecraft.util.ActionResult;
 
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 
-import me.i509.fabric.bulkyshulkies.api.block.colored.ColoredShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.old.colored.ColoredShulkerBoxBlock;
 
 public final class ShulkerEvents {
 	public static void init() {

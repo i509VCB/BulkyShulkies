@@ -35,7 +35,7 @@ import net.minecraft.screen.slot.ShulkerBoxSlot;
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
 @Mixin(ShulkerBoxSlot.class)
-public class ShulkerBoxSlotMixin {
+abstract class ShulkerBoxSlotMixin {
 	@Inject(at = @At("HEAD"), method = "canInsert", cancellable = true)
 	private void canInsert(ItemStack stack, CallbackInfoReturnable<Boolean> cib) {
 		if (!BulkyShulkies.getInstance().canInsertItem(stack)) {

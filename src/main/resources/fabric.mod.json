@@ -38,6 +38,15 @@
     "client": [
       "me.i509.fabric.bulkyshulkies.client.BulkyShulkiesClientMod"
     ],
+    "cardinal-components-block": [
+      "me.i509.fabric.bulkyshulkies.entrypoint.ShulkerBlockComponents"
+    ],
+    "cardinal-components-entity": [
+      "me.i509.fabric.bulkyshulkies.entrypoint.ShulkerEntityComponents"
+    ],
+    "cardinal-components-item": [
+      "me.i509.fabric.bulkyshulkies.entrypoint.ShulkerItemComponents"
+    ],
     "rei_plugins_v0": [
       "me.i509.fabric.bulkyshulkies.client.BulkyShulkiesREIPlugin"
     ],
@@ -60,5 +69,12 @@
   "suggests": {
     "cotton-resources": ">=1.4.1",
     "shulkerboxtooltip": ">=1.4.3"
+  },
+  "custom": {
+    "cardinal-components": [
+      "bulkyshulkies:ender_slab_inventory",
+      "bulkyshulkies:shulker_box_color",
+      "bulkyshulkies:magnetism_cooldown"
+    ]
   }
 }

@@ -42,8 +42,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.block.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.api.block.FacingShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.old.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.old.FacingShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
 
 @Environment(EnvType.CLIENT)

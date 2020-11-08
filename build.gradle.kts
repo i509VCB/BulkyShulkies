@@ -13,6 +13,7 @@ val loaderVersion: String by project
 
 val fabricApiVersion: String by project
 
+val ccaVersion: String by project
 val configurateVersion: String by project
 val confabricateVersion: String by project
 
@@ -40,6 +41,7 @@ repositories {
     pex()
     sponge()
     misterpe()
+    maven(url = "https://dl.bintray.com/ladysnake/libs")
 
     // For Quickshulker and kyrptconfig
     maven(url = "https://dl.bintray.com/kyrptonaught/Quickshulker/")
@@ -57,6 +59,12 @@ dependencies {
     configurate(ConfigurateType.HOCON, configurateVersion, true)?.let {
         include(it)
     }
+
+    // Base, entity, block
+    modApi("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:$ccaVersion")
+    modApi("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:$ccaVersion")
+    modApi("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:$ccaVersion")
+    modApi("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-item:$ccaVersion")
 
     // Optional dependencies
     optionalMod("com.misterpemodder:shulkerboxtooltip:$shulkerBoxTooltipVersion", false)

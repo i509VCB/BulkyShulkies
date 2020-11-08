@@ -41,7 +41,7 @@ import me.i509.fabric.bulkyshulkies.client.BulkyShulkiesClientMod;
 
 @Environment(EnvType.CLIENT)
 @Mixin(TexturedRenderLayers.class)
-public class TexturedRenderLayersMixin {
+abstract class TexturedRenderLayersMixin {
 	@Inject(at = @At("HEAD"), method = "addDefaultTextures(Ljava/util/function/Consumer;)V")
 	private static void onAddDefaultTextures(Consumer<SpriteIdentifier> consumer, CallbackInfo ci) {
 		BulkyShulkiesClientMod.makeAtlases(consumer);

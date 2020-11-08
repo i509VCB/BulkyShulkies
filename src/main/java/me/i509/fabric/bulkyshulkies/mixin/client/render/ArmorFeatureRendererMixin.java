@@ -42,7 +42,7 @@ import me.i509.fabric.bulkyshulkies.client.model.AbstractShulkerLidHelmetModel;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ArmorFeatureRenderer.class)
-public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, A extends BipedEntityModel<T>, M extends BipedEntityModel<T>> extends FeatureRenderer<T, M> {
+abstract class ArmorFeatureRendererMixin<T extends LivingEntity, A extends BipedEntityModel<T>, M extends BipedEntityModel<T>> extends FeatureRenderer<T, M> {
 	@Shadow
 	@Final
 	protected A bodyModel;

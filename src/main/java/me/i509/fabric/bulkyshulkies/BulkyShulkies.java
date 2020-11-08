@@ -33,6 +33,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.google.common.reflect.TypeToken;
+import me.i509.fabric.bulkyshulkies.api.ShulkerBoxType;
 import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
@@ -49,14 +50,18 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 
-import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBlock;
+import me.i509.fabric.bulkyshulkies.api.block.old.base.OldShulkerBox;
+import me.i509.fabric.bulkyshulkies.block.old.ender.EnderSlabBlock;
 import me.i509.fabric.bulkyshulkies.config.MainConfig;
 
-public class BulkyShulkies {
+public final class BulkyShulkies {
+	public static final RegistryKey<Registry<ShulkerBoxType>> SHULKER_BOX_TYPE_KEY = RegistryKey.ofRegistry(BulkyShulkies.id("shulker_box_type"));
+	public static final Registry<ShulkerBoxType> SHULKER_BOX_TYPE = FabricRegistryBuilder.createSimple(ShulkerBoxType.class, BulkyShulkies.id("shulker_box_type")).buildAndRegister();
 	private static final Logger LOGGER = LogManager.getLogger(BulkyShulkies.class);
 
 	private static final BulkyShulkies INSTANCE;
@@ -67,7 +72,7 @@ public class BulkyShulkies {
 
 	private BulkyShulkies() throws IOException {
 		BulkyShulkies.disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof ShulkerBoxBlock);
-		BulkyShulkies.disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof BasicShulkerBlock);
+		BulkyShulkies.disallowedItems.add((stack) -> Block.getBlockFromItem(stack.getItem()) instanceof OldShulkerBox);
 
 		Path configLocation = FabricLoader.getInstance().getConfigDir().resolve("bulkyshulkies");
 		Path configFile = configLocation.resolve("bulkyshulkies.conf");

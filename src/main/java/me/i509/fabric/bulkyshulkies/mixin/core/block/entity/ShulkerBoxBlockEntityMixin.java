@@ -37,7 +37,7 @@ import net.minecraft.util.math.Direction;
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
 @Mixin(ShulkerBoxBlockEntity.class)
-public abstract class ShulkerBoxBlockEntityMixin {
+abstract class ShulkerBoxBlockEntityMixin {
 	@Inject(at = @At("HEAD"), method = "canInsert", cancellable = true)
 	private void canInsert(int inventorySlot, ItemStack stack, @Nullable Direction direction, CallbackInfoReturnable<Boolean> cib) {
 		if (!BulkyShulkies.getInstance().canInsertItem(stack)) {

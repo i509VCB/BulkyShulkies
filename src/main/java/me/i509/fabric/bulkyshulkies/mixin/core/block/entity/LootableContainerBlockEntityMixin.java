@@ -37,16 +37,16 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
-import me.i509.fabric.bulkyshulkies.api.block.entity.inventory.LootableBlockEntity;
+import me.i509.fabric.bulkyshulkies.api.block.old.entity.inventory.LootableBlockEntity;
 
 @Mixin(LootableContainerBlockEntity.class)
-public abstract class LootableContainerBlockEntityMixin {
+abstract class LootableContainerBlockEntityMixin {
 	@Inject(at = @At("TAIL"), method = "setLootTable(Lnet/minecraft/world/BlockView;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Identifier;)V")
 	private static void bulky$setCustomBlockEntityTables(BlockView world, Random random, BlockPos pos, Identifier id, CallbackInfo ci) {
-		BlockEntity blockEntity = world.getBlockEntity(pos);
+		final BlockEntity blockEntity = world.getBlockEntity(pos);
 
 		if (blockEntity instanceof LootableContainerBlockEntity) {
-			return;
+			return; // Don't need to handle
 		}
 
 		if (blockEntity instanceof LootableBlockEntity) {

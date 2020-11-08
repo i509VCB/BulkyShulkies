@@ -36,19 +36,19 @@ import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.screen.slot.Slot;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.player.EnderSlabBridge;
-import me.i509.fabric.bulkyshulkies.block.ShulkerBoxConstants;
-import me.i509.fabric.bulkyshulkies.block.cursed.slab.ColoredSlabShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBlock;
-import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
+import me.i509.fabric.bulkyshulkies.inventory.PlayerEntityExtensions;
+import me.i509.fabric.bulkyshulkies.block.old.ShulkerBoxConstants;
+import me.i509.fabric.bulkyshulkies.block.old.cursed.slab.ColoredSlabShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.cursed.stair.StairShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.ender.EnderSlabBlock;
+import me.i509.fabric.bulkyshulkies.block.old.CopperShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.DiamondShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.GoldShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.IronShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.ObsidianShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.SilverShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.MissingTexBoxBlock;
 import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
 import me.i509.fabric.bulkyshulkies.config.section.quickshulker.QuickShulkerSection;
 import me.i509.fabric.bulkyshulkies.screen.GenericCustomSlotContainerScreenHandler;
@@ -156,7 +156,7 @@ public class QuickShulkerHook implements RegisterQuickShulker {
 
 	public static void openEnderSlab(PlayerEntity user, ItemStack stack) {
 		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
-			return GenericCustomSlotContainerScreenHandler.createGeneric9x2(ShulkerScreenHandlers.ENDER_SLAB, syncId, inventory, ((EnderSlabBridge) player).bridge$getEnderSlabInventory(), Slot::new);
+			return GenericCustomSlotContainerScreenHandler.createGeneric9x2(ShulkerScreenHandlers.ENDER_SLAB, syncId, inventory, ((PlayerEntityExtensions) player).getEnderSlabInventory(), Slot::new);
 		}, stack.getName()));
 	}
 

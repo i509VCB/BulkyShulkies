@@ -41,21 +41,21 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.block.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.cursed.slab.ColoredSlabShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBlock;
-import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.missing.MissingTexBoxBlock;
-import me.i509.fabric.bulkyshulkies.item.InventoryShulkerBlockItem;
-import me.i509.fabric.bulkyshulkies.api.block.base.BasicShulkerBlock;
+import me.i509.fabric.bulkyshulkies.api.block.old.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.cursed.slab.ColoredSlabShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.cursed.stair.StairShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.CopperShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.DiamondShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.ender.EnderSlabBlock;
+import me.i509.fabric.bulkyshulkies.block.old.IronShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.GoldShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.NetheriteShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.ObsidianShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.SilverShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.MissingTexBoxBlock;
+import me.i509.fabric.bulkyshulkies.item.ShulkerBlockItem;
+import me.i509.fabric.bulkyshulkies.api.block.old.base.OldShulkerBox;
 
 public final class ShulkerBlocks {
 	private static final AbstractBlock.ContextPredicate FALSE_CTX = (state, world, pos) -> false;
@@ -71,6 +71,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block COPPER_SHULKER_BOX = registerInventoryShulker(new CopperShulkerBoxBlock(SHULKER_BOX_SETTINGS, null), "copper_shulker_box"); // Uncolored
 	public static final Block WHITE_COPPER_SHULKER_BOX = registerInventoryShulker(new CopperShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_copper_shulker_box");
 	public static final Block ORANGE_COPPER_SHULKER_BOX = registerInventoryShulker(new CopperShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_copper_shulker_box");
@@ -95,6 +96,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block IRON_SHULKER_BOX = registerInventoryShulker(new IronShulkerBoxBlock(SHULKER_BOX_SETTINGS, null), "iron_shulker_box"); // Uncolored
 	public static final Block WHITE_IRON_SHULKER_BOX = registerInventoryShulker(new IronShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_iron_shulker_box");
 	public static final Block ORANGE_IRON_SHULKER_BOX = registerInventoryShulker(new IronShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_iron_shulker_box");
@@ -119,6 +121,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block SILVER_SHULKER_BOX = registerInventoryShulker(new SilverShulkerBoxBlock(SHULKER_BOX_SETTINGS, null), "silver_shulker_box"); // Uncolored
 	public static final Block WHITE_SILVER_SHULKER_BOX = registerInventoryShulker(new SilverShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_silver_shulker_box");
 	public static final Block ORANGE_SILVER_SHULKER_BOX = registerInventoryShulker(new SilverShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_silver_shulker_box");
@@ -143,6 +146,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block GOLD_SHULKER_BOX = registerInventoryShulker(new GoldShulkerBoxBlock(SHULKER_BOX_SETTINGS, null), "gold_shulker_box"); // Uncolored
 	public static final Block WHITE_GOLD_SHULKER_BOX = registerInventoryShulker(new GoldShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_gold_shulker_box");
 	public static final Block ORANGE_GOLD_SHULKER_BOX = registerInventoryShulker(new GoldShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_gold_shulker_box");
@@ -167,6 +171,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block DIAMOND_SHULKER_BOX = registerInventoryShulker(new DiamondShulkerBoxBlock(SHULKER_BOX_SETTINGS, null), "diamond_shulker_box"); // Uncolored
 	public static final Block WHITE_DIAMOND_SHULKER_BOX = registerInventoryShulker(new DiamondShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_diamond_shulker_box");
 	public static final Block ORANGE_DIAMOND_SHULKER_BOX = registerInventoryShulker(new DiamondShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_diamond_shulker_box");
@@ -191,6 +196,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block OBSIDIAN_SHULKER_BOX = registerInventoryShulker(new ObsidianShulkerBoxBlock(EXPLOSION_PROOF_SHULKER_BOX_SETTINGS, null), "obsidian_shulker_box"); // Uncolored
 	public static final Block WHITE_OBSIDIAN_SHULKER_BOX = registerInventoryShulker(new ObsidianShulkerBoxBlock(EXPLOSION_PROOF_SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_obsidian_shulker_box");
 	public static final Block ORANGE_OBSIDIAN_SHULKER_BOX = registerInventoryShulker(new ObsidianShulkerBoxBlock(EXPLOSION_PROOF_SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_obsidian_shulker_box");
@@ -215,6 +221,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block NETHERITE_SHULKER_BOX = registerInvulInventoryShulker(new NetheriteShulkerBoxBlock(EXPLOSION_PROOF_SHULKER_BOX_SETTINGS, null), "netherite_shulker_box"); // Uncolored
 	public static final Block WHITE_NETHERITE_SHULKER_BOX = registerInvulInventoryShulker(new NetheriteShulkerBoxBlock(EXPLOSION_PROOF_SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_netherite_shulker_box");
 	public static final Block ORANGE_NETHERITE_SHULKER_BOX = registerInvulInventoryShulker(new NetheriteShulkerBoxBlock(EXPLOSION_PROOF_SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_netherite_shulker_box");
@@ -239,6 +246,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block PLATINUM_SHULKER_BOX = registerInventoryShulker(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, null), "platinum_shulker_box"); // Uncolored
 	public static final Block WHITE_PLATINUM_SHULKER_BOX = registerInventoryShulker(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_platinum_shulker_box");
 	public static final Block ORANGE_PLATINUM_SHULKER_BOX = registerInventoryShulker(new PlatinumShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_platinum_shulker_box");
@@ -263,6 +271,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block MISSING_TEX_SHULKER_BOX = registerInventoryShulker(new MissingTexBoxBlock(SHULKER_BOX_SETTINGS, null), "missing_tex_shulker_box"); // Uncolored
 	public static final Block WHITE_MISSING_TEX_SHULKER_BOX = registerInventoryShulker(new MissingTexBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_missing_tex_shulker_box");
 	public static final Block ORANGE_MISSING_TEX_SHULKER_BOX = registerInventoryShulker(new MissingTexBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_missing_tex_shulker_box");
@@ -288,6 +297,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block SLAB_SHULKER_BOX = registerInventoryShulker(new ColoredSlabShulkerBoxBlock(SHULKER_SLAB_BOX_SETTINGS, null), "slab_shulker_box");
 	public static final Block WHITE_SLAB_SHULKER_BOX = registerInventoryShulker(new ColoredSlabShulkerBoxBlock(SHULKER_SLAB_BOX_SETTINGS, DyeColor.WHITE), "white_slab_shulker_box");
 	public static final Block ORANGE_SLAB_SHULKER_BOX = registerInventoryShulker(new ColoredSlabShulkerBoxBlock(SHULKER_SLAB_BOX_SETTINGS, DyeColor.ORANGE), "orange_slab_shulker_box");
@@ -313,6 +323,7 @@ public final class ShulkerBlocks {
 	 * ========================
 	 */
 
+	/*
 	public static final Block STAIR_SHULKER_BOX = registerInventoryShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, null), "stair_shulker_box");
 	public static final Block WHITE_STAIR_SHULKER_BOX = registerInventoryShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.WHITE), "white_stair_shulker_box");
 	public static final Block ORANGE_STAIR_SHULKER_BOX = registerInventoryShulker(new StairShulkerBoxBlock(SHULKER_BOX_SETTINGS, DyeColor.ORANGE), "orange_stair_shulker_box");
@@ -349,22 +360,22 @@ public final class ShulkerBlocks {
 	}
 
 	public static void iterateColors(Block block, BiConsumer<ItemConvertible, @Nullable DyeColor> consumer) {
-		if (block instanceof BasicShulkerBlock) {
+		if (block instanceof OldShulkerBox) {
 			for (DyeColor color : DyeColor.values()) {
-				consumer.accept(((BasicShulkerBlock) block).getItem(color), color);
+				consumer.accept(((OldShulkerBox) block).getItem(color), color);
 			}
 
-			consumer.accept(((BasicShulkerBlock) block).getItem(null), null);
+			consumer.accept(((OldShulkerBox) block).getItem(null), null);
 		}
 	}
 
-	public static Block registerInvulInventoryShulker(AbstractShulkerBoxBlock block, String path) {
+	/*public static Block registerInvulInventoryShulker(AbstractShulkerBoxBlock block, String path) {
 		return registerInvulInventoryShulker(block, path, ShulkerItemGroups.INVUL_UNSTACKABLE_CURSED_ITEM_SETTINGS);
 	}
 
 	public static Block registerInvulInventoryShulker(AbstractShulkerBoxBlock block, String path, Item.Settings settings) {
 		Block b = Registry.register(Registry.BLOCK, BulkyShulkies.id(path), block);
-		Registry.register(Registry.ITEM, BulkyShulkies.id(path), new InventoryShulkerBlockItem(block, settings));
+		Registry.register(Registry.ITEM, BulkyShulkies.id(path), new ShulkerBlockItem(block, settings));
 		return b;
 	}
 
@@ -374,7 +385,7 @@ public final class ShulkerBlocks {
 
 	public static Block registerInventoryShulker(AbstractShulkerBoxBlock block, String path, Item.Settings settings) {
 		Block b = Registry.register(Registry.BLOCK, BulkyShulkies.id(path), block);
-		Registry.register(Registry.ITEM, BulkyShulkies.id(path), new InventoryShulkerBlockItem(block, settings));
+		Registry.register(Registry.ITEM, BulkyShulkies.id(path), new ShulkerBlockItem(block, settings));
 		return b;
 	}
 
@@ -386,5 +397,5 @@ public final class ShulkerBlocks {
 		Block b = Registry.register(Registry.BLOCK, BulkyShulkies.id(path), block);
 		Registry.register(Registry.ITEM, BulkyShulkies.id(path), new BlockItem(block, settings));
 		return b;
-	}
+	}*/
 }

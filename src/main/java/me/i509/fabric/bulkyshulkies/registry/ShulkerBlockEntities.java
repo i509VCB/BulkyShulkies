@@ -24,30 +24,18 @@
 
 package me.i509.fabric.bulkyshulkies.registry;
 
-import java.util.function.Supplier;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.registry.Registry;
 
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.block.cursed.slab.CursedSlabShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.cursed.stair.StairShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.copper.CopperShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.diamond.DiamondShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.ender.EnderSlabBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.iron.IronShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.gold.GoldShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.netherite.NetheriteShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.obsidian.ObsidianShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.platinum.PlatinumShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.material.silver.SilverShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.missing.MissingTextureShulkerBoxBlockEntity;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 // import me.i509.fabric.bulkyshulkies.block.injector.ShulkerInjectorBE;
 
 public final class ShulkerBlockEntities {
-	public static final BlockEntityType<CopperShulkerBoxBlockEntity> COPPER_SHULKER_BOX = register("copper_shulker_box",
+	/*public static final BlockEntityType<CopperShulkerBoxBlockEntity> COPPER_SHULKER_BOX = register("copper_shulker_box",
 			CopperShulkerBoxBlockEntity::new,
 			ShulkerBlocks.COPPER_SHULKER_BOX, // Uncolored
 			ShulkerBlocks.WHITE_COPPER_SHULKER_BOX,
@@ -281,7 +269,7 @@ public final class ShulkerBlockEntities {
 	public static final BlockEntityType<EnderSlabBoxBlockEntity> ENDER_SLAB = register("ender_slab",
 			EnderSlabBoxBlockEntity::new,
 			ShulkerBlocks.ENDER_SLAB_BOX
-	);
+	);*/
 
 	/*public static final BlockEntityType<ShulkerInjectorBE> SHULKER_INJECTOR = register("shulker_injector",
 			ShulkerInjectorBE::new,
@@ -295,7 +283,7 @@ public final class ShulkerBlockEntities {
 	static void init() {
 	}
 
-	private static <B extends BlockEntity> BlockEntityType<B> register(String name, Supplier<B> supplier, Block... supportedBlocks) {
-		return Registry.register(Registry.BLOCK_ENTITY_TYPE, BulkyShulkies.id(name), BlockEntityType.Builder.create(supplier, supportedBlocks).build(null)); // TODO Replace null when DataFixers are done.
+	private static <B extends BlockEntity> BlockEntityType<B> register(String name, FabricBlockEntityTypeBuilder.Factory<B> factory, Block... supportedBlocks) {
+		return Registry.register(Registry.BLOCK_ENTITY_TYPE, BulkyShulkies.id(name), FabricBlockEntityTypeBuilder.create(factory, supportedBlocks).build());
 	}
 }
