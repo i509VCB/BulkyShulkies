@@ -22,37 +22,41 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.entrypoint;
+package me.i509.bulkyshulkies.mod.component;
 
 import java.util.Map;
 
+import dev.onyxstudios.cca.api.v3.block.BlockComponentFactoryRegistry;
+import dev.onyxstudios.cca.api.v3.block.BlockComponentInitializer;
 import dev.onyxstudios.cca.api.v3.component.ComponentFactory;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.item.ItemComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.item.ItemComponentInitializer;
 import me.i509.bulkyshulkies.mod.BulkyShulkies;
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
+import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.entity.BlockEntity;
 
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 
-public final class ShulkerItemComponents implements ItemComponentInitializer {
+public final class ShulkerBlockComponents implements BlockComponentInitializer {
 	@Override
-	public void registerItemComponentFactories(ItemComponentFactoryRegistry registry) {
+	public void registerBlockComponentFactories(BlockComponentFactoryRegistry registry) {
 		RegistryEntryAddedCallback.event(BulkyShulkies.SHULKER_BOX_TYPE).register((rawId, id, type) -> {
-			this.registerItemStackComponents(registry, type);
+			this.registerBlockEntityComponents(registry, type);
 		});
 
 		for (ShulkerBoxType type : BulkyShulkies.SHULKER_BOX_TYPE) {
-			this.registerItemStackComponents(registry, type);
+			this.registerBlockEntityComponents(registry, type);
 		}
 	}
 
-	private void registerItemStackComponents(ItemComponentFactoryRegistry registry, ShulkerBoxType type) {
-		for (Map.Entry<ComponentKey<?>, ComponentFactory<ItemStack, ?>> entry : type.getItemStackComponents().entrySet()) {
+	private void registerBlockEntityComponents(BlockComponentFactoryRegistry registry, ShulkerBoxType type) {
+		for (Map.Entry<ComponentKey<?>, ComponentFactory<? extends ShulkerBoxBlockEntity, ?>> entry : type.getBlockEntityComponents().entrySet()) {
+			// TODO: Test me
 			//noinspection unchecked,rawtypes
-			registry.registerFor(type.getId(), (ComponentKey) entry.getKey(), entry.getValue());
+			registry.beginRegistration(BlockEntity.class, entry.getKey())
+					.filter(klass -> klass.isAssignableFrom(ShulkerBoxBlockEntity.class))
+					.end((ComponentFactory) entry.getValue());
 		}
 	}
 }

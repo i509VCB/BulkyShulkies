@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.entrypoint;
+package me.i509.bulkyshulkies.mod.component;
 
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;

@@ -24,10 +24,12 @@
 
 package me.i509.bulkyshulkies.api.item;
 
+import me.i509.bulkyshulkies.api.ShulkerBoxType;
+
 import net.minecraft.item.Item;
 
 public class ShulkerUpgradeItem extends Item {
-	public ShulkerUpgradeItem(Settings settings) {
+	public ShulkerUpgradeItem(Settings settings, ShulkerBoxType from, ShulkerBoxType to) {
 		super(settings);
 	}
 }
