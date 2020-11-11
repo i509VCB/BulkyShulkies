@@ -1,8 +1,7 @@
 package me.i509.fabric.bulkyshulkies.mixin.core.block;
 
-import me.i509.fabric.bulkyshulkies.api.ShulkerDataKeys;
-import me.i509.fabric.bulkyshulkies.api.block.ShulkerBoxColor;
 import me.i509.fabric.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerComponents;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,10 +21,9 @@ abstract class AbstractBlockStateMixin {
 		final BlockEntity blockEntity = world.getBlockEntity(pos);
 
 		if (blockEntity instanceof ShulkerBoxBlockEntity) {
-			if (((ShulkerBoxBlockEntity) blockEntity).supports(ShulkerDataKeys.COLOR)) {
-				final ShulkerBoxColor color = ((ShulkerBoxBlockEntity) blockEntity).getValue(ShulkerDataKeys.COLOR);
+			ShulkerComponents.SHULKER_BOX_COLOR.maybeGet(blockEntity).ifPresent(component -> {
+				final DyeColor dyeColor = component.getColor().toDyeColor();
 
-				final DyeColor dyeColor = color.toDyeColor();
 				MapColor mapColor;
 
 				if (dyeColor == null) {
@@ -35,7 +33,7 @@ abstract class AbstractBlockStateMixin {
 				}
 
 				info.setReturnValue(mapColor);
-			}
+			});
 		}
 	}
 }

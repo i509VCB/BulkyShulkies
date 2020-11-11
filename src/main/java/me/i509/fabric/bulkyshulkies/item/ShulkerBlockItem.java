@@ -25,26 +25,20 @@
 package me.i509.fabric.bulkyshulkies.item;
 
 import me.i509.fabric.bulkyshulkies.api.ShulkerBoxType;
-import me.i509.fabric.bulkyshulkies.api.ShulkerDataKeys;
 import me.i509.fabric.bulkyshulkies.api.block.ShulkerBox;
 import me.i509.fabric.bulkyshulkies.api.block.ShulkerBoxColor;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerComponents;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.CauldronBlock;
 import net.minecraft.block.WaterCauldronBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
-
-import me.i509.fabric.bulkyshulkies.api.block.old.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.old.base.InventoryShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.old.colored.ColoredShulkerBoxBlock;
 
 public class ShulkerBlockItem extends BlockItem {
 	private final ShulkerBoxType type;
@@ -78,19 +72,10 @@ public class ShulkerBlockItem extends BlockItem {
 					final Block block = ((BlockItem) handStack.getItem()).getBlock();
 
 					if (block instanceof ShulkerBox) {
-						if (((ShulkerBox) block).supports(ShulkerDataKeys.COLOR)) {
-							// The color will default to NONE in this case
-							final ItemStack newStack = handStack.copy();
+						final ItemStack newStack = handStack.copy();
 
-							// Copy over the color if needed, everything else will stay the same
-							if (handStack.hasTag()) {
-								final CompoundTag blockEntityData = newStack.getOrCreateSubTag("BlockEntityData");
-
-								if (blockEntityData.contains(ShulkerDataKeys.COLOR.getKey())) {
-									blockEntityData.putString(ShulkerDataKeys.COLOR.getKey(), ShulkerBoxColor.NONE.toString());
-								}
-							}
-
+						return ShulkerComponents.SHULKER_BOX_COLOR.maybeGet(newStack).map(component -> {
+							component.setColor(ShulkerBoxColor.NONE);
 							player.setStackInHand(context.getHand(), newStack);
 
 							// TODO: Custom level decrement?
@@ -99,7 +84,7 @@ public class ShulkerBlockItem extends BlockItem {
 							player.incrementStat(Stats.CLEAN_SHULKER_BOX);
 
 							return ActionResult.SUCCESS;
-						}
+						}).orElse(super.useOnBlock(context));
 					}
 				}
 			}
