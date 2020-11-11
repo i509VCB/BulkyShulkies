@@ -93,4 +93,9 @@ public class ShulkerBlockItem extends BlockItem {
 		// Fallback
 		return super.useOnBlock(context);
 	}
+
+	@Override
+	public boolean hasStoredInventory() {
+		return this.type.hasInventory();
+	}
 }
