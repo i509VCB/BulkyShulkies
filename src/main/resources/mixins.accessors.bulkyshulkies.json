@@ -3,11 +3,11 @@
   "package": "me.i509.fabric.bulkyshulkies.mixin.accessor",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ShapedRecipeAccessor",
-    "StairsBlockAccessor"
+    "me.i509.bulkyshulkies.mod.mixin.accessor.ShapedRecipeAccessor",
+    "me.i509.bulkyshulkies.mod.mixin.accessor.StairsBlockAccessor"
   ],
   "client": [
-    "client.AnimalModelAccessor"
+    "me.i509.bulkyshulkies.mod.mixin.accessor.client.AnimalModelAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

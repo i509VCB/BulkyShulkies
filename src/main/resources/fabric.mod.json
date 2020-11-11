@@ -33,28 +33,28 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.i509.fabric.bulkyshulkies.BulkyShulkiesMod"
+      "me.i509.bulkyshulkies.mod.BulkyShulkiesMod"
     ],
     "client": [
-      "me.i509.fabric.bulkyshulkies.client.BulkyShulkiesClientMod"
+      "me.i509.bulkyshulkies.mod.client.BulkyShulkiesClientMod"
     ],
     "cardinal-components-block": [
-      "me.i509.fabric.bulkyshulkies.entrypoint.ShulkerBlockComponents"
+      "me.i509.bulkyshulkies.mod.entrypoint.ShulkerBlockComponents"
     ],
     "cardinal-components-entity": [
-      "me.i509.fabric.bulkyshulkies.entrypoint.ShulkerEntityComponents"
+      "me.i509.bulkyshulkies.mod.entrypoint.ShulkerEntityComponents"
     ],
     "cardinal-components-item": [
-      "me.i509.fabric.bulkyshulkies.entrypoint.ShulkerItemComponents"
+      "me.i509.bulkyshulkies.mod.entrypoint.ShulkerItemComponents"
     ],
     "rei_plugins_v0": [
-      "me.i509.fabric.bulkyshulkies.client.BulkyShulkiesREIPlugin"
+      "me.i509.bulkyshulkies.mod.client.BulkyShulkiesREIPlugin"
     ],
     "shulkerboxtooltip": [
-      "me.i509.fabric.bulkyshulkies.extension.BulkyTooltipHook"
+      "me.i509.bulkyshulkies.mod.extension.BulkyTooltipHook"
     ],
     "quickshulker": [
-      "me.i509.fabric.bulkyshulkies.extension.QuickShulkerHook"
+      "me.i509.bulkyshulkies.mod.extension.QuickShulkerHook"
     ]
   },
   "mixins": [
