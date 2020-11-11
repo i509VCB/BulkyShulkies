@@ -4,7 +4,7 @@ import java.util.Map;
 
 import dev.onyxstudios.cca.api.v3.block.BlockComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.block.BlockComponentInitializer;
-import dev.onyxstudios.cca.api.v3.block.BlockComponentProvider;
+import dev.onyxstudios.cca.api.v3.component.ComponentFactory;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.ShulkerBoxType;
@@ -27,12 +27,12 @@ public final class ShulkerBlockComponents implements BlockComponentInitializer {
 	}
 
 	private void registerBlockEntityComponents(BlockComponentFactoryRegistry registry, ShulkerBoxType type) {
-		for (Map.Entry<ComponentKey<?>, BlockComponentProvider<?>> entry : type.getBlockEntityComponents().entrySet()) {
+		for (Map.Entry<ComponentKey<?>, ComponentFactory<? extends ShulkerBoxBlockEntity, ?>> entry : type.getBlockEntityComponents().entrySet()) {
+			// TODO: Test me
+			//noinspection unchecked,rawtypes
 			registry.beginRegistration(BlockEntity.class, entry.getKey())
-					.filter(ShulkerBoxBlockEntity.class::isAssignableFrom)
-					.end(blockEntity -> {
-						return null; // FIXME: Should not return null at all
-					});
+					.filter(klass -> klass.isAssignableFrom(ShulkerBoxBlockEntity.class))
+					.end((ComponentFactory) entry.getValue());
 		}
 	}
 }

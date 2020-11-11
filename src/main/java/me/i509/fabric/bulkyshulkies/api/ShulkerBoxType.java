@@ -6,11 +6,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import dev.onyxstudios.cca.api.v3.block.BlockComponentProvider;
-import dev.onyxstudios.cca.api.v3.block.BlockEntityComponentFactory;
+import dev.onyxstudios.cca.api.v3.component.ComponentFactory;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
-import dev.onyxstudios.cca.api.v3.item.ItemComponentFactory;
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.block.ShulkerBox;
 import me.i509.fabric.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
@@ -18,7 +16,6 @@ import me.i509.fabric.bulkyshulkies.api.block.old.entity.inventory.ShulkerBlockE
 import me.i509.fabric.bulkyshulkies.block.entity.InventoryShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.block.entity.SimpleShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.item.ShulkerBlockItem;
-import nerdhub.cardinal.components.api.component.Component;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.AbstractBlock;
@@ -39,8 +36,8 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 
 public final class ShulkerBoxType {
 	private final Identifier id;
-	private final Map<ComponentKey<?>, BlockEntityComponentFactory<?, ? extends ShulkerBoxBlockEntity>> blockEntityComponents;
-	private final Map<ComponentKey<?>, ItemComponentFactory<?>> itemStackComponents;
+	private final Map<ComponentKey<?>, ComponentFactory<? extends ShulkerBoxBlockEntity, ?>> blockEntityComponents;
+	private final Map<ComponentKey<?>, ComponentFactory<ItemStack, ?>> itemStackComponents;
 	private final DirectionProperty directionProperty;
 	private final boolean inventory;
 	@Nullable
@@ -56,8 +53,8 @@ public final class ShulkerBoxType {
 		return new ShulkerBoxType.Builder();
 	}
 
-	private ShulkerBoxType(Identifier id, Map<ComponentKey<?>, BlockEntityComponentFactory<?, ? extends ShulkerBoxBlockEntity>> blockEntityComponents,
-						   Map<ComponentKey<?>, ItemComponentFactory<?>> itemStackComponents,
+	private ShulkerBoxType(Identifier id, Map<ComponentKey<?>, ComponentFactory<? extends ShulkerBoxBlockEntity, ?>> blockEntityComponents,
+						   Map<ComponentKey<?>, ComponentFactory<ItemStack, ?>> itemStackComponents,
 						   DirectionProperty directionProperty, boolean inventory,
 						   @Nullable BlockEntityTicker<? extends ShulkerBoxBlockEntity> clientTicker,
 						   @Nullable BlockEntityTicker<? extends ShulkerBoxBlockEntity> serverTicker,
@@ -123,11 +120,11 @@ public final class ShulkerBoxType {
 		return this.directionProperty;
 	}
 
-	public Map<ComponentKey<?>, ItemComponentFactory<?>> getItemStackComponents() {
+	public Map<ComponentKey<?>, ComponentFactory<ItemStack, ?>> getItemStackComponents() {
 		return this.itemStackComponents;
 	}
 
-	public Map<ComponentKey<?>, BlockEntityComponentFactory<?, ? extends ShulkerBoxBlockEntity>> getBlockEntityComponents() {
+	public Map<ComponentKey<?>, ComponentFactory<? extends ShulkerBoxBlockEntity, ?>> getBlockEntityComponents() {
 		return this.blockEntityComponents;
 	}
 
@@ -168,8 +165,8 @@ public final class ShulkerBoxType {
 		private BlockEntityTicker<? extends ShulkerBoxBlockEntity> serverTicker;
 		private AbstractBlock.Settings blockSettings;
 		private Item.Settings itemSettings;
-		private final Map<ComponentKey<?>, BlockEntityComponentFactory<?, ? extends ShulkerBoxBlockEntity>> blockEntityComponents = new HashMap<>();
-		private final Map<ComponentKey<?>, ItemComponentFactory<?>> itemStackComponents = new HashMap<>();
+		private final Map<ComponentKey<?>, ComponentFactory<? extends ShulkerBoxBlockEntity, ?>> blockEntityComponents = new HashMap<>();
+		private final Map<ComponentKey<?>, ComponentFactory<ItemStack, ?>> itemStackComponents = new HashMap<>();
 
 		private Builder() {
 		}
@@ -179,14 +176,14 @@ public final class ShulkerBoxType {
 			return this;
 		}
 
-		public <C extends ComponentV3> Builder attachToItemStack(ComponentKey<C> key, ItemComponentFactory<C> factory) {
+		public <C extends ComponentV3> Builder attachToItemStack(ComponentKey<C> key, ComponentFactory<ItemStack, ?> factory) {
 			Objects.requireNonNull(key);
 			Objects.requireNonNull(factory);
 			this.itemStackComponents.put(key, factory);
 			return this;
 		}
 
-		public <C extends ComponentV3> Builder attachToBlockEntity(ComponentKey<?> key, BlockEntityComponentFactory<C, ? extends ShulkerBoxBlockEntity> factory) {
+		public <C extends ComponentV3> Builder attachToBlockEntity(ComponentKey<?> key, ComponentFactory<? extends ShulkerBoxBlockEntity, ?> factory) {
 			Objects.requireNonNull(key);
 			Objects.requireNonNull(factory);
 			this.blockEntityComponents.put(key, factory);

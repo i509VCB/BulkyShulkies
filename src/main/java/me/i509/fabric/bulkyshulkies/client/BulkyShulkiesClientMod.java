@@ -33,13 +33,51 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import io.netty.buffer.Unpooled;
+import me.i509.fabric.bulkyshulkies.BulkyShulkies;
+import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
+import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
+import me.i509.fabric.bulkyshulkies.api.ShulkerBoxType;
+import me.i509.fabric.bulkyshulkies.api.block.old.AbstractShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.api.block.old.entity.inventory.ShulkerBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.CopperShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.CopperShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.DiamondShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.DiamondShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.GoldShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.GoldShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.IronShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.IronShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.MissingTexBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.MissingTextureShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.NetheriteShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.NetheriteShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.ObsidianShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.ObsidianShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.SilverShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.SilverShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.cursed.slab.ColoredSlabShulkerBoxBlock;
+import me.i509.fabric.bulkyshulkies.block.old.cursed.slab.CursedSlabShulkerBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.block.old.ender.EnderSlabBlock;
+import me.i509.fabric.bulkyshulkies.block.old.ender.EnderSlabBoxBlockEntity;
+import me.i509.fabric.bulkyshulkies.client.config.GameSession;
+import me.i509.fabric.bulkyshulkies.client.render.EnderSlabBlockEntityRenderer;
+import me.i509.fabric.bulkyshulkies.client.render.Facing1x1ShulkerBlockEntityRenderer;
+import me.i509.fabric.bulkyshulkies.client.render.FacingSlabShulkerBoxBlockEntityRenderer;
+import me.i509.fabric.bulkyshulkies.client.render.PlatinumShulkerBlockEntityRenderer;
+import me.i509.fabric.bulkyshulkies.client.registry.ClientShulkerRegistries;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerBoxTypes;
+import me.i509.fabric.bulkyshulkies.registry.ShulkerNetworking;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.ArmorStandEntityRenderer;
 import net.minecraft.client.render.entity.GiantEntityRenderer;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -69,50 +107,9 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-
-import me.i509.fabric.bulkyshulkies.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.BulkyShulkiesMod;
-import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
-import me.i509.fabric.bulkyshulkies.api.block.old.AbstractShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.old.entity.inventory.ShulkerBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.cursed.slab.ColoredSlabShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.old.cursed.slab.CursedSlabShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.ender.EnderSlabBlock;
-import me.i509.fabric.bulkyshulkies.block.old.ender.EnderSlabBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.CopperShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.old.CopperShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.DiamondShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.old.DiamondShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.GoldShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.old.GoldShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.IronShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.old.IronShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.NetheriteShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.old.NetheriteShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.ObsidianShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.old.ObsidianShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.SilverShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.old.SilverShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.block.old.MissingTexBoxBlock;
-import me.i509.fabric.bulkyshulkies.block.old.MissingTextureShulkerBoxBlockEntity;
-import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.EnderSlabBlockEntityRenderer;
-import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.Facing1x1ShulkerBlockEntityRenderer;
-import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.FacingSlabShulkerBoxBlockEntityRenderer;
-import me.i509.fabric.bulkyshulkies.client.block.entity.renderer.PlatinumShulkerBlockEntityRenderer;
-import me.i509.fabric.bulkyshulkies.client.screen.Generic11x7Screen;
-import me.i509.fabric.bulkyshulkies.client.screen.Generic13x7Screen;
-import me.i509.fabric.bulkyshulkies.client.screen.Generic9x7Screen;
-import me.i509.fabric.bulkyshulkies.client.screen.GenericCustomSlotContainerScreen;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlockEntities;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerBlocks;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerNetworking;
-import me.i509.fabric.bulkyshulkies.registry.ShulkerScreenHandlers;
 
 @Environment(EnvType.CLIENT)
 public class BulkyShulkiesClientMod implements ClientModInitializer {
@@ -155,65 +152,60 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		}
 	});
 
-	private static void registerRenderer(ItemConvertible item, @Nullable DyeColor color) {
+	private static void registerItemRenderer(ItemConvertible item, @Nullable DyeColor color) {
 		BuiltinItemRendererRegistry.INSTANCE.register(item.asItem(), (stack, mode, matrices, vertexConsumers, light, overlay) -> {
 			BlockEntity blockEntity = BulkyShulkiesClientMod.getRenderBlockEntity((AbstractShulkerBoxBlock) item, color);
-			BlockEntityRenderDispatcher.INSTANCE.renderEntity(blockEntity, matrices, vertexConsumers, light, overlay);
+			MinecraftClient.getInstance().method_31975().renderEntity(blockEntity, matrices, vertexConsumers, light, overlay);
 		});
+	}
+
+	public static void registerBlockRenderer(ShulkerBoxType type, ShulkerBlockEntityRendererFactory factory) {
+		BlockEntityRendererRegistry.INSTANCE.register(type.getBlockEntityType(), arguments -> {
+			return factory.create(type, arguments);
+		});
+	}
+
+	public static GameSession getSession() {
+		return null;
 	}
 
 	@Override
 	public void onInitializeClient() {
-		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x1_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
-		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x2_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
-		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x3_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
-		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x4_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
-		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x5_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
-		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x6_SCREEN_HANDLER, GenericCustomSlotContainerScreen::new);
-		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_9x7_SCREEN_HANDLER, Generic9x7Screen::new);
-		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_11x7_SCREEN_HANDLER, Generic11x7Screen::new);
-		ScreenRegistry.register(ShulkerScreenHandlers.SHULKER_13x7_SCREEN_HANDLER, Generic13x7Screen::new);
-		ScreenRegistry.register(ShulkerScreenHandlers.ENDER_SLAB, GenericCustomSlotContainerScreen::new);
+		ClientShulkerRegistries.init();
 
-		ShulkerBlocks.iterateColors(ShulkerBlocks.COPPER_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.IRON_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.SILVER_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.GOLD_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.DIAMOND_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.OBSIDIAN_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.PLATINUM_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.NETHERITE_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.MISSING_TEX_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.SLAB_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.STAIR_SHULKER_BOX, BulkyShulkiesClientMod::registerRenderer);
-		BulkyShulkiesClientMod.registerRenderer(ShulkerBlocks.ENDER_SLAB_BOX, null);
+		// TODO: Replace
+		ShulkerBlocks.iterateColors(ShulkerBlocks.COPPER_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.IRON_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.SILVER_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.GOLD_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.DIAMOND_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.OBSIDIAN_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.PLATINUM_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.NETHERITE_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.MISSING_TEX_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.SLAB_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlocks.iterateColors(ShulkerBlocks.STAIR_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		BulkyShulkiesClientMod.registerItemRenderer(ShulkerBlocks.ENDER_SLAB_BOX, null);
+		// TODO
 
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.COPPER_SHULKER_BOX,
-						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.COPPER));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.IRON_SHULKER_BOX,
-						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.IRON));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SILVER_SHULKER_BOX,
-						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.SILVER));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.GOLD_SHULKER_BOX,
-						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.GOLD));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.DIAMOND_SHULKER_BOX,
-						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.DIAMOND));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.OBSIDIAN_SHULKER_BOX,
-						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.OBSIDIAN));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.PLATINUM_SHULKER_BOX, PlatinumShulkerBlockEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.MISSING_TEX,
-						d -> new Facing1x1ShulkerBlockEntityRenderer<>(d, ShulkerBoxKeys.MISSING_TEX));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.ENDER_SLAB,
-						d -> new EnderSlabBlockEntityRenderer(d, ShulkerBoxKeys.ENDER_SLAB));
-		BlockEntityRendererRegistry.INSTANCE.register(ShulkerBlockEntities.SLAB_SHULKER_BOX,
-						d -> new FacingSlabShulkerBoxBlockEntityRenderer<>(d, ShulkerBoxKeys.SLAB));
+		registerBlockRenderer(ShulkerBoxTypes.COPPER, Facing1x1ShulkerBlockEntityRenderer::new);
+		registerBlockRenderer(ShulkerBoxTypes.IRON, Facing1x1ShulkerBlockEntityRenderer::new);
+		registerBlockRenderer(ShulkerBoxTypes.SILVER, Facing1x1ShulkerBlockEntityRenderer::new);
+		registerBlockRenderer(ShulkerBoxTypes.GOLD, Facing1x1ShulkerBlockEntityRenderer::new);
+		registerBlockRenderer(ShulkerBoxTypes.DIAMOND, Facing1x1ShulkerBlockEntityRenderer::new);
+		registerBlockRenderer(ShulkerBoxTypes.OBSIDIAN, Facing1x1ShulkerBlockEntityRenderer::new);
+		registerBlockRenderer(ShulkerBoxTypes.PLATINUM, PlatinumShulkerBlockEntityRenderer::new);
+		//registerBlockRenderer(ShulkerBoxTypes.MISSING_TEX, Facing1x1ShulkerBlockEntityRenderer::new);
+		registerBlockRenderer(ShulkerBoxTypes.ENDER_SLAB, EnderSlabBlockEntityRenderer::new);
+		registerBlockRenderer(ShulkerBoxTypes.SLAB, FacingSlabShulkerBoxBlockEntityRenderer::new);
+
 		ClientSpriteRegistryCallback.event(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE).register(BulkyShulkiesClientMod::registerSprites);
 
 		ClientTickEvents.END_CLIENT_TICK.register(BulkyShulkiesClientMod::tickHelmet);
 
 		final Iterator<String> iterator = BulkyShulkiesClientMod.HELMET_LID_TARGETS.iterator();
 
-		// Iterator is used because arraylist comodification isn't allowed
+		// Iterator is used because array list comodification isn't allowed
 		while (iterator.hasNext()) {
 			final String next = iterator.next();
 			Identifier id;
@@ -252,7 +244,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 			}
 		});
 
-		LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper) -> {
+		LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
 			if (BulkyShulkiesClientMod.shouldUseFeatureRenderer(entityType, entityRenderer)) {
 				registrationHelper.register(new ShulkerHelmetLidFeatureRenderer<>(entityRenderer));
 			}
@@ -323,5 +315,10 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		if (OPEN_SHULKER_HELMET.wasPressed()) {
 			ClientSidePacketRegistry.INSTANCE.sendToServer(ShulkerNetworking.HELMET_OPEN, new PacketByteBuf(Unpooled.buffer()));
 		}
+	}
+
+	@FunctionalInterface
+	public interface ShulkerBlockEntityRendererFactory {
+		BlockEntityRenderer<? extends ShulkerBlockEntity> create(ShulkerBoxType type, BlockEntityRendererFactory.Arguments arguments);
 	}
 }

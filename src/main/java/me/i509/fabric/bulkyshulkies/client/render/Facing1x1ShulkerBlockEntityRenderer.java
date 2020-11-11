@@ -22,14 +22,17 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
+package me.i509.fabric.bulkyshulkies.client.render;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
+import net.minecraft.client.render.entity.model.ShulkerEntityModel;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
@@ -41,20 +44,20 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
+import me.i509.fabric.bulkyshulkies.api.ShulkerBoxType;
+import me.i509.fabric.bulkyshulkies.api.block.old.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.api.block.old.FacingShulkerBoxBlock;
-import me.i509.fabric.bulkyshulkies.api.block.old.entity.slab.ColoredFacingSlabShulkerBlockEntity;
 import me.i509.fabric.bulkyshulkies.client.ShulkerRenderLayers;
-import me.i509.fabric.bulkyshulkies.client.model.SlabShulkerModel;
 
 @Environment(EnvType.CLIENT)
-public class FacingSlabShulkerBoxBlockEntityRenderer<BE extends ColoredFacingSlabShulkerBlockEntity> extends BlockEntityRenderer<BE> {
-	public FacingSlabShulkerBoxBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher, String textureKey) {
-		super(dispatcher);
-		this.type = textureKey;
-	}
+public class Facing1x1ShulkerBlockEntityRenderer<BE extends ColoredFacing1X1ShulkerBoxBlockEntity> implements BlockEntityRenderer<BE> {
+	protected final ShulkerEntityModel<?> model;
+	protected final ShulkerBoxType type;
 
-	protected static final SlabShulkerModel<ShulkerEntity> MODEL = new SlabShulkerModel<>();
-	protected final String type;
+	public Facing1x1ShulkerBlockEntityRenderer(ShulkerBoxType type, BlockEntityRendererFactory.Arguments arguments) {
+		this.type = type;
+		this.model = new ShulkerEntityModel<>(arguments.getLayerModelPart(EntityModelLayers.SHULKER));
+	}
 
 	public SpriteIdentifier getSprite() {
 		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id("be/shulker/" + type + "/shulker"));
@@ -65,7 +68,7 @@ public class FacingSlabShulkerBoxBlockEntityRenderer<BE extends ColoredFacingSla
 	}
 
 	@Override
-	public void render(ColoredFacingSlabShulkerBlockEntity blockEntity, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int defaultUV) {
+	public void render(ColoredFacing1X1ShulkerBoxBlockEntity blockEntity, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, int defaultUV) {
 		Direction direction = Direction.UP;
 
 		if (blockEntity.hasWorld()) {
@@ -86,18 +89,18 @@ public class FacingSlabShulkerBoxBlockEntityRenderer<BE extends ColoredFacingSla
 		}
 
 		matrixStack.push();
-		matrixStack.translate(0.5D, 0.5D, 0.5D); // Center the model
+		matrixStack.translate(0.5D, 0.5D, 0.5D);
 		float baseScale = 0.9995F;
-		matrixStack.scale(baseScale, baseScale, baseScale); // Scale em up
-		matrixStack.multiply(direction.getRotationQuaternion()); // Directionality
-		matrixStack.scale(1.0F, -1.0F, -1.0F); // To real size
-		matrixStack.translate(0.0D, -0.75D, 0.0D);
+		matrixStack.scale(baseScale, baseScale, baseScale);
+		matrixStack.multiply(direction.getRotationQuaternion());
+		matrixStack.scale(1.0F, -1.0F, -1.0F);
+		matrixStack.translate(0.0D, -1.0D, 0.0D);
 		VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutoutNoCull);
-		MODEL.getBottomShell().render(matrixStack, vertexConsumer, i, defaultUV);
-		matrixStack.translate(0.0D, (-blockEntity.getAnimationProgress(tickDelta) * 0.25F), 0.0D);
+		model.getBottomShell().render(matrixStack, vertexConsumer, light, defaultUV);
+		matrixStack.translate(0.0D, (-blockEntity.getAnimationProgress(tickDelta) * 0.5F), 0.0D);
 		matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F * blockEntity.getAnimationProgress(tickDelta)));
 
-		MODEL.getTopShell().render(matrixStack, vertexConsumer, i, defaultUV);
+		model.getTopShell().render(matrixStack, vertexConsumer, light, defaultUV);
 		matrixStack.pop();
 	}
 }

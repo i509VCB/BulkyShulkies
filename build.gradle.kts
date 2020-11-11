@@ -102,8 +102,17 @@ checkstyle {
     toolVersion = "8.25"
 }
 
-tasks.withType(JavaCompile::class) {
+tasks.withType(JavaCompile::class).configureEach {
     options.encoding = "UTF-8"
+    val targetVersion = 8
+
+    // So we always build binaries targeting jdk8
+    if (JavaVersion.current().isJava9Compatible) {
+        options.release.set(targetVersion)
+    } else {
+        sourceCompatibility = JavaVersion.toVersion(targetVersion).toString()
+        targetCompatibility = JavaVersion.toVersion(targetVersion).toString()
+    }
 }
 
 task<Jar>("sourcesJar") {

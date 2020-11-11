@@ -22,7 +22,10 @@
  * SOFTWARE.
  */
 
-package me.i509.fabric.bulkyshulkies.client.block.entity.renderer;
+package me.i509.fabric.bulkyshulkies.client.render;
+
+import java.util.Objects;
+import java.util.function.IntSupplier;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -32,7 +35,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
@@ -48,30 +51,55 @@ import net.fabricmc.api.Environment;
 
 import me.i509.fabric.bulkyshulkies.BulkyShulkies;
 import me.i509.fabric.bulkyshulkies.api.Magnetism;
-import me.i509.fabric.bulkyshulkies.ShulkerBoxKeys;
+import me.i509.fabric.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.fabric.bulkyshulkies.api.block.old.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlock;
 import me.i509.fabric.bulkyshulkies.block.old.PlatinumShulkerBoxBlockEntity;
 import me.i509.fabric.bulkyshulkies.item.ShulkerItemTags;
+import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEntityRenderer<PlatinumShulkerBoxBlockEntity> {
-	public PlatinumShulkerBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
-		super(dispatcher, ShulkerBoxKeys.PLATINUM);
+	private final boolean forceBox;
+	@Nullable
+	private final Direction forcedDirection;
+	@Nullable
+	private final IntSupplier boxSize;
+
+	public PlatinumShulkerBlockEntityRenderer(ShulkerBoxType type, BlockEntityRendererFactory.Arguments arguments) {
+		this(type, arguments, false, null, null);
+	}
+
+	public PlatinumShulkerBlockEntityRenderer(ShulkerBoxType type, BlockEntityRendererFactory.Arguments arguments, boolean forceBox, @Nullable Direction forcedDirection, @Nullable IntSupplier boxSize) {
+		super(type, arguments);
+		this.forceBox = forceBox;
+		this.forcedDirection = forcedDirection;
+		this.boxSize = boxSize;
+
+		if (forceBox) {
+			Objects.requireNonNull(this.forcedDirection);
+			Objects.requireNonNull(this.boxSize);
+		}
 	}
 
 	@Override
-	public void render(ColoredFacing1X1ShulkerBoxBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int i, int defaultUV) {
-		super.render(blockEntity, tickDelta, matrices, vertexConsumerProvider, i, defaultUV);
+	public void render(ColoredFacing1X1ShulkerBoxBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, int defaultUV) {
+		super.render(blockEntity, tickDelta, matrices, vertexConsumerProvider, light, defaultUV);
 
-		if (blockEntity.hasWorld()) {
+		if (this.forceBox) {
+			//noinspection ConstantConditions
+			final int size = this.boxSize.getAsInt();
+			final Box box = new Box(0.0D, 0.0D, 0.0D, size, size, size);
+
+			PlatinumShulkerBlockEntityRenderer.renderMagneticBox(matrices, vertexConsumerProvider, box, this.forcedDirection, 1.0F, 0.5F, 0.5F, 0.5F);
+		} else if (blockEntity.hasWorld()) {
 			final MinecraftClient client = MinecraftClient.getInstance();
 			final ClientPlayerEntity player = client.player;
 
 			if (player != null) {
 				final Tag<Item> tag = ShulkerItemTags.SHULKER_MAGNET_WAND;
 
-				if (player.getMainHandStack().getItem().isIn(tag) || player.getOffHandStack().getItem().isIn(tag)) {
+				if (tag.contains(player.getMainHandStack().getItem()) || tag.contains(player.getOffHandStack().getItem())) {
 					final BlockPos blockEntityPos = blockEntity.getPos();
 					final BlockState state = player.world.getBlockState(blockEntityPos);
 
