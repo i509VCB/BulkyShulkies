@@ -24,6 +24,8 @@
 
 package me.i509.bulkyshulkies.mod.integration.shulkertooltip;
 
+import java.util.Optional;
+
 import com.misterpemodder.shulkerboxtooltip.api.PreviewContext;
 import com.misterpemodder.shulkerboxtooltip.api.provider.BlockEntityPreviewProvider;
 
@@ -32,9 +34,12 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.DyeColor;
 
+import me.i509.bulkyshulkies.api.block.ShulkerBoxColor;
 import me.i509.bulkyshulkies.api.block.old.colored.ColoredShulkerBoxBlock;
+import me.i509.bulkyshulkies.api.component.ShulkerBoxColorComponent;
+import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
 
-class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
+final class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
 	private static float[] SHULKER_BOX_COLOR = new float[] {0.592f, 0.403f, 0.592f};
 
 	BulkyShulkerPreviewProvider(int maxInvSize) {
@@ -43,19 +48,27 @@ class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
 
 	@Override
 	public float[] getWindowColor(PreviewContext context) {
-		Item item = context.getStack().getItem();
+		final Optional<ShulkerBoxColorComponent> optional = ShulkerComponents.SHULKER_BOX_COLOR.maybeGet(context.getStack());
 
-		if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof ColoredShulkerBoxBlock) {
-			DyeColor dye = ((ColoredShulkerBoxBlock) Block.getBlockFromItem(item)).getColor();
+		if (optional.isPresent()) {
+			final ShulkerBoxColorComponent component = optional.get();
 
-			if (dye != null) {
-				float[] components = dye.getColorComponents();
-				return new float[] {
+			if (component.getColor() == ShulkerBoxColor.NONE) {
+				float[] components = DyeColor.PURPLE.getColorComponents();
+				return new float[]{
 						Math.max(0.15f, components[0]),
 						Math.max(0.15f, components[1]),
 						Math.max(0.15f, components[2])
 				};
 			}
+
+			//noinspection ConstantConditions
+			float[] components = component.getColor().toDyeColor().getColorComponents();
+			return new float[]{
+					Math.max(0.15f, components[0]),
+					Math.max(0.15f, components[1]),
+					Math.max(0.15f, components[2])
+			};
 		}
 
 		return SHULKER_BOX_COLOR;
