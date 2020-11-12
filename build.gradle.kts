@@ -34,8 +34,6 @@ logger.lifecycle("""
 Building Bulky Shulkies $version 
 """)
 
-val main by sourceSets
-
 repositories {
     jcenter()
     pex()
@@ -48,8 +46,35 @@ repositories {
     maven(url = "https://dl.bintray.com/kyrptonaught/kyrptconfig/")
 }
 
+val main = sourceSets.main.get()
+
+fun createIntegrationSourceSet(name: String) : NamedDomainObjectProvider<SourceSet> {
+    return sourceSets.register(name) {
+        java {
+            srcDirs("src/integration/$name/java")
+        }
+
+        resources {
+            srcDir("src/integration/$name/resources")
+        }
+
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+    }
+}
+
+val reiIntegration = createIntegrationSourceSet("rei")
+val shulkerToolTipIntegration = createIntegrationSourceSet("shulkertooltip")
+val quickShulkerIntegration = createIntegrationSourceSet("quickshulker")
+val modmenuIntegration = createIntegrationSourceSet("modmenu")
+
+configurations.forEach {
+    println(it)
+}
+
 dependencies {
     minecraft(minecraftVersion)
+
     yarn(minecraftVersion, yarnBuild)
     `fabric-loader`(loaderVersion)
     `fabric-api`(fabricApiVersion)
@@ -66,17 +91,33 @@ dependencies {
     modApi("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:$ccaVersion")
     modApi("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-item:$ccaVersion")
 
-    // Optional dependencies
-    optionalMod("com.misterpemodder:shulkerboxtooltip:$shulkerBoxTooltipVersion", false)
+    // Annotations
+    implementation("org.checkerframework:checker-qual:3.0.1")
+    //implementation("org.jetbrains:annotations:19.0.0")
+
     optionalMod("net.kyrptonaught:quickshulker:$quickShulkerVersion", true)
 
     // Nice to have
     optionalMod("io.github.prospector:modmenu:$modMenuVersion", false)
     optionalMod("me.shedaniel:RoughlyEnoughItems:$reiVersion", false)
 
-    // Annotations
-    implementation("org.checkerframework:checker-qual:3.0.1")
-    //implementation("org.jetbrains:annotations:19.0.0")
+    // Optional dependencies
+    //optionalMod("com.misterpemodder:shulkerboxtooltip:$shulkerBoxTooltipVersion", false)
+    "modShulkertooltipImplementation"("com.misterpemodder:shulkerboxtooltip:$shulkerBoxTooltipVersion")
+
+    afterEvaluate {
+        "modmenuImplementation"(main.output)
+        implementation(modmenuIntegration.get().output)
+
+        "quickshulkerImplementation"(main.output)
+        implementation(quickShulkerIntegration.get().output)
+
+        "reiImplementation"(main.output)
+        implementation(reiIntegration.get().output)
+
+        "shulkertooltipImplementation"(main.output)
+        implementation(shulkerToolTipIntegration.get().output)
+    }
 }
 
 tasks.withType(ProcessResources::class).configureEach {

@@ -51,7 +51,7 @@
       "me.i509.bulkyshulkies.mod.client.BulkyShulkiesREIPlugin"
     ],
     "shulkerboxtooltip": [
-      "me.i509.bulkyshulkies.mod.extension.BulkyTooltipHook"
+      "me.i509.bulkyshulkies.mod.integration.shulkertooltip.BulkyTooltipIntegration"
     ],
     "quickshulker": [
       "me.i509.bulkyshulkies.mod.extension.QuickShulkerHook"

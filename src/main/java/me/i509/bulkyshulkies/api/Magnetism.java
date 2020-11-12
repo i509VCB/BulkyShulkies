@@ -39,9 +39,9 @@ import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
 public final class Magnetism {
-	public static final Event<BeforeMagnetismCollection> BEFORE_MAGNETISM_COLLECTION = EventFactory.createArrayBacked(BeforeMagnetismCollection.class, (callbacks) -> ((targettedItems, world, pos, collectorBlockEntity) -> {
+	public static final Event<BeforeMagnetismCollection> BEFORE_MAGNETISM_COLLECTION = EventFactory.createArrayBacked(BeforeMagnetismCollection.class, (callbacks) -> ((targetedItems, world, pos, collectorBlockEntity) -> {
 		for (BeforeMagnetismCollection callback : callbacks) {
-			callback.beforeMagnetismCollection(targettedItems, world, pos, collectorBlockEntity);
+			callback.beforeMagnetismCollection(targetedItems, world, pos, collectorBlockEntity);
 		}
 	}));
 
@@ -70,11 +70,12 @@ public final class Magnetism {
 
 	public interface BeforeMagnetismCollection {
 		/**
-		 * Fired when a MagneticCollector BlockEntity fires it's magnetism tick.
+		 * Called when a magnetic collector block entity tries to pick up items
+		 * <p>To cancel the pickup of items, remove them from the targetedItems list.
+		 *
 		 * @param targetedItems The item entities to be collected.
 		 * @param pos The BlockPosition of the BlockEntity
 		 * @param collectingBlockEntity The blockEntity which engaged this event.
-		 * To cancel the pickup of items, remove them from the targettedItems list.
 		 */
 		void beforeMagnetismCollection(List<ItemEntity> targetedItems, World world, BlockPos pos, BlockEntity collectingBlockEntity);
 	}

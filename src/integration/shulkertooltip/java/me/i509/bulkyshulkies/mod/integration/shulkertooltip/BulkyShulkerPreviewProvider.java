@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.extension;
+package me.i509.bulkyshulkies.mod.integration.shulkertooltip;
 
 import com.misterpemodder.shulkerboxtooltip.api.PreviewContext;
 import com.misterpemodder.shulkerboxtooltip.api.provider.BlockEntityPreviewProvider;

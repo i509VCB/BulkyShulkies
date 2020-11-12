@@ -24,11 +24,11 @@
 
 package me.i509.bulkyshulkies.mod.registry;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
-import me.i509.fabric.bulkyshulkies.api.ShulkerBoxTicking;
+import me.i509.bulkyshulkies.api.ShulkerBoxTicking;
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.component.MagnetismCooldownComponent;
 import me.i509.bulkyshulkies.api.component.ShulkerBoxColorComponent;
+import me.i509.bulkyshulkies.mod.BulkyShulkies;
 
 import net.minecraft.block.FacingBlock;
 

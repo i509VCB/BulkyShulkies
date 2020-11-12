@@ -47,6 +47,7 @@ import net.minecraft.world.World;
 
 public final class ShulkerBoxTicking {
 	public static <B extends BlockEntity & ShulkerBoxBlockEntity> void simpleTick(World world, BlockPos pos, BlockState state, B blockEntity) {
+		// TODO: Impl
 	}
 
 	public static <B extends BlockEntity & ShulkerBoxBlockEntity> void platinumServerTick(World world, BlockPos pos, BlockState state, B blockEntity) {
@@ -82,6 +83,9 @@ public final class ShulkerBoxTicking {
 
 							final ItemStack result = add(stack, inventory);
 							entity.setStack(result);
+
+							// TODO: Check if the stack went the way of the dodo.
+							//  If yes then emit removal particles
 						}
 					}
 				});

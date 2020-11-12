@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.extension;
+package me.i509.bulkyshulkies.mod.integration.shulkertooltip;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,12 +39,13 @@ import net.minecraft.util.DyeColor;
 import me.i509.bulkyshulkies.mod.BulkyShulkiesMod;
 import me.i509.bulkyshulkies.api.block.old.AbstractShulkerBoxBlock;
 import me.i509.bulkyshulkies.mod.block.old.ShulkerBoxConstants;
+import me.i509.bulkyshulkies.mod.extension.ShulkerHooks;
 import me.i509.bulkyshulkies.mod.registry.ShulkerBlocks;
 
 /**
  * A hook to allow the Bulky Shulker Boxes to support Shulker Box Tooltips.
  */
-public final class BulkyTooltipHook implements ShulkerBoxTooltipApi {
+public final class BulkyTooltipIntegration implements ShulkerBoxTooltipApi {
 	@Override
 	public String getModId() {
 		return BulkyShulkiesMod.MODID;
