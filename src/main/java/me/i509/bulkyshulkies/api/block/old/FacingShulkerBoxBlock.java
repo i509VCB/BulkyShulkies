@@ -47,7 +47,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import me.i509.bulkyshulkies.api.block.old.entity.inventory.AbstractShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.inventory.PlayerEntityExtensions;
 import me.i509.bulkyshulkies.mod.block.old.ender.EnderSlabBoxBlockEntity;
 import me.i509.bulkyshulkies.mod.registry.ShulkerScreenHandlers;
 import me.i509.bulkyshulkies.mod.registry.ShulkerTexts;

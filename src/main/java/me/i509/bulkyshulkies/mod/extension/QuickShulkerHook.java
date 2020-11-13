@@ -37,7 +37,6 @@ import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.screen.slot.Slot;
 
 import me.i509.bulkyshulkies.mod.BulkyShulkies;
-import me.i509.bulkyshulkies.mod.inventory.PlayerEntityExtensions;
 import me.i509.bulkyshulkies.mod.block.old.ShulkerBoxConstants;
 import me.i509.bulkyshulkies.mod.block.old.cursed.slab.ColoredSlabShulkerBoxBlock;
 import me.i509.bulkyshulkies.mod.block.old.cursed.stair.StairShulkerBoxBlock;

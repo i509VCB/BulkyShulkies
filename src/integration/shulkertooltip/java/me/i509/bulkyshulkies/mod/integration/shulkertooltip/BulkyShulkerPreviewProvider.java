@@ -24,20 +24,12 @@
 
 package me.i509.bulkyshulkies.mod.integration.shulkertooltip;
 
-import java.util.Optional;
-
 import com.misterpemodder.shulkerboxtooltip.api.PreviewContext;
 import com.misterpemodder.shulkerboxtooltip.api.provider.BlockEntityPreviewProvider;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.util.DyeColor;
-
 import me.i509.bulkyshulkies.api.block.ShulkerBoxColor;
-import me.i509.bulkyshulkies.api.block.old.colored.ColoredShulkerBoxBlock;
-import me.i509.bulkyshulkies.api.component.ShulkerBoxColorComponent;
 import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
+
+import net.minecraft.util.DyeColor;
 
 final class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
 	private static float[] SHULKER_BOX_COLOR = new float[] {0.592f, 0.403f, 0.592f};
@@ -48,30 +40,23 @@ final class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
 
 	@Override
 	public float[] getWindowColor(PreviewContext context) {
-		final Optional<ShulkerBoxColorComponent> optional = ShulkerComponents.SHULKER_BOX_COLOR.maybeGet(context.getStack());
-
-		if (optional.isPresent()) {
-			final ShulkerBoxColorComponent component = optional.get();
+		return ShulkerComponents.SHULKER_BOX_COLOR.maybeGet(context.getStack()).map(component -> {
+			DyeColor color;
 
 			if (component.getColor() == ShulkerBoxColor.NONE) {
-				float[] components = DyeColor.PURPLE.getColorComponents();
-				return new float[]{
-						Math.max(0.15f, components[0]),
-						Math.max(0.15f, components[1]),
-						Math.max(0.15f, components[2])
-				};
+				color = DyeColor.PURPLE;
+			} else {
+				color = component.getColor().toDyeColor();
 			}
 
 			//noinspection ConstantConditions
-			float[] components = component.getColor().toDyeColor().getColorComponents();
+			final float[] components = color.getColorComponents();
 			return new float[]{
 					Math.max(0.15f, components[0]),
 					Math.max(0.15f, components[1]),
 					Math.max(0.15f, components[2])
 			};
-		}
-
-		return SHULKER_BOX_COLOR;
+		}).orElse(SHULKER_BOX_COLOR);
 	}
 
 	@Override

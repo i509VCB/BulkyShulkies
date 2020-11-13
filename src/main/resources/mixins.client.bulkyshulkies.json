@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "me.i509.fabric.bulkyshulkies.mixin.client",
+  "package": "me.i509.bulkyshulkies.mod.mixin.client",
   "compatibilityLevel": "JAVA_8",
   "client": [
     "TexturedRenderLayersMixin"

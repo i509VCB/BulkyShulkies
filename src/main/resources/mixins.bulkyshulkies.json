@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "me.i509.fabric.bulkyshulkies.mixin.core",
+  "package": "me.i509.bulkyshulkies.mod.mixin.core",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "block.AbstractBlockStateMixin",
@@ -9,8 +9,6 @@
     "block.entity.ShulkerBoxBlockEntityMixin",
     "enchantment.EnchantmentTargetMixin",
     "entity.LivingEntityMixin",
-    "entity.PlayerEntityMixin",
-    "entity.ServerPlayerEntityMixin",
     "screen.slot.ShulkerBoxSlotMixin"
   ],
   "injectors": {
