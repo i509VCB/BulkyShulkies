@@ -48,13 +48,13 @@
       "me.i509.bulkyshulkies.mod.component.ShulkerItemComponents"
     ],
     "rei_plugins_v0": [
-      "me.i509.bulkyshulkies.mod.client.BulkyShulkiesREIPlugin"
+      "me.i509.bulkyshulkies.mod.integration.rei.ReiIntegration"
     ],
     "shulkerboxtooltip": [
-      "me.i509.bulkyshulkies.mod.integration.shulkertooltip.BulkyTooltipIntegration"
+      "me.i509.bulkyshulkies.mod.integration.shulkertooltip.ShulkerBoxTooltipIntegration"
     ],
     "quickshulker": [
-      "me.i509.bulkyshulkies.mod.extension.QuickShulkerHook"
+      "me.i509.bulkyshulkies.mod.integration.quickshulker.QuickShulkerIntegration"
     ]
   },
   "mixins": [

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ import me.i509.bulkyshulkies.api.block.old.entity.inventory.LootableBlockEntity;
 @Mixin(LootableContainerBlockEntity.class)
 abstract class LootableContainerBlockEntityMixin {
 	@Inject(at = @At("TAIL"), method = "setLootTable(Lnet/minecraft/world/BlockView;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Identifier;)V")
-	private static void bulky$setCustomBlockEntityTables(BlockView world, Random random, BlockPos pos, Identifier id, CallbackInfo ci) {
+	private static void setCustomBlockEntityTables(BlockView world, Random random, BlockPos pos, Identifier id, CallbackInfo ci) {
 		final BlockEntity blockEntity = world.getBlockEntity(pos);
 
 		if (blockEntity instanceof LootableContainerBlockEntity) {

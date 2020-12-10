@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 
 import me.i509.bulkyshulkies.api.block.old.entity.slab.ColoredFacingSlabShulkerBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.ShulkerBoxConstants;
 import me.i509.bulkyshulkies.mod.registry.ShulkerBlockEntities;
 import me.i509.bulkyshulkies.mod.registry.ShulkerTexts;
 import me.i509.bulkyshulkies.mod.registry.ShulkerScreenHandlers;

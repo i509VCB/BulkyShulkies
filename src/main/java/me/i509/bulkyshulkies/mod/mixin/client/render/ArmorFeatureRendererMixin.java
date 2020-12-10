@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,12 @@
 
 package me.i509.bulkyshulkies.mod.mixin.client.render;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.client.model.AbstractShulkerLidHelmetModel;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
@@ -44,9 +45,10 @@ import net.fabricmc.api.Environment;
 abstract class ArmorFeatureRendererMixin<T extends LivingEntity, A extends BipedEntityModel<T>, M extends BipedEntityModel<T>> extends FeatureRenderer<T, M> {
 	@Shadow
 	@Final
-	protected A bodyModel;
+	private A bodyModel;
 
-	private AbstractShulkerLidHelmetModel bulkyshulkies$shulkerLidModel;
+	@Unique
+	private AbstractShulkerLidHelmetModel<?, ?> shulkerLidModel;
 
 	public ArmorFeatureRendererMixin() {
 		super(null);
@@ -131,6 +133,6 @@ abstract class ArmorFeatureRendererMixin<T extends LivingEntity, A extends Biped
 	}*/
 
 	protected Identifier bulkyshulkies_getLidTexture() {
-		return BulkyShulkies.id("shulker_helmet_lid");
+		return BulkyShulkiesImpl.id("shulker_helmet_lid");
 	}
 }

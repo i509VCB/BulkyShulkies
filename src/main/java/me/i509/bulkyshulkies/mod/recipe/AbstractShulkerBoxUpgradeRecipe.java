@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ public class AbstractShulkerBoxUpgradeRecipe extends ShapedRecipe {
 	}
 
 	public AbstractShulkerBoxUpgradeRecipe(ShapedRecipe handle) {
-		this(handle.getId(), ((ShapedRecipeAccessor) handle).accessor$getGroup(), handle.getWidth(), handle.getHeight(), handle.getPreviewInputs(), handle.getOutput());
+		this(handle.getId(), ((ShapedRecipeAccessor) handle).accessor_getGroup(), handle.getWidth(), handle.getHeight(), handle.getPreviewInputs(), handle.getOutput());
 	}
 
 	@Override

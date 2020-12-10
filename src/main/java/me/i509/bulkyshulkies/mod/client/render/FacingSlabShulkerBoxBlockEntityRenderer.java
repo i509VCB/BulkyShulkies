@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ import net.minecraft.util.math.Direction;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.block.old.FacingShulkerBoxBlock;
 import me.i509.bulkyshulkies.api.block.old.entity.slab.ColoredFacingSlabShulkerBlockEntity;
@@ -57,11 +57,11 @@ public class FacingSlabShulkerBoxBlockEntityRenderer<BE extends ColoredFacingSla
 	protected final ShulkerBoxType type;
 
 	public SpriteIdentifier getSprite() {
-		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id("be/shulker/" + type + "/shulker"));
+		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkiesImpl.id("be/shulker/" + type + "/shulker"));
 	}
 
 	public SpriteIdentifier getSprite(DyeColor color) {
-		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id("be/shulker/" + type + "/shulker_" + color.getName()));
+		return new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkiesImpl.id("be/shulker/" + type + "/shulker_" + color.getName()));
 	}
 
 	@Override

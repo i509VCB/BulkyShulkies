@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.client;
+package me.i509.bulkyshulkies.mod.integration.rei;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.registry.ShulkerBoxTypes;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
@@ -45,12 +45,12 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
-public class BulkyShulkiesREIPlugin implements REIPluginV0 {
+public final class ReiIntegration implements REIPluginV0 {
 	private static List<EntryStack> ENTRY_LIST;
 
 	@Override
 	public Identifier getPluginIdentifier() {
-		return BulkyShulkies.id("reiplugin");
+		return BulkyShulkiesImpl.id("integration");
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class BulkyShulkiesREIPlugin implements REIPluginV0 {
 		if (ENTRY_LIST == null) {
 			ENTRY_LIST = new ArrayList<>();
 
-			Tag<Item> itemTags = ItemTags.getTagGroup().getTagOrEmpty(BulkyShulkies.id("slab_shulker_boxes"));
+			Tag<Item> itemTags = ItemTags.getTagGroup().getTagOrEmpty(BulkyShulkiesImpl.id("slab_shulker_boxes"));
 			itemTags.values().forEach(item -> ENTRY_LIST.add(EntryStack.create(item)));
 
 			ENTRY_LIST.add(EntryStack.create(ShulkerBoxTypes.ENDER_SLAB.createItemStack()));

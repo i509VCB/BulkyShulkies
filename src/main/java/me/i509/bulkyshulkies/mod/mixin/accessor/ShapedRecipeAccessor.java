@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,5 +32,5 @@ import net.minecraft.recipe.ShapedRecipe;
 @Mixin(ShapedRecipe.class)
 public interface ShapedRecipeAccessor {
 	@Accessor("group")
-	String accessor$getGroup();
+	String accessor_getGroup();
 }

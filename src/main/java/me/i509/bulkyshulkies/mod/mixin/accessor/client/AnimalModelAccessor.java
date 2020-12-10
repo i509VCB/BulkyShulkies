@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,14 +32,14 @@ import net.minecraft.client.render.entity.model.AnimalModel;
 @Mixin(AnimalModel.class)
 public interface AnimalModelAccessor {
 	@Accessor("headScaled")
-	boolean accessor$headScaled();
+	boolean accessor_isHeadScaled();
 
 	@Accessor("childHeadYOffset")
-	float accessor$childHeadYOffset();
+	float accessor_getChildHeadYOffset();
 
 	@Accessor("childHeadZOffset")
-	float accessor$childHeadZOffset();
+	float accessor_getChildHeadZOffset();
 
 	@Accessor("invertedChildHeadScale")
-	float accessor$invertedChildHeadScale();
+	float accessor_getInvertedChildHeadScale();
 }

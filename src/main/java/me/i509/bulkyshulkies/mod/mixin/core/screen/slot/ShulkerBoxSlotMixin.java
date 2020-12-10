@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 package me.i509.bulkyshulkies.mod.mixin.core.screen.slot;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -37,7 +37,7 @@ import net.minecraft.screen.slot.ShulkerBoxSlot;
 abstract class ShulkerBoxSlotMixin {
 	@Inject(at = @At("HEAD"), method = "canInsert", cancellable = true)
 	private void canInsert(ItemStack stack, CallbackInfoReturnable<Boolean> cib) {
-		if (!BulkyShulkies.getInstance().canInsertItem(stack)) {
+		if (!BulkyShulkiesImpl.getInstance().canInsertItem(stack)) {
 			cib.setReturnValue(false);
 		}
 	}

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,29 +22,13 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.extension;
+package me.i509.bulkyshulkies.mod.integration.modmenu;
+
+import io.github.prospector.modmenu.api.ModMenuApi;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
 
-public class ShulkerHooks {
-	private static final FabricLoader LOADER = FabricLoader.getInstance();
-	static boolean resourcesPresent;
-	static boolean shulkerTooltipsPresent;
-
-	private ShulkerHooks() {
-	}
-
-	public static void init() {
-	}
-
-	@Environment(EnvType.CLIENT)
-	public static boolean shulkerTooltipsArePresent() {
-		return shulkerTooltipsPresent;
-	}
-
-	public static boolean areResourcesPresent() {
-		return resourcesPresent;
-	}
+@Environment(EnvType.CLIENT)
+public final class ModmenuIntegration implements ModMenuApi {
 }

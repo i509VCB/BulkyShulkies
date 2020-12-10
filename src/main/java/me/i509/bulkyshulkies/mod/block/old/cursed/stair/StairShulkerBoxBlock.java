@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 
 import me.i509.bulkyshulkies.api.block.old.colored.ColoredHorizontalFacingShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.ShulkerBoxConstants;
 import me.i509.bulkyshulkies.mod.mixin.accessor.StairsBlockAccessor;
 import me.i509.bulkyshulkies.mod.registry.ShulkerBlocks;
 
@@ -85,8 +84,8 @@ public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock
 	}
 
 	public static VoxelShape getBaseStairShape(BlockState state) {
-		return (state.get(HALF) == BlockHalf.TOP ? StairsBlockAccessor.getTopShapes()
-				: StairsBlockAccessor.getBottomShapes())[StairsBlockAccessor.getShapeIndices()[getShapeIndexIndex(state)]];
+		return (state.get(HALF) == BlockHalf.TOP ? StairsBlockAccessor.accessor_getTopShapes()
+				: StairsBlockAccessor.accessor_getBottomShapes())[StairsBlockAccessor.accessor_getShapeIndices()[getShapeIndexIndex(state)]];
 	}
 
 	public StairShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
@@ -235,7 +234,7 @@ public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock
 		BlockPos blockPos = ctx.getBlockPos();
 		FluidState fluidState = ctx.getWorld().getFluidState(blockPos);
 		BlockState blockState = this.getDefaultState().with(FACING, ctx.getPlayerFacing()).with(HALF, direction != Direction.DOWN && (direction == Direction.UP || ctx.getHitPos().y - blockPos.getY() <= 0.5D) ? BlockHalf.BOTTOM : BlockHalf.TOP).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
-		return blockState.with(SHAPE, StairsBlockAccessor.getStairShape(blockState, ctx.getWorld(), blockPos));
+		return blockState.with(SHAPE, StairsBlockAccessor.accessor_getStairShape(blockState, ctx.getWorld(), blockPos));
 	}
 
 	@Override
@@ -244,7 +243,7 @@ public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock
 			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		}
 
-		return facing.getAxis().isHorizontal() ? state.with(SHAPE, StairsBlockAccessor.getStairShape(state, world, pos)) : super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
+		return facing.getAxis().isHorizontal() ? state.with(SHAPE, StairsBlockAccessor.accessor_getStairShape(state, world, pos)) : super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
 	}
 
 	private static int getShapeIndexIndex(BlockState state) {

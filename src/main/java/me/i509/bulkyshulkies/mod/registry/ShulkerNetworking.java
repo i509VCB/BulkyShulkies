@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ package me.i509.bulkyshulkies.mod.registry;
 
 import net.minecraft.util.Identifier;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 
 public final class ShulkerNetworking {
-	public static Identifier HELMET_OPEN = BulkyShulkies.id("open_helmet");
+	public static Identifier HELMET_OPEN = BulkyShulkiesImpl.id("open_helmet");
 
 	private void ShulkerItems() {
 		throw new AssertionError("You should not be instantiating this");

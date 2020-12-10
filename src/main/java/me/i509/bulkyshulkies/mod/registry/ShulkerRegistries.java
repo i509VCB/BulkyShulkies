@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 package me.i509.bulkyshulkies.mod.registry;
 
 import me.i509.bulkyshulkies.mod.event.ShulkerEvents;
-import me.i509.bulkyshulkies.mod.extension.ShulkerHooks;
+import me.i509.bulkyshulkies.mod.integration.Integrations;
 import me.i509.bulkyshulkies.mod.recipe.BulkyRecipeSerializers;
 import me.i509.bulkyshulkies.mod.BulkyDataTrackerHandlers;
 
@@ -40,7 +40,7 @@ public final class ShulkerRegistries {
 		ShulkerEvents.init();
 		ShulkerItems.init();
 		ShulkerItemGroups.init();
-		ShulkerHooks.init();
+		Integrations.init();
 		ShulkerScreenHandlers.init();
 	}
 

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,30 +35,12 @@ import java.util.function.Consumer;
 import io.netty.buffer.Unpooled;
 import me.i509.bulkyshulkies.mod.client.render.EnderSlabBlockEntityRenderer;
 import me.i509.bulkyshulkies.mod.client.render.FacingSlabShulkerBoxBlockEntityRenderer;
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.BulkyShulkiesMod;
 import me.i509.bulkyshulkies.mod.ShulkerBoxKeys;
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.block.old.AbstractShulkerBoxBlock;
 import me.i509.bulkyshulkies.api.block.old.entity.inventory.ShulkerBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.CopperShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.CopperShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.DiamondShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.DiamondShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.GoldShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.GoldShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.IronShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.IronShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.MissingTexBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.MissingTextureShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.NetheriteShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.NetheriteShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.ObsidianShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.ObsidianShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.PlatinumShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.PlatinumShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.SilverShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.SilverShulkerBoxBlockEntity;
 import me.i509.bulkyshulkies.mod.block.old.cursed.slab.ColoredSlabShulkerBoxBlock;
 import me.i509.bulkyshulkies.mod.block.old.cursed.slab.CursedSlabShulkerBoxBlockEntity;
 import me.i509.bulkyshulkies.mod.block.old.ender.EnderSlabBlock;
@@ -70,7 +52,7 @@ import me.i509.bulkyshulkies.mod.client.registry.ClientShulkerRegistries;
 import me.i509.bulkyshulkies.mod.registry.ShulkerBlocks;
 import me.i509.bulkyshulkies.mod.registry.ShulkerBoxTypes;
 import me.i509.bulkyshulkies.mod.registry.ShulkerNetworking;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.block.entity.BlockEntity;
@@ -115,7 +97,7 @@ import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 public class BulkyShulkiesClientMod implements ClientModInitializer {
 	public static final KeyBinding OPEN_SHULKER_HELMET = KeyBindingHelper.registerKeyBinding(new KeyBinding("bulkyshulkies.keybinding.open_helmet", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, BulkyShulkiesMod.MODID));
 	// Copy the list
-	private static final List<String> HELMET_LID_TARGETS = new ArrayList<>(BulkyShulkies.getInstance().getConfig().getRendering().getHelmetRenderingAdditions());
+	private static final List<String> HELMET_LID_TARGETS = new ArrayList<>(BulkyShulkiesImpl.getInstance().getConfig().getRendering().getHelmetRenderingAdditions());
 	private static final List<EntityType<?>> DETECTED_TARGETS = new ArrayList<>();
 	/**
 	 * Provides the BlockEntity to use for the ItemRenderer.
@@ -160,8 +142,8 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 	}
 
 	public static void registerBlockRenderer(ShulkerBoxType type, ShulkerBlockEntityRendererFactory factory) {
-		BlockEntityRendererRegistry.INSTANCE.register(type.getBlockEntityType(), arguments -> {
-			return factory.create(type, arguments);
+		BlockEntityRendererRegistry.INSTANCE.register(type.getBlockEntityType(), context -> {
+			return factory.create(type, context);
 		});
 	}
 
@@ -213,7 +195,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 			try {
 				id = new Identifier(next);
 			} catch (InvalidIdentifierException e) {
-				BulkyShulkies.getInstance().getLogger().error(() -> {
+				BulkyShulkiesImpl.getInstance().getLogger().error(() -> {
 					return String.format("Could not apply helmet renderer to %s due to an invalid identifier", next);
 				}, e);
 				continue;
@@ -226,13 +208,13 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 			}
 
 			if (BulkyShulkiesClientMod.isReservedEntityType(entityType.get())) {
-				BulkyShulkies.getInstance().getLogger().warn("Tried to register helmet renderer for {} but it has a builtin renderer already.", next);
+				BulkyShulkiesImpl.getInstance().getLogger().warn("Tried to register helmet renderer for {} but it has a builtin renderer already.", next);
 				continue;
 			}
 
 			BulkyShulkiesClientMod.DETECTED_TARGETS.add(entityType.get());
 			iterator.remove();
-			BulkyShulkies.getInstance().getLogger().debug("Applying shulker renderer to entity type \"{}\"", next);
+			BulkyShulkiesImpl.getInstance().getLogger().debug("Applying shulker renderer to entity type \"{}\"", next);
 		}
 
 		// Listen for mods which are register their entity types after us
@@ -240,7 +222,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 			if (BulkyShulkiesClientMod.HELMET_LID_TARGETS.contains(id.toString())) {
 				BulkyShulkiesClientMod.HELMET_LID_TARGETS.remove(id.toString());
 				BulkyShulkiesClientMod.DETECTED_TARGETS.add(entityType);
-				BulkyShulkies.getInstance().getLogger().debug("Applying shulker renderer to entity type \"{}\"", id.toString());
+				BulkyShulkiesImpl.getInstance().getLogger().debug("Applying shulker renderer to entity type \"{}\"", id.toString());
 			}
 		});
 
@@ -319,6 +301,6 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 
 	@FunctionalInterface
 	public interface ShulkerBlockEntityRendererFactory {
-		BlockEntityRenderer<? extends ShulkerBlockEntity> create(ShulkerBoxType type, BlockEntityRendererFactory.Arguments arguments);
+		BlockEntityRenderer<? extends ShulkerBlockEntity> create(ShulkerBoxType type, BlockEntityRendererFactory.Context context);
 	}
 }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ import java.util.function.Consumer;
 import dev.onyxstudios.cca.api.v3.component.ComponentFactory;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.block.ShulkerBox;
 import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
 import me.i509.bulkyshulkies.api.block.old.entity.inventory.ShulkerBlockEntity;
@@ -58,6 +58,9 @@ import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 
+/**
+ * Represents a type of shulker box.
+ */
 public final class ShulkerBoxType {
 	private final Identifier id;
 	private final Map<ComponentKey<?>, ComponentFactory<? extends ShulkerBoxBlockEntity, ?>> blockEntityComponents;
@@ -72,17 +75,23 @@ public final class ShulkerBoxType {
 	private final Item.Settings itemSettings;
 	private final BlockEntityType<? extends ShulkerBlockEntity> blockEntityType;
 	private final Block block;
+	private final boolean allowInsertionIntoShulkerBox;
 
 	public static ShulkerBoxType.Builder builder() {
 		return new ShulkerBoxType.Builder();
 	}
 
-	private ShulkerBoxType(Identifier id, Map<ComponentKey<?>, ComponentFactory<? extends ShulkerBoxBlockEntity, ?>> blockEntityComponents,
-						   Map<ComponentKey<?>, ComponentFactory<ItemStack, ?>> itemStackComponents,
-						   DirectionProperty directionProperty, boolean inventory,
-						   @Nullable BlockEntityTicker<? extends ShulkerBoxBlockEntity> clientTicker,
-						   @Nullable BlockEntityTicker<? extends ShulkerBoxBlockEntity> serverTicker,
-						   AbstractBlock.Settings blockSettings, Item.Settings itemSettings) {
+	private ShulkerBoxType(
+			Identifier id, Map<ComponentKey<?>,
+			ComponentFactory<? extends ShulkerBoxBlockEntity, ?>> blockEntityComponents,
+			Map<ComponentKey<?>, ComponentFactory<ItemStack, ?>> itemStackComponents,
+			DirectionProperty directionProperty,
+			boolean inventory,
+			@Nullable BlockEntityTicker<? extends ShulkerBoxBlockEntity> clientTicker,
+			@Nullable BlockEntityTicker<? extends ShulkerBoxBlockEntity> serverTicker,
+			AbstractBlock.Settings blockSettings,
+			Item.Settings itemSettings,
+			boolean allowInsertionIntoShulkerBox) {
 		this.id = id;
 		this.blockEntityComponents = Collections.unmodifiableMap(new HashMap<>(blockEntityComponents));
 		this.itemStackComponents = Collections.unmodifiableMap(new HashMap<>(itemStackComponents));
@@ -92,7 +101,8 @@ public final class ShulkerBoxType {
 		this.serverTicker = serverTicker;
 		this.blockSettings = blockSettings;
 		this.itemSettings = itemSettings;
-		this.block = null;
+		this.allowInsertionIntoShulkerBox = allowInsertionIntoShulkerBox;
+		this.block = null; // TODO
 
 		if (inventory) {
 			//noinspection unchecked
@@ -129,7 +139,7 @@ public final class ShulkerBoxType {
 	}
 
 	void register() {
-		Registry.register(BulkyShulkies.SHULKER_BOX_TYPE, this.id, this);
+		Registry.register(BulkyShulkiesImpl.SHULKER_BOX_TYPE, this.id, this);
 		Registry.register(Registry.BLOCK, this.id, this.block);
 		Registry.register(Registry.ITEM, this.id, new ShulkerBlockItem(this, this.itemSettings));
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, this.id, this.getBlockEntityType());
@@ -156,12 +166,16 @@ public final class ShulkerBoxType {
 		return this.block.getDefaultState().with(this.getDirectionProperty(), facing);
 	}
 
+	public Item getItem() {
+		return this.block.asItem();
+	}
+
 	public ItemStack createItemStack() {
 		return this.block.asItem().getDefaultStack();
 	}
 
 	public ItemStack createItemStack(Consumer<ItemStack> postProcessor) {
-		Objects.requireNonNull(postProcessor, "Item stack post processor cannot be null");
+		Objects.requireNonNull(postProcessor, "Post processor cannot be null");
 		final ItemStack stack = this.createItemStack();
 		postProcessor.accept(stack);
 		return stack;
@@ -179,6 +193,10 @@ public final class ShulkerBoxType {
 		return new InventoryShulkerBoxBlockEntity(this, null, -1, this.blockEntityType, pos, state);
 	}
 
+	public boolean canInsertIntoShulkerBox() {
+		return this.allowInsertionIntoShulkerBox;
+	}
+
 	public static final class Builder {
 		private Identifier id;
 		private boolean inventory;
@@ -191,6 +209,7 @@ public final class ShulkerBoxType {
 		private Item.Settings itemSettings;
 		private final Map<ComponentKey<?>, ComponentFactory<? extends ShulkerBoxBlockEntity, ?>> blockEntityComponents = new HashMap<>();
 		private final Map<ComponentKey<?>, ComponentFactory<ItemStack, ?>> itemStackComponents = new HashMap<>();
+		private boolean allowInsertionIntoShulkerBox;
 
 		private Builder() {
 		}
@@ -207,7 +226,7 @@ public final class ShulkerBoxType {
 			return this;
 		}
 
-		public <C extends ComponentV3> Builder attachToBlockEntity(ComponentKey<?> key, ComponentFactory<? extends ShulkerBoxBlockEntity, ?> factory) {
+		public <C extends ComponentV3> Builder attachToBlockEntity(ComponentKey<C> key, ComponentFactory<? extends ShulkerBoxBlockEntity, ?> factory) {
 			Objects.requireNonNull(key);
 			Objects.requireNonNull(factory);
 			this.blockEntityComponents.put(key, factory);
@@ -219,8 +238,25 @@ public final class ShulkerBoxType {
 			return this;
 		}
 
+		/**
+		 * Specifies that this type of shulker box will have an inventory.
+		 *
+		 * @return this builder
+		 */
 		public Builder inventory() {
 			this.inventory = true;
+			return this;
+		}
+
+		/**
+		 * Specifies that this type of shulker box may be inserted into another shulker box.
+		 *
+		 * <p><b>You are not recommended to use this builder parameter unless you know what you are doing!</b>
+		 *
+		 * @return this builder
+		 */
+		public Builder allowInsertionIntoShulkerBox() {
+			this.allowInsertionIntoShulkerBox = true;
 			return this;
 		}
 
@@ -250,7 +286,17 @@ public final class ShulkerBoxType {
 			Objects.requireNonNull(this.blockSettings);
 			Objects.requireNonNull(this.itemSettings);
 
-			final ShulkerBoxType type = new ShulkerBoxType(this.id, this.blockEntityComponents, this.itemStackComponents, this.directionProperty, this.inventory, this.clientTicker, this.serverTicker, this.blockSettings, this.itemSettings);
+			final ShulkerBoxType type = new ShulkerBoxType(
+					this.id,
+					this.blockEntityComponents,
+					this.itemStackComponents,
+					this.directionProperty,
+					this.inventory,
+					this.clientTicker,
+					this.serverTicker,
+					this.blockSettings,
+					this.itemSettings,
+					this.allowInsertionIntoShulkerBox);
 
 			type.register();
 			return type;

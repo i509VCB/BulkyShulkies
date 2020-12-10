@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,23 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.api.inventory;
+package me.i509.bulkyshulkies.api;
 
-public enum InventoryType {
-	// TODO
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
+
+import net.minecraft.item.ItemStack;
+
+public final class BulkyShulkies {
+	/**
+	 * Checks if an item can be inserted into a shulker box.
+	 *
+	 * @param stack the item stack
+	 * @return true if the item can be inserted, otherwise false
+	 */
+	public static boolean canInsertItem(ItemStack stack) {
+		return BulkyShulkiesImpl.getInstance().canInsertItem(stack);
+	}
+
+	private BulkyShulkies() {
+	}
 }

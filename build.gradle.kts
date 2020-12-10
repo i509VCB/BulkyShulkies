@@ -1,129 +1,125 @@
-import net.minecrell.gradle.licenser.header.HeaderStyle
+/*
+ * MIT License
+ *
+ * Copyright (c) 2020 i509VCB
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+// Buildscript start
+import net.fabricmc.loom.util.Constants.Configurations
 
 plugins {
     java
+    `java-library`
+    `maven-publish`
     checkstyle
-    id("fabric-loom")
-    id("net.minecrell.licenser")
+    id("com.diffplug.spotless") version "5.8.2"
+    id("fabric-loom") version "0.5-SNAPSHOT"
 }
 
+val distribution: String by project
+val archivesBaseName: String by project
+base.archivesBaseName = archivesBaseName
+
+val mavenGroup: String by project
+group = mavenGroup
+
+val baseVersion: String by project
 val minecraftVersion: String by project
+version = "$baseVersion+$minecraftVersion"
+
 val yarnBuild: String by project
 val loaderVersion: String by project
-
 val fabricApiVersion: String by project
 
 val ccaVersion: String by project
 val configurateVersion: String by project
 val confabricateVersion: String by project
 
-// Optional dependencies
+// Integrations
 val shulkerBoxTooltipVersion: String by project
 val quickShulkerVersion: String by project
-
-// Nice to have
-val reiVersion: String by project
 val modMenuVersion: String by project
+val reiVersion: String by project
 
-val baseVersion: String by project
-version = "$baseVersion+$minecraftVersion"
-
-val archivesBaseName: String by project
-
-logger.lifecycle("""
-Building Bulky Shulkies $version 
-""")
+logger.lifecycle("Building Bulky Shulkies $version")
 
 repositories {
     jcenter()
-    pex()
-    sponge()
-    misterpe()
-    maven(url = "https://dl.bintray.com/ladysnake/libs")
+    mavenCentral()
 
-    // For Quickshulker and kyrptconfig
-    maven(url = "https://dl.bintray.com/kyrptonaught/Quickshulker/")
-    maven(url = "https://dl.bintray.com/kyrptonaught/kyrptconfig/")
-}
+    maven("https://maven.misterpemodder.com/libs-release") {
+        name = "Misterpemodder"
+    }
 
-val main = sourceSets.main.get()
+    maven("https://dl.bintray.com/ladysnake/libs") {
+        name = "Ladysnake"
+    }
 
-fun createIntegrationSourceSet(name: String) : NamedDomainObjectProvider<SourceSet> {
-    return sourceSets.register(name) {
-        java {
-            srcDirs("src/integration/$name/java")
-        }
+    maven("https://dl.bintray.com/kyrptonaught/Quickshulker/") {
+        name = "Quickshulker"
+    }
 
-        resources {
-            srcDir("src/integration/$name/resources")
-        }
-
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
+    maven("https://dl.bintray.com/kyrptonaught/kyrptconfig/") {
+        name = "Kryptconfig"
     }
 }
 
-val reiIntegration = createIntegrationSourceSet("rei")
-val shulkerToolTipIntegration = createIntegrationSourceSet("shulkertooltip")
-val quickShulkerIntegration = createIntegrationSourceSet("quickshulker")
-val modmenuIntegration = createIntegrationSourceSet("modmenu")
-
-configurations.forEach {
-    println(it)
-}
+// Configurations
+val implementationAndInclude by configurations.register("implementationAndInclude")
+val modApiAndInclude by configurations.register("modApiAndInclude")
 
 dependencies {
-    minecraft(minecraftVersion)
+    minecraft("com.mojang:minecraft:$minecraftVersion")
+    mappings("net.fabricmc:yarn:$minecraftVersion+build.$yarnBuild:v2")
+    modImplementation("net.fabricmc:fabric-loader:$loaderVersion")
 
-    yarn(minecraftVersion, yarnBuild)
-    `fabric-loader`(loaderVersion)
-    `fabric-api`(fabricApiVersion)
+    modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricApiVersion")
 
-    // Confabricate needs updating to 20w30a
+    // Confabricate needs updating
     //confabricate(configurateVersion, confabricateVersion, true)
-    configurate(ConfigurateType.HOCON, configurateVersion, true)?.let {
-        include(it)
+    implementationAndInclude("org.spongepowered:configurate-core:$configurateVersion") {
+        exclude(module = "checker-qual")
+    }
+    implementationAndInclude("org.spongepowered:configurate-hocon:$configurateVersion") {
+        exclude(module = "checker-qual")
     }
 
     // Base, entity, block
-    modApi("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:$ccaVersion")
-    modApi("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:$ccaVersion")
-    modApi("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:$ccaVersion")
-    modApi("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-item:$ccaVersion")
+    modApiAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:$ccaVersion")
+    modApiAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:$ccaVersion")
+    modApiAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:$ccaVersion")
+    modApiAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-item:$ccaVersion")
 
-    // Annotations
-    implementation("org.checkerframework:checker-qual:3.0.1")
-    //implementation("org.jetbrains:annotations:19.0.0")
+    // Integrations
+    modIntegration("net.kyrptonaught:quickshulker:$quickShulkerVersion", true)
+    modIntegration("com.misterpemodder:shulkerboxtooltip:$shulkerBoxTooltipVersion", true)
+    modIntegration("io.github.prospector:modmenu:$modMenuVersion", false)
+    modIntegration("me.shedaniel:RoughlyEnoughItems:$reiVersion", false)
 
-    optionalMod("net.kyrptonaught:quickshulker:$quickShulkerVersion", true)
+    // Apply custom configurations
+    add(sourceSets.main.get().getTaskName(null, JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME), implementationAndInclude)
+    add(Configurations.INCLUDE, implementationAndInclude)
 
-    // Nice to have
-    optionalMod("io.github.prospector:modmenu:$modMenuVersion", false)
-    optionalMod("me.shedaniel:RoughlyEnoughItems:$reiVersion", false)
-
-    // Optional dependencies
-    //optionalMod("com.misterpemodder:shulkerboxtooltip:$shulkerBoxTooltipVersion", false)
-    "modShulkertooltipImplementation"("com.misterpemodder:shulkerboxtooltip:$shulkerBoxTooltipVersion")
-
-    afterEvaluate {
-        "modmenuImplementation"(main.output)
-        implementation(modmenuIntegration.get().output)
-
-        "quickshulkerImplementation"(main.output)
-        implementation(quickShulkerIntegration.get().output)
-
-        "reiImplementation"(main.output)
-        implementation(reiIntegration.get().output)
-
-        "shulkertooltipImplementation"(main.output)
-        implementation(shulkerToolTipIntegration.get().output)
-    }
-}
-
-tasks.withType(ProcessResources::class).configureEach {
-    filesMatching("fabric.mod.json") {
-        expand("version" to version)
-    }
+    add(sourceSets.main.get().getTaskName("mod", JavaPlugin.API_CONFIGURATION_NAME), modApiAndInclude)
+    add(Configurations.INCLUDE, modApiAndInclude)
 }
 
 configure<JavaPluginConvention> {
@@ -131,11 +127,38 @@ configure<JavaPluginConvention> {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-license {
-    header = file("HEADER.txt")
+spotless {
+    java {
+        // Only update license headers when changes have occurred
+        ratchetFrom("origin/$distribution")
+        licenseHeaderFile(project.file("codeformat/HEADER")).yearSeparator(", ")
+    }
 
-    include("**/*.java")
-    style("java", HeaderStyle.BLOCK_COMMENT)
+    // Spotless tries to be smart by ignoring package-info files, however license headers are allowed there
+    format("package-info.java") {
+        target("**/package-info.java")
+
+        // Only update license headers when changes have occurred
+        ratchetFrom("origin/$distribution")
+        // Regex is `/**` or `package`
+        licenseHeaderFile(project.file("codeformat/HEADER"), "/\\*\\*|package").yearSeparator(", ")
+    }
+
+    format("buildscript") {
+        target("**/**.gradle.kts")
+
+        // Only update license headers when changes have occurred
+        ratchetFrom("origin/$distribution")
+        licenseHeaderFile(project.file("codeformat/HEADER"), "// Buildscript start").yearSeparator(", ")
+    }
+
+    format("gradle.properties") {
+        target("**/gradle.properties")
+
+        // Only update license headers when changes have occurred
+        ratchetFrom("origin/$distribution")
+        licenseHeaderFile(project.file("codeformat/PROPERTIES_HEADER"), "# Buildscript start").yearSeparator(", ")
+    }
 }
 
 checkstyle {
@@ -143,7 +166,25 @@ checkstyle {
     toolVersion = "8.25"
 }
 
-tasks.withType(JavaCompile::class).configureEach {
+java {
+    withSourcesJar()
+}
+
+tasks.processResources {
+    inputs.properties("version" to project.version)
+
+    filesMatching("fabric.mod.json") {
+        expand("version" to version)
+    }
+}
+
+tasks.jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesBaseName}"}
+    }
+}
+
+tasks.compileJava {
     options.encoding = "UTF-8"
     val targetVersion = 8
 
@@ -156,9 +197,11 @@ tasks.withType(JavaCompile::class).configureEach {
     }
 }
 
-task<Jar>("sourcesJar") {
-    classifier = "sources"
-    from(main.allSource)
+fun DependencyHandler.modIntegration(dependencyNotation: Any, enabled: Boolean = true): Dependency? = when(enabled) {
+    true -> modImplementation(dependencyNotation)
+    false -> modCompileOnly(dependencyNotation)
+}?.also {
+    (it as ExternalModuleDependency).exclude(group = "net.fabricmc.fabric-api")
 }
 
 // TODO: Publishing

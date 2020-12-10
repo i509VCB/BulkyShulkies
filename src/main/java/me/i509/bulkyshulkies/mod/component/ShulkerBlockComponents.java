@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import dev.onyxstudios.cca.api.v3.block.BlockComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.block.BlockComponentInitializer;
 import dev.onyxstudios.cca.api.v3.component.ComponentFactory;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
 
@@ -41,11 +41,11 @@ import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 public final class ShulkerBlockComponents implements BlockComponentInitializer {
 	@Override
 	public void registerBlockComponentFactories(BlockComponentFactoryRegistry registry) {
-		RegistryEntryAddedCallback.event(BulkyShulkies.SHULKER_BOX_TYPE).register((rawId, id, type) -> {
+		RegistryEntryAddedCallback.event(BulkyShulkiesImpl.SHULKER_BOX_TYPE).register((rawId, id, type) -> {
 			this.registerBlockEntityComponents(registry, type);
 		});
 
-		for (ShulkerBoxType type : BulkyShulkies.SHULKER_BOX_TYPE) {
+		for (ShulkerBoxType type : BulkyShulkiesImpl.SHULKER_BOX_TYPE) {
 			this.registerBlockEntityComponents(registry, type);
 		}
 	}

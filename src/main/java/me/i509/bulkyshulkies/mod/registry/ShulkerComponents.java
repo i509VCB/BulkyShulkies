@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ package me.i509.bulkyshulkies.mod.registry;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.component.EnderSlabInventory;
 import me.i509.bulkyshulkies.api.component.MagnetismCooldownComponent;
 import me.i509.bulkyshulkies.api.component.ShulkerBoxColorComponent;
@@ -38,7 +38,7 @@ public final class ShulkerComponents {
 	public static final ComponentKey<MagnetismCooldownComponent> MAGNETISM_COOLDOWN = register("magnetism_cooldown", MagnetismCooldownComponent.class);
 
 	private static <C extends ComponentV3> ComponentKey<C> register(String name, Class<C> type) {
-		return ComponentRegistryV3.INSTANCE.getOrCreate(BulkyShulkies.id(name), type);
+		return ComponentRegistryV3.INSTANCE.getOrCreate(BulkyShulkiesImpl.id(name), type);
 	}
 
 	private ShulkerComponents() {

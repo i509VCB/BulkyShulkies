@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,9 +35,9 @@ public final class NetworkingConstants {
 	/*
 	 * Channels
 	 */
-	public static final Identifier DECLARE_VERSION = BulkyShulkies.id("packet/declare_version");
-	public static final Identifier OPEN_HELMET = BulkyShulkies.id("packet/action/open_helmet_inv");
-	public static final Identifier SYNC_CONFIG = BulkyShulkies.id("packet/config/sync");
+	public static final Identifier DECLARE_VERSION = BulkyShulkiesImpl.id("packet/declare_version");
+	public static final Identifier OPEN_HELMET = BulkyShulkiesImpl.id("packet/action/open_helmet_inv");
+	public static final Identifier SYNC_CONFIG = BulkyShulkiesImpl.id("packet/config/sync");
 
 	private NetworkingConstants() {
 	}

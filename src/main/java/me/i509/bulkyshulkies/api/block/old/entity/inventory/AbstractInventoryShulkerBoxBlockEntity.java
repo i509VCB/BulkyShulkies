@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,7 @@ import net.minecraft.util.math.Vec3d;
 
 import net.fabricmc.fabric.api.util.NbtType;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.inventory.ForwardingSidedInventory;
 
 public abstract class AbstractInventoryShulkerBoxBlockEntity extends AbstractShulkerBoxBlockEntity implements
@@ -191,7 +191,7 @@ public abstract class AbstractInventoryShulkerBoxBlockEntity extends AbstractShu
 
 		@Override
 		public boolean canInsert(ItemStack stack) {
-			return BulkyShulkies.getInstance().canInsertItem(stack);
+			return BulkyShulkiesImpl.getInstance().canInsertItem(stack);
 		}
 
 		@Override
@@ -207,7 +207,7 @@ public abstract class AbstractInventoryShulkerBoxBlockEntity extends AbstractShu
 
 		@Override
 		public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-			return BulkyShulkies.getInstance().canInsertItem(stack);
+			return BulkyShulkiesImpl.getInstance().canInsertItem(stack);
 		}
 
 		@Override

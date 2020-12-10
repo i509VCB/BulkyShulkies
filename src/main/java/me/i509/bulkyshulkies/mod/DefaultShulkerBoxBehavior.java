@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,11 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public final class DefaultShulkerBoxBehavior implements ShulkerBoxBehavior {
+	public static final ShulkerBoxBehavior INSTANCE = new DefaultShulkerBoxBehavior();
+
+	private DefaultShulkerBoxBehavior() {
+	}
+
 	@Override
 	public VoxelShape getShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return null;
@@ -53,7 +58,7 @@ public final class DefaultShulkerBoxBehavior implements ShulkerBoxBehavior {
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockHitResult hitResult) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity user, Hand hand, BlockHitResult hit) {
 		return null;
 	}
 

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,12 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.extension;
+package me.i509.bulkyshulkies.mod.integration.quickshulker;
 
 import static net.kyrptonaught.quickshulker.api.QuickOpenableRegistry.register;
 
 import me.i509.bulkyshulkies.mod.block.old.ender.EnderSlabBlock;
+import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
 import net.kyrptonaught.quickshulker.api.ItemStackInventory;
 import net.kyrptonaught.quickshulker.api.RegisterQuickShulker;
 
@@ -36,18 +37,9 @@ import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.screen.slot.Slot;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
-import me.i509.bulkyshulkies.mod.block.old.ShulkerBoxConstants;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.block.old.cursed.slab.ColoredSlabShulkerBoxBlock;
 import me.i509.bulkyshulkies.mod.block.old.cursed.stair.StairShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.CopperShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.DiamondShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.GoldShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.IronShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.ObsidianShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.PlatinumShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.SilverShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.MissingTexBoxBlock;
 import me.i509.bulkyshulkies.mod.registry.ShulkerScreenHandlers;
 import me.i509.bulkyshulkies.mod.config.section.quickshulker.QuickShulkerSection;
 import me.i509.bulkyshulkies.mod.screen.GenericCustomSlotContainerScreenHandler;
@@ -55,53 +47,53 @@ import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler11x7;
 import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler13x7;
 import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler9x7;
 
-public class QuickShulkerHook implements RegisterQuickShulker {
+public final class QuickShulkerIntegration implements RegisterQuickShulker {
 	@Override
 	public void registerProviders() {
-		QuickShulkerSection config = BulkyShulkies.getInstance().getConfig().getExtensions().getQuickShulker();
+		QuickShulkerSection config = BulkyShulkiesImpl.getInstance().getConfig().getExtensions().getQuickShulker();
 
 		if (config.canOpenCopper()) {
-			register(QuickShulkerHook::openCopperBox, CopperShulkerBoxBlock.class);
+			register(QuickShulkerIntegration::openCopperBox, CopperShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenIron()) {
-			register(QuickShulkerHook::openIronBox, IronShulkerBoxBlock.class);
+			register(QuickShulkerIntegration::openIronBox, IronShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenSilver()) {
-			register(QuickShulkerHook::openSilverBox, SilverShulkerBoxBlock.class);
+			register(QuickShulkerIntegration::openSilverBox, SilverShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenGold()) {
-			register(QuickShulkerHook::openGoldBox, GoldShulkerBoxBlock.class);
+			register(QuickShulkerIntegration::openGoldBox, GoldShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenDiamond()) {
-			register(QuickShulkerHook::openDiamondBox, DiamondShulkerBoxBlock.class);
+			register(QuickShulkerIntegration::openDiamondBox, DiamondShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenObsidian()) {
-			register(QuickShulkerHook::openObsidianBox, ObsidianShulkerBoxBlock.class);
+			register(QuickShulkerIntegration::openObsidianBox, ObsidianShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenPlatinum()) {
-			register(QuickShulkerHook::openPlatinumBox, PlatinumShulkerBoxBlock.class);
+			register(QuickShulkerIntegration::openPlatinumBox, PlatinumShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenSlab()) {
-			register(QuickShulkerHook::openSlabBox, ColoredSlabShulkerBoxBlock.class);
+			register(QuickShulkerIntegration::openSlabBox, ColoredSlabShulkerBoxBlock.class);
 		}
 
 		if (config.canOpenEnderSlab()) {
-			register(QuickShulkerHook::openEnderSlab, EnderSlabBlock.class);
+			register(QuickShulkerIntegration::openEnderSlab, EnderSlabBlock.class);
 		}
 
 		if (config.canOpenMissingTex()) {
-			register(QuickShulkerHook::openMissingTex, MissingTexBoxBlock.class);
+			register(QuickShulkerIntegration::openMissingTex, MissingTexBoxBlock.class);
 		}
 
 		if (config.canOpenStair()) {
-			register(QuickShulkerHook::openStair, StairShulkerBoxBlock.class);
+			register(QuickShulkerIntegration::openStair, StairShulkerBoxBlock.class);
 		}
 	}
 
@@ -155,7 +147,7 @@ public class QuickShulkerHook implements RegisterQuickShulker {
 
 	public static void openEnderSlab(PlayerEntity user, ItemStack stack) {
 		user.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> {
-			return GenericCustomSlotContainerScreenHandler.createGeneric9x2(ShulkerScreenHandlers.ENDER_SLAB, syncId, inventory, ((PlayerEntityExtensions) player).getEnderSlabInventory(), Slot::new);
+			return GenericCustomSlotContainerScreenHandler.createGeneric9x2(ShulkerScreenHandlers.ENDER_SLAB, syncId, inventory, ShulkerComponents.ENDER_SLAB_INVENTORY.get(player), Slot::new);
 		}, stack.getName()));
 	}
 

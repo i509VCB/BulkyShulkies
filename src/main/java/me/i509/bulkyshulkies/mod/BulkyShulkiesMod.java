@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,8 +43,9 @@ public final class BulkyShulkiesMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		BulkyShulkies.getInstance();
+		BulkyShulkiesImpl.getInstance();
 		ShulkerRegistries.init();
+		C2SNetworking.init();
 
 		ServerSidePacketRegistry.INSTANCE.register(ShulkerNetworking.HELMET_OPEN, this::onOpenHelmet);
 	}

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ package me.i509.bulkyshulkies.api;
 
 import java.util.List;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
@@ -38,6 +38,9 @@ import net.minecraft.world.World;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
+/**
+ * Utilities related to magnetism in some shulker boxes.
+ */
 public final class Magnetism {
 	public static final Event<BeforeMagnetismCollection> BEFORE_MAGNETISM_COLLECTION = EventFactory.createArrayBacked(BeforeMagnetismCollection.class, (callbacks) -> ((targetedItems, world, pos, collectorBlockEntity) -> {
 		for (BeforeMagnetismCollection callback : callbacks) {
@@ -46,7 +49,7 @@ public final class Magnetism {
 	}));
 
 	public static Vec3d getDirectionalBoxOffset(Direction direction) {
-		final int size = BulkyShulkies.getInstance().getConfig().getPlatinumMagnetMaxRange() - 1;
+		final int size = BulkyShulkiesImpl.getInstance().getConfig().getPlatinumMagnetMaxRange() - 1;
 
 		switch (direction) {
 		case NORTH:
@@ -68,9 +71,11 @@ public final class Magnetism {
 	private Magnetism() {
 	}
 
+	@FunctionalInterface
 	public interface BeforeMagnetismCollection {
 		/**
-		 * Called when a magnetic collector block entity tries to pick up items
+		 * Called when a magnetic collector block entity tries to pick up items.
+		 *
 		 * <p>To cancel the pickup of items, remove them from the targetedItems list.
 		 *
 		 * @param targetedItems The item entities to be collected.

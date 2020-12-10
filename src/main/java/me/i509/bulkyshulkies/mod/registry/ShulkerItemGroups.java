@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,11 @@ import net.minecraft.item.ItemGroup;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.block.ShulkerBoxColor;
 
 public final class ShulkerItemGroups {
-	public static final ItemGroup BULKY_SHULKIES = FabricItemGroupBuilder.build(BulkyShulkies.id("group"), () -> {
+	public static final ItemGroup BULKY_SHULKIES = FabricItemGroupBuilder.build(BulkyShulkiesImpl.id("group"), () -> {
 		return ShulkerBoxTypes.COPPER.createItemStack(stack -> {
 			ShulkerComponents.SHULKER_BOX_COLOR.get(stack).setColor(ShulkerBoxColor.CYAN);
 		});

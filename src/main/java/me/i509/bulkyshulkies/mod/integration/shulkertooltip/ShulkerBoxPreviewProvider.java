@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,11 +31,11 @@ import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
 
 import net.minecraft.util.DyeColor;
 
-final class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
-	private static float[] SHULKER_BOX_COLOR = new float[] {0.592f, 0.403f, 0.592f};
+final class ShulkerBoxPreviewProvider extends BlockEntityPreviewProvider {
+	private static final float[] SHULKER_BOX_COLOR = new float[]{ 0.592F, 0.403F, 0.592F };
 
-	BulkyShulkerPreviewProvider(int maxInvSize) {
-		super(maxInvSize, true);
+	ShulkerBoxPreviewProvider() {
+		super(0, true);
 	}
 
 	@Override
@@ -57,6 +57,18 @@ final class BulkyShulkerPreviewProvider extends BlockEntityPreviewProvider {
 					Math.max(0.15f, components[2])
 			};
 		}).orElse(SHULKER_BOX_COLOR);
+	}
+
+	@Override
+	public int getInventoryMaxSize(PreviewContext context) {
+		// TODO: Impl
+		return super.getInventoryMaxSize(context);
+	}
+
+	@Override
+	public int getMaxRowSize(PreviewContext context) {
+		// TODO: Impl
+		return super.getMaxRowSize(context);
 	}
 
 	@Override

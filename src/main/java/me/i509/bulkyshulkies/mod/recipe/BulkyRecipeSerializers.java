@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,12 @@ package me.i509.bulkyshulkies.mod.recipe;
 import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.util.registry.Registry;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.recipe.injector.InjectorRecipeSerializer;
 
 public class BulkyRecipeSerializers {
-	public static final SpecialRecipeSerializer<AbstractShulkerBoxColoringRecipe> ABSTRACT_SHULKER_COLORING = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("shulker_coloring"), new SpecialRecipeSerializer<>(AbstractShulkerBoxColoringRecipe::new));
-	public static final InjectorRecipeSerializer INJECTOR = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("injector"), new InjectorRecipeSerializer());
-	public static final AbstractShulkerBoxUpgradeRecipeSerializer UPGRADE = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("upgrade"), new AbstractShulkerBoxUpgradeRecipeSerializer());
-	public static final NoNbtRecipeSerializer NO_NBT = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkies.id("no_nbt"), new NoNbtRecipeSerializer());
+	public static final SpecialRecipeSerializer<AbstractShulkerBoxColoringRecipe> ABSTRACT_SHULKER_COLORING = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkiesImpl.id("shulker_coloring"), new SpecialRecipeSerializer<>(AbstractShulkerBoxColoringRecipe::new));
+	public static final InjectorRecipeSerializer INJECTOR = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkiesImpl.id("injector"), new InjectorRecipeSerializer());
+	public static final AbstractShulkerBoxUpgradeRecipeSerializer UPGRADE = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkiesImpl.id("upgrade"), new AbstractShulkerBoxUpgradeRecipeSerializer());
+	public static final NoNbtRecipeSerializer NO_NBT = Registry.register(Registry.RECIPE_SERIALIZER, BulkyShulkiesImpl.id("no_nbt"), new NoNbtRecipeSerializer());
 }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 
 package me.i509.bulkyshulkies.mod.block.old.cursed.slab;
 
-import me.i509.bulkyshulkies.mod.block.old.ShulkerBoxConstants;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.block.entity.BlockEntity;

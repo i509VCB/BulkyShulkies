@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,11 +28,12 @@ import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.block.ShulkerBox;
 import me.i509.bulkyshulkies.api.block.ShulkerBoxColor;
 import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.WaterCauldronBlock;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -58,14 +59,15 @@ public class ShulkerBlockItem extends BlockItem {
 			return super.useOnBlock(context);
 		}
 
-		@Nullable final PlayerEntity player = context.getPlayer();
+		@Nullable
+		final PlayerEntity player = context.getPlayer();
 
 		if (player != null) {
 			final BlockState state = context.getWorld().getBlockState(context.getBlockPos());
 
 			// Test if we are using a cauldron
 			// TODO: custom cauldrons?
-			if (state.getBlock() instanceof WaterCauldronBlock) {
+			if (state.isOf(Blocks.WATER_CAULDRON)) {
 				final ItemStack handStack = player.getStackInHand(context.getHand());
 
 				if (handStack.getItem() instanceof BlockItem) {
@@ -80,7 +82,7 @@ public class ShulkerBlockItem extends BlockItem {
 
 							// TODO: Custom level decrement?
 							// Reduce water level of cauldron
-							WaterCauldronBlock.subtractWaterLevel(state, context.getWorld(), context.getBlockPos());
+							LeveledCauldronBlock.decrementFluidLevel(state, context.getWorld(), context.getBlockPos());
 							player.incrementStat(Stats.CLEAN_SHULKER_BOX);
 
 							return ActionResult.SUCCESS;

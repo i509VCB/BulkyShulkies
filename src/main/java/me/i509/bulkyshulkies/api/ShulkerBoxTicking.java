@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,14 @@ package me.i509.bulkyshulkies.api;
 
 import java.util.List;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
 import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -45,6 +46,9 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+/**
+ * Simple {@link BlockEntityTicker} implementations for shulker boxes.
+ */
 public final class ShulkerBoxTicking {
 	public static <B extends BlockEntity & ShulkerBoxBlockEntity> void simpleTick(World world, BlockPos pos, BlockState state, B blockEntity) {
 		// TODO: Impl
@@ -53,13 +57,13 @@ public final class ShulkerBoxTicking {
 	public static <B extends BlockEntity & ShulkerBoxBlockEntity> void platinumServerTick(World world, BlockPos pos, BlockState state, B blockEntity) {
 		simpleTick(world, pos, state, blockEntity);
 
-		if (BulkyShulkies.getInstance().getConfig().shouldPlatinumUseMagnetism()) {
+		if (BulkyShulkiesImpl.getInstance().getConfig().shouldPlatinumUseMagnetism()) {
 			if (!world.isClient()) {
 				ShulkerComponents.MAGNETISM_COOLDOWN.maybeGet(blockEntity).ifPresent(component -> {
-					if (component.getCooldownValue() >= BulkyShulkies.getInstance().getConfig().getMagnetismTickDelay()) {
+					if (component.getCooldownValue() >= BulkyShulkiesImpl.getInstance().getConfig().getMagnetismTickDelay()) {
 						component.setCooldownValue(0);
 
-						final int range = BulkyShulkies.getInstance().getConfig().getPlatinumMagnetMaxRange();
+						final int range = BulkyShulkiesImpl.getInstance().getConfig().getPlatinumMagnetMaxRange();
 						final Direction facing = world.getBlockState(pos).get(FacingBlock.FACING);
 						final Box box = new Box(0, 0, 0, range, range, range)
 								.offset(pos)
@@ -93,7 +97,7 @@ public final class ShulkerBoxTicking {
 		}
 	}
 
-	public static ItemStack add(ItemStack itemStack, Inventory inventory) {
+	private static ItemStack add(ItemStack itemStack, Inventory inventory) {
 		ItemStack copied = itemStack.copy();
 		addToExistingSlot(copied, inventory);
 

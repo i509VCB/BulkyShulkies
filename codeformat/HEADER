@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) $YEAR i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,23 +22,3 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.block.old;
-
-public final class ShulkerBoxConstants {
-	public static final int SLAB_SLOT_COUNT = 18;
-	public static final int COPPER_SLOT_COUNT = 36;
-	public static final int IRON_SLOT_COUNT = 45;
-	public static final int SILVER_SLOT_COUNT = 54;
-	public static final int GOLD_SLOT_COUNT = 63;
-	public static final int DIAMOND_SLOT_COUNT = 77;
-	public static final int OBSIDIAN_SLOT_COUNT = 91;
-	public static final int CLEAR_SLOT_COUNT = 91;
-	public static final int PLATINUM_SLOT_COUNT = 91;
-	public static final int NETHERITE_SLOT_COUNT = 91;
-	public static final int MISSING_TEX = 27;
-	public static final int STAIR_SLOT_COUNT = 27;
-
-	private ShulkerBoxConstants() {
-		// NO-OP
-	}
-}

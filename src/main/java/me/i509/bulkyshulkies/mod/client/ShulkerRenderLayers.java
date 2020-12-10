@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ package me.i509.bulkyshulkies.mod.client;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -38,24 +38,24 @@ import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 
 public final class ShulkerRenderLayers {
-	public static final Identifier SHULKER_BOXES_ATLAS_TEXTURE = BulkyShulkies.id("textures/atlas/shulker_boxes.png");
+	public static final Identifier SHULKER_BOXES_ATLAS_TEXTURE = BulkyShulkiesImpl.id("textures/atlas/shulker_boxes.png");
 
 	public static void makeAtlases(Consumer<SpriteIdentifier> consumer, String key) {
-		consumer.accept(new SpriteIdentifier(SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id(makePath(key, null))));
-		Arrays.stream(DyeColor.values()).forEach(c -> consumer.accept(new SpriteIdentifier(SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id(makePath(key, c)))));
+		consumer.accept(new SpriteIdentifier(SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkiesImpl.id(makePath(key, null))));
+		Arrays.stream(DyeColor.values()).forEach(c -> consumer.accept(new SpriteIdentifier(SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkiesImpl.id(makePath(key, c)))));
 	}
 
 	public static void registerSprites(SpriteAtlasTexture atlas, ClientSpriteRegistryCallback.Registry registry, String key) {
-		registry.register(BulkyShulkies.id(makePath(key, null)));
-		Arrays.stream(DyeColor.values()).forEach(c -> registry.register(BulkyShulkies.id(makePath(key, c))));
+		registry.register(BulkyShulkiesImpl.id(makePath(key, null)));
+		Arrays.stream(DyeColor.values()).forEach(c -> registry.register(BulkyShulkiesImpl.id(makePath(key, c))));
 	}
 
 	public static void makeAtlas(Consumer<SpriteIdentifier> consumer, String key) {
-		consumer.accept(new SpriteIdentifier(SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id(makePath(key, null))));
+		consumer.accept(new SpriteIdentifier(SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkiesImpl.id(makePath(key, null))));
 	}
 
 	public static void registerSprite(SpriteAtlasTexture atlas, ClientSpriteRegistryCallback.Registry registry, String key) {
-		registry.register(BulkyShulkies.id(makePath(key, null)));
+		registry.register(BulkyShulkiesImpl.id(makePath(key, null)));
 	}
 
 	private static String makePath(String key, @Nullable DyeColor color) {

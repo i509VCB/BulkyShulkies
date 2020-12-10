@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ import net.minecraft.util.math.Direction;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.block.old.FacingShulkerBoxBlock;
 import me.i509.bulkyshulkies.mod.block.old.ender.EnderSlabBoxBlockEntity;
@@ -48,7 +48,7 @@ import me.i509.bulkyshulkies.mod.client.model.SlabShulkerModel;
 
 @Environment(EnvType.CLIENT)
 public class EnderSlabBlockEntityRenderer implements BlockEntityRenderer<EnderSlabBoxBlockEntity> {
-	public EnderSlabBlockEntityRenderer(ShulkerBoxType type, BlockEntityRendererFactory.Arguments arguments) {
+	public EnderSlabBlockEntityRenderer(ShulkerBoxType type, BlockEntityRendererFactory.Context context) {
 		this.type = type;
 	}
 
@@ -67,7 +67,7 @@ public class EnderSlabBlockEntityRenderer implements BlockEntityRenderer<EnderSl
 			}
 		}
 
-		SpriteIdentifier spriteIdentifier = new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkies.id("be/shulker/" + type + "/shulker"));
+		SpriteIdentifier spriteIdentifier = new SpriteIdentifier(ShulkerRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, BulkyShulkiesImpl.id("be/shulker/" + type + "/shulker"));
 
 		matrices.push();
 		matrices.translate(0.5D, 0.5D, 0.5D); // Center the model

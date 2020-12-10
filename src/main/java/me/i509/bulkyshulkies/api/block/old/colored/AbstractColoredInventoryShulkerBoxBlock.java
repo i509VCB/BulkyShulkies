@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -66,7 +66,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.NbtType;
 
 import me.i509.bulkyshulkies.api.block.old.entity.inventory.AbstractInventoryShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.extension.ShulkerHooks;
+import me.i509.bulkyshulkies.mod.integration.Integrations;
 
 public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractShulkerBoxBlock implements ColoredShulkerBoxBlock, InventoryShulkerBoxBlock {
 	protected static final Identifier CONTENTS = new Identifier("contents");
@@ -206,7 +206,7 @@ public abstract class AbstractColoredInventoryShulkerBoxBlock extends AbstractSh
 	public void appendTooltip(ItemStack itemStack, @Nullable BlockView world, List<Text> list, TooltipContext context) {
 		super.appendTooltip(itemStack, world, list, context);
 
-		if (ShulkerHooks.shulkerTooltipsArePresent()) {
+		if (Integrations.isOverridingVanillaTooltips()) {
 			return; // Shulker Tooltips will handle the Tooltip itself if installed.
 		}
 

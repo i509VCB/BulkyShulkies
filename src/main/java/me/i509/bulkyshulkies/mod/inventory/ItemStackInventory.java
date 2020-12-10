@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ public class ItemStackInventory extends SimpleInventory {
 			CompoundTag compoundTag = listTag.getCompound(j);
 			int k = compoundTag.getByte("Slot") & 255;
 
-			if (k >= 0 && k < this.size()) {
+			if (k < this.size()) {
 				this.setStack(k, ItemStack.fromTag(compoundTag));
 			}
 		}

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,12 +31,12 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 
 //@Mixin(PiglinBipedArmorFeatureRenderer.class)
 abstract class PiglinArmorFeatureRendererMixin<T extends LivingEntity, A extends BipedEntityModel<T>, M extends BipedEntityModel<T>> extends ArmorFeatureRendererMixin<T, M, A> {
 	@Override
 	protected Identifier bulkyshulkies_getLidTexture() {
-		return BulkyShulkies.id("piglin_shulker_helmet_lid");
+		return BulkyShulkiesImpl.id("piglin_shulker_helmet_lid");
 	}
 }

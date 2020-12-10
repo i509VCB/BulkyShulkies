@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,12 +49,10 @@ import net.minecraft.util.math.Vec3d;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.Magnetism;
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.block.old.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.block.old.PlatinumShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.block.old.PlatinumShulkerBoxBlockEntity;
 import me.i509.bulkyshulkies.mod.item.ShulkerItemTags;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,12 +64,12 @@ public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEnt
 	@Nullable
 	private final IntSupplier boxSize;
 
-	public PlatinumShulkerBlockEntityRenderer(ShulkerBoxType type, BlockEntityRendererFactory.Arguments arguments) {
-		this(type, arguments, false, null, null);
+	public PlatinumShulkerBlockEntityRenderer(ShulkerBoxType type, BlockEntityRendererFactory.Context context) {
+		this(type, context, false, null, null);
 	}
 
-	public PlatinumShulkerBlockEntityRenderer(ShulkerBoxType type, BlockEntityRendererFactory.Arguments arguments, boolean forceBox, @Nullable Direction forcedDirection, @Nullable IntSupplier boxSize) {
-		super(type, arguments);
+	public PlatinumShulkerBlockEntityRenderer(ShulkerBoxType type, BlockEntityRendererFactory.Context context, boolean forceBox, @Nullable Direction forcedDirection, @Nullable IntSupplier boxSize) {
+		super(type, context);
 		this.forceBox = forceBox;
 		this.forcedDirection = forcedDirection;
 		this.boxSize = boxSize;
@@ -92,17 +90,21 @@ public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEnt
 			final Box box = new Box(0.0D, 0.0D, 0.0D, size, size, size);
 
 			PlatinumShulkerBlockEntityRenderer.renderMagneticBox(matrices, vertexConsumerProvider, box, this.forcedDirection, 1.0F, 0.5F, 0.5F, 0.5F);
-		} else if (blockEntity.hasWorld()) {
+			return;
+		}
+
+		if (blockEntity.hasWorld()) {
 			final MinecraftClient client = MinecraftClient.getInstance();
 			final ClientPlayerEntity player = client.player;
 
 			if (player != null) {
-				final Tag<Item> tag = ShulkerItemTags.SHULKER_MAGNET_WAND;
+				final Tag.Identified<Item> tag = ShulkerItemTags.SHULKER_MAGNET_WAND;
 
 				if (tag.contains(player.getMainHandStack().getItem()) || tag.contains(player.getOffHandStack().getItem())) {
 					final BlockPos blockEntityPos = blockEntity.getPos();
 					final BlockState state = player.world.getBlockState(blockEntityPos);
 
+					// If we have a cursor within raycast range then check if we have the shulker wand in hand
 					if (client.crosshairTarget.getType() == HitResult.Type.BLOCK) {
 						final BlockHitResult blockHitResult = (BlockHitResult) client.crosshairTarget;
 						final BlockEntity hitResultBlockEntity = player.world.getBlockEntity(blockHitResult.getBlockPos());
@@ -113,13 +115,11 @@ public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEnt
 								if (state.getBlock() instanceof PlatinumShulkerBoxBlock) {
 									final Direction facing = state.get(PlatinumShulkerBoxBlock.FACING);
 
-									int size = BulkyShulkies.getInstance().getConfig().getPlatinumMagnetMaxRange();
+									int size = BulkyShulkiesImpl.getInstance().getConfig().getPlatinumMagnetMaxRange();
 									final Box box = new Box(0.0D, 0.0D, 0.0D, size, size, size);
 
 									PlatinumShulkerBlockEntityRenderer.renderMagneticBox(matrices, vertexConsumerProvider, box, facing, 1.0F, 0.5F, 0.5F, 0.5F);
 								}
-							} else {
-								return;
 							}
 						}
 					}
@@ -127,7 +127,7 @@ public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEnt
 					if (state.getBlock() instanceof PlatinumShulkerBoxBlock) {
 						final Direction facing = state.get(PlatinumShulkerBoxBlock.FACING);
 
-						int size = BulkyShulkies.getInstance().getConfig().getPlatinumMagnetMaxRange();
+						int size = BulkyShulkiesImpl.getInstance().getConfig().getPlatinumMagnetMaxRange();
 						final Box box = new Box(0.0D, 0.0D, 0.0D, size, size, size);
 
 						PlatinumShulkerBlockEntityRenderer.renderMagneticBox(matrices, vertexConsumerProvider, box, facing, 1.0F, 0.5F, 0.5F, 0.5F);

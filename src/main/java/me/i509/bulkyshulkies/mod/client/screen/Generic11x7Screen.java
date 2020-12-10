@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,12 +35,12 @@ import net.minecraft.util.Identifier;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler11x7;
 
 @Environment(EnvType.CLIENT)
 public class Generic11x7Screen extends HandledScreen<GenericScreenHandler11x7> {
-	private static final Identifier TEXTURE = BulkyShulkies.id("textures/gui/container/generic_11x7.png");
+	private static final Identifier TEXTURE = BulkyShulkiesImpl.id("textures/gui/container/generic_11x7.png");
 
 	public Generic11x7Screen(GenericScreenHandler11x7 handler, PlayerInventory playerInventory, Text title) {
 		super(handler, playerInventory, title);

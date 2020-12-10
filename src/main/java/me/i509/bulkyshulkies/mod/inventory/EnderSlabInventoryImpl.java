@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,8 @@ package me.i509.bulkyshulkies.mod.inventory;
 import java.util.stream.IntStream;
 
 import me.i509.bulkyshulkies.api.component.EnderSlabInventory;
-import me.i509.bulkyshulkies.mod.block.old.ShulkerBoxConstants;
 import me.i509.bulkyshulkies.mod.block.old.ender.EnderSlabBoxBlockEntity;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;
@@ -47,7 +46,7 @@ public final class EnderSlabInventoryImpl extends SimpleInventory implements End
 		super(ShulkerBoxConstants.SLAB_SLOT_COUNT);
 	}
 
-	public void setCurrentBlockEntity(EnderSlabBoxBlockEntity blockEntity) {
+	public void setCurrentBlockEntity(@Nullable EnderSlabBoxBlockEntity blockEntity) {
 		this.currentBlockEntity = blockEntity;
 	}
 
@@ -62,7 +61,7 @@ public final class EnderSlabInventoryImpl extends SimpleInventory implements End
 			CompoundTag compoundTag = listTag.getCompound(j);
 			int k = compoundTag.getByte("Slot") & 255;
 
-			if (k >= 0 && k < this.size()) {
+			if (k < this.size()) {
 				this.setStack(k, ItemStack.fromTag(compoundTag));
 			}
 		}
@@ -87,7 +86,7 @@ public final class EnderSlabInventoryImpl extends SimpleInventory implements End
 
 	public boolean canPlayerUse(PlayerEntity player) {
 		//return this.currentBlockEntity != null && !this.currentBlockEntity.canPlayerUse(player) ? false : super.canPlayerUse(player);
-		return super.canPlayerUse(player); // TOOD: Fix
+		return super.canPlayerUse(player); // TODO: Fix
 	}
 
 	public void onOpen(PlayerEntity player) {
@@ -124,7 +123,7 @@ public final class EnderSlabInventoryImpl extends SimpleInventory implements End
 
 	@Override
 	public void readFromNbt(CompoundTag tag) {
-
+		// TODO: Impl?
 	}
 
 	@Override

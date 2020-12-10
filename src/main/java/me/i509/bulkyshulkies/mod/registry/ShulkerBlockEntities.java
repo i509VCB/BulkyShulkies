@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 package me.i509.bulkyshulkies.mod.registry;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
@@ -284,6 +284,6 @@ public final class ShulkerBlockEntities {
 	}
 
 	private static <B extends BlockEntity> BlockEntityType<B> register(String name, FabricBlockEntityTypeBuilder.Factory<B> factory, Block... supportedBlocks) {
-		return Registry.register(Registry.BLOCK_ENTITY_TYPE, BulkyShulkies.id(name), FabricBlockEntityTypeBuilder.create(factory, supportedBlocks).build());
+		return Registry.register(Registry.BLOCK_ENTITY_TYPE, BulkyShulkiesImpl.id(name), FabricBlockEntityTypeBuilder.create(factory, supportedBlocks).build());
 	}
 }

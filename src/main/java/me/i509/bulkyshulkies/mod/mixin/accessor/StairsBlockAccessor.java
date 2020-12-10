@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,22 +38,22 @@ import net.minecraft.world.BlockView;
 @Mixin(StairsBlock.class)
 public interface StairsBlockAccessor {
 	@Invoker("getStairShape")
-	static StairShape getStairShape(BlockState blockState, BlockView blockView, BlockPos blockPos) {
+	static StairShape accessor_getStairShape(BlockState state, BlockView world, BlockPos pos) {
 		throw new AssertionError("Untransformed Accessor!");
 	}
 
 	@Accessor("TOP_SHAPES")
-	static VoxelShape[] getTopShapes() {
+	static VoxelShape[] accessor_getTopShapes() {
 		throw new AssertionError("Untransformed Accessor!");
 	}
 
 	@Accessor("BOTTOM_SHAPES")
-	static VoxelShape[] getBottomShapes() {
+	static VoxelShape[] accessor_getBottomShapes() {
 		throw new AssertionError("Untransformed Accessor!");
 	}
 
 	@Accessor("SHAPE_INDICES")
-	static int[] getShapeIndices() {
+	static int[] accessor_getShapeIndices() {
 		throw new AssertionError("Untransformed Accessor!");
 	}
 }

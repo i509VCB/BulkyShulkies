@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,7 @@ import net.minecraft.world.BlockView;
 
 @Mixin(AbstractBlock.AbstractBlockState.class)
 abstract class AbstractBlockStateMixin {
+	// TODO: For block extensions
 	@Inject(method = "getMapColor", at = @At("HEAD"), cancellable = true)
 	private void getDynamicMapColor(BlockView world, BlockPos pos, CallbackInfoReturnable<MapColor> info) {
 		final BlockEntity blockEntity = world.getBlockEntity(pos);

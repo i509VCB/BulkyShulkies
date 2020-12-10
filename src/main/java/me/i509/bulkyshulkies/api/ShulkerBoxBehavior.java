@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019-2020 i509VCB
+ * Copyright (c) 2019, 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 package me.i509.bulkyshulkies.api;
 
 import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
+import me.i509.bulkyshulkies.mod.DefaultShulkerBoxBehavior;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -41,11 +42,15 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public interface ShulkerBoxBehavior {
+	static ShulkerBoxBehavior getDefault() {
+		return DefaultShulkerBoxBehavior.INSTANCE;
+	}
+
 	VoxelShape getShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context);
 
 	Box getLidCollisionBox(Direction facing);
 
-	ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockHitResult hitResult);
+	ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity user, Hand hand, BlockHitResult hit);
 
 	void updateAnimation(World world, ShulkerBoxBlockEntity blockEntity, DirectionProperty property);
 
