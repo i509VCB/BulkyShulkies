@@ -24,6 +24,8 @@
 
 package me.i509.bulkyshulkies.mod.client;
 
+import me.i509.bulkyshulkies.mod.Uninstantiable;
+
 final class S2CNetworking {
 	static void init() {
 	}
@@ -33,5 +35,6 @@ final class S2CNetworking {
 	}
 
 	private S2CNetworking() {
+		Uninstantiable.whyDoIHearBossMusic(S2CNetworking.class);
 	}
 }

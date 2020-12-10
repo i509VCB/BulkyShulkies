@@ -40,5 +40,6 @@ public final class NetworkingConstants {
 	public static final Identifier SYNC_CONFIG = BulkyShulkiesImpl.id("packet/config/sync");
 
 	private NetworkingConstants() {
+		Uninstantiable.whyDoIHearBossMusic(NetworkingConstants.class);
 	}
 }

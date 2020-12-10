@@ -26,6 +26,7 @@ package me.i509.bulkyshulkies.mod.registry;
 
 import java.util.function.BiConsumer;
 
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.AbstractBlock;
@@ -39,13 +40,13 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 
 import me.i509.bulkyshulkies.api.block.old.base.OldShulkerBox;
 
-public final class ShulkerBlocks {
+public final class ShulkerBlockSettings {
 	private static final AbstractBlock.ContextPredicate FALSE_CTX = (state, world, pos) -> false;
 	// Dynamic bounds are VERY IMPORTANT. Otherwise your box will make entities suffocate since the game's cached block is exactly 1 full cube, so collisions act odd for this reason without the dynamic bounds.
 	public static final AbstractBlock.Settings SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque();
-	public static final AbstractBlock.Settings SHULKER_SLAB_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque().suffocates(ShulkerBlocks.FALSE_CTX);
+	public static final AbstractBlock.Settings SHULKER_SLAB_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).dynamicBounds().nonOpaque().suffocates(ShulkerBlockSettings.FALSE_CTX);
 	public static final AbstractBlock.Settings EXPLOSION_PROOF_SHULKER_BOX_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque();
-	public static final AbstractBlock.Settings ENDER_SLAB_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().lightLevel(7).suffocates(ShulkerBlocks.FALSE_CTX);
+	public static final AbstractBlock.Settings ENDER_SLAB_SETTINGS = FabricBlockSettings.of(Material.SHULKER_BOX).breakByTool(FabricToolTags.PICKAXES).hardness(2.0F).resistance(1200.0F).dynamicBounds().nonOpaque().lightLevel(7).suffocates(ShulkerBlockSettings.FALSE_CTX);
 
 	/*
 	 * ========================
@@ -334,8 +335,8 @@ public final class ShulkerBlocks {
 	// For the future
 	// public static final Block SHULKER_INJECTOR = registerShulker(new ShulkerInjectorBlock(FabricBlockSettings.of(Material.METAL).build()), "shulker_injector", ShulkerItemGroups.MATERIAL_SETTINGS);
 
-	private ShulkerBlocks() {
-		throw new AssertionError("You should not be instantiating this");
+	private ShulkerBlockSettings() {
+		Uninstantiable.whyDoIHearBossMusic(ShulkerBlockSettings.class);
 	}
 
 	static void init() {

@@ -24,6 +24,7 @@
 
 package me.i509.bulkyshulkies.mod.registry;
 
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 import me.i509.bulkyshulkies.mod.event.ShulkerEvents;
 import me.i509.bulkyshulkies.mod.integration.Integrations;
 import me.i509.bulkyshulkies.mod.recipe.BulkyRecipeSerializers;
@@ -33,10 +34,9 @@ public final class ShulkerRegistries {
 	public static void init() {
 		BulkyRecipeSerializers.ABSTRACT_SHULKER_COLORING.getClass(); // Register the colorizer recipe type
 		BulkyDataTrackerHandlers.SHULKER_ANIMATION_STAGE.getClass(); // Load the DataTrackers
-		ShulkerBlocks.init();
+		ShulkerBlockSettings.init();
 		ShulkerBoxTypes.init();
 		ShulkerDispenserBehaviors.init();
-		ShulkerBlockEntities.init();
 		ShulkerEvents.init();
 		ShulkerItems.init();
 		ShulkerItemGroups.init();
@@ -45,6 +45,6 @@ public final class ShulkerRegistries {
 	}
 
 	private ShulkerRegistries() {
-		throw new AssertionError("You should not be instantiating this");
+		Uninstantiable.whyDoIHearBossMusic(ShulkerRegistries.class);
 	}
 }

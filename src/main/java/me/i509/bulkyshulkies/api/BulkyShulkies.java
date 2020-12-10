@@ -28,6 +28,7 @@ import java.util.Objects;
 
 import me.i509.bulkyshulkies.api.item.ShulkerHelmetStage;
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 import me.i509.bulkyshulkies.mod.registry.ShulkerItems;
 import me.i509.bulkyshulkies.mod.screen.ScreenHandlerKeys;
 
@@ -80,5 +81,6 @@ public final class BulkyShulkies {
 	}
 
 	private BulkyShulkies() {
+		Uninstantiable.whyDoIHearBossMusic(BulkyShulkies.class);
 	}
 }

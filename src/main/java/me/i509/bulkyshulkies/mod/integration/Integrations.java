@@ -24,6 +24,8 @@
 
 package me.i509.bulkyshulkies.mod.integration;
 
+import me.i509.bulkyshulkies.mod.Uninstantiable;
+
 import net.fabricmc.loader.api.FabricLoader;
 
 public final class Integrations {
@@ -37,5 +39,6 @@ public final class Integrations {
 	}
 
 	private Integrations() {
+		Uninstantiable.whyDoIHearBossMusic(Integrations.class);
 	}
 }

@@ -27,7 +27,6 @@ package me.i509.bulkyshulkies.mod.block.old.ender;
 import net.minecraft.text.Text;
 
 import me.i509.bulkyshulkies.api.block.old.entity.slab.FacingSlabShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.registry.ShulkerBlockEntities;
 import me.i509.bulkyshulkies.mod.registry.ShulkerTexts;
 
 public class EnderSlabBoxBlockEntity extends FacingSlabShulkerBoxBlockEntity {

@@ -29,6 +29,7 @@ import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.component.MagnetismCooldownComponent;
 import me.i509.bulkyshulkies.api.component.ShulkerBoxColorComponent;
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 
 import net.minecraft.block.FacingBlock;
 
@@ -38,7 +39,7 @@ public final class ShulkerBoxTypes {
 			.directionProperty(FacingBlock.FACING)
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
-			.blockSettings(ShulkerBlocks.SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -50,7 +51,7 @@ public final class ShulkerBoxTypes {
 			.directionProperty(FacingBlock.FACING)
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
-			.blockSettings(ShulkerBlocks.SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -62,7 +63,7 @@ public final class ShulkerBoxTypes {
 			.directionProperty(FacingBlock.FACING)
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
-			.blockSettings(ShulkerBlocks.SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -74,7 +75,7 @@ public final class ShulkerBoxTypes {
 			.directionProperty(FacingBlock.FACING)
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
-			.blockSettings(ShulkerBlocks.SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -86,7 +87,7 @@ public final class ShulkerBoxTypes {
 			.directionProperty(FacingBlock.FACING)
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
-			.blockSettings(ShulkerBlocks.SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -98,7 +99,7 @@ public final class ShulkerBoxTypes {
 			.directionProperty(FacingBlock.FACING)
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
-			.blockSettings(ShulkerBlocks.SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -110,7 +111,7 @@ public final class ShulkerBoxTypes {
 			.directionProperty(FacingBlock.FACING)
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
-			.blockSettings(ShulkerBlocks.EXPLOSION_PROOF_SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.EXPLOSION_PROOF_SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -123,7 +124,7 @@ public final class ShulkerBoxTypes {
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToBlockEntity(ShulkerComponents.MAGNETISM_COOLDOWN, ignored -> new MagnetismCooldownComponent())
-			.blockSettings(ShulkerBlocks.SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -135,7 +136,7 @@ public final class ShulkerBoxTypes {
 			.directionProperty(FacingBlock.FACING)
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
-			.blockSettings(ShulkerBlocks.EXPLOSION_PROOF_SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.EXPLOSION_PROOF_SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.INVUL_UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -147,7 +148,7 @@ public final class ShulkerBoxTypes {
 			.directionProperty(FacingBlock.FACING)
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
-			.blockSettings(ShulkerBlocks.SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -159,7 +160,7 @@ public final class ShulkerBoxTypes {
 			.directionProperty(FacingBlock.FACING)
 			.attachToBlockEntity(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
 			.attachToItemStack(ShulkerComponents.SHULKER_BOX_COLOR, ignored -> new ShulkerBoxColorComponent())
-			.blockSettings(ShulkerBlocks.SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS)
 			.inventory()
 			.clientTicker(ShulkerBoxTicking::simpleTick)
@@ -169,7 +170,7 @@ public final class ShulkerBoxTypes {
 	public static final ShulkerBoxType ENDER_SLAB = ShulkerBoxType.builder()
 			.id(BulkyShulkiesImpl.id("ender_slab"))
 			.directionProperty(FacingBlock.FACING)
-			.blockSettings(ShulkerBlocks.EXPLOSION_PROOF_SHULKER_BOX_SETTINGS)
+			.blockSettings(ShulkerBlockSettings.EXPLOSION_PROOF_SHULKER_BOX_SETTINGS)
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS) // TODO: Stackable
 			.clientTicker(ShulkerBoxTicking::enderSlabTick)
 			.serverTicker(ShulkerBoxTicking::enderSlabTick)
@@ -180,5 +181,6 @@ public final class ShulkerBoxTypes {
 	}
 
 	private ShulkerBoxTypes() {
+		Uninstantiable.whyDoIHearBossMusic(ShulkerBoxTypes.class);
 	}
 }

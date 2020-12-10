@@ -32,7 +32,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.world.BlockView;
 
 import me.i509.bulkyshulkies.api.block.old.slab.AbstractColoredInventorySlabShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.registry.ShulkerBlocks;
+import me.i509.bulkyshulkies.mod.registry.ShulkerBlockSettings;
 
 public class ColoredSlabShulkerBoxBlock extends AbstractColoredInventorySlabShulkerBoxBlock {
 	public ColoredSlabShulkerBoxBlock(Settings settings, @Nullable DyeColor color) {
@@ -47,43 +47,43 @@ public class ColoredSlabShulkerBoxBlock extends AbstractColoredInventorySlabShul
 	@Override
 	public ItemConvertible getItem(@Nullable DyeColor color) {
 		if (color == null) {
-			return ShulkerBlocks.SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.SLAB_SHULKER_BOX;
 		}
 
 		switch (color) {
 		case WHITE:
-			return ShulkerBlocks.WHITE_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.WHITE_SLAB_SHULKER_BOX;
 		case ORANGE:
-			return ShulkerBlocks.ORANGE_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.ORANGE_SLAB_SHULKER_BOX;
 		case MAGENTA:
-			return ShulkerBlocks.MAGENTA_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.MAGENTA_SLAB_SHULKER_BOX;
 		case LIGHT_BLUE:
-			return ShulkerBlocks.LIGHT_BLUE_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.LIGHT_BLUE_SLAB_SHULKER_BOX;
 		case YELLOW:
-			return ShulkerBlocks.YELLOW_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.YELLOW_SLAB_SHULKER_BOX;
 		case LIME:
-			return ShulkerBlocks.LIME_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.LIME_SLAB_SHULKER_BOX;
 		case PINK:
-			return ShulkerBlocks.PINK_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.PINK_SLAB_SHULKER_BOX;
 		case GRAY:
-			return ShulkerBlocks.GRAY_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.GRAY_SLAB_SHULKER_BOX;
 		case LIGHT_GRAY:
-			return ShulkerBlocks.LIGHT_GRAY_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.LIGHT_GRAY_SLAB_SHULKER_BOX;
 		case CYAN:
-			return ShulkerBlocks.CYAN_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.CYAN_SLAB_SHULKER_BOX;
 		case PURPLE:
 		default:
-			return ShulkerBlocks.PURPLE_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.PURPLE_SLAB_SHULKER_BOX;
 		case BLUE:
-			return ShulkerBlocks.BLUE_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.BLUE_SLAB_SHULKER_BOX;
 		case BROWN:
-			return ShulkerBlocks.BROWN_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.BROWN_SLAB_SHULKER_BOX;
 		case GREEN:
-			return ShulkerBlocks.GREEN_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.GREEN_SLAB_SHULKER_BOX;
 		case RED:
-			return ShulkerBlocks.RED_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.RED_SLAB_SHULKER_BOX;
 		case BLACK:
-			return ShulkerBlocks.BLACK_SLAB_SHULKER_BOX;
+			return ShulkerBlockSettings.BLACK_SLAB_SHULKER_BOX;
 		}
 	}
 }

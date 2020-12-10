@@ -33,5 +33,6 @@ final class C2SNetworking {
 	}
 
 	private C2SNetworking() {
+		Uninstantiable.whyDoIHearBossMusic(C2SNetworking.class);
 	}
 }

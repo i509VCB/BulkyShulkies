@@ -33,7 +33,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 
 import me.i509.bulkyshulkies.api.block.old.entity.slab.ColoredFacingSlabShulkerBlockEntity;
-import me.i509.bulkyshulkies.mod.registry.ShulkerBlockEntities;
 import me.i509.bulkyshulkies.mod.registry.ShulkerTexts;
 import me.i509.bulkyshulkies.mod.registry.ShulkerScreenHandlers;
 import me.i509.bulkyshulkies.mod.screen.GenericCustomSlotContainerScreenHandler;

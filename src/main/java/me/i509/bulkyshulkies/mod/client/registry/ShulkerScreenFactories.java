@@ -24,6 +24,7 @@
 
 package me.i509.bulkyshulkies.mod.client.registry;
 
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 import me.i509.bulkyshulkies.mod.client.screen.Generic11x7Screen;
 import me.i509.bulkyshulkies.mod.client.screen.Generic13x7Screen;
 import me.i509.bulkyshulkies.mod.client.screen.Generic9x7Screen;
@@ -48,5 +49,6 @@ final class ShulkerScreenFactories {
 	}
 
 	private ShulkerScreenFactories() {
+		Uninstantiable.whyDoIHearBossMusic(ShulkerScreenFactories.class);
 	}
 }

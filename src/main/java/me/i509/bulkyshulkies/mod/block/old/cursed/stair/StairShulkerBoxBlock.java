@@ -55,7 +55,7 @@ import net.minecraft.world.WorldAccess;
 
 import me.i509.bulkyshulkies.api.block.old.colored.ColoredHorizontalFacingShulkerBoxBlock;
 import me.i509.bulkyshulkies.mod.mixin.accessor.StairsBlockAccessor;
-import me.i509.bulkyshulkies.mod.registry.ShulkerBlocks;
+import me.i509.bulkyshulkies.mod.registry.ShulkerBlockSettings;
 
 public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock implements Waterloggable {
 	public static final EnumProperty<StairShape> SHAPE = Properties.STAIR_SHAPE;
@@ -113,43 +113,43 @@ public class StairShulkerBoxBlock extends ColoredHorizontalFacingShulkerBoxBlock
 	@Override
 	public ItemConvertible getItem(@Nullable DyeColor color) {
 		if (color == null) {
-			return ShulkerBlocks.STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.STAIR_SHULKER_BOX;
 		}
 
 		switch (color) {
 		case WHITE:
-			return ShulkerBlocks.WHITE_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.WHITE_STAIR_SHULKER_BOX;
 		case ORANGE:
-			return ShulkerBlocks.ORANGE_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.ORANGE_STAIR_SHULKER_BOX;
 		case MAGENTA:
-			return ShulkerBlocks.MAGENTA_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.MAGENTA_STAIR_SHULKER_BOX;
 		case LIGHT_BLUE:
-			return ShulkerBlocks.LIGHT_BLUE_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.LIGHT_BLUE_STAIR_SHULKER_BOX;
 		case YELLOW:
-			return ShulkerBlocks.YELLOW_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.YELLOW_STAIR_SHULKER_BOX;
 		case LIME:
-			return ShulkerBlocks.LIME_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.LIME_STAIR_SHULKER_BOX;
 		case PINK:
-			return ShulkerBlocks.PINK_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.PINK_STAIR_SHULKER_BOX;
 		case GRAY:
-			return ShulkerBlocks.GRAY_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.GRAY_STAIR_SHULKER_BOX;
 		case LIGHT_GRAY:
-			return ShulkerBlocks.LIGHT_GRAY_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.LIGHT_GRAY_STAIR_SHULKER_BOX;
 		case CYAN:
-			return ShulkerBlocks.CYAN_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.CYAN_STAIR_SHULKER_BOX;
 		case PURPLE:
 		default:
-			return ShulkerBlocks.PURPLE_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.PURPLE_STAIR_SHULKER_BOX;
 		case BLUE:
-			return ShulkerBlocks.BLUE_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.BLUE_STAIR_SHULKER_BOX;
 		case BROWN:
-			return ShulkerBlocks.BROWN_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.BROWN_STAIR_SHULKER_BOX;
 		case GREEN:
-			return ShulkerBlocks.GREEN_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.GREEN_STAIR_SHULKER_BOX;
 		case RED:
-			return ShulkerBlocks.RED_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.RED_STAIR_SHULKER_BOX;
 		case BLACK:
-			return ShulkerBlocks.BLACK_STAIR_SHULKER_BOX;
+			return ShulkerBlockSettings.BLACK_STAIR_SHULKER_BOX;
 		}
 	}
 

@@ -28,6 +28,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 import me.i509.bulkyshulkies.mod.item.ShulkerMagnetWand;
 import me.i509.bulkyshulkies.api.item.ShulkerHelmetItem;
 
@@ -38,7 +39,7 @@ public final class ShulkerItems {
 	public static final Item SHULKER_HELMET = register(new ShulkerHelmetItem(new FabricItemSettings().customDamage(ShulkerHelmetItem::handleItemDamage).group(ShulkerItemGroups.BULKY_SHULKIES).maxCount(1)), "shulker_helmet");
 
 	private ShulkerItems() {
-		throw new AssertionError("You should not be instantiating this");
+		Uninstantiable.whyDoIHearBossMusic(ShulkerItems.class);
 	}
 
 	static void init() {

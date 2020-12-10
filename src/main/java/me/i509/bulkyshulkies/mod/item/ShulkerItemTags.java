@@ -30,7 +30,9 @@ import net.minecraft.tag.Tag;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 
+// TODO: Move to api
 public final class ShulkerItemTags {
 	public static final Tag.Identified<Item> SHULKER_MAGNET_WAND = register("shulker_magnet_wands");
 
@@ -39,5 +41,6 @@ public final class ShulkerItemTags {
 	}
 
 	private ShulkerItemTags() {
+		Uninstantiable.whyDoIHearBossMusic(ShulkerItemTags.class);
 	}
 }

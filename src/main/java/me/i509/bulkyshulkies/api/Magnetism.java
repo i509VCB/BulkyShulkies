@@ -27,6 +27,7 @@ package me.i509.bulkyshulkies.api;
 import java.util.List;
 
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
@@ -69,6 +70,7 @@ public final class Magnetism {
 	}
 
 	private Magnetism() {
+		Uninstantiable.whyDoIHearBossMusic(Magnetism.class);
 	}
 
 	@FunctionalInterface

@@ -28,6 +28,7 @@ import java.util.List;
 
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
 
 import net.minecraft.block.BlockState;
@@ -150,5 +151,6 @@ public final class ShulkerBoxTicking {
 	}
 
 	private ShulkerBoxTicking() {
+		Uninstantiable.whyDoIHearBossMusic(ShulkerBoxTicking.class);
 	}
 }

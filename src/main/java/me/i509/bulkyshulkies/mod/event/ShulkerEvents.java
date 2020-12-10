@@ -36,6 +36,7 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 
 import me.i509.bulkyshulkies.api.block.old.colored.ColoredShulkerBoxBlock;
 
+// TODO: Is this needed?
 public final class ShulkerEvents {
 	public static void init() {
 		// NO-OP

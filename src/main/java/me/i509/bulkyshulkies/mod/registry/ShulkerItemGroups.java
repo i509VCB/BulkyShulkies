@@ -32,6 +32,7 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.block.ShulkerBoxColor;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 
 public final class ShulkerItemGroups {
 	public static final ItemGroup BULKY_SHULKIES = FabricItemGroupBuilder.build(BulkyShulkiesImpl.id("group"), () -> {
@@ -48,7 +49,7 @@ public final class ShulkerItemGroups {
 	//public static final Item.Settings UPGRADES = new Item.Settings().maxCount(16).group(ShulkerItemGroups.MATERIAL_GROUP);
 
 	private ShulkerItemGroups() {
-		throw new AssertionError("You should not be instantiating this");
+		Uninstantiable.whyDoIHearBossMusic(ShulkerItemGroups.class);
 	}
 
 	static void init() {

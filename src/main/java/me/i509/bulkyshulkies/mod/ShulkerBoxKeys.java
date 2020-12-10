@@ -43,6 +43,6 @@ public final class ShulkerBoxKeys {
 	public static final String STAIR = "stair";
 
 	private ShulkerBoxKeys() {
-		// NO-OP
+		Uninstantiable.whyDoIHearBossMusic(ShulkerBoxKeys.class);
 	}
 }

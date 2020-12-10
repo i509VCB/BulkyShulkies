@@ -30,6 +30,7 @@ import net.minecraft.screen.slot.Slot;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler13x7;
 import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler9x7;
 import me.i509.bulkyshulkies.mod.screen.GenericCustomSlotContainerScreenHandler;
@@ -69,7 +70,7 @@ public final class ShulkerScreenHandlers {
 	});
 
 	private ShulkerScreenHandlers() {
-		throw new AssertionError("You should not be instantiating this");
+		Uninstantiable.whyDoIHearBossMusic(ShulkerScreenHandlers.class);
 	}
 
 	static void init() {

@@ -31,6 +31,7 @@ import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.component.EnderSlabInventory;
 import me.i509.bulkyshulkies.api.component.MagnetismCooldownComponent;
 import me.i509.bulkyshulkies.api.component.ShulkerBoxColorComponent;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 
 public final class ShulkerComponents {
 	public static final ComponentKey<EnderSlabInventory> ENDER_SLAB_INVENTORY = register("ender_slab_inventory", EnderSlabInventory.class);
@@ -42,5 +43,6 @@ public final class ShulkerComponents {
 	}
 
 	private ShulkerComponents() {
+		Uninstantiable.whyDoIHearBossMusic(ShulkerComponents.class);
 	}
 }

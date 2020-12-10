@@ -41,7 +41,6 @@ import net.minecraft.util.shape.VoxelShapes;
 import me.i509.bulkyshulkies.api.block.old.colored.ColoredHorizontalFacingShulkerBoxBlock;
 import me.i509.bulkyshulkies.api.block.old.entity.colored.ColoredHorizontalFacingShulkerBoxBlockEntity;
 import me.i509.bulkyshulkies.mod.registry.ShulkerTexts;
-import me.i509.bulkyshulkies.mod.registry.ShulkerBlockEntities;
 import me.i509.bulkyshulkies.mod.registry.ShulkerScreenHandlers;
 import me.i509.bulkyshulkies.mod.screen.GenericCustomSlotContainerScreenHandler;
 

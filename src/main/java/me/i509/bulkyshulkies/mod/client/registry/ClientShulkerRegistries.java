@@ -24,6 +24,7 @@
 
 package me.i509.bulkyshulkies.mod.client.registry;
 
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 import me.i509.bulkyshulkies.mod.registry.ShulkerRegistries;
 
 public final class ClientShulkerRegistries {
@@ -36,5 +37,6 @@ public final class ClientShulkerRegistries {
 	}
 
 	private ClientShulkerRegistries() {
+		Uninstantiable.whyDoIHearBossMusic(ClientShulkerRegistries.class);
 	}
 }

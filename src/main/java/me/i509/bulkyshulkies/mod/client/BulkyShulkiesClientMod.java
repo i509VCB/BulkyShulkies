@@ -33,6 +33,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import io.netty.buffer.Unpooled;
+import me.i509.bulkyshulkies.mod.NetworkingConstants;
 import me.i509.bulkyshulkies.mod.client.render.EnderSlabBlockEntityRenderer;
 import me.i509.bulkyshulkies.mod.client.render.FacingSlabShulkerBoxBlockEntityRenderer;
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
@@ -49,9 +50,8 @@ import me.i509.bulkyshulkies.mod.client.config.GameSession;
 import me.i509.bulkyshulkies.mod.client.render.Facing1x1ShulkerBlockEntityRenderer;
 import me.i509.bulkyshulkies.mod.client.render.PlatinumShulkerBlockEntityRenderer;
 import me.i509.bulkyshulkies.mod.client.registry.ClientShulkerRegistries;
-import me.i509.bulkyshulkies.mod.registry.ShulkerBlocks;
+import me.i509.bulkyshulkies.mod.registry.ShulkerBlockSettings;
 import me.i509.bulkyshulkies.mod.registry.ShulkerBoxTypes;
-import me.i509.bulkyshulkies.mod.registry.ShulkerNetworking;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -156,18 +156,18 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 		ClientShulkerRegistries.init();
 
 		// TODO: Replace
-		ShulkerBlocks.iterateColors(ShulkerBlocks.COPPER_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.IRON_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.SILVER_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.GOLD_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.DIAMOND_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.OBSIDIAN_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.PLATINUM_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.NETHERITE_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.MISSING_TEX_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.SLAB_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		ShulkerBlocks.iterateColors(ShulkerBlocks.STAIR_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
-		BulkyShulkiesClientMod.registerItemRenderer(ShulkerBlocks.ENDER_SLAB_BOX, null);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.COPPER_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.IRON_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.SILVER_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.GOLD_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.DIAMOND_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.OBSIDIAN_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.PLATINUM_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.NETHERITE_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.MISSING_TEX_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.SLAB_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		ShulkerBlockSettings.iterateColors(ShulkerBlockSettings.STAIR_SHULKER_BOX, BulkyShulkiesClientMod::registerItemRenderer);
+		BulkyShulkiesClientMod.registerItemRenderer(ShulkerBlockSettings.ENDER_SLAB_BOX, null);
 		// TODO
 
 		registerBlockRenderer(ShulkerBoxTypes.COPPER, Facing1x1ShulkerBlockEntityRenderer::new);
@@ -295,7 +295,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 
 	private static void tickHelmet(MinecraftClient client) {
 		if (OPEN_SHULKER_HELMET.wasPressed()) {
-			ClientSidePacketRegistry.INSTANCE.sendToServer(ShulkerNetworking.HELMET_OPEN, new PacketByteBuf(Unpooled.buffer()));
+			ClientSidePacketRegistry.INSTANCE.sendToServer(NetworkingConstants.OPEN_HELMET, new PacketByteBuf(Unpooled.buffer()));
 		}
 	}
 

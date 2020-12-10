@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -67,6 +68,6 @@ public final class ShulkerRenderLayers {
 	}
 
 	private ShulkerRenderLayers() {
-		// NO-OP
+		Uninstantiable.whyDoIHearBossMusic(ShulkerRenderLayers.class);
 	}
 }

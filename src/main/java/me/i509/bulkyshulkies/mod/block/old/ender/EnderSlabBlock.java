@@ -32,7 +32,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.world.BlockView;
 
 import me.i509.bulkyshulkies.api.block.old.slab.AbstractShulkerSlabBlock;
-import me.i509.bulkyshulkies.mod.registry.ShulkerBlocks;
+import me.i509.bulkyshulkies.mod.registry.ShulkerBlockSettings;
 
 public class EnderSlabBlock extends AbstractShulkerSlabBlock {
 	public EnderSlabBlock(Settings settings) {
@@ -46,6 +46,6 @@ public class EnderSlabBlock extends AbstractShulkerSlabBlock {
 
 	@Override
 	public ItemConvertible getItem(@Nullable DyeColor color) {
-		return ShulkerBlocks.ENDER_SLAB_BOX;
+		return ShulkerBlockSettings.ENDER_SLAB_BOX;
 	}
 }

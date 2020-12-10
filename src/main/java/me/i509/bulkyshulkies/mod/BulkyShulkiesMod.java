@@ -25,7 +25,6 @@
 package me.i509.bulkyshulkies.mod;
 
 import me.i509.bulkyshulkies.api.BulkyShulkies;
-import me.i509.bulkyshulkies.mod.registry.ShulkerNetworking;
 import me.i509.bulkyshulkies.mod.registry.ShulkerRegistries;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,7 +44,7 @@ public final class BulkyShulkiesMod implements ModInitializer {
 		ShulkerRegistries.init();
 		C2SNetworking.init();
 
-		ServerSidePacketRegistry.INSTANCE.register(ShulkerNetworking.HELMET_OPEN, this::onOpenHelmet);
+		ServerSidePacketRegistry.INSTANCE.register(NetworkingConstants.OPEN_HELMET, this::onOpenHelmet);
 	}
 
 	private void onOpenHelmet(PacketContext context, PacketByteBuf packetByteBuf) {

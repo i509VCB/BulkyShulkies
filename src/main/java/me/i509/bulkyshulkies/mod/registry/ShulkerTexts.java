@@ -24,6 +24,8 @@
 
 package me.i509.bulkyshulkies.mod.registry;
 
+import me.i509.bulkyshulkies.mod.Uninstantiable;
+
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
@@ -46,5 +48,6 @@ public final class ShulkerTexts {
 	public static final Text CLEAR_CONTAINER = new TranslatableText("container.clearShulkerBox");
 
 	private ShulkerTexts() {
+		Uninstantiable.whyDoIHearBossMusic(ShulkerTexts.class);
 	}
 }
