@@ -28,8 +28,8 @@ rootProject.name = "bulkyshulkies"
 pluginManagement {
     repositories {
         jcenter()
-        mavenCentral()
         gradlePluginPortal()
+        mavenCentral()
 
         maven(url = "https://maven.fabricmc.net") {
             name = "Fabric"

@@ -23,15 +23,30 @@
  */
 
 // Buildscript start
+import com.matthewprenger.cursegradle.CurseProject
+import com.matthewprenger.cursegradle.Options
+import com.modrinth.minotaur.TaskModrinthUpload
 import net.fabricmc.loom.util.Constants.Configurations
+import java.net.URL
+
+buildscript {
+    dependencies {
+        classpath("org.kohsuke:github-api:1.114")
+    }
+}
 
 plugins {
     java
     `java-library`
-    `maven-publish`
+    `kotlin-dsl`
     checkstyle
     id("com.diffplug.spotless") version "5.8.2"
     id("fabric-loom") version "0.5-SNAPSHOT"
+
+    // Publishing
+    `maven-publish`
+    id("com.matthewprenger.cursegradle") version "1.4.0"
+    id("com.modrinth.minotaur") version "1.1.0"
 }
 
 val distribution: String by project
@@ -180,20 +195,16 @@ tasks.processResources {
 
 tasks.jar {
     from("LICENSE") {
-        rename { "${it}_${project.base.archivesBaseName}"}
+        rename { "${it}_${project.base.archivesBaseName}" }
     }
 }
 
 tasks.compileJava {
     options.encoding = "UTF-8"
-    val targetVersion = 8
 
-    // So we always build binaries targeting jdk8
+    // Build for JDK 8
     if (JavaVersion.current().isJava9Compatible) {
-        options.release.set(targetVersion)
-    } else {
-        sourceCompatibility = JavaVersion.toVersion(targetVersion).toString()
-        targetCompatibility = JavaVersion.toVersion(targetVersion).toString()
+        options.release.set(8)
     }
 }
 
@@ -204,4 +215,73 @@ fun DependencyHandler.modIntegration(dependencyNotation: Any, enabled: Boolean =
     (it as ExternalModuleDependency).exclude(group = "net.fabricmc.fabric-api")
 }
 
-// TODO: Publishing
+// Publishing
+
+val checkVersion by tasks.register<DefaultTask>("checkVersion") {
+    doFirst {
+        val mavenUrl = URL("") // TODO: Test this task
+        @Suppress("UNCHECKED_CAST")
+        val metadata = groovy.xml.XmlSlurper().parseText(mavenUrl.readText()) as Map<String, Map<String, *>>
+        val versions = metadata["versioning"]?.get("versions") as Collection<*>
+
+        if (versions.contains(version)) {
+            throw GradleException("$version has already been published")
+        }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifact(tasks.remapJar) {
+                builtBy(tasks.remapJar)
+            }
+
+            artifact(tasks.remapSourcesJar) {
+                builtBy(tasks.remapSourcesJar)
+            }
+        }
+    }
+
+    repositories {
+        // TODO
+    }
+}
+
+curseforge {
+//    project(closureOf<CurseProject> {
+//        // TODO:
+//    })
+
+    options(closureOf<Options> {
+        forgeGradleIntegration = false
+    })
+}
+
+val publishToModrinth = tasks.register<TaskModrinthUpload>("publishToModrinth") {
+    mustRunAfter(checkVersion)
+
+    group = "publishing"
+
+    projectId = "bulkyshulkies"
+    versionNumber = version as String
+    uploadFile = tasks.remapJar
+    releaseType = "alpha" // TODO
+    addGameVersion(minecraftVersion)
+    addLoader("Fabric")
+}
+
+val publishToGithubReleases = tasks.register<DefaultTask>("publishToGithubReleases") {
+    mustRunAfter(checkVersion)
+
+    onlyIf {
+        System.getenv().containsKey("GITHUB_TOKEN")
+    }
+
+    doLast {
+        // TODO
+    }
+}
+
+tasks.curseforge { mustRunAfter(checkVersion) }
+tasks.publish { mustRunAfter(checkVersion) }

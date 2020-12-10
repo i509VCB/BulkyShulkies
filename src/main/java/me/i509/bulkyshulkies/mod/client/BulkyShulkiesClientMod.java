@@ -202,6 +202,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 			}
 
 			final Optional<EntityType<?>> entityType = Registry.ENTITY_TYPE.getOrEmpty(id);
+
 			if (!entityType.isPresent()) {
 				// Probably not loaded yet, move on for now
 				continue;
@@ -300,6 +301,7 @@ public class BulkyShulkiesClientMod implements ClientModInitializer {
 	}
 
 	@FunctionalInterface
+	@Environment(EnvType.CLIENT)
 	public interface ShulkerBlockEntityRendererFactory {
 		BlockEntityRenderer<? extends ShulkerBlockEntity> create(ShulkerBoxType type, BlockEntityRendererFactory.Context context);
 	}
