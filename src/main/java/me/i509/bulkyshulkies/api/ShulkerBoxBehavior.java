@@ -28,6 +28,7 @@ import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
 import me.i509.bulkyshulkies.mod.DefaultShulkerBoxBehavior;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.property.DirectionProperty;
@@ -41,7 +42,22 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+/**
+ * Defines how a shulker box behaves.
+ *
+ * <p>A shulker box's behavior defines what occurs when shulker box block is used, what the collision shape is, pushing
+ * entities and updating the animation.
+ *
+ * @see ShulkerBoxBehavior#getDefault()
+ */
 public interface ShulkerBoxBehavior {
+	/**
+	 * Gets the default shulker box behavior.
+	 *
+	 * <p>This shulker box behavior is similar to how the {@link Blocks#SHULKER_BOX vanilla shulker boxes behave}.
+	 *
+	 * @return the default shulker box behavior.
+	 */
 	static ShulkerBoxBehavior getDefault() {
 		return DefaultShulkerBoxBehavior.INSTANCE;
 	}

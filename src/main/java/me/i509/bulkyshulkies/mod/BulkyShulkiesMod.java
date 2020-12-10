@@ -24,19 +24,17 @@
 
 package me.i509.bulkyshulkies.mod;
 
-import net.minecraft.entity.EquipmentSlot;
+import me.i509.bulkyshulkies.api.BulkyShulkies;
+import me.i509.bulkyshulkies.mod.registry.ShulkerNetworking;
+import me.i509.bulkyshulkies.mod.registry.ShulkerRegistries;
+
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-
-import me.i509.bulkyshulkies.api.item.ShulkerHelmetItem;
-import me.i509.bulkyshulkies.mod.registry.ShulkerNetworking;
-import me.i509.bulkyshulkies.mod.registry.ShulkerRegistries;
-import me.i509.bulkyshulkies.mod.registry.ShulkerItems;
 
 public final class BulkyShulkiesMod implements ModInitializer {
 	public static final String MODID = "bulkyshulkies";
@@ -51,20 +49,14 @@ public final class BulkyShulkiesMod implements ModInitializer {
 	}
 
 	private void onOpenHelmet(PacketContext context, PacketByteBuf packetByteBuf) {
-		PlayerEntity playerEntity = context.getPlayer();
+		final PlayerEntity player = context.getPlayer();
 
 		context.getTaskQueue().execute(() -> {
-			if (playerEntity.isSpectator()) {
+			if (player.isSpectator()) {
 				return;
 			}
 
-			ItemStack stack = playerEntity.getEquippedStack(EquipmentSlot.HEAD);
-
-			if (stack.getItem() != ShulkerItems.SHULKER_HELMET) {
-				return;
-			}
-
-			ShulkerHelmetItem.open(playerEntity);
+			BulkyShulkies.openShulkerBoxHelmet(((ServerPlayerEntity) player));
 		});
 	}
 }

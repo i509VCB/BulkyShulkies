@@ -173,6 +173,7 @@ public final class ShulkerBoxTypes {
 			.itemSettings(ShulkerItemGroups.UNSTACKABLE_CURSED_ITEM_SETTINGS) // TODO: Stackable
 			.clientTicker(ShulkerBoxTicking::enderSlabTick)
 			.serverTicker(ShulkerBoxTicking::enderSlabTick)
+			.allowInsertionIntoShulkerBox()
 			.buildAndRegister();
 
 	static void init() {
