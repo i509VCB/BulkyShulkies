@@ -22,18 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.component;
+package me.i509.bulkyshulkies.api.client;
 
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
-import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
-
-import me.i509.bulkyshulkies.api.registry.ShulkerComponents;
-import me.i509.bulkyshulkies.mod.inventory.EnderSlabInventoryImpl;
-
-public final class ShulkerEntityComponents implements EntityComponentInitializer {
-	@Override
-	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-		registry.registerForPlayers(ShulkerComponents.ENDER_SLAB_INVENTORY, player -> new EnderSlabInventoryImpl(), RespawnCopyStrategy.ALWAYS_COPY);
-	}
+public final class GameSession {
 }

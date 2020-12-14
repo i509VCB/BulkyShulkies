@@ -22,15 +22,16 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.registry;
+package me.i509.bulkyshulkies.api.registry;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
-import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
+
 import me.i509.bulkyshulkies.api.component.EnderSlabInventory;
 import me.i509.bulkyshulkies.api.component.MagnetismCooldownComponent;
 import me.i509.bulkyshulkies.api.component.ShulkerBoxColorComponent;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.Uninstantiable;
 
 public final class ShulkerComponents {

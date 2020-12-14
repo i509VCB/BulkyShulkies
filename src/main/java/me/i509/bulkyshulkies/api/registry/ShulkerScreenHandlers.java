@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.registry;
+package me.i509.bulkyshulkies.api.registry;
 
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.ShulkerBoxSlot;
@@ -31,10 +31,10 @@ import net.minecraft.screen.slot.Slot;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 
 import me.i509.bulkyshulkies.mod.Uninstantiable;
-import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler13x7;
-import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler9x7;
 import me.i509.bulkyshulkies.mod.screen.GenericCustomSlotContainerScreenHandler;
 import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler11x7;
+import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler13x7;
+import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler9x7;
 import me.i509.bulkyshulkies.mod.screen.ScreenHandlerKeys;
 
 public final class ShulkerScreenHandlers {
@@ -73,6 +73,6 @@ public final class ShulkerScreenHandlers {
 		Uninstantiable.whyDoIHearBossMusic(ShulkerScreenHandlers.class);
 	}
 
-	static void init() {
+	public static void init() {
 	}
 }

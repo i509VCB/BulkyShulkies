@@ -24,14 +24,14 @@
 
 package me.i509.bulkyshulkies.mod.client.registry;
 
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+
+import me.i509.bulkyshulkies.api.registry.ShulkerScreenHandlers;
 import me.i509.bulkyshulkies.mod.Uninstantiable;
 import me.i509.bulkyshulkies.mod.client.screen.Generic11x7Screen;
 import me.i509.bulkyshulkies.mod.client.screen.Generic13x7Screen;
 import me.i509.bulkyshulkies.mod.client.screen.Generic9x7Screen;
 import me.i509.bulkyshulkies.mod.client.screen.GenericCustomSlotContainerScreen;
-import me.i509.bulkyshulkies.mod.registry.ShulkerScreenHandlers;
-
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 
 // Intentionally package-private
 final class ShulkerScreenFactories {

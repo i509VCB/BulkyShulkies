@@ -30,13 +30,14 @@ import dev.onyxstudios.cca.api.v3.block.BlockComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.block.BlockComponentInitializer;
 import dev.onyxstudios.cca.api.v3.component.ComponentFactory;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
-import me.i509.bulkyshulkies.api.ShulkerBoxType;
-import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
 
 import net.minecraft.block.entity.BlockEntity;
 
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
+
+import me.i509.bulkyshulkies.api.ShulkerBoxType;
+import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 
 public final class ShulkerBlockComponents implements BlockComponentInitializer {
 	@Override
@@ -55,7 +56,7 @@ public final class ShulkerBlockComponents implements BlockComponentInitializer {
 			// TODO: Test me
 			//noinspection unchecked,rawtypes
 			registry.beginRegistration(BlockEntity.class, entry.getKey())
-					.filter(klass -> klass.isAssignableFrom(ShulkerBoxBlockEntity.class))
+					.filter(clz -> clz.isAssignableFrom(ShulkerBoxBlockEntity.class))
 					.end((ComponentFactory) entry.getValue());
 		}
 	}

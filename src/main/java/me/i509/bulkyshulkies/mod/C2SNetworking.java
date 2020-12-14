@@ -24,12 +24,24 @@
 
 package me.i509.bulkyshulkies.mod;
 
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+
+import me.i509.bulkyshulkies.api.BulkyShulkies;
+
 final class C2SNetworking {
 	static void init() {
 	}
 
 	static {
-		// TODO: Register networking stuff
+		ServerPlayNetworking.registerGlobalReceiver(NetworkingConstants.OPEN_HELMET, (server, player, handler, buf, responseSender) -> {
+			server.execute(() -> {
+				if (player.isSpectator()) {
+					return;
+				}
+
+				BulkyShulkies.openShulkerBoxHelmet(player);
+			});
+		});
 	}
 
 	private C2SNetworking() {

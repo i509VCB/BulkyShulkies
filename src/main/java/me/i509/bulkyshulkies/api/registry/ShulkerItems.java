@@ -22,27 +22,28 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.registry;
+package me.i509.bulkyshulkies.api.registry;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+
+import me.i509.bulkyshulkies.api.item.ShulkerHelmetItem;
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.Uninstantiable;
 import me.i509.bulkyshulkies.mod.item.ShulkerMagnetWand;
-import me.i509.bulkyshulkies.api.item.ShulkerHelmetItem;
-
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import me.i509.bulkyshulkies.mod.registry.ShulkerItemGroups;
 
 public final class ShulkerItems {
 	public static final Item SHULKER_MAGNET_WAND = register(new ShulkerMagnetWand(new Item.Settings().group(ShulkerItemGroups.BULKY_SHULKIES).maxCount(1)), "shulker_magnet_wand");
-	public static final Item SHULKER_HELMET = register(new ShulkerHelmetItem(new FabricItemSettings().customDamage(ShulkerHelmetItem::handleItemDamage).group(ShulkerItemGroups.BULKY_SHULKIES).maxCount(1)), "shulker_helmet");
+	public static final Item SHULKER_HELMET = register(new ShulkerHelmetItem(new FabricItemSettings().group(ShulkerItemGroups.BULKY_SHULKIES).maxCount(1)), "shulker_helmet");
 
 	private ShulkerItems() {
 		Uninstantiable.whyDoIHearBossMusic(ShulkerItems.class);
 	}
 
-	static void init() {
+	public static void init() {
 	}
 
 	public static Item register(Item item, String path) {

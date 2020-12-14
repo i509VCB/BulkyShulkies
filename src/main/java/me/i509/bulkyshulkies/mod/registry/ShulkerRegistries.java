@@ -24,11 +24,13 @@
 
 package me.i509.bulkyshulkies.mod.registry;
 
+import me.i509.bulkyshulkies.api.registry.ShulkerBoxTypes;
+import me.i509.bulkyshulkies.api.registry.ShulkerItems;
+import me.i509.bulkyshulkies.api.registry.ShulkerScreenHandlers;
+import me.i509.bulkyshulkies.mod.BulkyDataTrackerHandlers;
 import me.i509.bulkyshulkies.mod.Uninstantiable;
 import me.i509.bulkyshulkies.mod.event.ShulkerEvents;
-import me.i509.bulkyshulkies.mod.integration.Integrations;
 import me.i509.bulkyshulkies.mod.recipe.BulkyRecipeSerializers;
-import me.i509.bulkyshulkies.mod.BulkyDataTrackerHandlers;
 
 public final class ShulkerRegistries {
 	public static void init() {
@@ -40,7 +42,6 @@ public final class ShulkerRegistries {
 		ShulkerEvents.init();
 		ShulkerItems.init();
 		ShulkerItemGroups.init();
-		Integrations.init();
 		ShulkerScreenHandlers.init();
 	}
 

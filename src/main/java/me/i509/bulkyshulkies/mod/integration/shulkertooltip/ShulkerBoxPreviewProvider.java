@@ -26,10 +26,11 @@ package me.i509.bulkyshulkies.mod.integration.shulkertooltip;
 
 import com.misterpemodder.shulkerboxtooltip.api.PreviewContext;
 import com.misterpemodder.shulkerboxtooltip.api.provider.BlockEntityPreviewProvider;
-import me.i509.bulkyshulkies.api.block.ShulkerBoxColor;
-import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
 
 import net.minecraft.util.DyeColor;
+
+import me.i509.bulkyshulkies.api.block.ShulkerBoxColor;
+import me.i509.bulkyshulkies.api.registry.ShulkerComponents;
 
 final class ShulkerBoxPreviewProvider extends BlockEntityPreviewProvider {
 	private static final float[] SHULKER_BOX_COLOR = new float[]{ 0.592F, 0.403F, 0.592F };

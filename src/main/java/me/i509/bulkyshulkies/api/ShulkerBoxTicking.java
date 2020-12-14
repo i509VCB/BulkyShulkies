@@ -26,11 +26,6 @@ package me.i509.bulkyshulkies.api;
 
 import java.util.List;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
-import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.mod.Uninstantiable;
-import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -46,6 +41,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+
+import me.i509.bulkyshulkies.api.block.entity.ShulkerBoxBlockEntity;
+import me.i509.bulkyshulkies.api.registry.ShulkerComponents;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
 
 /**
  * Simple {@link BlockEntityTicker} implementations for shulker boxes.

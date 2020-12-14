@@ -26,12 +26,13 @@ package me.i509.bulkyshulkies.mod.registry;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-//import net.minecraft.item.Items;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.block.ShulkerBoxColor;
+import me.i509.bulkyshulkies.api.registry.ShulkerBoxTypes;
+import me.i509.bulkyshulkies.api.registry.ShulkerComponents;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.Uninstantiable;
 
 public final class ShulkerItemGroups {

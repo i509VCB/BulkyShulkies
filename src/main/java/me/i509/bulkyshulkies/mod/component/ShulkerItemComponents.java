@@ -30,12 +30,13 @@ import dev.onyxstudios.cca.api.v3.component.ComponentFactory;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.item.ItemComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.item.ItemComponentInitializer;
-import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
-import me.i509.bulkyshulkies.api.ShulkerBoxType;
 
 import net.minecraft.item.ItemStack;
 
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
+
+import me.i509.bulkyshulkies.api.ShulkerBoxType;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 
 public final class ShulkerItemComponents implements ItemComponentInitializer {
 	@Override

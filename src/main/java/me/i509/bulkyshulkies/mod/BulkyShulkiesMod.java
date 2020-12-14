@@ -24,16 +24,10 @@
 
 package me.i509.bulkyshulkies.mod;
 
-import me.i509.bulkyshulkies.api.BulkyShulkies;
-import me.i509.bulkyshulkies.mod.registry.ShulkerRegistries;
-
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
-
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.network.PacketContext;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+
+import me.i509.bulkyshulkies.mod.integration.Integrations;
+import me.i509.bulkyshulkies.mod.registry.ShulkerRegistries;
 
 public final class BulkyShulkiesMod implements ModInitializer {
 	public static final String MODID = "bulkyshulkies";
@@ -43,19 +37,6 @@ public final class BulkyShulkiesMod implements ModInitializer {
 		BulkyShulkiesImpl.getInstance();
 		ShulkerRegistries.init();
 		C2SNetworking.init();
-
-		ServerSidePacketRegistry.INSTANCE.register(NetworkingConstants.OPEN_HELMET, this::onOpenHelmet);
-	}
-
-	private void onOpenHelmet(PacketContext context, PacketByteBuf packetByteBuf) {
-		final PlayerEntity player = context.getPlayer();
-
-		context.getTaskQueue().execute(() -> {
-			if (player.isSpectator()) {
-				return;
-			}
-
-			BulkyShulkies.openShulkerBoxHelmet(((ServerPlayerEntity) player));
-		});
+		Integrations.init();
 	}
 }

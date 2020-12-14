@@ -27,8 +27,6 @@ package me.i509.bulkyshulkies.mod.integration.rei;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
-import me.i509.bulkyshulkies.mod.registry.ShulkerBoxTypes;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
@@ -43,6 +41,9 @@ import net.minecraft.util.Identifier;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
+import me.i509.bulkyshulkies.api.registry.ShulkerBoxTypes;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 
 @Environment(EnvType.CLIENT)
 public final class ReiIntegration implements REIPluginV0 {

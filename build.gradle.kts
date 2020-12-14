@@ -23,7 +23,6 @@
  */
 
 // Buildscript start
-import com.matthewprenger.cursegradle.CurseProject
 import com.matthewprenger.cursegradle.Options
 import com.modrinth.minotaur.TaskModrinthUpload
 import net.fabricmc.loom.util.Constants.Configurations
@@ -77,17 +76,26 @@ val reiVersion: String by project
 logger.lifecycle("Building Bulky Shulkies $version")
 
 repositories {
-    jcenter()
-    mavenCentral()
+    // Confabricate
+    maven("https://oss.sonatype.org/content/repositories/snapshots/") {
+        name = "Sonatype"
+    }
 
+    maven("https://repo.glaremasters.me/repository/permissionsex") {
+        name = "Pex"
+    }
+
+    // Shulkertooltip
     maven("https://maven.misterpemodder.com/libs-release") {
         name = "Misterpemodder"
     }
 
+    // CCA
     maven("https://dl.bintray.com/ladysnake/libs") {
         name = "Ladysnake"
     }
 
+    // Quick shulker
     maven("https://dl.bintray.com/kyrptonaught/Quickshulker/") {
         name = "Quickshulker"
     }
@@ -98,7 +106,7 @@ repositories {
 }
 
 // Configurations
-val implementationAndInclude by configurations.register("implementationAndInclude")
+val modImplementationAndInclude by configurations.register("modImplementationAndInclude")
 val modApiAndInclude by configurations.register("modApiAndInclude")
 
 dependencies {
@@ -108,20 +116,16 @@ dependencies {
 
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricApiVersion")
 
-    // Confabricate needs updating
-    //confabricate(configurateVersion, confabricateVersion, true)
-    implementationAndInclude("org.spongepowered:configurate-core:$configurateVersion") {
+    modImplementationAndInclude("ca.stellardrift:confabricate:$confabricateVersion+$configurateVersion") {
         exclude(module = "checker-qual")
-    }
-    implementationAndInclude("org.spongepowered:configurate-hocon:$configurateVersion") {
-        exclude(module = "checker-qual")
+        exclude(module = "fabric-api")
+        exclude(module = "gson")
     }
 
-    // Base, entity, block
-    modApiAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:$ccaVersion")
-    modApiAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:$ccaVersion")
-    modApiAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:$ccaVersion")
-    modApiAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-item:$ccaVersion")
+    // Cardinal components
+    setOf("base", "block", "entity", "item").forEach {
+        modApiAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-$it:$ccaVersion")
+    }
 
     // Integrations
     modIntegration("net.kyrptonaught:quickshulker:$quickShulkerVersion", true)
@@ -130,8 +134,8 @@ dependencies {
     modIntegration("me.shedaniel:RoughlyEnoughItems:$reiVersion", false)
 
     // Apply custom configurations
-    add(sourceSets.main.get().getTaskName(null, JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME), implementationAndInclude)
-    add(Configurations.INCLUDE, implementationAndInclude)
+    add(sourceSets.main.get().getTaskName("mod", JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME), modImplementationAndInclude)
+    add(Configurations.INCLUDE, modImplementationAndInclude)
 
     add(sourceSets.main.get().getTaskName("mod", JavaPlugin.API_CONFIGURATION_NAME), modApiAndInclude)
     add(Configurations.INCLUDE, modApiAndInclude)
@@ -145,6 +149,7 @@ configure<JavaPluginConvention> {
 spotless {
     java {
         // Only update license headers when changes have occurred
+        importOrderFile(rootProject.file("codeformat/bulkyshulkies.importorder"))
         ratchetFrom("origin/$distribution")
         licenseHeaderFile(project.file("codeformat/HEADER")).yearSeparator(", ")
     }
@@ -261,7 +266,7 @@ curseforge {
 val publishToModrinth = tasks.register<TaskModrinthUpload>("publishToModrinth") {
     mustRunAfter(checkVersion)
 
-    group = "publishing"
+    group = "publishing" // TODO
 
     projectId = "bulkyshulkies"
     versionNumber = version as String

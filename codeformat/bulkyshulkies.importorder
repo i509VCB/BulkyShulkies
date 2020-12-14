@@ -1,0 +1,7 @@
+# Import order
+0=java
+0=javax
+1=
+2=net.minecraft
+3=net.fabricmc
+5=me.i509

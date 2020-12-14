@@ -26,18 +26,20 @@ package me.i509.bulkyshulkies.api;
 
 import java.util.Objects;
 
-import me.i509.bulkyshulkies.api.item.ShulkerHelmetStage;
-import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
-import me.i509.bulkyshulkies.mod.Uninstantiable;
-import me.i509.bulkyshulkies.mod.registry.ShulkerItems;
-import me.i509.bulkyshulkies.mod.screen.ScreenHandlerKeys;
-
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+
+import me.i509.bulkyshulkies.api.config.IntegrationServerConfig;
+import me.i509.bulkyshulkies.api.config.ServerConfig;
+import me.i509.bulkyshulkies.api.item.ShulkerHelmetStage;
+import me.i509.bulkyshulkies.api.registry.ShulkerItems;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
+import me.i509.bulkyshulkies.mod.Uninstantiable;
+import me.i509.bulkyshulkies.mod.screen.ScreenHandlerKeys;
 
 public final class BulkyShulkies {
 	/**
@@ -78,6 +80,14 @@ public final class BulkyShulkies {
 		}
 
 		return false;
+	}
+
+	public static ServerConfig getServerConfig() {
+		return BulkyShulkiesImpl.getServerConfig();
+	}
+
+	public static IntegrationServerConfig getIntegrationServerConfig() {
+		return BulkyShulkiesImpl.getIntegrationServerConfig();
 	}
 
 	private BulkyShulkies() {

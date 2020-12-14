@@ -22,7 +22,9 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.registry;
+package me.i509.bulkyshulkies.api.registry;
+
+import net.minecraft.block.FacingBlock;
 
 import me.i509.bulkyshulkies.api.ShulkerBoxTicking;
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
@@ -30,8 +32,8 @@ import me.i509.bulkyshulkies.api.component.MagnetismCooldownComponent;
 import me.i509.bulkyshulkies.api.component.ShulkerBoxColorComponent;
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.Uninstantiable;
-
-import net.minecraft.block.FacingBlock;
+import me.i509.bulkyshulkies.mod.registry.ShulkerBlockSettings;
+import me.i509.bulkyshulkies.mod.registry.ShulkerItemGroups;
 
 public final class ShulkerBoxTypes {
 	public static final ShulkerBoxType COPPER = ShulkerBoxType.builder()
@@ -177,7 +179,7 @@ public final class ShulkerBoxTypes {
 			.allowInsertionIntoShulkerBox()
 			.buildAndRegister();
 
-	static void init() {
+	public static void init() {
 	}
 
 	private ShulkerBoxTypes() {

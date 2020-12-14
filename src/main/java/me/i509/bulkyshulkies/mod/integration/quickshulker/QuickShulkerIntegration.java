@@ -26,8 +26,6 @@ package me.i509.bulkyshulkies.mod.integration.quickshulker;
 
 import static net.kyrptonaught.quickshulker.api.QuickOpenableRegistry.register;
 
-import me.i509.bulkyshulkies.mod.block.old.ender.EnderSlabBlock;
-import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
 import net.kyrptonaught.quickshulker.api.ItemStackInventory;
 import net.kyrptonaught.quickshulker.api.RegisterQuickShulker;
 
@@ -37,11 +35,13 @@ import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.screen.slot.ShulkerBoxSlot;
 import net.minecraft.screen.slot.Slot;
 
+import me.i509.bulkyshulkies.api.registry.ShulkerComponents;
+import me.i509.bulkyshulkies.api.registry.ShulkerScreenHandlers;
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.block.old.cursed.slab.ColoredSlabShulkerBoxBlock;
 import me.i509.bulkyshulkies.mod.block.old.cursed.stair.StairShulkerBoxBlock;
-import me.i509.bulkyshulkies.mod.registry.ShulkerScreenHandlers;
-import me.i509.bulkyshulkies.mod.config.section.quickshulker.QuickShulkerSection;
+import me.i509.bulkyshulkies.mod.block.old.ender.EnderSlabBlock;
+import me.i509.bulkyshulkies.mod.config.old.section.quickshulker.QuickShulkerSection;
 import me.i509.bulkyshulkies.mod.screen.GenericCustomSlotContainerScreenHandler;
 import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler11x7;
 import me.i509.bulkyshulkies.mod.screen.GenericScreenHandler13x7;

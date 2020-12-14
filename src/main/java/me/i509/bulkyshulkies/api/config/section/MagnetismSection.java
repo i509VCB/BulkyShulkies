@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019, 2020 i509VCB
+ * Copyright (c) 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,35 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.config.section;
+package me.i509.bulkyshulkies.api.config.section;
 
-import me.i509.bulkyshulkies.mod.config.section.quickshulker.QuickShulkerSection;
-import ninja.leaping.configurate.objectmapping.Setting;
-import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+import org.jetbrains.annotations.Range;
 
-@ConfigSerializable
-public class ExtensionConfigSection {
-	@Setting(comment = "Options for Quick Shulker hooks")
-	private QuickShulkerSection quickShulker = new QuickShulkerSection();
+import me.i509.bulkyshulkies.api.ShulkerBoxType;
 
-	public QuickShulkerSection getQuickShulker() {
-		return quickShulker;
-	}
+/**
+ * Configuration related to magnetism in shulker boxes.
+ */
+public interface MagnetismSection {
+	/**
+	 * Gets the magnetism range for a type of shulker box.
+	 *
+	 * <p>{@link MagnetismSection#isMagnetismEnabled(ShulkerBoxType)} must return true in order for this value to be considered.
+	 *
+	 * @param type the shulker box type
+	 * @return the magnetism range
+	 */
+	@Range(from = 0, to = 32)
+	int getShulkerBoxRange(ShulkerBoxType type);
+
+	@Range(from = 0, to = Integer.MAX_VALUE)
+	int getTickDelay(ShulkerBoxType type);
+
+	/**
+	 * Checks if magnetism is enabled for a type of shulker box.
+	 *
+	 * @param type the shulker box type
+	 * @return the magnetism range
+	 */
+	boolean isMagnetismEnabled(ShulkerBoxType type);
 }

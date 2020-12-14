@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019, 2020 i509VCB
+ * Copyright (c) 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,33 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.client.config;
+package me.i509.bulkyshulkies.mod.config;
 
-public final class GameSession {
+import java.util.Set;
+
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
+
+import net.minecraft.item.Item;
+
+import me.i509.bulkyshulkies.api.config.ServerConfig;
+import me.i509.bulkyshulkies.api.config.section.MagnetismSection;
+
+@ConfigSerializable
+public final class ServerConfigImpl implements ServerConfig {
+	@Setting
+	private Set<Item> disallowedItems;
+
+	@Setting
+	private MagnetismSection magnetism;
+
+	@Override
+	public Set<Item> getDisallowedItems() {
+		return this.disallowedItems;
+	}
+
+	@Override
+	public MagnetismSection getMagnetismSection() {
+		return this.magnetism;
+	}
 }

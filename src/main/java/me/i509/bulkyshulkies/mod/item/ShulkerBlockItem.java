@@ -24,10 +24,6 @@
 
 package me.i509.bulkyshulkies.mod.item;
 
-import me.i509.bulkyshulkies.api.ShulkerBoxType;
-import me.i509.bulkyshulkies.api.block.ShulkerBox;
-import me.i509.bulkyshulkies.api.block.ShulkerBoxColor;
-import me.i509.bulkyshulkies.mod.registry.ShulkerComponents;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.Block;
@@ -40,6 +36,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
+
+import me.i509.bulkyshulkies.api.ShulkerBoxType;
+import me.i509.bulkyshulkies.api.block.ShulkerBox;
+import me.i509.bulkyshulkies.api.block.ShulkerBoxColor;
+import me.i509.bulkyshulkies.api.registry.ShulkerComponents;
 
 public class ShulkerBlockItem extends BlockItem {
 	private final ShulkerBoxType type;

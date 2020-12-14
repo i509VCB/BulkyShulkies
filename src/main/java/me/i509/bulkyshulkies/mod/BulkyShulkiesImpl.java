@@ -32,17 +32,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import ca.stellardrift.confabricate.Confabricate;
 import io.leangen.geantyref.TypeToken;
-import me.i509.bulkyshulkies.api.ShulkerBoxType;
-import me.i509.bulkyshulkies.mod.block.old.ender.EnderSlabBlock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.ConfigurationOptions;
+import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
+import org.spongepowered.configurate.loader.ConfigurationLoader;
+import org.spongepowered.configurate.serialize.TypeSerializer;
+import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.registry.Registry;
@@ -50,19 +55,22 @@ import net.minecraft.util.registry.RegistryKey;
 
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 
+import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.block.old.base.OldShulkerBox;
-import me.i509.bulkyshulkies.mod.config.MainConfig;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.ConfigurationOptions;
-import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
-import org.spongepowered.configurate.loader.ConfigurationLoader;
+import me.i509.bulkyshulkies.api.config.IntegrationServerConfig;
+import me.i509.bulkyshulkies.api.config.ServerConfig;
+import me.i509.bulkyshulkies.api.config.section.MagnetismSection;
+import me.i509.bulkyshulkies.mod.block.old.ender.EnderSlabBlock;
+import me.i509.bulkyshulkies.mod.config.ServerConfigImpl;
+import me.i509.bulkyshulkies.mod.config.section.MagnetismSectionImpl;
 
 public final class BulkyShulkiesImpl {
+	public static final ModContainer MOD_CONTAINER = null;
 	public static final RegistryKey<Registry<ShulkerBoxType>> SHULKER_BOX_TYPE_KEY = RegistryKey.ofRegistry(BulkyShulkiesImpl.id("shulker_box_type"));
 	public static final Registry<ShulkerBoxType> SHULKER_BOX_TYPE = FabricRegistryBuilder.createSimple(ShulkerBoxType.class, BulkyShulkiesImpl.id("shulker_box_type")).buildAndRegister();
 	private static final Logger LOGGER = LogManager.getLogger(BulkyShulkiesImpl.class);
-	private static final TypeToken<MainConfig> MAIN_CONFIG_TYPE_TOKEN = new TypeToken<MainConfig>() {};
 
 	private static final BulkyShulkiesImpl INSTANCE;
 	private static List<Predicate<ItemStack>> disallowedItems = new ArrayList<>();
@@ -120,6 +128,30 @@ public final class BulkyShulkiesImpl {
 
 	public static Identifier id(String path) {
 		return new Identifier(BulkyShulkiesMod.MODID, path);
+	}
+
+	public static ServerConfigImpl getServerConfig() {
+		return null;
+	}
+
+	// TODO: Impl
+	public static IntegrationServerConfig getIntegrationServerConfig() {
+		return null;
+	}
+
+	public static HoconConfigurationLoader createLoader(String name) {
+		return HoconConfigurationLoader.builder()
+				.path(FabricLoader.getInstance().getConfigDir().resolve("bulkyshulkies").resolve(name + ".conf"))
+				.defaultOptions(createOptions())
+				.build();
+	}
+
+	private static ConfigurationOptions createOptions() {
+		return Confabricate.confabricateOptions().serializers(
+				TypeSerializerCollection.builder()
+						.register(MagnetismSection.class, MagnetismSectionImpl.SERIALIZER)
+						.build()
+		);
 	}
 
 	public Logger getLogger() {

@@ -63,8 +63,9 @@
     "mixins.client.bulkyshulkies.json"
   ],
   "depends": {
-    "fabricloader": ">=0.9.0",
-    "fabric": ">=0.15.2"
+    "confabricate": ">=2.1.0",
+    "fabricloader": ">=0.10.0",
+    "fabric": ">=0.28.0"
   },
   "suggests": {
     "cotton-resources": ">=1.4.1",

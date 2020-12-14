@@ -26,40 +26,19 @@ package me.i509.bulkyshulkies.api.item;
 
 import java.util.function.Consumer;
 
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
 
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-
-import me.i509.bulkyshulkies.mod.screen.ScreenHandlerKeys;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
 public class ShulkerHelmetItem extends ArmorItem {
-	public ShulkerHelmetItem(Settings settings) {
-		super(ShulkerArmorMaterials.SHULKER, EquipmentSlot.HEAD, settings);
+	public ShulkerHelmetItem(FabricItemSettings settings) {
+		super(ShulkerArmorMaterials.SHULKER, EquipmentSlot.HEAD, settings.customDamage(ShulkerHelmetItem::handleItemDamage));
 	}
 
-	@Override
-	public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-		return this.type.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
-	}
-
-	public static void open(PlayerEntity playerEntity) {
-		if (playerEntity instanceof ServerPlayerEntity) {
-			// TODO: Screen handler
-			ContainerProviderRegistry.INSTANCE.openContainer(ScreenHandlerKeys.SHULKER_HELMET, playerEntity, writer -> {
-				writer.writeText(playerEntity.getEquippedStack(EquipmentSlot.HEAD).getName());
-			});
-
-			ShulkerHelmetStage.bulkyshulkies$getStageFromEntity(playerEntity).bulkyshulkies$setStage(ShulkerBoxBlockEntity.AnimationStage.OPENING);
-		}
-	}
-
-	public static int handleItemDamage(ItemStack stack, int damageAmount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
+	private static int handleItemDamage(ItemStack stack, int damageAmount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
 		if (stack.getMaxDamage() - damageAmount <= stack.getDamage()) {
 			final int remainingDurability = stack.getMaxDamage() - stack.getDamage();
 

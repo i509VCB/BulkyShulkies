@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019, 2020 i509VCB
+ * Copyright (c) 2020 i509VCB
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,11 @@
  * SOFTWARE.
  */
 
-package me.i509.bulkyshulkies.mod.component;
+package me.i509.bulkyshulkies.api.client.config;
 
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
-import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
-import me.i509.bulkyshulkies.api.registry.ShulkerComponents;
-import me.i509.bulkyshulkies.mod.inventory.EnderSlabInventoryImpl;
-
-public final class ShulkerEntityComponents implements EntityComponentInitializer {
-	@Override
-	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-		registry.registerForPlayers(ShulkerComponents.ENDER_SLAB_INVENTORY, player -> new EnderSlabInventoryImpl(), RespawnCopyStrategy.ALWAYS_COPY);
-	}
+@Environment(EnvType.CLIENT)
+public interface IntegrationClientConfig {
 }
