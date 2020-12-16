@@ -25,6 +25,7 @@
 package me.i509.bulkyshulkies.mod.client.render;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -34,21 +35,23 @@ import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.ShulkerEntityModel;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3f;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
+import me.i509.bulkyshulkies.api.ShulkerBoxType;
+import me.i509.bulkyshulkies.api.block.old.FacingShulkerBoxBlock;
+import me.i509.bulkyshulkies.api.block.old.entity.inventory.ShulkerBlockEntity;
+import me.i509.bulkyshulkies.api.component.ShulkerBoxColorComponent;
+import me.i509.bulkyshulkies.api.registry.ShulkerComponents;
 import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.client.ShulkerRenderLayers;
-import me.i509.bulkyshulkies.api.ShulkerBoxType;
-import me.i509.bulkyshulkies.api.block.old.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
-import me.i509.bulkyshulkies.api.block.old.FacingShulkerBoxBlock;
 
 @Environment(EnvType.CLIENT)
-public class Facing1x1ShulkerBlockEntityRenderer<BE extends ColoredFacing1X1ShulkerBoxBlockEntity> implements BlockEntityRenderer<BE> {
+public class Facing1x1ShulkerBlockEntityRenderer<BE extends BlockEntity & ShulkerBlockEntity> implements BlockEntityRenderer<BE> {
 	protected final ShulkerEntityModel<?> model;
 	protected final ShulkerBoxType type;
 
@@ -66,7 +69,7 @@ public class Facing1x1ShulkerBlockEntityRenderer<BE extends ColoredFacing1X1Shul
 	}
 
 	@Override
-	public void render(ColoredFacing1X1ShulkerBoxBlockEntity blockEntity, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, int defaultUV) {
+	public void render(BE blockEntity, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, int defaultUV) {
 		Direction direction = Direction.UP;
 
 		if (blockEntity.hasWorld()) {
@@ -77,7 +80,8 @@ public class Facing1x1ShulkerBlockEntityRenderer<BE extends ColoredFacing1X1Shul
 			}
 		}
 
-		DyeColor dyeColor = blockEntity.getColor();
+
+		DyeColor dyeColor = ShulkerComponents.SHULKER_BOX_COLOR.get(blockEntity).getColor().toDyeColor();
 		SpriteIdentifier spriteIdentifier;
 
 		if (dyeColor == null) {
@@ -96,7 +100,7 @@ public class Facing1x1ShulkerBlockEntityRenderer<BE extends ColoredFacing1X1Shul
 		VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntityCutoutNoCull);
 		model.getBottomShell().render(matrixStack, vertexConsumer, light, defaultUV);
 		matrixStack.translate(0.0D, (-blockEntity.getAnimationProgress(tickDelta) * 0.5F), 0.0D);
-		matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F * blockEntity.getAnimationProgress(tickDelta)));
+		matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270.0F * blockEntity.getAnimationProgress(tickDelta)));
 
 		model.getTopShell().render(matrixStack, vertexConsumer, light, defaultUV);
 		matrixStack.pop();

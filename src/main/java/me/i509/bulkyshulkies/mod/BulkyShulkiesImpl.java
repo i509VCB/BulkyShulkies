@@ -33,14 +33,12 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import ca.stellardrift.confabricate.Confabricate;
-import io.leangen.geantyref.TypeToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurationOptions;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import org.spongepowered.configurate.loader.ConfigurationLoader;
-import org.spongepowered.configurate.serialize.TypeSerializer;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import net.minecraft.block.Block;
@@ -60,7 +58,6 @@ import net.fabricmc.loader.api.ModContainer;
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.block.old.base.OldShulkerBox;
 import me.i509.bulkyshulkies.api.config.IntegrationServerConfig;
-import me.i509.bulkyshulkies.api.config.ServerConfig;
 import me.i509.bulkyshulkies.api.config.section.MagnetismSection;
 import me.i509.bulkyshulkies.mod.block.old.ender.EnderSlabBlock;
 import me.i509.bulkyshulkies.mod.config.ServerConfigImpl;

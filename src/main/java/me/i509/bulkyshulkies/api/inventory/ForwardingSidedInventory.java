@@ -24,7 +24,7 @@
 
 package me.i509.bulkyshulkies.api.inventory;
 
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;

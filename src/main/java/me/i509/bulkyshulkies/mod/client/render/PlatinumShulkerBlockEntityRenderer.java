@@ -27,6 +27,8 @@ package me.i509.bulkyshulkies.mod.client.render;
 import java.util.Objects;
 import java.util.function.IntSupplier;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
@@ -49,15 +51,15 @@ import net.minecraft.util.math.Vec3d;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.api.Magnetism;
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
 import me.i509.bulkyshulkies.api.block.old.entity.colored.ColoredFacing1X1ShulkerBoxBlockEntity;
+import me.i509.bulkyshulkies.api.block.old.entity.inventory.ShulkerBlockEntity;
+import me.i509.bulkyshulkies.mod.BulkyShulkiesImpl;
 import me.i509.bulkyshulkies.mod.item.ShulkerItemTags;
-import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
-public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEntityRenderer<PlatinumShulkerBoxBlockEntity> {
+public class PlatinumShulkerBlockEntityRenderer<BE extends BlockEntity & ShulkerBlockEntity> extends Facing1x1ShulkerBlockEntityRenderer<BE> {
 	private final boolean forceBox;
 	@Nullable
 	private final Direction forcedDirection;
@@ -81,7 +83,7 @@ public class PlatinumShulkerBlockEntityRenderer extends Facing1x1ShulkerBlockEnt
 	}
 
 	@Override
-	public void render(ColoredFacing1X1ShulkerBoxBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, int defaultUV) {
+	public void render(BE blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, int defaultUV) {
 		super.render(blockEntity, tickDelta, matrices, vertexConsumerProvider, light, defaultUV);
 
 		if (this.forceBox) {

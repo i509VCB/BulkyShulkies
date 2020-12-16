@@ -24,6 +24,8 @@
 
 package me.i509.bulkyshulkies.api.block;
 
+import net.minecraft.client.MinecraftClient;
+
 import me.i509.bulkyshulkies.api.ShulkerBoxType;
 
 public interface ShulkerBox {
